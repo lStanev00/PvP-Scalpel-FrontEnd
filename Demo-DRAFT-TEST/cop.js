@@ -1,7 +1,6 @@
 import fs from 'fs';
 import dotenv from 'dotenv';
-
-dotenv.config();
+dotenv.config({ path: './.env' });
 
 // Token storing
 let accessToken = null;
@@ -163,15 +162,13 @@ async function getGuildPvPData() {
 async function savePvPDataToFile() {
     accessToken = await getAccessToken()
     currentSeason = await getSeason();
-    console.log(currentSeason);
-    
     const now = new Date(); 
     console.log(`Execution Time: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
 
   try {
     const data = await getGuildPvPData();
     const roasterJSON = JSON.stringify(data, null, 2);
-    fs.writeFileSync(`./pages/DBS/roaster.json`, roasterJSON, 'utf8');
+    fs.writeFileSync(`./Demo-DRAFT-TEST/pages/DBS/roaster.json`, roasterJSON, 'utf8');
     console.log("PvP data successfully saved to roaster.json!");
   } catch (error) {
     console.error("Error saving PvP data:", error.message);

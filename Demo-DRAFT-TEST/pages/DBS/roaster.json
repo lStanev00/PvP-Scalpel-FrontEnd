@@ -1911,7 +1911,7 @@
     "class": "Rogue",
     "spec": "Subtlety",
     "rating": {
-      "solo_bg": 2484,
+      "solo_bg": 2583,
       "rbg": 1625
     },
     "achieves": {
@@ -2036,8 +2036,8 @@
     "class": "Demon Hunter",
     "spec": "Havoc",
     "rating": {
-      "solo": 1922,
-      "solo_bg": 2007,
+      "solo": 1935,
+      "solo_bg": 2074,
       "2v2": 1636,
       "3v3": 1677
     },
@@ -2295,9 +2295,9 @@
     "rank": 6,
     "race": "Night Elf",
     "class": "Priest",
-    "spec": "Discipline",
+    "spec": "Shadow",
     "rating": {
-      "solo": 1322,
+      "solo": 864,
       "2v2": 1607,
       "3v3": 1401
     },
@@ -2451,7 +2451,7 @@
       "solo": 2474,
       "solo_bg": 949,
       "2v2": 2112,
-      "3v3": 2385
+      "3v3": 2426
     },
     "achieves": {
       "2s": {
@@ -2516,7 +2516,7 @@
     "class": "Rogue",
     "spec": "Assassination",
     "rating": {
-      "solo": 2304,
+      "solo": 2307,
       "solo_bg": 384,
       "2v2": 1693,
       "3v3": 2043,
@@ -2582,8 +2582,8 @@
     "spec": "Shadow",
     "rating": {
       "solo": 2011,
-      "2v2": 1582,
-      "3v3": 1679
+      "2v2": 1471,
+      "3v3": 1684
     },
     "achieves": {
       "2s": {
@@ -3354,7 +3354,7 @@
     "class": "Rogue",
     "spec": "Assassination",
     "rating": {
-      "solo": 2248,
+      "solo": 2224,
       "2v2": 1339,
       "3v3": 1951
     },
@@ -3614,7 +3614,7 @@
     "class": "Warrior",
     "spec": "Arms",
     "rating": {
-      "solo": 2140,
+      "solo": 2076,
       "solo_bg": 957,
       "2v2": 1805,
       "3v3": 1797
@@ -3794,6 +3794,82 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/genjuros/10/168731402-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/genjuros/10/168731402-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/genjuros/10/168731402-main-raw.png"
+    }
+  },
+  {
+    "name": "Greytoe",
+    "playerRealmSlug": "stormscale",
+    "innerID": 170555403,
+    "rank": 7,
+    "race": "Dwarf",
+    "class": "Warrior",
+    "spec": "Arms",
+    "rating": {
+      "solo": 2084,
+      "solo_bg": 1620,
+      "2v2": 576,
+      "3v3": 1573
+    },
+    "achieves": {
+      "2s": {
+        "name": "Rival",
+        "description": "Earn the Rival title in an arena season."
+      },
+      "3s": {
+        "name": "Three's Company: 1750",
+        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
+      },
+      "BG": [
+        {
+          "name": "Sergeant Major",
+          "description": "Earned the title, \"Sergeant Major\" at level 60."
+        },
+        {
+          "name": "Master Sergeant",
+          "description": "Earned the title, \"Master Sergeant\" at level 60."
+        },
+        {
+          "name": "Warbound Veteran of the Alliance",
+          "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Lieutenant Commander",
+          "description": "Earn a rating of 2000 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/stormscale/11/170555403-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/stormscale/11/170555403-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/stormscale/11/170555403-main-raw.png"
     }
   },
   {
@@ -4371,7 +4447,7 @@
     "class": "Death Knight",
     "spec": "Unholy",
     "rating": {
-      "solo": 1630,
+      "solo": 1655,
       "solo_bg": 576,
       "2v2": 957
     },
@@ -4882,7 +4958,7 @@
     "rating": {
       "solo": 96,
       "solo_bg": 576,
-      "2v2": 2028
+      "2v2": 2004
     },
     "achieves": {
       "2s": {
@@ -5075,8 +5151,8 @@
     "class": "Death Knight",
     "spec": "Frost",
     "rating": {
-      "solo": 1806,
-      "solo_bg": 1559
+      "solo": 1855,
+      "solo_bg": 1573
     },
     "achieves": {
       "2s": {
@@ -5136,10 +5212,8 @@
     "rank": 7,
     "race": "Dark Iron Dwarf",
     "class": "Shaman",
-    "spec": "Elemental",
+    "spec": "Enhancement",
     "rating": {
-      "solo": 1344,
-      "solo_bg": 192,
       "3v3": 1982,
       "rbg": 192
     },
@@ -5360,7 +5434,7 @@
     "spec": "Affliction",
     "rating": {
       "solo": 1409,
-      "solo_bg": 1279
+      "solo_bg": 1273
     },
     "achieves": {
       "2s": "No XP yet",
@@ -5639,8 +5713,10 @@
     "rank": 7,
     "race": "Human",
     "class": "Paladin",
-    "spec": "Protection",
+    "spec": "Retribution",
     "rating": {
+      "solo": 288,
+      "solo_bg": 384,
       "2v2": 1120
     },
     "achieves": {
@@ -5857,14 +5933,83 @@
     }
   },
   {
+    "name": "Wagz",
+    "playerRealmSlug": "outland",
+    "innerID": 220186336,
+    "rank": 7,
+    "race": "Night Elf",
+    "class": "Hunter",
+    "spec": "Beast Mastery",
+    "rating": {
+      "2v2": 1646,
+      "3v3": 864
+    },
+    "achieves": {
+      "2s": {
+        "name": "Rival",
+        "description": "Earn the Rival title in an arena season."
+      },
+      "3s": {
+        "name": "Three's Company: 1750",
+        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
+      },
+      "BG": [
+        {
+          "name": "Warbound Veteran of the Alliance",
+          "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Sergeant Major",
+          "description": "Earn a rating of 1500 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/outland/224/220186336-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/outland/224/220186336-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/outland/224/220186336-main-raw.png"
+    }
+  },
+  {
     "name": "Ivex",
     "playerRealmSlug": "auchindoun",
     "innerID": 259084753,
     "rank": 7,
     "race": "Human",
     "class": "Monk",
-    "spec": "Mistweaver",
-    "rating": {},
+    "spec": "Windwalker",
+    "rating": {
+      "solo": 1620,
+      "solo_bg": 575
+    },
     "achieves": {
       "2s": "No XP yet",
       "3s": "No XP yet",
@@ -6083,10 +6228,10 @@
     "class": "Shaman",
     "spec": "Elemental",
     "rating": {
-      "solo": 1840,
+      "solo": 1956,
       "solo_bg": 576,
       "2v2": 1589,
-      "3v3": 1519,
+      "3v3": 1652,
       "rbg": 192
     },
     "achieves": {
@@ -6137,148 +6282,6 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/sylvanas/7/262604295-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/sylvanas/7/262604295-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/sylvanas/7/262604295-main-raw.png"
-    }
-  },
-  {
-    "name": "Wagz",
-    "playerRealmSlug": "outland",
-    "innerID": 220186336,
-    "rank": 7,
-    "race": "Night Elf",
-    "class": "Hunter",
-    "spec": "Beast Mastery",
-    "rating": {
-      "2v2": 1646,
-      "3v3": 864
-    },
-    "achieves": {
-      "2s": {
-        "name": "Rival",
-        "description": "Earn the Rival title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1750",
-        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Sergeant Major",
-          "description": "Earn a rating of 1500 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/outland/224/220186336-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/outland/224/220186336-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/outland/224/220186336-main-raw.png"
-    }
-  },
-  {
-    "name": "Greytoe",
-    "playerRealmSlug": "stormscale",
-    "innerID": 170555403,
-    "rank": 7,
-    "race": "Dwarf",
-    "class": "Warrior",
-    "spec": "Arms",
-    "rating": {
-      "solo": 2118,
-      "solo_bg": 1620,
-      "2v2": 576,
-      "3v3": 864
-    },
-    "achieves": {
-      "2s": {
-        "name": "Rival",
-        "description": "Earn the Rival title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1750",
-        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Sergeant Major",
-          "description": "Earned the title, \"Sergeant Major\" at level 60."
-        },
-        {
-          "name": "Master Sergeant",
-          "description": "Earned the title, \"Master Sergeant\" at level 60."
-        },
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Lieutenant Commander",
-          "description": "Earn a rating of 2000 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/stormscale/11/170555403-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/stormscale/11/170555403-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/stormscale/11/170555403-main-raw.png"
     }
   },
   {
@@ -6531,6 +6534,50 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/quelthalas/75/186998603-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/quelthalas/75/186998603-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/quelthalas/75/186998603-main-raw.png"
+    }
+  },
+  {
+    "name": "Anuswrat",
+    "playerRealmSlug": "chamber-of-aspects",
+    "innerID": 204774055,
+    "rank": 8,
+    "race": "Human",
+    "class": "Priest",
+    "spec": "Discipline",
+    "rating": {},
+    "achieves": {
+      "2s": {
+        "name": "Challenger",
+        "description": "Earn the Challenger title in an arena season."
+      },
+      "3s": "No XP yet",
+      "BG": [
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/167/204774055-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/167/204774055-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/167/204774055-main-raw.png"
     }
   },
   {
@@ -7076,50 +7123,6 @@
     }
   },
   {
-    "name": "Anuswrat",
-    "playerRealmSlug": "chamber-of-aspects",
-    "innerID": 204774055,
-    "rank": 8,
-    "race": "Human",
-    "class": "Priest",
-    "spec": "Discipline",
-    "rating": {},
-    "achieves": {
-      "2s": {
-        "name": "Challenger",
-        "description": "Earn the Challenger title in an arena season."
-      },
-      "3s": "No XP yet",
-      "BG": [
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/167/204774055-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/167/204774055-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/167/204774055-main-raw.png"
-    }
-  },
-  {
     "name": "Druit",
     "playerRealmSlug": "burning-steppes",
     "innerID": 84905557,
@@ -7499,7 +7502,7 @@
     "rating": {
       "solo": 1987,
       "2v2": 1831,
-      "3v3": 1517
+      "3v3": 1607
     },
     "achieves": {
       "2s": "No XP yet",
