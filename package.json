@@ -27,7 +27,7 @@
   "web-development"
 ],
   "author": "Lachezar Stanev",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "SEE LICENSE IN LICENSE.md",
   "private": true,
   "type": "module",
   "dependencies": {
