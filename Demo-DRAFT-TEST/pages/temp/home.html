@@ -1,0 +1,99 @@
+<style>
+    /* Hero Section */
+#home.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    color: #ecf0f1;
+    max-width: 900px;
+    margin: 3rem auto;
+}
+
+/* Roadmap Container */
+.roadmap {
+    background-color: #1e272e;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    line-height: 1.8;
+    width: 100%;
+}
+
+/* Title */
+.roadmap .hero-text {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #f1c40f;
+    text-align: center;
+    text-shadow: 0 0 8px rgba(241, 196, 15, 0.6);
+}
+
+/* Paragraph */
+.roadmap p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: #dfe6e9;
+    text-align: center;
+}
+
+/* Ordered List */
+.roadmap ol {
+    list-style: none;
+    counter-reset: item;
+    padding: 0;
+}
+
+.roadmap li {
+    counter-increment: item;
+    margin-bottom: 1rem;
+    padding: 0.7rem 1rem;
+    background: #2c3e50;
+    border-left: 5px solid #f1c40f;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.roadmap li::before {
+    content: counter(item) ".";
+    font-weight: bold;
+    color: #f1c40f;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.roadmap li:hover {
+    transform: translateX(8px);
+    background: #34495e;
+    transition: all 0.3s ease;
+}
+
+</style>
+
+<section id="home" class="hero">
+    <div class="roadmap">
+        <h2 class="hero-text">Spoiler Alert: The App Is Under Development!</h2>
+        <p>Actively working on bringing this app to life. Here's the priority roadmap:</p>
+        <ol>
+            <li><strong>Server-Side Data Integration:</strong> Fetch data from Blizzard's API.</li>
+            <li><strong>Server-Side Data Storage:</strong> Efficiently store and manage data.</li>
+            <li><strong>Achievements Storage Optimization:</strong> Improve how achievements are stored and retrieved.</li>
+            <li><strong>Basic User Interface:</strong> Establish a foundational UI for the site.</li>
+            <li><strong>Leaderboard Optimization:</strong> Enhance leaderboard functionality and performance.</li>
+            <li><strong>Roster Banner:</strong> Add a roster banner with links to personal character pages.</li>
+            <li><strong>Personal Character Pages:</strong> Create detailed pages for individual characters.</li>
+            <li><strong>Enhanced Functionality:</strong> Expand and refine app features.</li>
+            <li><strong>User-Friendly Interface:</strong> Build an intuitive and engaging UI for users.</li>
+            <li><strong>Seamless Navigation:</strong> Ensure smooth and user-friendly navigation throughout the site.</li>
+        </ol>
+    </div>
+</section>
+
+

@@ -1,0 +1,34 @@
+<section>
+    <h1 class="choose-bracket-title">Choose a Bracket</h1>
+    <div class="bracket-buttons">
+        <button id="shuffle" class="bracket-btn">Solo Shuffle</button>
+        <button id="twos" class="bracket-btn">2v2 Arena</button>
+        <button id="threes" class="bracket-btn">3v3 Arena</button>
+        <button id="blitz" class="bracket-btn">Blitz BG</button>
+        <button id="rbg" class="bracket-btn">Rated BG</button>
+    </div>
+</section>
+
+    
+    
+    <section style="display: none;" class="leaderboard-container">
+        <h1 class="leaderboard-title">PvP Leaderboard</h1>
+        <h3 id="bracket-title">dd</h3>
+
+        <div class="search-container">
+            <input
+                type="text"
+                id="searchInput"
+                class="search-input"
+                placeholder="Search for a character..."
+            />
+            <button id="searchBtn" class="search-btn">Search</button>
+            <ul id="suggestions"></ul>
+        </div>
+        <h3><p class="error-msg" style="display: none; color: red; justify-content: center; margin-top: 1.5rem; margin-bottom: 1.5rem;"></p></h3>
+
+
+        <table class="leaderboard-table" id="leaderboard"></table>
+    </section>
+
+<script data-cfasync="false" type="module" src="./pages/src/LDB.js"></script>
