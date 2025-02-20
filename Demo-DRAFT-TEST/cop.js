@@ -1,6 +1,6 @@
 import fs from 'fs';
 import dotenv from 'dotenv';
-dotenv.config({ path: './.env' });
+dotenv.config({ path: '../.env' });
 
 // Token storing
 let accessToken = null;
