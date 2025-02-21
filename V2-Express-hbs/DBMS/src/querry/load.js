@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
-dotenv.config({ path: '../../../../.env' });
+import jwt from 'jsonwebtoken';
 
+dotenv.config({ path: '../../../../.env' });
+const JWT_SECRET = process.env.JWT_SECRET;
 // Token storing
 let accessToken = null;
 let tokenExpiry = null; // Store the expiration timestamp
@@ -353,10 +355,13 @@ async function getSeason() {
 
     for (const { name, playerRealmSlug, _id, rank, race, class4e, spec, rating, achieves, media } of results) {
       try {
+        const member = { name, playerRealmSlug, _id, rank, race, class4e, spec, rating, achieves, media }
+        const token =jwt.sign(member, JWT_SECRET, { expiresIn: "20s" })
         const DBMSreq = await fetch(`http://localhost:59534/member`, {
           method: `POST`,
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "in-auth": `${token}`
           },
           body: JSON.stringify({
               name,
@@ -382,6 +387,6 @@ async function getSeason() {
     }
     console.log("PvP data successfully!");
   };
-  
+
   getGuildPvPData();
   setInterval(getGuildPvPData, 1800000); // Close to 40 minutes refresh
