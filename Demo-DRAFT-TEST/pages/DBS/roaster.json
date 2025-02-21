@@ -1712,7 +1712,7 @@
       "solo": 480,
       "solo_bg": 1653,
       "3v3": 192,
-      "rbg": 192
+      "rbg": 960
     },
     "achieves": {
       "2s": {
@@ -2348,11 +2348,6 @@
           "description": "Earn a rating of 1500 in either Rated Battlegrounds or Rated Battleground Blitz."
         }
       ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/outland/147/100721555-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/outland/147/100721555-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/outland/147/100721555-main-raw.png"
     }
   },
   {
@@ -2451,7 +2446,7 @@
       "solo": 2474,
       "solo_bg": 949,
       "2v2": 2112,
-      "3v3": 2426
+      "3v3": 2365
     },
     "achieves": {
       "2s": {
@@ -3354,7 +3349,7 @@
     "class": "Rogue",
     "spec": "Assassination",
     "rating": {
-      "solo": 2224,
+      "solo": 2226,
       "2v2": 1339,
       "3v3": 1951
     },
@@ -8484,6 +8479,31 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/dragonblight/29/261953309-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/dragonblight/29/261953309-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/dragonblight/29/261953309-main-raw.png"
+    }
+  },
+  {
+    "name": "Victra",
+    "playerRealmSlug": "sylvanas",
+    "innerID": 262720956,
+    "rank": 9,
+    "race": "Worgen",
+    "class": "Warrior",
+    "spec": "Fury",
+    "rating": {},
+    "achieves": {
+      "2s": "No XP yet",
+      "3s": "No XP yet",
+      "BG": [
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-main-raw.png"
     }
   }
 ]

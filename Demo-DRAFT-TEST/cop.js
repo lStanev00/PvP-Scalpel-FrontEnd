@@ -168,7 +168,7 @@ async function savePvPDataToFile() {
   try {
     const data = await getGuildPvPData();
     const roasterJSON = JSON.stringify(data, null, 2);
-    fs.writeFileSync(`./Demo-DRAFT-TEST/pages/DBS/roaster.json`, roasterJSON, 'utf8');
+    fs.writeFileSync(`./pages/DBS/roaster.json`, roasterJSON, 'utf8');
     console.log("PvP data successfully saved to roaster.json!");
   } catch (error) {
     console.error("Error saving PvP data:", error.message);
