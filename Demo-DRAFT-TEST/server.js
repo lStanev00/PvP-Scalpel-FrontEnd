@@ -8,8 +8,8 @@ import rateLimit from "express-rate-limit";
 app.set('trust proxy', 1);
 
 const limiter = rateLimit({
-    windowMs: 1000, // 1 second
-    max: 5, // Max 5 requests per second per IP
+    windowMs: 2000, // 1 second
+    max: 10, // Max 5 requests per second per IP
     message: "Too many requests, slow down.",
     headers: true,
 });
