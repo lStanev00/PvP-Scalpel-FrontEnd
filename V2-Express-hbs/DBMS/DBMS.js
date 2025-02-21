@@ -8,7 +8,7 @@ const port = 59534
 
 await DBconnect();
 
-app.use(express.json({ extended: false}));
+app.use(express.json({ extended: false }));
 app.use(`/`, router);
 
 
