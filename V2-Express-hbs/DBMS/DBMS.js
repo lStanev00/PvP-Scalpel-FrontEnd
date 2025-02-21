@@ -4,7 +4,7 @@ import { DBconnect } from "./src/helpers/mongoHelper.js";
 import router from "./src/router.js";
 
 const app = express();
-const port = 59534
+const port = 59534;
 
 await DBconnect();
 
