@@ -119,34 +119,7 @@ async function fetchCharacterData(member) {
     characterProfile.active_spec?.name || "Unknown"
   );
   
-//   console.log(`THIS IS ERRORING HERE:`, `eu`, (name).toLowerCase(), playerRealmSlug, ACCESS_TOKEN);
-
-
-try {
-    const DBMSreq = await fetch(`http://localhost:59534/member`, {
-      method: `POST`,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-          name,
-          playerRealmSlug,
-          innerID : member.character["id"],
-          rank: member.rank,
-          race: characterProfile.race?.name || "Unknown",
-          class: characterProfile.character_class?.name || "Unknown",
-          spec: characterProfile.active_spec?.name || "Unknown",
-          rating: playerPvPData,
-          achieves : await fetchPvPAchievements(`eu`, playerRealmSlug, (name).toLowerCase(), accessToken),
-          media: await fetchImage(`eu`, (name).toLowerCase(), playerRealmSlug, accessToken),
-        }),
-    })
-    
-  } catch (error) {
-    console.log(error);
-    
-  }
-  
+//   console.log(`THIS IS ERRORING HERE:`, `eu`, (name).toLowerCase(), playerRealmSlug, ACCESS_TOKEN);  
   return {
     name,
     playerRealmSlug,
