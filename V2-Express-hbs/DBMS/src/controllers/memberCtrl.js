@@ -70,7 +70,7 @@ async function onPostList(req, res) {
         const mgList =  await Member.find({}, list);
         res.status(200).json(mgList);
     } catch (error) {
-        return res.status(404).json({msg:`Not FOUND!`});
+        return res.status(404).json({msg:`Not FOUND! ${list}`});
     }
 }
 export default memberCtrl;
