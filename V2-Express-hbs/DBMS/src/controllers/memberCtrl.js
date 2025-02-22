@@ -42,7 +42,7 @@ async function onPost(req, res) {
         res.status(200).json(mem);
     } catch (error) {
         console.log(error);
-        res.status(500).json({msg: `error: ${error}`})
+        res.status(502).json({msg: `error: ${error}`})
         
     }   
 }
