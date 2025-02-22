@@ -1,6 +1,10 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 
+// PLEASE NOTE! Blizzard API have 36,000 requests per hour at a rate of 100 requests per second LIMIT!.
+
+//THIS QUERY does 1303 requests for 100 PLAYERS and runs on 40 MINUTES
+
 dotenv.config({ path: '../../../../.env' });
 const JWT_SECRET = process.env.JWT_SECRET;
 // Token storing
@@ -356,28 +360,27 @@ async function getSeason() {
     for (const { name, playerRealmSlug, _id, rank, race, class4e, spec, rating, achieves, media } of results) {
       try {
         const member = { name, playerRealmSlug, _id, rank, race, class4e, spec, rating, achieves, media }
-        const token =jwt.sign(member, JWT_SECRET, { expiresIn: "20s" })
+        const token = jwt.sign(member, JWT_SECRET, { expiresIn: "20s" });
         const DBMSreq = await fetch(`http://localhost:59534/member`, {
           method: `POST`,
           headers: {
             "Content-Type": "application/json",
             "in-auth": `${token}`
           },
-          body: JSON.stringify({
-              name,
-              playerRealmSlug,
-              _id,
-              rank,
-              race,
-              class: class4e,
-              spec,
-              rating,
-              achieves,
-              media,
-            }),
+          // body: JSON.stringify({
+          //     name,
+          //     playerRealmSlug,
+          //     _id,
+          //     rank,
+          //     race,
+          //     class: class4e,
+          //     spec,
+          //     rating,
+          //     achieves,
+          //     media,
+          //   }),
         })
-        if (DBMSreq.status == 500){
-          // const data = await DBMSreq.json();
+        if (DBMSreq.status >= 500){
           console.log({ name, playerRealmSlug, _id, rank, race, class4e, spec, rating, achieves, media });
         }
         
@@ -389,4 +392,4 @@ async function getSeason() {
   };
 
   getGuildPvPData();
-  setInterval(getGuildPvPData, 1800000); // Close to 40 minutes refresh
+  setInterval(getGuildPvPData, 1800000); // Close to 40 minutes refresh rate
