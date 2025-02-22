@@ -926,10 +926,10 @@
     "class": "Priest",
     "spec": "Discipline",
     "rating": {
-      "solo": 1530,
+      "solo": 1706,
       "solo_bg": 1824,
-      "2v2": 1716,
-      "3v3": 1647,
+      "2v2": 1782,
+      "3v3": 1700,
       "rbg": 768
     },
     "achieves": {
@@ -2102,10 +2102,10 @@
     "rank": 5,
     "race": "Night Elf",
     "class": "Druid",
-    "spec": "Feral",
+    "spec": "Balance",
     "rating": {
-      "solo": 2166,
-      "solo_bg": 192,
+      "solo": 1437,
+      "solo_bg": 1576,
       "2v2": 2003,
       "3v3": 2039,
       "rbg": 192
@@ -2348,6 +2348,11 @@
           "description": "Earn a rating of 1500 in either Rated Battlegrounds or Rated Battleground Blitz."
         }
       ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/outland/147/100721555-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/outland/147/100721555-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/outland/147/100721555-main-raw.png"
     }
   },
   {
@@ -2360,7 +2365,7 @@
     "spec": "Frost",
     "rating": {
       "solo": 2086,
-      "2v2": 1634,
+      "2v2": 1669,
       "3v3": 1242
     },
     "achieves": {
@@ -2511,7 +2516,7 @@
     "class": "Rogue",
     "spec": "Assassination",
     "rating": {
-      "solo": 2307,
+      "solo": 2312,
       "solo_bg": 384,
       "2v2": 1693,
       "3v3": 2043,
@@ -3737,8 +3742,8 @@
     "spec": "Frost",
     "rating": {
       "solo": 1769,
-      "2v2": 384,
-      "3v3": 1686,
+      "2v2": 576,
+      "3v3": 1722,
       "rbg": 192
     },
     "achieves": {
@@ -4722,7 +4727,7 @@
     "spec": "Havoc",
     "rating": {
       "solo": 2042,
-      "2v2": 1625,
+      "2v2": 1643,
       "3v3": 1830
     },
     "achieves": {
@@ -4953,7 +4958,7 @@
     "rating": {
       "solo": 96,
       "solo_bg": 576,
-      "2v2": 2004
+      "2v2": 2046
     },
     "achieves": {
       "2s": {
@@ -5147,7 +5152,7 @@
     "spec": "Frost",
     "rating": {
       "solo": 1855,
-      "solo_bg": 1573
+      "solo_bg": 1564
     },
     "achieves": {
       "2s": {
@@ -5708,10 +5713,8 @@
     "rank": 7,
     "race": "Human",
     "class": "Paladin",
-    "spec": "Retribution",
+    "spec": "Protection",
     "rating": {
-      "solo": 288,
-      "solo_bg": 384,
       "2v2": 1120
     },
     "achieves": {
@@ -5936,8 +5939,8 @@
     "class": "Hunter",
     "spec": "Beast Mastery",
     "rating": {
-      "2v2": 1646,
-      "3v3": 864
+      "2v2": 1721,
+      "3v3": 1243
     },
     "achieves": {
       "2s": {
@@ -6042,9 +6045,9 @@
     "class": "Paladin",
     "spec": "Holy",
     "rating": {
-      "solo": 1757,
+      "solo": 1690,
       "solo_bg": 1418,
-      "2v2": 1655,
+      "2v2": 1770,
       "3v3": 1508
     },
     "achieves": {
@@ -6110,12 +6113,12 @@
       },
       "BG": [
         {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
           "name": "Warbound Veteran of the Alliance",
           "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
         },
         {
           "name": "Commander",
@@ -7127,7 +7130,7 @@
     "spec": "Feral",
     "rating": {
       "2v2": 672,
-      "3v3": 384
+      "3v3": 480
     },
     "achieves": {
       "2s": {
@@ -7495,7 +7498,7 @@
     "class": "Warrior",
     "spec": "Fury",
     "rating": {
-      "solo": 1987,
+      "solo": 1966,
       "2v2": 1831,
       "3v3": 1607
     },
@@ -7645,11 +7648,10 @@
     "rank": 9,
     "race": "Human",
     "class": "Warlock",
-    "spec": "Affliction",
+    "spec": "Destruction",
     "rating": {
-      "solo": 1642,
       "2v2": 1827,
-      "3v3": 1858
+      "3v3": 1843
     },
     "achieves": {
       "2s": {
@@ -8489,7 +8491,9 @@
     "race": "Worgen",
     "class": "Warrior",
     "spec": "Fury",
-    "rating": {},
+    "rating": {
+      "solo": 384
+    },
     "achieves": {
       "2s": "No XP yet",
       "3s": "No XP yet",
@@ -8504,6 +8508,64 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-main-raw.png"
+    }
+  },
+  {
+    "name": "Illusioner",
+    "playerRealmSlug": "outland",
+    "innerID": 220255454,
+    "rank": 9,
+    "race": "Night Elf",
+    "class": "Mage",
+    "spec": "Frost",
+    "rating": {
+      "solo": 1851
+    },
+    "achieves": {
+      "2s": "No XP yet",
+      "3s": {
+        "name": "Three's Company: 2000",
+        "description": "Earn a 2000 personal rating in the 3v3 bracket of the arena."
+      },
+      "BG": [
+        {
+          "name": "Warbound Veteran of the Alliance",
+          "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Grand Marshal",
+          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/outland/222/220255454-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/outland/222/220255454-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/outland/222/220255454-main-raw.png"
     }
   }
 ]
