@@ -21,7 +21,9 @@ const mediaSchema = new mongoose.Schema({
 })
 
 const MemberSchema = new mongoose.Schema({
-    _id: Number,
+    blizID: {
+        type: Number,
+    },
     name: {
         type: String,
         required: [true, `Name is required`],
@@ -38,7 +40,7 @@ const MemberSchema = new mongoose.Schema({
     media: mediaSchema
 
 
-}, { _id: false});
+});
 
 const Member = mongoose.model(`Member`, MemberSchema);
 
