@@ -11,6 +11,7 @@ const memberCtrl = Router();
 
 memberCtrl.post(`/member`, onPost);
 memberCtrl.get(`/member/list`, onGetList)
+memberCtrl.post(`/member/list`, onPostList)
 memberCtrl.get(`/member/:id`, onGet);
 
 async function onGet(req, res) {
@@ -24,8 +25,6 @@ async function onGet(req, res) {
         res.status(404).json({msg:`Entry's missing.`})
     }
 }
-
-
 async function onPost(req, res) {
     const Authorization = validateToken(req.headers[`in-auth`], JWT_SECRET);
 
@@ -55,6 +54,23 @@ async function onGetList(req,res) {
         res.status(200).json(memList);
     } catch (error) {
         res.status(404).json({msg:`There's no such collection`});
+    }
+}
+async function onPostList(req, res) {
+    const QUERY = req.body?.query;
+    if (!QUERY) return res.status(404).json({msg:`Not FOUND!`});
+    const list = {
+        "name": 1
+    }
+    for (const qr of QUERY) {
+        list[`${qr}`] = 1
+    }
+
+    try {
+        const mgList =  await Member.find({}, list);
+        res.status(200).json(mgList);
+    } catch (error) {
+        return res.status(404).json({msg:`Not FOUND!`});
     }
 }
 export default memberCtrl;
