@@ -317,10 +317,10 @@ async function getSeason() {
     return {
       name,
       playerRealmSlug,
-      _id : member.character["id"],
+      blizID : member.character["id"],
       rank: member.rank,
       race: characterProfile.race?.name || "Unknown",
-      class4e: characterProfile.character_class?.name || "Unknown",
+      class: characterProfile.character_class?.name || "Unknown",
       spec: characterProfile.active_spec?.name || "Unknown",
       rating: playerPvPData,
       achieves : await fetchPvPAchievements(`eu`, playerRealmSlug, (name).toLowerCase(), accessToken),
@@ -356,10 +356,13 @@ async function getSeason() {
   
     // Sort by rank
     results = results.sort((a, b) => a.rank - b.rank);
+    let success = 0;
+    let fails = 0;
 
-    for (const { name, playerRealmSlug, _id, rank, race, class4e, spec, rating, achieves, media } of results) {
+    for (const entry of results) {
       try {
-        const member = { name, playerRealmSlug, _id, rank, race, class4e, spec, rating, achieves, media }
+        // const member = { name, playerRealmSlug, blizID, rank, race, class, spec, rating, achieves, media }
+        const member = entry
         const token = jwt.sign(member, JWT_SECRET, { expiresIn: "20s" });
         const DBMSreq = await fetch(`http://localhost:59534/member`, {
           method: `POST`,
@@ -367,29 +370,73 @@ async function getSeason() {
             "Content-Type": "application/json",
             "in-auth": `${token}`
           },
-          // body: JSON.stringify({
-          //     name,
-          //     playerRealmSlug,
-          //     _id,
-          //     rank,
-          //     race,
-          //     class: class4e,
-          //     spec,
-          //     rating,
-          //     achieves,
-          //     media,
-          //   }),
         })
-        if (DBMSreq.status >= 500){
-          console.log({ name, playerRealmSlug, _id, rank, race, class4e, spec, rating, achieves, media });
+        if (DBMSreq.status >= 500 || DBMSreq.status == 401){
+          console.log(member.name);
+          fails = fails + 1;
+        } else {
+            success = success + 1;
         }
         
       } catch (error) {
         console.error("Error saving PvP data:", error.message);
       }
     }
-    console.log("PvP data successfully!");
+    console.log(`PvP data successfully!\nSuccess: ${success}\nFails: ${fails}`);
   };
 
   getGuildPvPData();
   setInterval(getGuildPvPData, 1800000); // Close to 40 minutes refresh rate
+
+// TEST WITH 1 FETCH
+  async function getOneMemberPvPData() {
+    // Get and store access token and season
+    accessToken = await getAccessToken();
+    currentSeason = await getSeason();
+    const now = new Date();
+    console.log(`Execution Time: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
+  
+    console.log("Fetching guild roster...");
+    const guildRoster = await blizzFetch(
+      `/data/wow/guild/${GUILD_REALM}/${GUILD_NAME}/roster?`,
+      "Guild",
+      "Roster"
+    );
+  
+    if (!guildRoster || !guildRoster.members) {
+      throw new Error("Failed to fetch guild roster.");
+    }
+  
+    // For testing, fetch data for only one member (e.g., the first member)
+    const member = guildRoster.members[0];
+    console.log(`Fetching PvP data for ${member.character.name}...`);
+  
+    const playerData = await fetchCharacterData(member);
+    if (!playerData) {
+      console.log(`No PvP data for ${member.character.name}`);
+      return;
+    }
+  
+    try {
+      // Create a short-lived JWT for this member's data
+      const token = jwt.sign(playerData, JWT_SECRET, { expiresIn: "20s" });
+      const DBMSreq = await fetch(`http://localhost:59534/member`, {
+        method: `POST`,
+        headers: {
+          "Content-Type": "application/json",
+          "in-auth": `${token}`,
+        },
+      });
+      if (DBMSreq.status >= 500 || DBMSreq.status === 401) {
+        console.log("Error saving PvP data for:", playerData);
+      } else {
+        console.log("PvP data saved successfully for:", playerData.name);
+      }
+    } catch (error) {
+      console.error("Error saving PvP data:", error.message);
+    }
+  }
+  
+  // For testing, call the function that fetches data for one member only
+  // getOneMemberPvPData();
+  
