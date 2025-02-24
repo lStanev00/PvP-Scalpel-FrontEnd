@@ -30,7 +30,7 @@ const MemberSchema = new mongoose.Schema({
     },
     playerRealmSlug: {type: String, required: true},
     rank: {
-        type: Number
+        type: String
     },
     race: String,
     class: String,

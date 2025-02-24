@@ -31,9 +31,23 @@ async function onPost(req, res) {
     if(!Authorization) return res.status(401).json({403: `Auth Error`});
     console.log(`Authorized!`);
     
-    const mem = Authorization
+    let mem = Authorization
+
     
     try {
+        const roleMap = {
+            0: "Guild Master",
+            1: "Officer",
+            2: "Veteran",
+            3: "Blood Sniffer",
+            4: "BGs & Arena",
+            5: "BGs",
+            6: "Arena",
+            7: "Member",
+            8: "Gear team",
+            9: `Initiate`,
+        };
+        mem.rank = roleMap[mem.rank]
         const exist = await Member.findOne({ blizID: mem.blizID });
         if (exist){
             await Member.findByIdAndUpdate(mem._id, mem);
