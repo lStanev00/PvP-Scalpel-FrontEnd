@@ -1,0 +1,10 @@
+/* Footer */
+.footer {
+    text-align: center;
+    background-color: #1abc9c;
+    padding: 1rem;
+    color: #1c1c2e;
+    font-size: 0.9rem;
+    border-top: 4px solid #f1c40f;
+    border-radius: 8px;
+}
