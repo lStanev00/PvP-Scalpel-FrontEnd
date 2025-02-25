@@ -1129,10 +1129,10 @@
     "class": "Shaman",
     "spec": "Elemental",
     "rating": {
-      "solo": 2474,
+      "solo": 2592,
       "solo_bg": 949,
       "2v2": 2112,
-      "3v3": 2388
+      "3v3": 2403
     },
     "achieves": {
       "2s": {
@@ -2022,7 +2022,7 @@
     "class": "Rogue",
     "spec": "Subtlety",
     "rating": {
-      "solo_bg": 2583,
+      "solo_bg": 2577,
       "rbg": 1625
     },
     "achieves": {
@@ -2148,7 +2148,7 @@
     "spec": "Havoc",
     "rating": {
       "solo": 1935,
-      "solo_bg": 2066,
+      "solo_bg": 2060,
       "2v2": 1636,
       "3v3": 1677
     },
@@ -2408,7 +2408,7 @@
     "class": "Priest",
     "spec": "Shadow",
     "rating": {
-      "solo": 864,
+      "solo": 1056,
       "2v2": 1607,
       "3v3": 1401
     },
@@ -2475,7 +2475,7 @@
     "class": "Mage",
     "spec": "Frost",
     "rating": {
-      "solo": 2086,
+      "solo": 2043,
       "2v2": 1669,
       "3v3": 1242
     },
@@ -3904,7 +3904,7 @@
       "solo": 2084,
       "solo_bg": 1620,
       "2v2": 576,
-      "3v3": 1573
+      "3v3": 1598
     },
     "achieves": {
       "2s": {
@@ -5204,7 +5204,7 @@
     "spec": "Frost",
     "rating": {
       "solo": 1855,
-      "solo_bg": 1601
+      "solo_bg": 1634
     },
     "achieves": {
       "2s": {
@@ -7713,7 +7713,7 @@
     "rating": {
       "solo": 1642,
       "2v2": 1827,
-      "3v3": 1915
+      "3v3": 1909
     },
     "achieves": {
       "2s": {
@@ -8585,7 +8585,7 @@
     "class": "Mage",
     "spec": "Frost",
     "rating": {
-      "solo": 2380
+      "solo": 2412
     },
     "achieves": {
       "2s": "No XP yet",
