@@ -1,9 +1,11 @@
 import {useState, useEffect} from  'react';
 import CharCard from '../components/charCard';
+import SearchBox from '../components/searchBox';
 
 export default function RosterPage() {
 
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
+    const [search, setSearch] = useState([]);
     
     useEffect(() => {
         const fetchData = async () => {
@@ -17,16 +19,17 @@ export default function RosterPage() {
                 })
             })
             const data = await req.json();
-            setData(data)
-
+            setData(data);
+            setSearch(data);
         }
         fetchData();
-    }, [])
+    }, []);
 
     console.log(data)
     return (
         <>
-            <CharCard charArr={data} />
+            <SearchBox data = {data} setSearch={setSearch} />
+            <CharCard charArr={search} />
         </>
     )
 }
