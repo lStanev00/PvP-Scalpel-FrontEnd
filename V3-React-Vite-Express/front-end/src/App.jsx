@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navigation from "./components/Router";
-import Home from "./components/home";
+import Navigation from "./modules/Router";
+import Home from "./modules/home";
+import LDB from "./modules/LDB";
+import RosterPage from "./modules/roster";
+import GoToTopButton from "./components/topBtn";
 
 function App() {
     return (
@@ -17,8 +20,8 @@ function App() {
                     <main>
                         <Routes>
                             <Route path='/' element={<Home />}></Route>
-                            <Route path='/roster'></Route>
-                            <Route path='/leaderbord'></Route>
+                            <Route path='/roster' element={<RosterPage />}></Route>
+                            <Route path='/leaderboard' element={<LDB />}></Route>
                         </Routes>
                         
                     </main>
@@ -27,6 +30,7 @@ function App() {
                         <p>&copy; 2025 Lachezar Stanev. All rights reserved.</p>
                     </footer>
                 </div>
+            <GoToTopButton />
             </Router>
         </>
     )
