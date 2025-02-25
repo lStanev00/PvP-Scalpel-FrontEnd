@@ -17,7 +17,7 @@ export default function GoToTopButton() {
         window.addEventListener(`scroll`, show);
 
         return () => {
-            window.removeEventListener(`scroll`, show)
+            window.removeEventListener(`scroll`, show);
         }
     },[])
 
