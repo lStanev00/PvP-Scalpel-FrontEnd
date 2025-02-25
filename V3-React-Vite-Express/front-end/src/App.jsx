@@ -27,7 +27,7 @@ function App() {
                     </main>
 
                     <footer className="footer">
-                        <p>&copy; 2025 Lachezar Stanev. All rights reserved.</p>
+                        <p>&copy; 2024 Lachezar Stanev. ALL RIGHTS RESERVED.</p>
                     </footer>
                 </div>
             <GoToTopButton />
