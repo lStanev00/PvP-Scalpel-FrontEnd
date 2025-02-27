@@ -8,14 +8,14 @@ export default function TableContent({  page, content  }) {
                 <>
                     <div className="search-container">
                         <input type="text" id="searchInput" className="search-input" placeholder="Search for a character..." />
-                        <button id="searchBtn" className="search-btn">Search</button>
+                        <button id="searchBtn" className="search-btn">Clear</button>
                         <ul id="suggestions"></ul>
                     </div>
                     <h3>
                         <p className="error-msg" style={{ display: "none", color: "red", justifyContent: "center", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
                         </p>
                     </h3>
-
+                
                 <table className="leaderboard-table" id="leaderboard">
                     <thead>
                         <tr>

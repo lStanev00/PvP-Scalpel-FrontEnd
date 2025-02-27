@@ -17,7 +17,7 @@ export default function LDB() {
             <BlitzBtn setData={setData} setPage={setPage} setContent={setContent}/>
             <button id="rbg" className="bracket-btn">Rated BG</button>
         </div>
-        <section className="leaderboard-container">
+        <section className="leaderboard-container" style={{visibility: content ? `visible` : `hidden`}}>
 
             <LDBHeaderContent content={content} />
             <TableContent page={page} content={content}/>
