@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navigation from "./modules/Router";
-import Home from "./modules/home";
-import LDB from "./modules/LDB";
-import RosterPage from "./modules/roster";
+import Navigation from "./components/Router";
+import Home from "./pages/home";
+import LDB from "./pages/LDB";
+import RosterPage from "./pages/roster";
 import GoToTopButton from "./components/topBtn";
 
 function App() {

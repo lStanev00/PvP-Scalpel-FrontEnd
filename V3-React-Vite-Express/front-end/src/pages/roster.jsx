@@ -1,6 +1,6 @@
 import {useState, useEffect} from  'react';
-import CharCard from '../components/charCard';
-import SearchBox from '../components/searchBox';
+import CharCard from '../components/Roster/charCard';
+import SearchBox from '../components/Roster/searchBox';
 
 export default function RosterPage() {
 

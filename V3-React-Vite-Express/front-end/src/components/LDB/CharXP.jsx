@@ -1,6 +1,3 @@
-
-
-
 export default function CharXP({  XP  }) {
        
     if (XP) {

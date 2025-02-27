@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import TableContent from "./TableContent";
-import BlitzBtn from "../components/LDButtons/blitzButton";
-import PaginatioContainer from "./paginationContainer";
-import LDBHeaderContent from "./LDBHeader";
+import TableContent from "../components/LDB/TableContent";
+import BlitzBtn from "../components/LDB/LDButtons/blitzButton";
+import PaginatioContainer from "../components/LDB/paginationContainer";
+import LDBHeaderContent from "../components/LDB/LDBHeader";
 
 export default function LDB() {
     const [data, setData] = useState(undefined);
