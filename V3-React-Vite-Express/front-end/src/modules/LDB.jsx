@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import paginationStyles from '../Styles/pagination.module.css'
+import paginationStyles from '../Styles/pagination.module.css';
+import TableContent from "./TableContent";
 
 export default function LDB() {
     const [data, setData] = useState([]);
@@ -80,7 +81,7 @@ export default function LDB() {
             </h3>
         </section>
 
-        <BlitzTableContent key={`blitz-LDB`} page={page} />
+        <TableContent key={`blitz-LDB`} page={page} />
 
         <div className={paginationStyles["pagination-container"]}>
             <button className={paginationStyles["pagination-btn"]} disabled>« First</button>
@@ -95,71 +96,3 @@ export default function LDB() {
     );
 };
 
-function BlitzTableContent({  page  }) {
-    function CharXP({  XP  }) {
-       
-        if (XP) {
-            if (XP.description) {
-                return (
-                    
-                        <td key={XP._id}>{XP.name}<br /><b>{XP.description}</b></td>
-                    
-                )
-            } else {
-                return (
-                    
-                        <td key={XP._id}>{XP.name}</td>
-                    
-                )
-            }
-        } else {
-            return (
-                
-                    <td>No XP Yet</td>
-                
-            )
-        }
-    }
-    try {
-        return (
-            <>
-            <table className="leaderboard-table" id="leaderboard">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Spec</th>
-                        <th>Blitz Rating</th>
-                        <th>BG XP</th>
-                    </tr>
-                </thead>
-    
-                <tbody id="leaderboard-body">
-                    {
-                    page.map(char =>{
-                        return (
-                            
-                              <tr key={char?._id}>
-                            <td>
-                                <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
-                            </td>
-                            <td><b>{char?.ladderRank}.</b> {char?.name}</td>
-                            <td><b>{char?.spec}</b> ({char?.class})</td>
-                            <td>{char?.rating.solo_bg}</td>
-                                <CharXP key={char?.ladderRank} XP={char?.XP} />
-                            {/* <td>Grand Marshal<br /><b> 2400</b></td> */}
-                        </tr>
-                            
-                        )}
-                    )}
-    
-                </tbody>
-    
-            </table>
-            </>
-        )
-        
-    } catch (error) {
-        return(<></>)
-    }
-}
