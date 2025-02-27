@@ -1,16 +1,32 @@
 import { useState, useEffect } from "react";
 export default function LDB() {
     const [data, setData] = useState();
-    
-    useEffect(async () => {
-    const request = await (
-        await fetch(`https://api.pvpscalpel.com/LDB/blitz`)
-    ).json();
-
-    const maxPage = 25;
-    
-    
-    setData(request);
+    useEffect(() => {
+        
+        async function fetchData() {
+            let reqData;
+            const res = await fetch(`https://api.pvpscalpel.com/LDB/blitz`);
+            reqData = await res.json();
+            console.log(reqData);
+            let rank = 1;
+            const data = [];
+        
+            for (let i = 0; i < reqData.length; i += 25) {
+                const page = reqData.slice(i, i + 25);
+                let pageMap = new Map();
+                    for (const char of page) {
+                        pageMap.set(rank, char);
+                        rank = rank + 1;
+                    };
+                data.push(page);
+            }
+            
+            setData(data);
+            console.log(data);
+            
+        }
+        
+        fetchData()
     }, []);
     return (
         <>
