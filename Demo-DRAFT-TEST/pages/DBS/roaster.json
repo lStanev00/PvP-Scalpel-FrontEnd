@@ -2299,20 +2299,20 @@
       },
       "BG": [
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -5186,10 +5186,8 @@
     "rank": 7,
     "race": "Dark Iron Dwarf",
     "class": "Shaman",
-    "spec": "Elemental",
+    "spec": "Enhancement",
     "rating": {
-      "solo": 1344,
-      "solo_bg": 192,
       "3v3": 1966,
       "rbg": 192
     },
@@ -5216,24 +5214,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Sergeant Major",
@@ -5268,24 +5266,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Sergeant Major",
