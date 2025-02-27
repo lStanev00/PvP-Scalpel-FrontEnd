@@ -14,6 +14,7 @@ export default function RosterPage() {
                     'Content-Type': 'application/json'
                 },
                 method: `POST`,
+                cache: 'no-store',
                 body: JSON.stringify({
                     "query": ["rank", "media"]
                 })

@@ -108,7 +108,7 @@ async function blitzGet(req,res) {
     try {
         let players = await Member.find(
             { "rating.solo_bg": { $exists: true } }, 
-            { name: 1, "rating.solo_bg": 1,  "achieves.BG": 1, _id: 1 } 
+            { name: 1, "rating.solo_bg": 1,  "achieves.BG": 1, "media.avatar": 1, 'class' : 1, 'spec': 1, _id: 1 } 
           );
         players = sortBlitz(players);
         res.status(200).json(players);

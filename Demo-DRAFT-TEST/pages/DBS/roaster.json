@@ -10,7 +10,7 @@
     "rating": {
       "solo": 1720,
       "solo_bg": 2742,
-      "2v2": 1565,
+      "2v2": 1738,
       "3v3": 1628,
       "rbg": 768
     },
@@ -37,24 +37,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -105,24 +105,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -137,202 +137,6 @@
     }
   },
   {
-    "name": "Jinada",
-    "playerRealmSlug": "chamber-of-aspects",
-    "innerID": 205535643,
-    "rank": 1,
-    "race": "Pandaren",
-    "class": "Monk",
-    "spec": "Mistweaver",
-    "rating": {
-      "solo": 766,
-      "solo_bg": 576,
-      "2v2": 1515,
-      "3v3": 954
-    },
-    "achieves": {
-      "2s": {
-        "name": "Challenger",
-        "description": "Earn the Challenger title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1550",
-        "description": "Earn a 1550 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Grand Marshal",
-          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/155/205535643-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/155/205535643-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/155/205535643-main-raw.png"
-    }
-  },
-  {
-    "name": "Scalped",
-    "playerRealmSlug": "chamber-of-aspects",
-    "innerID": 213760726,
-    "rank": 1,
-    "race": "Night Elf",
-    "class": "Druid",
-    "spec": "Guardian",
-    "rating": {
-      "solo_bg": 192
-    },
-    "achieves": {
-      "2s": {
-        "name": "Challenger",
-        "description": "Earn the Challenger title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1550",
-        "description": "Earn a 1550 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Grand Marshal",
-          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/214/213760726-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/214/213760726-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/214/213760726-main-raw.png"
-    }
-  },
-  {
-    "name": "Creepindeath",
-    "playerRealmSlug": "chamber-of-aspects",
-    "innerID": 218836017,
-    "rank": 1,
-    "race": "Dwarf",
-    "class": "Rogue",
-    "spec": "Subtlety",
-    "rating": {},
-    "achieves": {
-      "2s": {
-        "name": "Challenger",
-        "description": "Earn the Challenger title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1550",
-        "description": "Earn a 1550 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Grand Marshal",
-          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/49/218836017-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/49/218836017-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/49/218836017-main-raw.png"
-    }
-  },
-  {
     "name": "Earthwock",
     "playerRealmSlug": "chamber-of-aspects",
     "innerID": 219502047,
@@ -344,7 +148,7 @@
       "solo": 1612,
       "solo_bg": 1467,
       "2v2": 1625,
-      "3v3": 1517
+      "3v3": 1508
     },
     "achieves": {
       "2s": {
@@ -378,7 +182,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -439,20 +243,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Sergeant Major",
@@ -628,7 +432,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -657,11 +461,11 @@
     "rank": 3,
     "race": "Human",
     "class": "Warrior",
-    "spec": "Arms",
+    "spec": "Fury",
     "rating": {
-      "solo": 1344,
+      "solo": 2051,
       "2v2": 1565,
-      "3v3": 1339
+      "3v3": 1637
     },
     "achieves": {
       "2s": {
@@ -695,7 +499,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -724,7 +528,7 @@
     "rank": 3,
     "race": "Night Elf",
     "class": "Monk",
-    "spec": "Mistweaver",
+    "spec": "Windwalker",
     "rating": {
       "2v2": 96,
       "3v3": 288
@@ -740,28 +544,16 @@
       },
       "BG": [
         {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
           "name": "Warbound Veteran of the Alliance",
           "description": "Win 300 rated battlegrounds."
         },
         {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
           "name": "Commander",
           "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
         },
         {
           "name": "Setting Records",
@@ -770,6 +562,18 @@
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -829,7 +633,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -862,7 +666,7 @@
     "rating": {
       "solo": 1804,
       "solo_bg": 1824,
-      "2v2": 1774,
+      "2v2": 1829,
       "3v3": 1718,
       "rbg": 768
     },
@@ -889,24 +693,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -964,7 +768,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1030,7 +834,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1063,7 +867,7 @@
     "rating": {
       "solo": 1623,
       "solo_bg": 192,
-      "2v2": 1757,
+      "2v2": 1845,
       "3v3": 1243
     },
     "achieves": {
@@ -1089,24 +893,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -1166,7 +970,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1200,7 +1004,7 @@
       "solo": 2404,
       "solo_bg": 384,
       "2v2": 1693,
-      "3v3": 2014,
+      "3v3": 2113,
       "rbg": 576
     },
     "achieves": {
@@ -1226,20 +1030,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Knight-Lieutenant",
@@ -1296,7 +1100,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1363,7 +1167,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1425,7 +1229,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1492,7 +1296,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1503,8 +1307,8 @@
           "description": "Complete 150 victories in Battleground Blitz."
         },
         {
-          "name": "Lieutenant Commander",
-          "description": "Earn a rating of 2000 in either Rated Battlegrounds or Rated Battleground Blitz."
+          "name": "Commander",
+          "description": "Earn a rating of 2100 in either Rated Battlegrounds or Rated Battleground Blitz."
         }
       ]
     },
@@ -1557,7 +1361,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1600,20 +1404,20 @@
       "3s": "No XP yet",
       "BG": [
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -1683,69 +1487,6 @@
     }
   },
   {
-    "name": "Ashid",
-    "playerRealmSlug": "chamber-of-aspects",
-    "innerID": 207947533,
-    "rank": 4,
-    "race": "Human",
-    "class": "Warlock",
-    "spec": "Demonology",
-    "rating": {},
-    "achieves": {
-      "2s": {
-        "name": "Rival",
-        "description": "Earn the Rival title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 2400",
-        "description": "Earn a 2400 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Hero of the Alliance",
-          "description": "End a PvP season in the top 0.5% of the rated battleground ladder (requires 50 games won in the current season)."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Grand Marshal",
-          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/13/207947533-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/13/207947533-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/13/207947533-main-raw.png"
-    }
-  },
-  {
     "name": "Yvvoni",
     "playerRealmSlug": "chamber-of-aspects",
     "innerID": 214325935,
@@ -1780,24 +1521,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Sergeant Major",
@@ -1857,7 +1598,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1921,7 +1662,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -1950,9 +1691,10 @@
     "rank": 5,
     "race": "Night Elf",
     "class": "Druid",
-    "spec": "Feral",
+    "spec": "Balance",
     "rating": {
-      "solo": 480,
+      "solo": 192,
+      "solo_bg": 2402,
       "2v2": 383
     },
     "achieves": {
@@ -1982,24 +1724,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -2044,24 +1786,24 @@
           "description": "Win 75 rated battlegrounds."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -2107,24 +1849,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Knight-Lieutenant",
@@ -2147,8 +1889,8 @@
     "class": "Demon Hunter",
     "spec": "Havoc",
     "rating": {
-      "solo": 1935,
-      "solo_bg": 2060,
+      "solo": 1947,
+      "solo_bg": 2145,
       "2v2": 1636,
       "3v3": 1677
     },
@@ -2175,24 +1917,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -2218,7 +1960,7 @@
       "solo": 1437,
       "solo_bg": 1576,
       "2v2": 2003,
-      "3v3": 2015,
+      "3v3": 2114,
       "rbg": 192
     },
     "achieves": {
@@ -2253,7 +1995,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -2273,61 +2015,6 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/outland/79/216381263-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/outland/79/216381263-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/outland/79/216381263-main-raw.png"
-    }
-  },
-  {
-    "name": "Corráx",
-    "playerRealmSlug": "silvermoon",
-    "innerID": 219642685,
-    "rank": 5,
-    "race": "Earthen",
-    "class": "Priest",
-    "spec": "Discipline",
-    "rating": {
-      "solo_bg": 1801
-    },
-    "achieves": {
-      "2s": "No XP yet",
-      "3s": "No XP yet",
-      "BG": [
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Knight-Captain",
-          "description": "Earn a rating of 1800 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/silvermoon/61/219642685-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/silvermoon/61/219642685-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/silvermoon/61/219642685-main-raw.png"
     }
   },
   {
@@ -2377,7 +2064,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -2409,7 +2096,7 @@
     "spec": "Shadow",
     "rating": {
       "solo": 1056,
-      "2v2": 1607,
+      "2v2": 1641,
       "3v3": 1401
     },
     "achieves": {
@@ -2444,7 +2131,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -2481,13 +2168,51 @@
     },
     "achieves": {
       "2s": {
-        "name": "Challenger",
-        "description": "Earn the Challenger title in an arena season."
+        "name": "Duelist",
+        "description": "Earn the Duelist title in an arena season."
       },
       "3s": {
-        "name": "Three's Company: 1750",
-        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
-      }
+        "name": "Three's Company: 2700",
+        "description": "Earn a 2700 personal rating in the 3v3 bracket of the arena."
+      },
+      "BG": [
+        {
+          "name": "Warbound Veteran of the Alliance",
+          "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
+        },
+        {
+          "name": "Knight-Champion",
+          "description": "Earn a rating of 1900 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
     },
     "media": {
       "avatar": "https://render.worldofwarcraft.com/eu/character/blackhand/74/171761226-avatar.jpg",
@@ -2527,20 +2252,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -2664,7 +2389,7 @@
     "class": "Hunter",
     "spec": "Survival",
     "rating": {
-      "solo": 1927,
+      "solo": 1948,
       "2v2": 1691,
       "3v3": 1548
     },
@@ -2691,20 +2416,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Sergeant Major",
@@ -2824,7 +2549,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -2952,7 +2677,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -3097,8 +2822,10 @@
     "rank": 6,
     "race": "Night Elf",
     "class": "Hunter",
-    "spec": "Beast Mastery",
-    "rating": {},
+    "spec": "Marksmanship",
+    "rating": {
+      "solo_bg": 957
+    },
     "achieves": {
       "2s": {
         "name": "Rival",
@@ -3122,24 +2849,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Sergeant Major",
@@ -3171,12 +2898,12 @@
       "3s": "No XP yet",
       "BG": [
         {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
         }
       ]
     },
@@ -3224,24 +2951,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Sergeant Major",
@@ -3301,7 +3028,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -3332,7 +3059,7 @@
     "class": "Rogue",
     "spec": "Assassination",
     "rating": {
-      "solo": 2226,
+      "solo": 2247,
       "2v2": 1339,
       "3v3": 1932
     },
@@ -3359,20 +3086,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Knight-Lieutenant",
@@ -3484,7 +3211,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -3550,7 +3277,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -3608,20 +3335,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Sergeant Major",
@@ -3672,24 +3399,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         }
       ]
     },
@@ -3806,7 +3533,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -3865,20 +3592,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Knight-Lieutenant",
@@ -3946,7 +3673,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -3975,10 +3702,8 @@
     "rank": 7,
     "race": "Orc",
     "class": "Warrior",
-    "spec": "Fury",
+    "spec": "Arms",
     "rating": {
-      "solo": 1461,
-      "solo_bg": 1326,
       "2v2": 1802,
       "3v3": 1479,
       "rbg": 1581
@@ -4002,20 +3727,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -4059,7 +3784,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -4134,24 +3859,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Lieutenant Commander",
@@ -4210,7 +3935,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -4270,7 +3995,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -4333,7 +4058,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -4396,7 +4121,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -4448,20 +4173,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -4478,7 +4203,7 @@
     "rank": 7,
     "race": "Human",
     "class": "Rogue",
-    "spec": "Assassination",
+    "spec": "Subtlety",
     "rating": {},
     "achieves": {
       "2s": {
@@ -4503,24 +4228,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -4692,7 +4417,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -4746,20 +4471,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -4801,20 +4526,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -4867,7 +4592,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -4925,20 +4650,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Knight-Lieutenant",
@@ -5000,26 +4725,27 @@
     }
   },
   {
-    "name": "Ægirl",
+    "name": "Jinada",
     "playerRealmSlug": "chamber-of-aspects",
-    "innerID": 207871462,
+    "innerID": 205535643,
     "rank": 7,
-    "race": "Night Elf",
-    "class": "Priest",
-    "spec": "Discipline",
+    "race": "Pandaren",
+    "class": "Monk",
+    "spec": "Mistweaver",
     "rating": {
-      "solo": 96,
+      "solo": 766,
       "solo_bg": 576,
-      "2v2": 2114
+      "2v2": 1515,
+      "3v3": 954
     },
     "achieves": {
       "2s": {
-        "name": "Duelist",
-        "description": "Earn the Duelist title in an arena season."
+        "name": "Challenger",
+        "description": "Earn the Challenger title in an arena season."
       },
       "3s": {
-        "name": "Three's Company: 2400",
-        "description": "Earn a 2400 personal rating in the 3v3 bracket of the arena."
+        "name": "Three's Company: 1550",
+        "description": "Earn a 1550 personal rating in the 3v3 bracket of the arena."
       },
       "BG": [
         {
@@ -5044,7 +4770,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5053,6 +4779,73 @@
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Grand Marshal",
+          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/155/205535643-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/155/205535643-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/155/205535643-main-raw.png"
+    }
+  },
+  {
+    "name": "Ægirl",
+    "playerRealmSlug": "chamber-of-aspects",
+    "innerID": 207871462,
+    "rank": 7,
+    "race": "Night Elf",
+    "class": "Priest",
+    "spec": "Discipline",
+    "rating": {
+      "solo": 96,
+      "solo_bg": 576,
+      "2v2": 2145
+    },
+    "achieves": {
+      "2s": {
+        "name": "Duelist",
+        "description": "Earn the Duelist title in an arena season."
+      },
+      "3s": {
+        "name": "Three's Company: 2400",
+        "description": "Earn a 2400 personal rating in the 3v3 bracket of the arena."
+      },
+      "BG": [
+        {
+          "name": "Warbound Veteran of the Alliance",
+          "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Knight-Champion",
@@ -5107,7 +4900,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5127,6 +4920,75 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/nagrand/133/209875589-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/nagrand/133/209875589-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/nagrand/133/209875589-main-raw.png"
+    }
+  },
+  {
+    "name": "Vikraal",
+    "playerRealmSlug": "kazzak",
+    "innerID": 211908621,
+    "rank": 7,
+    "race": "Night Elf",
+    "class": "Demon Hunter",
+    "spec": "Havoc",
+    "rating": {
+      "solo": 192
+    },
+    "achieves": {
+      "2s": {
+        "name": "Duelist",
+        "description": "Earn the Duelist title in an arena season."
+      },
+      "3s": {
+        "name": "Three's Company: 2400",
+        "description": "Earn a 2400 personal rating in the 3v3 bracket of the arena."
+      },
+      "BG": [
+        {
+          "name": "Warbound Veteran of the Alliance",
+          "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Hero of the Alliance",
+          "description": "End a PvP season in the top 0.5% of the rated battleground ladder (requires 50 games won in the current season)."
+        },
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
+        },
+        {
+          "name": "Grand Marshal",
+          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/kazzak/13/211908621-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/kazzak/13/211908621-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/kazzak/13/211908621-main-raw.png"
     }
   },
   {
@@ -5172,7 +5034,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5195,23 +5057,25 @@
     }
   },
   {
-    "name": "Powerlifter",
+    "name": "Scalped",
     "playerRealmSlug": "chamber-of-aspects",
-    "innerID": 215364881,
+    "innerID": 213760726,
     "rank": 7,
-    "race": "Kul Tiran",
-    "class": "Death Knight",
-    "spec": "Frost",
+    "race": "Night Elf",
+    "class": "Druid",
+    "spec": "Guardian",
     "rating": {
-      "solo": 1855,
-      "solo_bg": 1634
+      "solo_bg": 192
     },
     "achieves": {
       "2s": {
         "name": "Challenger",
         "description": "Earn the Challenger title in an arena season."
       },
-      "3s": "No XP yet",
+      "3s": {
+        "name": "Three's Company: 1550",
+        "description": "Earn a 1550 personal rating in the 3v3 bracket of the arena."
+      },
       "BG": [
         {
           "name": "Warbound Veteran of the Alliance",
@@ -5235,7 +5099,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5244,6 +5108,66 @@
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Grand Marshal",
+          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/214/213760726-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/214/213760726-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/214/213760726-main-raw.png"
+    }
+  },
+  {
+    "name": "Powerlifter",
+    "playerRealmSlug": "chamber-of-aspects",
+    "innerID": 215364881,
+    "rank": 7,
+    "race": "Kul Tiran",
+    "class": "Death Knight",
+    "spec": "Blood",
+    "rating": {},
+    "achieves": {
+      "2s": {
+        "name": "Challenger",
+        "description": "Earn the Challenger title in an arena season."
+      },
+      "3s": "No XP yet",
+      "BG": [
+        {
+          "name": "Warbound Veteran of the Alliance",
+          "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Sergeant Major",
@@ -5303,7 +5227,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5355,7 +5279,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5404,7 +5328,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5456,7 +5380,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5508,7 +5432,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5528,6 +5452,69 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/32/218493728-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/32/218493728-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/32/218493728-main-raw.png"
+    }
+  },
+  {
+    "name": "Creepindeath",
+    "playerRealmSlug": "chamber-of-aspects",
+    "innerID": 218836017,
+    "rank": 7,
+    "race": "Dwarf",
+    "class": "Rogue",
+    "spec": "Subtlety",
+    "rating": {},
+    "achieves": {
+      "2s": {
+        "name": "Challenger",
+        "description": "Earn the Challenger title in an arena season."
+      },
+      "3s": {
+        "name": "Three's Company: 1550",
+        "description": "Earn a 1550 personal rating in the 3v3 bracket of the arena."
+      },
+      "BG": [
+        {
+          "name": "Warbound Veteran of the Alliance",
+          "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Grand Marshal",
+          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/49/218836017-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/49/218836017-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/49/218836017-main-raw.png"
     }
   },
   {
@@ -5580,7 +5567,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5620,12 +5607,12 @@
       "3s": "No XP yet",
       "BG": [
         {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
         }
       ]
     },
@@ -5729,24 +5716,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Knight-Champion",
@@ -5761,14 +5748,71 @@
     }
   },
   {
+    "name": "Corráx",
+    "playerRealmSlug": "silvermoon",
+    "innerID": 219642685,
+    "rank": 7,
+    "race": "Earthen",
+    "class": "Priest",
+    "spec": "Discipline",
+    "rating": {
+      "solo_bg": 1801
+    },
+    "achieves": {
+      "2s": "No XP yet",
+      "3s": "No XP yet",
+      "BG": [
+        {
+          "name": "Warbound Veteran of the Alliance",
+          "description": "Win 300 rated battlegrounds."
+        },
+        {
+          "name": "Veteran of the Alliance",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Knight-Captain",
+          "description": "Earn a rating of 1800 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/silvermoon/61/219642685-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/silvermoon/61/219642685-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/silvermoon/61/219642685-main-raw.png"
+    }
+  },
+  {
     "name": "Plexer",
     "playerRealmSlug": "outland",
     "innerID": 219705775,
     "rank": 7,
     "race": "Human",
     "class": "Paladin",
-    "spec": "Protection",
+    "spec": "Retribution",
     "rating": {
+      "solo": 288,
+      "solo_bg": 384,
       "2v2": 1120
     },
     "achieves": {
@@ -5794,24 +5838,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Knight-Champion",
@@ -5962,7 +6006,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -5991,10 +6035,10 @@
     "rank": 7,
     "race": "Night Elf",
     "class": "Hunter",
-    "spec": "Beast Mastery",
+    "spec": "Marksmanship",
     "rating": {
-      "2v2": 1870,
-      "3v3": 1556
+      "2v2": 1833,
+      "3v3": 1691
     },
     "achieves": {
       "2s": {
@@ -6019,24 +6063,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Sergeant Major",
@@ -6059,7 +6103,7 @@
     "class": "Monk",
     "spec": "Windwalker",
     "rating": {
-      "solo": 1735,
+      "solo": 1826,
       "solo_bg": 575
     },
     "achieves": {
@@ -6067,20 +6111,20 @@
       "3s": "No XP yet",
       "BG": [
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -6136,7 +6180,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -6581,6 +6625,65 @@
     }
   },
   {
+    "name": "Gorsith",
+    "playerRealmSlug": "runetotem",
+    "innerID": 208589664,
+    "rank": 8,
+    "race": "Orc",
+    "class": "Warlock",
+    "spec": "Demonology",
+    "rating": {},
+    "achieves": {
+      "2s": {
+        "name": "Rival",
+        "description": "Earn the Rival title in an arena season."
+      },
+      "3s": {
+        "name": "Three's Company: 1750",
+        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
+      },
+      "BG": [
+        {
+          "name": "Veteran of the Horde",
+          "description": "Win 75 rated battlegrounds."
+        },
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
+        },
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "High Warlord",
+          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/runetotem/96/208589664-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/runetotem/96/208589664-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/runetotem/96/208589664-main-raw.png"
+    }
+  },
+  {
     "name": "Maikati",
     "playerRealmSlug": "chamber-of-aspects",
     "innerID": 213027862,
@@ -6649,7 +6752,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -6828,20 +6931,20 @@
       "3s": "No XP yet",
       "BG": [
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -6883,24 +6986,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Knight-Champion",
@@ -6965,24 +7068,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Knight-Champion",
@@ -7037,7 +7140,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -7100,7 +7203,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -7120,65 +7223,6 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/runetotem/20/262383636-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/runetotem/20/262383636-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/runetotem/20/262383636-main-raw.png"
-    }
-  },
-  {
-    "name": "Gorsith",
-    "playerRealmSlug": "runetotem",
-    "innerID": 208589664,
-    "rank": 8,
-    "race": "Orc",
-    "class": "Warlock",
-    "spec": "Demonology",
-    "rating": {},
-    "achieves": {
-      "2s": {
-        "name": "Rival",
-        "description": "Earn the Rival title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1750",
-        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Veteran of the Horde",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "High Warlord",
-          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/runetotem/96/208589664-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/runetotem/96/208589664-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/runetotem/96/208589664-main-raw.png"
     }
   },
   {
@@ -7216,20 +7260,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Knight-Lieutenant",
@@ -7402,20 +7446,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -7488,78 +7532,15 @@
     }
   },
   {
-    "name": "Åa",
-    "playerRealmSlug": "chamber-of-aspects",
-    "innerID": 173353115,
-    "rank": 9,
-    "race": "Night Elf",
-    "class": "Druid",
-    "spec": "Restoration",
-    "rating": {},
-    "achieves": {
-      "2s": {
-        "name": "Rival",
-        "description": "Earn the Rival title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1750",
-        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Sergeant Major",
-          "description": "Earned the title, \"Sergeant Major\" at level 60."
-        },
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Sergeant Major",
-          "description": "Earn a rating of 1500 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/155/173353115-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/155/173353115-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/155/173353115-main-raw.png"
-    }
-  },
-  {
     "name": "Totalt",
     "playerRealmSlug": "stormscale",
     "innerID": 173874501,
     "rank": 9,
     "race": "Gnome",
     "class": "Warrior",
-    "spec": "Fury",
+    "spec": "Arms",
     "rating": {
-      "solo": 1966,
+      "solo": 864,
       "2v2": 1831,
       "3v3": 1607
     },
@@ -7571,20 +7552,20 @@
       },
       "BG": [
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Sergeant Major",
@@ -7639,7 +7620,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -7679,20 +7660,20 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
     },
@@ -7713,7 +7694,7 @@
     "rating": {
       "solo": 1642,
       "2v2": 1827,
-      "3v3": 1909
+      "3v3": 1896
     },
     "achieves": {
       "2s": {
@@ -7747,7 +7728,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -7934,7 +7915,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -8063,69 +8044,6 @@
     }
   },
   {
-    "name": "Joao",
-    "playerRealmSlug": "chamber-of-aspects",
-    "innerID": 207640844,
-    "rank": 9,
-    "race": "Dracthyr",
-    "class": "Evoker",
-    "spec": "Augmentation",
-    "rating": {},
-    "achieves": {
-      "2s": {
-        "name": "Rival",
-        "description": "Earn the Rival title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1750",
-        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Sergeant Major",
-          "description": "Earn a rating of 1500 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/12/207640844-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/12/207640844-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/12/207640844-main-raw.png"
-    }
-  },
-  {
     "name": "Durranto",
     "playerRealmSlug": "chamber-of-aspects",
     "innerID": 213206876,
@@ -8200,24 +8118,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Sergeant Major",
@@ -8238,7 +8156,7 @@
     "rank": 9,
     "race": "Human",
     "class": "Hunter",
-    "spec": "Beast Mastery",
+    "spec": "Marksmanship",
     "rating": {
       "2v2": 1152,
       "3v3": 1840
@@ -8266,24 +8184,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Sergeant Major",
@@ -8464,7 +8382,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -8484,6 +8402,46 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/silvermoon/254/219674878-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/silvermoon/254/219674878-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/silvermoon/254/219674878-main-raw.png"
+    }
+  },
+  {
+    "name": "Galfonso",
+    "playerRealmSlug": "chamber-of-aspects",
+    "innerID": 219850868,
+    "rank": 9,
+    "race": "Void Elf",
+    "class": "Mage",
+    "spec": "Frost",
+    "rating": {
+      "solo": 576,
+      "solo_bg": 192
+    },
+    "achieves": {
+      "2s": "No XP yet",
+      "3s": "No XP yet",
+      "BG": [
+        {
+          "name": "Setting Records",
+          "description": "Participate in 300 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Master",
+          "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/116/219850868-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/116/219850868-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/chamber-of-aspects/116/219850868-main-raw.png"
     }
   },
   {
@@ -8509,74 +8467,6 @@
     }
   },
   {
-    "name": "Pechus",
-    "playerRealmSlug": "dragonblight",
-    "innerID": 261953309,
-    "rank": 9,
-    "race": "Draenei",
-    "class": "Shaman",
-    "spec": "Restoration",
-    "rating": {},
-    "achieves": {
-      "2s": "No XP yet",
-      "3s": "No XP yet",
-      "BG": [
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/dragonblight/29/261953309-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/dragonblight/29/261953309-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/dragonblight/29/261953309-main-raw.png"
-    }
-  },
-  {
-    "name": "Victra",
-    "playerRealmSlug": "sylvanas",
-    "innerID": 262720956,
-    "rank": 9,
-    "race": "Worgen",
-    "class": "Warrior",
-    "spec": "Fury",
-    "rating": {
-      "solo": 384
-    },
-    "achieves": {
-      "2s": "No XP yet",
-      "3s": "No XP yet",
-      "BG": [
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-main-raw.png"
-    }
-  },
-  {
     "name": "Illusioner",
     "playerRealmSlug": "outland",
     "innerID": 220255454,
@@ -8585,7 +8475,7 @@
     "class": "Mage",
     "spec": "Frost",
     "rating": {
-      "solo": 2412
+      "solo": 2393
     },
     "achieves": {
       "2s": "No XP yet",
@@ -8612,7 +8502,7 @@
         },
         {
           "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 6 minutes."
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Setting Records",
@@ -8632,6 +8522,33 @@
       "avatar": "https://render.worldofwarcraft.com/eu/character/outland/222/220255454-avatar.jpg",
       "banner": "https://render.worldofwarcraft.com/eu/character/outland/222/220255454-inset.jpg",
       "charImg": "https://render.worldofwarcraft.com/eu/character/outland/222/220255454-main-raw.png"
+    }
+  },
+  {
+    "name": "Victra",
+    "playerRealmSlug": "sylvanas",
+    "innerID": 262720956,
+    "rank": 9,
+    "race": "Worgen",
+    "class": "Warrior",
+    "spec": "Fury",
+    "rating": {
+      "solo": 543
+    },
+    "achieves": {
+      "2s": "No XP yet",
+      "3s": "No XP yet",
+      "BG": [
+        {
+          "name": "Commander",
+          "description": "Recruit 40 followers."
+        }
+      ]
+    },
+    "media": {
+      "avatar": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-avatar.jpg",
+      "banner": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-inset.jpg",
+      "charImg": "https://render.worldofwarcraft.com/eu/character/sylvanas/188/262720956-main-raw.png"
     }
   }
 ]
