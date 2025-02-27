@@ -969,10 +969,6 @@
           "description": "Participate in 100 matches in Battleground Blitz."
         },
         {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
@@ -2822,10 +2818,8 @@
     "rank": 6,
     "race": "Night Elf",
     "class": "Hunter",
-    "spec": "Marksmanship",
-    "rating": {
-      "solo_bg": 957
-    },
+    "spec": "Beast Mastery",
+    "rating": {},
     "achieves": {
       "2s": {
         "name": "Rival",
@@ -4144,59 +4138,6 @@
     }
   },
   {
-    "name": "Mogi",
-    "playerRealmSlug": "darksorrow",
-    "innerID": 176731010,
-    "rank": 7,
-    "race": "Orc",
-    "class": "Death Knight",
-    "spec": "Unholy",
-    "rating": {
-      "2v2": 1669
-    },
-    "achieves": {
-      "2s": {
-        "name": "Rival",
-        "description": "Earn the Rival title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1750",
-        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Veteran of the Horde",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/darksorrow/130/176731010-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/darksorrow/130/176731010-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/darksorrow/130/176731010-main-raw.png"
-    }
-  },
-  {
     "name": "Drunkenblade",
     "playerRealmSlug": "dun-morogh",
     "innerID": 178193426,
@@ -4207,51 +4148,14 @@
     "rating": {},
     "achieves": {
       "2s": {
-        "name": "Rival",
-        "description": "Earn the Rival title in an arena season."
+        "name": "None",
+        "description": ""
       },
       "3s": {
-        "name": "Three's Company: 1750",
-        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
+        "name": "None",
+        "description": ""
       },
-      "BG": [
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
-        },
-        {
-          "name": "Grand Marshal",
-          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
+      "BG": []
     },
     "media": {
       "avatar": "https://render.worldofwarcraft.com/eu/character/dun-morogh/18/178193426-avatar.jpg",
@@ -4408,24 +4312,24 @@
           "description": "Recruit 40 followers."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Grand Marshal",
@@ -4449,8 +4353,7 @@
     "spec": "Preservation",
     "rating": {
       "solo": 1654,
-      "2v2": 1545,
-      "3v3": 1680
+      "2v2": 1545
     },
     "achieves": {
       "2s": {
@@ -5888,20 +5791,20 @@
       "3s": "No XP yet",
       "BG": [
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
         },
         {
           "name": "Sergeant Major",
@@ -6461,11 +6364,6 @@
           "description": "Earn a rating of 1500 in either Rated Battlegrounds or Rated Battleground Blitz."
         }
       ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/draenor/201/177439945-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/draenor/201/177439945-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/draenor/201/177439945-main-raw.png"
     }
   },
   {
@@ -7580,69 +7478,6 @@
     }
   },
   {
-    "name": "Drunkenshot",
-    "playerRealmSlug": "dun-morogh",
-    "innerID": 176180054,
-    "rank": 9,
-    "race": "Worgen",
-    "class": "Hunter",
-    "spec": "Beast Mastery",
-    "rating": {},
-    "achieves": {
-      "2s": {
-        "name": "Rival",
-        "description": "Earn the Rival title in an arena season."
-      },
-      "3s": {
-        "name": "Three's Company: 1750",
-        "description": "Earn a 1750 personal rating in the 3v3 bracket of the arena."
-      },
-      "BG": [
-        {
-          "name": "Warbound Veteran of the Alliance",
-          "description": "Win 300 rated battlegrounds."
-        },
-        {
-          "name": "Veteran of the Alliance",
-          "description": "Win 75 rated battlegrounds."
-        },
-        {
-          "name": "Commander",
-          "description": "Recruit 40 followers."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
-        },
-        {
-          "name": "Setting Records",
-          "description": "Participate in 300 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Master",
-          "description": "Complete 150 victories in Battleground Blitz."
-        },
-        {
-          "name": "Grand Marshal",
-          "description": "Earn a rating of 2400 in either Rated Battlegrounds or Rated Battleground Blitz."
-        }
-      ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/dun-morogh/86/176180054-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/dun-morogh/86/176180054-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/dun-morogh/86/176180054-main-raw.png"
-    }
-  },
-  {
     "name": "Baylea",
     "playerRealmSlug": "blackmoore",
     "innerID": 178343199,
@@ -7670,17 +7505,8 @@
         {
           "name": "Battle-scarred Battler",
           "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
         }
       ]
-    },
-    "media": {
-      "avatar": "https://render.worldofwarcraft.com/eu/character/blackmoore/31/178343199-avatar.jpg",
-      "banner": "https://render.worldofwarcraft.com/eu/character/blackmoore/31/178343199-inset.jpg",
-      "charImg": "https://render.worldofwarcraft.com/eu/character/blackmoore/31/178343199-main-raw.png"
     }
   },
   {
