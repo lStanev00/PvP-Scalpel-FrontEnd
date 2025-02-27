@@ -1,5 +1,5 @@
 import { useState } from "react";
-import paginationStyles from '../Styles/pagination.module.css';
+import paginationStyles from '../../Styles/modular/pagination.module.css';
 
 
 export default function PaginatioContainer ({ data, page ,setPage }) {
