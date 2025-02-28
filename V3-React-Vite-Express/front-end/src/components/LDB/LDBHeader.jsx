@@ -20,5 +20,10 @@ export default function LDBHeaderContent({  content  }) {
         <h1 className="leaderboard-title">PvP Leaderboard</h1>
         <h3 id="bracket-title">-\* 3V3 */-</h3>
         </>)
+} else if (content ===`BGContent`) {
+    return (<>
+        <h1 className="leaderboard-title">PvP Leaderboard</h1>
+        <h3 id="bracket-title">-\* Rated BG */-</h3>
+        </>)
 }
 }

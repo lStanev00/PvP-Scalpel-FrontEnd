@@ -1,7 +1,8 @@
-export default function BlitzBtn({  setData, setPage, setContent  }){
+export default function BGBtn({  setData, setPage, setContent  }){
     const clickHandler = async (event) => {
-        const res = await fetch(`https://api.pvpscalpel.com/LDB/blitz`);
-        let reqData = await res.json();
+        let reqData;
+        const res = await fetch(`https://api.pvpscalpel.com/LDB/BG`);
+        reqData = await res.json();
         let rank = 1;
         const paginatedData = [];
     
@@ -42,9 +43,9 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
             }
             setData(paginatedData);
             setPage(paginatedData[0]);
-            setContent(`blitzContent`);
+            setContent(`BGContent`);
     }
     return(
-        <button onClick={clickHandler} id="blitz" className="bracket-btn">Blitz BG</button>
+        <button onClick={clickHandler} id="rbg" className="bracket-btn">RATED BG</button>
     )
 }
