@@ -23,7 +23,7 @@ async function twosGet(req, res) {
         // Fetch players from MongoDB
         let players = await Member.find(
             { "rating.2v2": { $exists: true } }, 
-            { name: 1, "rating.2v2": 1, "media.avatar": 1, 'class' : 1, 'spec': 1, "achieves.2s": 1, _id: 1 }
+            { name: 1, "rating.2v2": 1, "media.avatar": 1, 'playerRealmSlug': 1, 'class' : 1, 'spec': 1, "achieves.2s": 1, _id: 1 }
         );
 
         // Sort in JavaScript (since MongoDB cannot use a function)
@@ -64,7 +64,7 @@ async function threesGet(req,res) {
         };
         let players = await Member.find(
             { "rating.3v3": { $exists: true } }, 
-            { name: 1, "rating.3v3": 1,  'class' : 1, 'spec': 1, "media.avatar": 1, "achieves.3s": 1, _id: 1 } 
+            { name: 1, "rating.3v3": 1, 'playerRealmSlug': 1, 'class' : 1, 'spec': 1, "media.avatar": 1, "achieves.3s": 1, _id: 1 } 
           ).sort({ "rating.3v3": -1 }); 
 
           players = players.sort((a, b) => {
@@ -95,7 +95,7 @@ async function soloGet(req,res) {
     try {
         const players = await Member.find(
             { "rating.solo": { $exists: true } }, 
-            { name: 1, "media.avatar": 1,  'class' : 1, 'spec': 1, "rating.solo": 1, _id: 1 } 
+            { name: 1, "media.avatar": 1, 'playerRealmSlug': 1, 'class' : 1, 'spec': 1, "rating.solo": 1, _id: 1 } 
           ).sort({ "rating.solo": -1 }); 
 
         res.status(200).json(players);
@@ -108,7 +108,7 @@ async function blitzGet(req,res) {
     try {
         let players = await Member.find(
             { "rating.solo_bg": { $exists: true } }, 
-            { name: 1, "rating.solo_bg": 1,  "achieves.BG": 1, "media.avatar": 1, 'class' : 1, 'spec': 1, _id: 1 } 
+            { name: 1, "rating.solo_bg": 1,'playerRealmSlug': 1, "achieves.BG": 1, "media.avatar": 1, 'class' : 1, 'spec': 1, _id: 1 } 
           );
         players = sortBlitz(players);
         res.status(200).json(players);
@@ -121,7 +121,7 @@ async function BGGet(req,res) {
     try {
         let players = await Member.find(
             { "rating.rbg": { $exists: true } }, 
-            { name: 1, "rating.rbg": 1,  'class' : 1, 'spec': 1, "media.avatar": 1,  "achieves.BG": 1, _id: 1 } 
+            { name: 1, "rating.rbg": 1,  'class' : 1, 'playerRealmSlug': 1, 'spec': 1, "media.avatar": 1,  "achieves.BG": 1, _id: 1 } 
           );
           
         players = sortBG(players);
