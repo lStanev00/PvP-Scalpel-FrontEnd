@@ -43,7 +43,7 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
             }
             setData(paginatedData);
             setPage(paginatedData[0]);
-            setContent(`blitzContent`)
+            setContent(`blitzContent`);
     }
     return(
         <button onClick={clickHandler} id="blitz" className="bracket-btn">Blitz BG</button>

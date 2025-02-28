@@ -1652,24 +1652,24 @@
           "description": "Win 75 rated battlegrounds."
         },
         {
-          "name": "Battleground Blitz Veteran",
-          "description": "Complete 50 victories in Battleground Blitz."
-        },
-        {
-          "name": "Battle-scarred Battler",
-          "description": "Participate in 100 matches in Battleground Blitz."
-        },
-        {
-          "name": "Battleground Blitzest",
-          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
-        },
-        {
           "name": "Setting Records",
           "description": "Participate in 300 matches in Battleground Blitz."
         },
         {
           "name": "Battleground Blitz Master",
           "description": "Complete 150 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battle-scarred Battler",
+          "description": "Participate in 100 matches in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitz Veteran",
+          "description": "Complete 50 victories in Battleground Blitz."
+        },
+        {
+          "name": "Battleground Blitzest",
+          "description": "Win a Battleground Blitz match on each map in under 7 minutes."
         },
         {
           "name": "Commander",
@@ -5873,10 +5873,9 @@
     "rank": 7,
     "race": "Gnome",
     "class": "Warrior",
-    "spec": "Fury",
+    "spec": "Arms",
     "rating": {
-      "solo": 1997,
-      "solo_bg": 1624,
+      "solo": 335,
       "2v2": 1144,
       "3v3": 576
     },
