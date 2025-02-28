@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import TableContent from "../components/LDB/TableContent";
 import BlitzBtn from "../components/LDB/LDButtons/blitzButton";
-import PaginatioContainer from "../components/LDB/paginationContainer";
-import LDBHeaderContent from "../components/LDB/LDBHeader";
+import ContentContainer from "../components/LDB/ContentContainer";
 
 export default function LDB() {
     const [data, setData] = useState(undefined);
@@ -17,15 +15,8 @@ export default function LDB() {
             <BlitzBtn setData={setData} setPage={setPage} setContent={setContent}/>
             <button id="rbg" className="bracket-btn">Rated BG</button>
         </div>
-        <section className="leaderboard-container" style={{visibility: content ? `visible` : `hidden`}}>
 
-            <LDBHeaderContent content={content} />
-            <TableContent page={page} content={content}/>
-            <PaginatioContainer data={data} page={page} setPage={setPage} />
-
-        </section>
-        
+        <ContentContainer data={data} content={content} page={page} setPage={setPage} />
         </>
     );
 };
-
