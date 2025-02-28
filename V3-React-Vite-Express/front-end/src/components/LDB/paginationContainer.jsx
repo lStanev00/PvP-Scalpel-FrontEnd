@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import paginationStyles from '../../Styles/modular/pagination.module.css';
 
 export default function PaginatioContainer ({ data, page ,setPage }) {
-    const [pageCounter, setCounter] = useState(1);
-
+    const [pageCounter, setCounter] = useState(1); 
     useEffect(() => {
         setPage(data[pageCounter - 1]);
     }, [pageCounter, data, setPage]);

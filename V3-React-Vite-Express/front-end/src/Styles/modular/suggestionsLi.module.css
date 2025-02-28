@@ -1,0 +1,33 @@
+.suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    background: #1e1e2f; /* Dark theme */
+    border: 1px solid #444;
+    border-radius: 5px;
+    width: 200px; /* Adjust width */
+    max-height: 200px;
+    overflow-y: auto; /* Scroll if too many */
+    z-index: 1000;
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.suggestion-item:hover {
+    background: #2a2a3d; /* Darker hover effect */
+}
+
+.suggestion-item img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+}
