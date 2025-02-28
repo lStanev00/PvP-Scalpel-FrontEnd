@@ -121,7 +121,7 @@ async function BGGet(req,res) {
     try {
         let players = await Member.find(
             { "rating.rbg": { $exists: true } }, 
-            { name: 1, "rating.rbg": 1, "media.avatar": 1,  "achieves.BG": 1, _id: 1 } 
+            { name: 1, "rating.rbg": 1,  'class' : 1, 'spec': 1, "media.avatar": 1,  "achieves.BG": 1, _id: 1 } 
           );
           
         players = sortBG(players);
