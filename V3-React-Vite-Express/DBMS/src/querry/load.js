@@ -112,7 +112,7 @@ async function blizzFetch(endpoint, playerName, bracket, retries = 3) {
         "Hero of the Alliance", "Hero of the Horde", "Grand Marshal", "Veteran of the Horde", "General",
         "Knight-Lieutenant", "Knight-Captain", "Knight-Champion", "Sergeant Major", "Master Sergeant",
         "Battleground Blitz Veteran", "Battleground Blitz Master", "Setting Records", "Battle-scarred Battler", 'Legionnaire', `Champion`,
-        `Lieutenant Commander`, `Commander`, `Lieutenant General`, `Marshal`, `Field Marshal`, `Warlord`
+        `Lieutenant Commander`, `Commander`, `Lieutenant General`, `Marshal`, `Field Marshal`, `Warlord`, "Stone Guard"
     ];
 
     try {
