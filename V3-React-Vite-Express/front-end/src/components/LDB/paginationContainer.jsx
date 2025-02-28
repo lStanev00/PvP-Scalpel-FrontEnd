@@ -6,6 +6,7 @@ export default function PaginatioContainer ({ data, page ,setPage }) {
 
     useEffect(() => {
         setPage(data[pageCounter - 1]);
+        // return setPage(undefined)
     }, [pageCounter, data, setPage]);
 
     const nextPage = (e) => {
@@ -33,6 +34,11 @@ export default function PaginatioContainer ({ data, page ,setPage }) {
             return newValue
         })
     }
+
+    useEffect(()=>{
+        setPage(data[0]);
+        setCounter(1)
+    },[data])
     
 
     if (!data) return (<></>);
