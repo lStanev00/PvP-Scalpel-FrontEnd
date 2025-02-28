@@ -23,7 +23,7 @@ async function twosGet(req, res) {
         // Fetch players from MongoDB
         let players = await Member.find(
             { "rating.2v2": { $exists: true } }, 
-            { name: 1, "rating.2v2": 1,  'class' : 1, 'spec': 1, "achieves.2s": 1, _id: 1 }
+            { name: 1, "rating.2v2": 1, "media.avatar": 1, 'class' : 1, 'spec': 1, "achieves.2s": 1, _id: 1 }
         );
 
         // Sort in JavaScript (since MongoDB cannot use a function)
