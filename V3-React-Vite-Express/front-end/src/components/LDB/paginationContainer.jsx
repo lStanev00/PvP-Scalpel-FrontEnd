@@ -1,27 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import paginationStyles from '../../Styles/modular/pagination.module.css';
 
 export default function PaginatioContainer ({ data, page ,setPage }) {
     const [pageCounter, setCounter] = useState(1);
 
+    useEffect(() => {
+        setPage(data[pageCounter - 1]);
+    }, [pageCounter, data, setPage]);
+
     const nextPage = (e) => {
         setCounter(page => {
             const newValue = page + 1
-            setPage(data[newValue - 1]);
             return newValue
         });
 
     }
 
     const lastPage = (e) => {
-        setCounter((data.length));
-        setPage(data[data.length - 1]);
+        setCounter(() => data.length);
     }
 
     const prevPage = (e) => {
         setCounter(page => {
             const newValue = page - 1;
-            setPage(data[newValue - 1]);
             return newValue
         })
     }
@@ -29,7 +30,6 @@ export default function PaginatioContainer ({ data, page ,setPage }) {
     const firstPage = (e) => {
         setCounter(page => {
             const newValue = 1;
-            setPage(data[0]);
             return newValue
         })
     }
