@@ -32,7 +32,7 @@ export default function SearchBox({ data, setSearch }) {
     <>
       <div className="search-container">
         <input
-          autocomplete="off"
+          autoComplete="off"
           type="text"
           id="searchInput"
           className="search-input"

@@ -27,7 +27,9 @@ export default function LDBSearch({ data }) {
   return (
     <>
       <div className="search-container">
-        <input autocomplete="off" onInput={inputChecker}
+        <input 
+          autoComplete="off" 
+          onInput={inputChecker}
           type="text"
           id="searchInput"
           className="search-input"
@@ -59,7 +61,7 @@ function Suggestions({ suggestions }) {
 
     return (
         <ul id="suggestions">
-                <li className={liStyle["suggestion-item"]}>--- Please select from the dropdown! ---</li>
+                <li disabled className={liStyle["suggestion-item"]}>--- Please select from the dropdown! ---</li>
             {suggestions.map((player, index) => (
                 <li 
                     key={player._id} 
