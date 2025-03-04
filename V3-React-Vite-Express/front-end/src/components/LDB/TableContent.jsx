@@ -1,6 +1,7 @@
 import CharXP from "./CharXP";
+import {  useRef  } from 'react';
 
-export default function TableContent({  page, content  }) {
+export default function TableContent({  page, content, refs  }) {
 
     if (content == `blitzContent`){
         try {
@@ -24,7 +25,7 @@ export default function TableContent({  page, content  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr key={char?._id}>
+                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
@@ -67,7 +68,7 @@ export default function TableContent({  page, content  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr key={char?._id}>
+                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
@@ -109,7 +110,7 @@ export default function TableContent({  page, content  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr key={char?._id}>
+                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
@@ -152,7 +153,7 @@ export default function TableContent({  page, content  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr key={char?._id}>
+                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
@@ -195,7 +196,7 @@ export default function TableContent({  page, content  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr key={char?._id}>
+                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
