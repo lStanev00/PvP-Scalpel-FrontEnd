@@ -1,7 +1,7 @@
 import { useState } from "react";
 import liStyle from '../../Styles/modular/suggestionsLi.module.css'
 
-export default function LDBSearch({ data }) {
+export default function LDBSearch({ data, setPage, refs }) {
     const [suggestions, setSuggestions] = useState(undefined);
     const inputChecker = async (event) => {
         const input = event.target.value;
@@ -28,7 +28,8 @@ export default function LDBSearch({ data }) {
     <>
       <div className="search-container">
         <input 
-          autoComplete="off" 
+          autoComplete="off"
+          autoCorrect="off"
           onInput={inputChecker}
           type="text"
           id="searchInput"
@@ -38,7 +39,7 @@ export default function LDBSearch({ data }) {
         <button onClick={clear} id="searchBtn" className="search-btn">
           Clear
         </button>
-        <Suggestions suggestions={suggestions} />
+        <Suggestions suggestions={suggestions} setPage={setPage} data={data} refs={refs} />
       </div>
       <h3>
         <p
@@ -56,18 +57,49 @@ export default function LDBSearch({ data }) {
   );
 }
 
-function Suggestions({ suggestions }) {
+function Suggestions({ suggestions, setPage, data, refs }) {
     if (!suggestions || suggestions.length === 0) return null;
+
+    const [highlight, setHigh] = useState(false);
+
+    const scrollToChar = (key) => {
+      const element = refs.current[key];
+      if(element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else{
+        for (const page of data) {
+          try {
+            for (const char of page) {
+              if(char?._id === key) {
+                setPage(old => {
+                  return page
+                });
+                setTimeout(() => {
+                  const element = refs.current[key];
+                  if(element) element.scrollIntoView({ behavior: "smooth", block: "start" });
+                  return
+                }, 100)
+              }
+            }
+            
+          } catch (error) {
+            console.log(error)
+          }
+        }
+      }
+      
+    }
 
     return (
         <ul id="suggestions">
-                <li disabled className={liStyle["suggestion-item"]}>--- Please select from the dropdown! ---</li>
+                <li disabled style={{color: "#E5B80B",  fontWeight: "bold", textShadow: "0px 0px 5px rgba(255, 215, 0, 0.6)"}} className={liStyle["suggestion-item"]}>--- Please select from the dropdown! ---</li>
             {suggestions.map((player, index) => (
                 <li 
-                    key={player._id} 
+                    onClick={() => scrollToChar(player._id)}
+                    key={player._id + `/SEARCH`} 
                     className={liStyle["suggestion-item"]}
                     tabIndex={index}
-                    id={player._id}
+                    style={{color: '#17E7E7'}}
                 >
                     <img alt="Char IMG" src={player.media?.avatar} />
 
