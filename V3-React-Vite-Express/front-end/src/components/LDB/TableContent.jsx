@@ -1,5 +1,4 @@
 import CharXP from "./CharXP";
-import {  useRef  } from 'react';
 
 export default function TableContent({  page, content, refs  }) {
 

@@ -1,11 +1,13 @@
-import { useState } from "react";
-import liStyle from '../../Styles/modular/suggestionsLi.module.css'
+import { useEffect, useState } from "react";
+import Suggestions from "./SuggestionsLi";
 
 export default function LDBSearch({ data, setPage, refs }) {
-    const [suggestions, setSuggestions] = useState(undefined);
+    const [suggestions, setSuggestions] = useState(`nan`);
     const inputChecker = async (event) => {
         const input = event.target.value;
         const result = [];
+
+        if (input == "")  return setSuggestions(undefined)
         if (data) {
             for (const page of data) {
                 page.filter(char => {
@@ -21,9 +23,11 @@ export default function LDBSearch({ data, setPage, refs }) {
 
     const clear =  (e) => {
         setSuggestions(undefined);
-
-        document.getElementById(`searchInput`).value = ``
     }
+
+    useEffect(() => {
+        if (suggestions === `nan`) document.getElementById(`searchInput`).value = ``;
+    }, [suggestions])
   return (
     <>
       <div className="search-container">
@@ -39,7 +43,7 @@ export default function LDBSearch({ data, setPage, refs }) {
         <button onClick={clear} id="searchBtn" className="search-btn">
           Clear
         </button>
-        <Suggestions suggestions={suggestions} setPage={setPage} data={data} refs={refs} />
+        <Suggestions suggestions={suggestions} setPage={setPage} data={data} refs={refs} setSuggestions={setSuggestions} />
       </div>
       <h3>
         <p
@@ -55,57 +59,4 @@ export default function LDBSearch({ data, setPage, refs }) {
       </h3>{" "}
     </>
   );
-}
-
-function Suggestions({ suggestions, setPage, data, refs }) {
-    if (!suggestions || suggestions.length === 0) return null;
-
-    const [highlight, setHigh] = useState(false);
-
-    const scrollToChar = (key) => {
-      const element = refs.current[key];
-      if(element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else{
-        for (const page of data) {
-          try {
-            for (const char of page) {
-              if(char?._id === key) {
-                setPage(old => {
-                  return page
-                });
-                setTimeout(() => {
-                  const element = refs.current[key];
-                  if(element) element.scrollIntoView({ behavior: "smooth", block: "start" });
-                  return
-                }, 100)
-              }
-            }
-            
-          } catch (error) {
-            console.log(error)
-          }
-        }
-      }
-      
-    }
-
-    return (
-        <ul id="suggestions">
-                <li disabled style={{color: "#E5B80B",  fontWeight: "bold", textShadow: "0px 0px 5px rgba(255, 215, 0, 0.6)"}} className={liStyle["suggestion-item"]}>--- Please select from the dropdown! ---</li>
-            {suggestions.map((player, index) => (
-                <li 
-                    onClick={() => scrollToChar(player._id)}
-                    key={player._id + `/SEARCH`} 
-                    className={liStyle["suggestion-item"]}
-                    tabIndex={index}
-                    style={{color: '#17E7E7'}}
-                >
-                    <img alt="Char IMG" src={player.media?.avatar} />
-
-                    {player.name} - {(player.playerRealmSlug).replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
-                </li>
-            ))}
-        </ul>
-    );
 }
