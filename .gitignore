@@ -4,6 +4,7 @@
 node_modules/
 cloudflared.exe
 roaster.json
+DBMS
 # Logs
 logs
 *.log
