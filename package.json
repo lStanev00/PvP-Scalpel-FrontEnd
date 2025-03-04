@@ -1,8 +1,8 @@
 {
   "name": "pvp-scalpel",
-  "version": "1.0.0",
-  "description": "Multi-Full-Stack-Showoff-APP",
-  "main": "index.js",
+  "version": "3.0.0",
+  "description": "Multi-Full-Stack-Showoff-APP this app is not ment to run on any platform",
+  "main": "start-all.bat",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
