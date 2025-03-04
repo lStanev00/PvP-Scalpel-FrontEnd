@@ -37,6 +37,18 @@ export default function PaginatioContainer ({ data, page ,setPage }) {
         setPage(data[0]);
         setCounter(1)
     },[data])
+    useEffect(()=>{// Helps to determine in which page we are now due to outside change like from the search logic
+        let pageIdx = 0;
+        for (const pg of data) {
+            pageIdx = pageIdx + 1;
+            if(pg === page) {
+                setCounter(now => {
+                    return pageIdx
+                });
+                return
+            }
+        }
+    },[page])
     
 
     if (!data) return (<></>);
