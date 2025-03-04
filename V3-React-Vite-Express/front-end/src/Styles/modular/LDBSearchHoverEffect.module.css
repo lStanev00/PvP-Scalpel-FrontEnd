@@ -1,0 +1,5 @@
+.hover-effect {
+    background-color: #1abc9c !important;
+    color: #1c1c2e !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
