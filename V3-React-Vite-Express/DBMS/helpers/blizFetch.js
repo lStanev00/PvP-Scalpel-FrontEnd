@@ -38,12 +38,13 @@ async function fetchData(server, realm, name) {
             name: data.active_spec.name,
             media: await helpFetch.getMedia(data , 'active_spec', headers)
         }
-        console.log(data)
+        await helpFetch.getRating(data.pvp_summary.href, headers)
+        console.log('Data: ', data)
     } catch (error) {
         console.log(error)
     }
 
-    console.log(result);
+    console.log('Result: ', result);
     debugger
 }
 
