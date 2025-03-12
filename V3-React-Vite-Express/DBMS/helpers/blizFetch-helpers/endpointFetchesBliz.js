@@ -51,7 +51,7 @@ const helpFetch = {
         }
 
     },
-    getRating: async function(path, headers) {
+    getRating: async function(path, headers, server, name) {
         try {
             const bracketsCheatSheet = {
                 "SHUFFLE": `solo`,
@@ -60,47 +60,95 @@ const helpFetch = {
                 "ARENA_3v3": "3v3",
                 "BATTLEGROUNDS": "rbg",
               }
-            let SeasonID;
             let result = {
                 solo: {},
                 solo_bg: {},
                 '2v2': {
-                    rating: undefined,
+                    currentSeason : {
+                        rating: 0,
+                        title: undefined,
+                        seasonMatchStatistics: undefined,
+                        weeklyMatchStatistics: undefined
+                    },
                     lastSeason: undefined,
-                    record: undefined
+                    record: 0
                 },
                 '3v3': {
-                    rating: undefined,
+                    currentSeason : {
+                        rating: 0,
+                        title: undefined,
+                        seasonMatchStatistics: undefined,
+                        weeklyMatchStatistics: undefined
+                    },
                     lastSeason: undefined,
-                    record: undefined
+                    record: 0
                 },
                 rbg: {
                     rating: undefined,
-                    lastSeason: undefined,
+                    lastSeasonLadder: undefined,
                 }
             }
             const brackets = (await (await fetch(path, headers)).json()).brackets;
-            for (const bracketHref of brackets) {
-                const data = await ( (await fetch(bracketHref.href, headers)).json());
-                // let {bracket, rating, season_match_statistics, weekly_match_statistics, specialization} = data.entries();
-                SeasonID = data.season.id;
+            for (const bracket of brackets) {
+                const data = await ( (await fetch(bracket.href, headers)).json());
+                const seasonID = data.season.id;
+                const match = (bracket.href).match(/pvp-bracket\/([^?]+)/);
+                const bracketName = match[1];
+                const pastSeasonCheckURL = `https://${server}.api.blizzard.com/data/wow/pvp-season/${seasonID - 1}/pvp-leaderboard/${bracketName}?namespace=dynamic-${server}&locale=en_US`
                 const currentBracket = data.bracket.type;
+                const lastSeasonLadder = await helpFetch.getpastRate(pastSeasonCheckURL, name, headers);
                 if (currentBracket === `BLITZ` || currentBracket === `SHUFFLE`){
                     const curentBracketData = {
                         currentSeason : {
                             rating: data.rating,
-                            title: await helpFetch.getPvPTitle(data.tier.key.href, headers)
+                            title: await helpFetch.getPvPTitle(data.tier.key.href, headers),
+                            seasonMatchStatistics: data.season_match_statistics,
+                            weeklyMatchStatistics: data.weekly_match_statistics
                         },
+                        lastSeasonLadder: lastSeasonLadder
 
                     }
-                    console.log(curentBracketData)
-                } else {
+                    const bracketKey = bracketsCheatSheet[currentBracket];
+                    if (bracketKey) {
+                        result[bracketKey][bracketName] = curentBracketData;
+                    } else {
+                        console.warn(`Unknown bracket: ${currentBracket}`);
+                    }
+                 } else if(currentBracket == `BATTLEGROUNDS`){
+                    const curentBracketData = {
+                        rating: data.rating,
+                        lastSeasonLadder: lastSeasonLadder,
+                    }
+                    const bracketKey = bracketsCheatSheet[currentBracket];
+                    if (bracketKey) {
+                        result[bracketKey] = curentBracketData;
+                    } else {
+                        console.warn(`Unknown bracket: ${currentBracket}`);
+                    }
 
+                 } else {
+                    const curentBracketData = {
+                        currentSeason : {
+                            rating: data.rating,
+                            title: await helpFetch.getPvPTitle(data.tier.key.href, headers),
+                            seasonMatchStatistics: data.season_match_statistics,
+                            weeklyMatchStatistics: data.weekly_match_statistics
+                        },
+                        lastSeasonLadder: lastSeasonLadder,
+                        record: 0
+                    }
+                    const bracketKey = bracketsCheatSheet[currentBracket];
+                    if (bracketKey) {
+                        result[bracketKey] = curentBracketData;
+                    } else {
+                        console.warn(`Unknown bracket: ${currentBracket}`);
+                    }
+                    
                 }
 
 
             }
-            // console.log('getRating: ', result)
+            return result
         } catch (error) {
             console.log(error)
         }
@@ -117,6 +165,49 @@ const helpFetch = {
             console.log(error);
             return undefined
         }
+    },
+    getpastRate: async function (url, playerName, headers) {
+        let data;
+        try {
+            data = await (await fetch(url, headers)).json()
+        } catch (error) {
+            console.warn(`BAD FETCH`);
+        }
+        if (!data || !data.entries) {
+            console.error('Invalid data format');
+            return null;
+        }
+        playerName = playerName.toLowerCase();
+
+        const player = data.entries.find(entry => entry.character.name.toLowerCase() === playerName);
+    
+        if (!player) {
+            return undefined;
+        }
+
+        return {
+            rank: player.rank,
+            lastSeasonRating: player.rating
+        }
+    },
+    getAchievById : async function (href, headers, statId) {
+        let data
+        try {
+            data = await(await fetch(href ,headers)).json();
+        } catch (error) {
+            console.warn(`Error fetchng!`)
+            return 0
+        }
+        for (const category of data.categories) {
+            for (const subCategory of category.sub_categories || []) {
+                for (const stat of subCategory.statistics || []) {
+                    if (stat.id === statId) {
+                        return stat.quantity;
+                    }
+                }
+            }
+        }
+        return 0 // Keep 0 if not found
     }
 }
 

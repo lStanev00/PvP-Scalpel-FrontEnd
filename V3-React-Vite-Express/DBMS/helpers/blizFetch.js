@@ -6,6 +6,7 @@ const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
 async function fetchData(server, realm, name) {
+    const capsName = name;
     name = name.toLowerCase();
     const result = {};
     let accessToken = await helpFetch.getAccessToken(clientId, clientSecret);
@@ -38,7 +39,9 @@ async function fetchData(server, realm, name) {
             name: data.active_spec.name,
             media: await helpFetch.getMedia(data , 'active_spec', headers)
         }
-        await helpFetch.getRating(data.pvp_summary.href, headers)
+        result.rating = await helpFetch.getRating(data.pvp_summary.href, headers, server, capsName);
+        result.rating[`2v2`].record = await helpFetch.getAchievById(data.achievements_statistics.href,headers, 370)
+        result.rating[`3v3`].record = await helpFetch.getAchievById(data.achievements_statistics.href,headers, 595)
         console.log('Data: ', data)
     } catch (error) {
         console.log(error)
