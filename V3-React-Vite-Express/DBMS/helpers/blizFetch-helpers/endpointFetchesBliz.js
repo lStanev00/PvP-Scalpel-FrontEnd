@@ -61,8 +61,10 @@ const helpFetch = {
                 "BATTLEGROUNDS": "rbg",
               }
             let result = {
-                solo: {},
-                solo_bg: {},
+                solo: {
+                },
+                solo_bg: {
+                },
                 '2v2': {
                     currentSeason : {
                         rating: 0,
@@ -98,19 +100,18 @@ const helpFetch = {
                 const currentBracket = data.bracket.type;
                 const lastSeasonLadder = await helpFetch.getpastRate(pastSeasonCheckURL, name, headers);
                 if (currentBracket === `BLITZ` || currentBracket === `SHUFFLE`){
-                    const curentBracketData = {
-                        currentSeason : {
-                            rating: data.rating,
-                            title: await helpFetch.getPvPTitle(data.tier.key.href, headers),
-                            seasonMatchStatistics: data.season_match_statistics,
-                            weeklyMatchStatistics: data.weekly_match_statistics
-                        },
-                        lastSeasonLadder: lastSeasonLadder
-
+                    const currentSeason = {
+                        rating: data.rating,
+                        title: await helpFetch.getPvPTitle(data.tier.key.href, headers),
+                        seasonMatchStatistics: data.season_match_statistics,
+                        weeklyMatchStatistics: data.weekly_match_statistics
                     }
                     const bracketKey = bracketsCheatSheet[currentBracket];
                     if (bracketKey) {
-                        result[bracketKey][bracketName] = curentBracketData;
+                        result[bracketKey][bracketName] = {
+                            currentSeason: currentSeason,
+                            lastSeasonLadder: lastSeasonLadder
+                        };
                     } else {
                         console.warn(`Unknown bracket: ${currentBracket}`);
                     }
