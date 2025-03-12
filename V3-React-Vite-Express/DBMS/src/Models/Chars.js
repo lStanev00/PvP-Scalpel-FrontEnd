@@ -22,17 +22,20 @@ const mediaSchema = new mongoose.Schema({
 }, { _id: false })
 
 const CharSchema = new mongoose.Schema({
-    blizID: Number,
-    name: {
+    blizID: Number, // Collected
+    name: { // Collected
         type: String,
         required: [true, `Name is required`],
     },
-    playerRealmSlug: {type: String, required: true},
-    level : Number,
-    faction: String,
-    race: String,
-    class: {name: String, media: String},
-    activeSpec: String,
+    playerRealmSlug: { // Collected
+        name : {type: String, required: true},
+        slug : {type: String, required: true}
+    },
+    level : Number, // Collected
+    faction: String, // Collected
+    race: String, // Collected
+    class: {name: String, media: String}, // Collected
+    activeSpec: {name: String, media: String},
     allSpecs,
     rating: ratingSchema,
     achieves: achievementsSchema,
