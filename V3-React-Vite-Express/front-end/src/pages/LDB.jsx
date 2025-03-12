@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BlitzBtn from "../components/LDB/LDButtons/blitzButton";
 import ContentContainer from "../components/LDB/ContentContainer";
 import ShuffleBTN from "../components/LDB/LDButtons/shuffleButton";

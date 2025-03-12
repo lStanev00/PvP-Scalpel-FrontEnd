@@ -59,18 +59,6 @@ export default function LDBSearch({ data, setPage, refs }) {
           liRef={liRef}
         />
       </div>
-      <h3>
-        <p
-          className="error-msg"
-          style={{
-            display: "none",
-            color: "red",
-            justifyContent: "center",
-            marginTop: "1.5rem",
-            marginBottom: "1.5rem",
-          }}
-        ></p>
-      </h3>{" "}
     </>
   );
 }
