@@ -57,7 +57,6 @@ const CharSchema = new mongoose.Schema({
     race: String, // Collected
     class: {name: String, media: String}, // Collected
     activeSpec: {name: String, media: String}, // Collected
-    allSpecs,
     rating: ratingSchema, // Collected
     achieves: achievementsSchema,
     media: mediaSchema,
