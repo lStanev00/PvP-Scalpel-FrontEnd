@@ -34,9 +34,9 @@ const helpFetch = {
         }
 
     },
-    getClassMedia : async function (data, headers) {
+    getMedia : async function (data, path, headers) {
         try {
-            const data1 = await(await fetch(data.character_class.key.href, headers)).json();
+            const data1 = await(await fetch(data[path].key.href, headers)).json();
             const data2 = await ( await fetch(data1.media.key.href, headers)).json();
             return data2 ? data2.assets[0].value : undefined
             
