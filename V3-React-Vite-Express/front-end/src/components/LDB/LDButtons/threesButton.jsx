@@ -1,6 +1,8 @@
 export default function ThreesBTN({  setData, setPage, setContent  }){
     const clickHandler = async (event) => {
         const res = await fetch(`https://api.pvpscalpel.com/LDB/3v3`);
+        // const res = await fetch(`http://localhost:59534/LDB/3v3`);
+
         let reqData = await res.json();
         let rank = 1;
         const paginatedData = [];
@@ -13,12 +15,22 @@ export default function ThreesBTN({  setData, setPage, setContent  }){
                    const achieves = char?.achieves?.['3s'] ?? undefined;
 
                     if(achieves){
-                        const XPRate = achieves.name.replace(`Three's Company: `, ``);
-                        const XPName = `Three's Company: `;
+                        let XPRate;
+                        let XPName = undefined;
+
+                        if (achieves.name) {
+                            XPRate = achieves.name ? achieves.name.replace(`Three's Company: `, ``): achieves;
+                            XPName = `Three's Company: `;
+                        } else {
+                            XPRate = achieves
+                        }
 
                         char.XP = {
                             name: XPName,
                             description: XPRate
+                        }
+                        if(XPName == undefined) {
+                            char.XP = undefined
                         }
                         
                     };

@@ -7,7 +7,7 @@ export default function CharXP({  XP  }) {
                     <td key={XP._id}>{XP.name}<br /><b>{XP.description}</b></td>
                 
             )
-        } else {
+        } else if(XP.name){
             return (
                 
                     <td key={XP._id}>{XP.name}</td>
