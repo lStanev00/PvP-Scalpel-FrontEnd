@@ -70,7 +70,7 @@ const helpFetch = {
                         seasonMatchStatistics: undefined,
                         weeklyMatchStatistics: undefined
                     },
-                    lastSeason: undefined,
+                    lastSeasonLadder: undefined,
                     record: 0
                 },
                 '3v3': {
@@ -80,7 +80,7 @@ const helpFetch = {
                         seasonMatchStatistics: undefined,
                         weeklyMatchStatistics: undefined
                     },
-                    lastSeason: undefined,
+                    lastSeasonLadder: undefined,
                     record: 0
                 },
                 rbg: {

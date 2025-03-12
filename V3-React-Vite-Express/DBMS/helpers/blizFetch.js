@@ -23,6 +23,7 @@ async function fetchData(server, realm, name) {
         // let data = await getCharProfile(server, realm, name);
         let data = await helpFetch.getCharProfile(server, realm, name, headers);
         result.name = data.name;
+        result.server = server;
         result.playerRealmSlug = {
             name: data.realm.name,
             slug: data.realm.slug
