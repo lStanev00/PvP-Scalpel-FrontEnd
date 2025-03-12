@@ -8,12 +8,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 async function fetchData(server, realm, name) {
     name = name.toLowerCase();
     const result = {};
-    let accessToken
-    try { // Fetch the access token
-        accessToken = await helpFetch.getAccessToken(clientId, clientSecret);
-    } catch (error) {
-        console.log(`Can't fetch token`)
-    }
+    let accessToken = await helpFetch.getAccessToken(clientId, clientSecret);
 
     const headers = {
         headers: {
