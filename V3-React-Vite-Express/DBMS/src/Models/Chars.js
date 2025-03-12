@@ -3,13 +3,34 @@ import mongoose from 'mongoose';
 const ratingSchema = new mongoose.Schema({
     solo: { type: mongoose.Schema.Types.Mixed },
     solo_bg: { type: mongoose.Schema.Types.Mixed },
-    '2v2': { type: mongoose.Schema.Types.Mixed },
-    '3v3': { type: mongoose.Schema.Types.Mixed },
-    rbg: { type: mongoose.Schema.Types.Mixed }
+    '2v2': {
+        currentSeason: {
+            rating: {default: 0},
+            title: { type: mongoose.Schema.Types.Mixed, default: undefined },
+            seasonMatchStatistics: { type: mongoose.Schema.Types.Mixed, default: undefined },
+            weeklyMatchStatistics: { type: mongoose.Schema.Types.Mixed, default: undefined }
+        },
+        lastSeasonLadder: { type: mongoose.Schema.Types.Mixed, default: undefined },
+        record: {default: 0}
+    },
+    '3v3': {
+        currentSeason: {
+            rating: {default: 0},
+            title: { type: mongoose.Schema.Types.Mixed, default: undefined },
+            seasonMatchStatistics: { type: mongoose.Schema.Types.Mixed, default: undefined },
+            weeklyMatchStatistics: { type: mongoose.Schema.Types.Mixed, default: undefined }
+        },
+        lastSeasonLadder: { type: mongoose.Schema.Types.Mixed, default: undefined },
+        record: {default: 0}
+    },
+    rbg: {
+        rating: {default: 0},
+        lastSeasonLadder: {default: undefined},
+    }
 }, { _id: false });
 
 const achievementsSchema = new mongoose.Schema({
-    points: Number,
+    points: Number, // Collected
     "2s": { type: mongoose.Schema.Types.Mixed },
     "3s": { type: mongoose.Schema.Types.Mixed },
     BG: { type: mongoose.Schema.Types.Mixed },
@@ -35,13 +56,13 @@ const CharSchema = new mongoose.Schema({
     faction: String, // Collected
     race: String, // Collected
     class: {name: String, media: String}, // Collected
-    activeSpec: {name: String, media: String},
+    activeSpec: {name: String, media: String}, // Collected
     allSpecs,
-    rating: ratingSchema,
+    rating: ratingSchema, // Collected
     achieves: achievementsSchema,
     media: mediaSchema,
     checkedCount: Number,
-    region: String,
+    server: String, // Collected
     gear: {
         head,
         neck,
@@ -52,7 +73,7 @@ const CharSchema = new mongoose.Schema({
         tabard,
         wrist,
         hands,
-        wast,
+        waist,
         legs,
         feet,
         ring1,
