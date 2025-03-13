@@ -1,3 +1,5 @@
+import achievesData from "./achievesData.js";
+
 const helpFetch = {
     getAccessToken : async function (clientId, clientSecret) {
         const tokenUrl = 'https://eu.battle.net/oauth/token';
@@ -209,8 +211,201 @@ const helpFetch = {
             }
         }
         return 0 // Keep 0 if not found
-    }
+    },
+    getAchievXP: async function (href, headers, points) {
+        try {
+            const data = await (await helpFetch.fetchWithLocale(href, headers)).json();
+
+            const achievementsMAP = new Map();
+
+            for (const element of data.achievements) {
+                achievementsMAP.set(element.id, element)
+            }            
+            const result = await filterAchiev(achievementsMAP, points, headers);
+            return result
+        } catch (error) {
+            console.log(error)
+            const result = filterAchiev(undefined, undefined, undefined);
+            return result
+        }
+    },
+    fetchWithLocale: async function (url, options = {}) {
+        let apiUrl = new URL(url);
+        apiUrl.searchParams.append("locale", "en_US");
+      
+        return fetch(apiUrl, options);
+      }
 }
 
 
+async function filterAchiev (achievements, points, headers) {
+    let result = {
+        points: points, // Collected
+        "2s": {
+            name: undefined
+        },
+        "3s": {
+            name: undefined
+        },
+        solo: {
+            name:undefined
+        },
+        RBG: {
+            XP: {
+                name: undefined,
+            },
+            WINS: {
+                name: undefined
+            }
+        },
+        Blitz: {
+            XP: {
+                name: undefined,
+            },
+            WINS: {
+                name: undefined
+            }
+        },
+    }
+    if (!achievements) return result
+    // Get the 2s XP
+    for (const {key, name: dataName, id: dataID} of achievesData["2v2"]) {
+        let match = achievements.get(dataID)
+        if (match && match.criteria.is_completed){
+            try {
+                const data = await(await helpFetch.fetchWithLocale(match.achievement.key.href, headers)).json();
+                const twosResult = {
+                    name: data.name,
+                    description: data.description,
+                    media: await helpFetch.getMedia(data, "media", headers)
+                }
+                result["2s"] = twosResult;
+            } catch (error) {
+                console.log(error);
+            }
+            break;  
+        }
+    }
+    // Get the 3s XP
+    for (const {key, name: dataName, id: dataID} of achievesData["3v3"]) {
+        let match = achievements.get(dataID);
+        if (match && match.criteria.is_completed){
+            try {
+                const data = await(await helpFetch.fetchWithLocale(match.achievement.key.href, headers)).json();
+                const threesResult = {
+                    name: data.name,
+                    description: data.description,
+                    media: await helpFetch.getMedia(data, "media", headers)
+                }
+                result["3s"] = threesResult;
+            } catch (error) {
+                console.log(error);
+            }
+            break;  
+        }
+    }
+    // Get the soloShuffle XP
+    for (const {key, name, id: dataID} of achievesData["soloShuffle"]) {
+        let match = achievements.get(dataID);
+        if (match && match.criteria.is_completed) try {
+            const data = await(await helpFetch.fetchWithLocale(match.achievement.key.href, headers)).json();
+            const soloResult = {
+                name: data.name,
+                description: data.description,
+                media: await helpFetch.getMedia(data, "media", headers)
+            }
+            result["solo"] = soloResult;
+            break;
+        } catch (error) {
+            console.log(error); break;
+        }
+    }
+    // Get RBG & Blitz XP!
+    for (const {key, name, id: dataID} of achievesData["BG"]) {
+        let match = achievements.get(dataID);
+        if (match && match.criteria.is_completed) try {
+            const data = await(await helpFetch.fetchWithLocale(match.achievement.key.href, headers)).json();
+            const BGXPResult = {
+                name: data.name,
+                description: data.description,
+                media: await helpFetch.getMedia(data, "media", headers)
+            }
+            result["RBG"].XP = BGXPResult;
+            result["Blitz"].XP = BGXPResult;
+            break;
+        } catch (error) {
+            console.log(error); break;
+        }
+    }
+    // Get the RBG WINS
+    for (const {key, name, id: dataID} of achievesData["RBGWins"]) {
+        let match = achievements.get(dataID);
+        if (match && match.criteria.is_completed) try {
+            const data = await(await helpFetch.fetchWithLocale(match.achievement.key.href, headers)).json();
+            const RBGWinsResult = {
+                name: data.name,
+                description: data.description,
+                media: await helpFetch.getMedia(data, "media", headers)
+            }
+            result["RBG"].WINS = RBGWinsResult;
+            break;
+        } catch (error) {
+            console.log(error); break;
+        }
+    }
+
+    let strategistChecker = undefined;
+    try {
+        const URI = `https://eu.api.blizzard.com/data/wow/achievement-category/15270?namespace=static-11.1.0_59095-eu&locale=en_US`
+        strategistChecker = await(await fetch(URI, headers)).json();
+        strategistChecker = (strategistChecker.achievements)
+            .filter(ach => ach.name.startsWith("Strategist: "))
+            .sort((a, b) => {
+                const aCheck = Number(a.name.replace("Strategist: The War Within Season ", ""));
+                const bCheck = Number(b.name.replace("Strategist: The War Within Season ", ""));
+                
+                return bCheck - aCheck;
+            });
+    } catch (error) {
+        console.log(error);
+    }
+    if (strategistChecker) {
+        for (const {  key, name, id: dataID  } of strategistChecker) {
+            let match = achievements.get(dataID);
+
+            if(match && match.criteria.is_completed) {
+                try {
+                    const data = await(await helpFetch.fetchWithLocale(match.achievement.key.href, headers)).json();
+                    const BlitzWinsResult = {
+                        name: data.name,
+                        description: data.description,
+                        media: await helpFetch.getMedia(data, "media", headers)
+                    }
+                    result["Blitz"].WINS = BlitzWinsResult;
+                    return result
+                } catch (error) {
+                    console.log(error); break;
+                }
+            }
+        }
+    }
+    // Get the Blitz WINS
+    for (const {key, name, id: dataID} of achievesData["BlitzWins"]) {
+        let match = achievements.get(dataID);
+        if (match && match.criteria.is_completed)
+            try {
+                const data = await(await helpFetch.fetchWithLocale(match.achievement.key.href, headers)).json();
+                const BlitzWinsResult = {
+                    name: data.name,
+                    description: data.description,
+                    media: await helpFetch.getMedia(data, "media", headers)
+                }
+                result["Blitz"].WINS = BlitzWinsResult;
+                break;
+            } catch (error) {
+                console.log(error); break;
+            }
+    }
+    return result
+}
 export default helpFetch

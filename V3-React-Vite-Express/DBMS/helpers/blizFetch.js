@@ -42,15 +42,16 @@ async function fetchData(server, realm, name) {
         result.rating = await helpFetch.getRating(data.pvp_summary.href, headers, server, result.name);
         result.rating[`2v2`].record = await helpFetch.getAchievById(data.achievements_statistics.href,headers, 370)
         result.rating[`3v3`].record = await helpFetch.getAchievById(data.achievements_statistics.href,headers, 595)
+        result.achieves = await helpFetch.getAchievXP(data.achievements.href, headers, result.achieves)
         console.log('Data: ', data)
     } catch (error) {
         console.log(error)
     }
 
-    console.log('Result: ', result);
+    console.log(result);
     debugger
 }
 
 
 
-fetchData(`eu`, `chamber-of-aspects`, `Lychezar`)
+fetchData(`eu`, `chamber-of-aspects`, `Powerlifter`)

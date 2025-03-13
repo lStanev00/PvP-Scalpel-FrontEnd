@@ -103,7 +103,7 @@ const achievesData = {
           "id": 2091
         }
       ],
-    "RBG": [
+    "BG": [
         {
           "key": {
             "href": "https://eu.api.blizzard.com/data/wow/achievement/6942?namespace=static-11.1.0_59095-eu"
