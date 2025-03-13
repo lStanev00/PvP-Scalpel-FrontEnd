@@ -1,6 +1,10 @@
 import dotenv from 'dotenv';
 import helpFetch from './blizFetch-helpers/endpointFetchesBliz.js'
+import { DBconnect } from '../src/helpers/mongoHelper.js';
+import Char from '../src/Models/chars.js';
 dotenv.config({ path: '../../.env' });
+
+await DBconnect()
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -42,7 +46,10 @@ async function fetchData(server, realm, name) {
         result.rating = await helpFetch.getRating(data.pvp_summary.href, headers, server, result.name);
         result.rating[`2v2`].record = await helpFetch.getAchievById(data.achievements_statistics.href,headers, 370)
         result.rating[`3v3`].record = await helpFetch.getAchievById(data.achievements_statistics.href,headers, 595)
-        result.achieves = await helpFetch.getAchievXP(data.achievements.href, headers, result.achieves)
+        result.achieves = await helpFetch.getAchievXP(data.achievements.href, headers, result.achieves);
+        result.media = await helpFetch.getCharMedia(data.media.href, headers);
+        const memTry = new Char(result);
+        await memTry.save();
         console.log('Data: ', data)
     } catch (error) {
         console.log(error)
@@ -54,4 +61,4 @@ async function fetchData(server, realm, name) {
 
 
 
-fetchData(`eu`, `chamber-of-aspects`, `Powerlifter`)
+fetchData(`eu`, `chamber-of-aspects`, `Lychezar`)
