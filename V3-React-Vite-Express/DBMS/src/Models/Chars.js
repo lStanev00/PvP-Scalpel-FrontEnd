@@ -48,7 +48,7 @@ const gearSchema = new mongoose.Schema({
     head: mongoose.Schema.Types.Mixed,
     neck: mongoose.Schema.Types.Mixed,
     shoulder: mongoose.Schema.Types.Mixed,
-    clock: mongoose.Schema.Types.Mixed,
+    cloak: mongoose.Schema.Types.Mixed,
     chest: mongoose.Schema.Types.Mixed,
     shirt: mongoose.Schema.Types.Mixed,
     tabard: mongoose.Schema.Types.Mixed,
