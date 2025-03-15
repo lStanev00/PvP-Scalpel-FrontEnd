@@ -23,11 +23,10 @@ async function fetchData(server, realm, name) {
     }
 
     try {
-        // let data = await getCharProfile(server, realm, name);
         let data = await helpFetch.getCharProfile(server, realm, name, headers);
         result.name = data.name;
         result.server = server;
-        result.playerRealmSlug = {
+        result.playerRealm = {
             name: data.realm.name,
             slug: data.realm.slug
         }
@@ -48,6 +47,9 @@ async function fetchData(server, realm, name) {
         result.rating[`3v3`].record = await helpFetch.getAchievById(data.achievements_statistics.href,headers, 595)
         result.achieves = await helpFetch.getAchievXP(data.achievements.href, headers, result.achieves);
         result.media = await helpFetch.getCharMedia(data.media.href, headers);
+        result.gear = await helpFetch.getCharGear(data.equipment.href, headers);
+        result.equipmentStats = await helpFetch.getStats(data.statistics.href, headers)
+
         const memTry = new Char(result);
         await memTry.save();
         console.log('Data: ', data)
@@ -61,4 +63,4 @@ async function fetchData(server, realm, name) {
 
 
 
-fetchData(`eu`, `chamber-of-aspects`, `Lychezar`)
+fetchData(`eu`, `dun-morogh`, `Drunkenele`)

@@ -247,6 +247,25 @@ const helpFetch = {
         } catch (error) {
             console.log(error)
         }
+    },
+    getCharGear: async function (href, headers) {
+        try {
+            const data = await (await this.fetchWithLocale(href, headers)).json();
+            const result = await formatGearData(data, headers);
+            return result
+        } catch (error) {
+            return undefined
+        }
+    },
+    getStats: async function(href, headers){
+        try {
+            const data = await(await this.fetchWithLocale(href, headers)).json();
+            const result = extractStats(data);
+            return result
+        } catch (error) {
+            console.log(error);
+            return undefined
+        }
     }
 }
 
@@ -421,4 +440,95 @@ async function filterAchiev (achievements, points, headers) {
     }
     return result
 }
+
+async function formatGearData(apiResponse, headers) {
+    const gear = {};
+
+    for (const item of apiResponse.equipped_items) {
+        let slot = item.slot.type.toLowerCase();
+
+        // Handle mismatches in slot names between API and schema
+        const slotMap = {
+            "cloak": "clock",
+            "main_hand": "wep",
+            "off_hand": "offHand",
+            "finger_1": "ring1",
+            "finger_2": "ring2",
+            "trinket_1": "trinket1",
+            "trinket_2": "trinket2",
+        };
+        slot = slotMap[slot] || slot;
+
+        const media = await helpFetch.getMedia(item, "media", headers);
+
+        const sockets = item.sockets
+            ? await Promise.all(
+                  item.sockets.map(async (socket) => ({
+                      gemName: socket.item.name,
+                      gemId: socket.item.id,
+                      media: await helpFetch.getMedia(socket, "media", headers),
+                      bonus: socket.display_string,
+                  }))
+              )
+            : [];
+
+        gear[slot] = {
+            name: item.name,
+            id: item.item.id,
+            media,
+            level: item.level?.value || 0,
+            stats: item.stats?.map((stat) => ({
+                type: stat.type.name,
+                value: stat.value,
+            })) || [],
+            sockets,
+            enchantments: item.enchantments?.map((enchant) => ({
+                description: enchant.display_string,
+                id: enchant.enchantment_id,
+            })) || [],
+            transmog: item.transmog
+                ? {
+                      name: item.transmog.item.name,
+                      id: item.transmog.item.id,
+                  }
+                : null,
+        };
+    }
+
+    return gear;
+}
+
+function extractStats(data) {
+    let primaryStat = ["Unknown", 0];
+    console.log(data)
+    const stats = {
+        Strength: data?.strength?.effective,
+        Agility: data?.agility?.effective,
+        Intellect: data?.intellect?.effective
+    };
+    for (let [key, value] of Object.entries(stats)) {
+        if (value > primaryStat[1]) {
+            primaryStat = [key, value];
+        }
+    }
+
+    
+    return {
+        Primary: primaryStat,
+        Stamina: data?.stamina?.effective || 0,
+        Armor: data?.armor?.effective || 0,
+        Versatility: `${data?.versatility_damage_done_bonus?.toFixed(1) || "0"}%`,
+        Haste: `${data?.melee_haste?.value?.toFixed(1) || data?.ranged_haste?.value?.toFixed(1) || "0"}%`,
+        Mastery: `${data?.mastery?.value?.toFixed(1) || "0"}%`,
+        CriticalStrike: `${data?.melee_crit?.value?.toFixed(1) || data?.ranged_crit?.value?.toFixed(1) || "0"}%`,
+        Speed: `${data?.speed?.rating_bonus?.toFixed(1) || "0"}%`,
+        Leech: `${data?.lifesteal?.value?.toFixed(1) || "0"}%`,
+        Dodge: `${data?.dodge?.value?.toFixed(1) || "0"}%`,
+        Parry: `${data?.parry?.value?.toFixed(1) || "0"}%`,
+        Block: `${data?.block?.value?.toFixed(1) || "0"}%`,
+        Avoidance: `${data?.avoidance?.value?.toFixed(1) || "0"}%`
+    };
+    
+}
+
 export default helpFetch
