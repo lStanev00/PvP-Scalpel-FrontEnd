@@ -1,8 +1,15 @@
 import achievesData from "./achievesData.js";
+import { setToken, getToken } from "./tokenCache.js"
 
 const helpFetch = {
     getAccessToken : async function (clientId, clientSecret) {
         const tokenUrl = 'https://eu.battle.net/oauth/token';
+
+        const cachedToken = getToken(); // Check if the token is cached and valid
+        if (cachedToken) {
+            console.log(`Token: ${cachedToken}\nIs cached!`);
+            return cachedToken;
+        }
         
         try {
             const response = await fetch(tokenUrl, {
@@ -19,8 +26,9 @@ const helpFetch = {
             }
     
             const data = await response.json();
-            let token = data.access_token;
-            return token;
+            setToken(data.access_token, data.expires_in);
+
+            return data.access_token;
         } catch (error) {
             console.error('Error fetching access token:', error);
             throw error;
@@ -93,7 +101,6 @@ const helpFetch = {
                 }
             }
             const brackets = (await (await fetch(path, headers)).json()).brackets;
-            console.log(brackets)
             for (const bracket of brackets) {
                 const data = await ( (await fetch(bracket.href, headers)).json());
                 const seasonID = data.season.id;
@@ -154,7 +161,6 @@ const helpFetch = {
             }
             return result
         } catch (error) {
-            console.log(error)
             return {
                 solo: {
                 },
