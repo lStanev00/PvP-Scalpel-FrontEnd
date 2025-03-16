@@ -7,14 +7,14 @@ import cors from 'cors'
 const app = express();
 const port = 59534;
 
+app.disable("x-powered-by");
+
 await DBconnect();
 const allowedOrigins = [
   "https://pvpscalpel.com",
   "https://www.pvpscalpel.com",
-  "http://localhost:5173",
-  "http://109.160.22.20:59534" // If developing locally
+  "http://localhost:5173" // If needed for local development
 ];
-
 
 // Enable CORS
 app.use(
