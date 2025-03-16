@@ -483,6 +483,7 @@ async function getSeason() {
       const DBMSreq = await fetch(`http://localhost:59534/member`, {
         method: `POST`,
         headers: {
+          "Origin": "https://pvpscalpel.com",
           "Content-Type": "application/json",
           "in-auth": `${token}`,
           'Cache-Control': 'no-cache',  // prevents cached responses
