@@ -93,6 +93,7 @@ const helpFetch = {
                 }
             }
             const brackets = (await (await fetch(path, headers)).json()).brackets;
+            console.log(brackets)
             for (const bracket of brackets) {
                 const data = await ( (await fetch(bracket.href, headers)).json());
                 const seasonID = data.season.id;
@@ -154,6 +155,36 @@ const helpFetch = {
             return result
         } catch (error) {
             console.log(error)
+            return {
+                solo: {
+                },
+                solo_bg: {
+                },
+                '2v2': {
+                    currentSeason : {
+                        rating: 0,
+                        title: undefined,
+                        seasonMatchStatistics: undefined,
+                        weeklyMatchStatistics: undefined
+                    },
+                    lastSeasonLadder: undefined,
+                    record: 0
+                },
+                '3v3': {
+                    currentSeason : {
+                        rating: 0,
+                        title: undefined,
+                        seasonMatchStatistics: undefined,
+                        weeklyMatchStatistics: undefined
+                    },
+                    lastSeasonLadder: undefined,
+                    record: 0
+                },
+                rbg: {
+                    rating: undefined,
+                    lastSeasonLadder: undefined,
+                }
+            }
         }
     },
     getPvPTitle: async function (href, headers) {
@@ -500,7 +531,6 @@ async function formatGearData(apiResponse, headers) {
 
 function extractStats(data) {
     let primaryStat = ["Unknown", 0];
-    console.log(data)
     const stats = {
         Strength: data?.strength?.effective,
         Agility: data?.agility?.effective,
