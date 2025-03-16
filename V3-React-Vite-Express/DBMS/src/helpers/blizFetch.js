@@ -12,44 +12,71 @@ async function fetchData(server, realm, name) {
 
     const headers = {
         headers: {
-          Authorization: `Bearer ${accessToken}`, // Use header for authentication
-          'Cache-Control': 'no-cache',  // prevents cached responses
+          Authorization: `Bearer ${accessToken}`, 
+          'Cache-Control': 'no-cache',  
           'Pragma': 'no-cache',
         },
     }
 
     try {
+        // Fetch the main character profile
         let data = await helpFetch.getCharProfile(server, realm, name, headers);
-        result.name = data.name;
-        result.server = server;
-        result.playerRealm = {
-            name: data.realm.name,
-            slug: data.realm.slug
-        }
-        result.blizID = data.id;
-        result.level = Number(data.level);
-        result.faction = data.faction.name
-        result.lastLogin = data.last_login_timestamp;
-        result.achieves = {points: Number(data.achievement_points)};
-        result.class = {name :data.character_class.name};
-        result.class.media = await helpFetch.getMedia(data, 'character_class', headers);
-        result.race = data.race.name
-        result.activeSpec = {
-            name: data.active_spec.name,
-            media: await helpFetch.getMedia(data , 'active_spec', headers)
-        }
-        result.rating = await helpFetch.getRating(data.pvp_summary.href, headers, server, result.name);
-        result.rating[`2v2`].record = await helpFetch.getAchievById(data.achievements_statistics.href,headers, 370)
-        result.rating[`3v3`].record = await helpFetch.getAchievById(data.achievements_statistics.href,headers, 595)
-        result.achieves = await helpFetch.getAchievXP(data.achievements.href, headers, result.achieves);
-        result.media = await helpFetch.getCharMedia(data.media.href, headers);
-        result.gear = await helpFetch.getCharGear(data.equipment.href, headers);
-        result.equipmentStats = await helpFetch.getStats(data.statistics.href, headers)
+        if (!data || !data.id) return false;
 
-        return result
+        const result = {
+            name: data.name,
+            server,
+            playerRealm: {
+                name: data.realm.name,
+                slug: data.realm.slug
+            },
+            blizID: data.id,
+            level: Number(data.level),
+            faction: data.faction.name,
+            lastLogin: data.last_login_timestamp,
+            achieves: { points: Number(data.achievement_points) },
+            class: { name: data.character_class.name },
+            race: data.race.name,
+            activeSpec: { name: data.active_spec.name }
+        };
+
+        // Fetch dependent data in parallel
+        const [
+            classMedia,
+            activeSpecMedia,
+            rating,
+            rating2v2Record,
+            rating3v3Record,
+            achievements,
+            media,
+            gear,
+            equipmentStats
+        ] = await Promise.all([
+            helpFetch.getMedia(data, 'character_class', headers),
+            helpFetch.getMedia(data, 'active_spec', headers),
+            helpFetch.getRating(data.pvp_summary.href, headers, server, result.name),
+            helpFetch.getAchievById(data.achievements_statistics.href, headers, 370),
+            helpFetch.getAchievById(data.achievements_statistics.href, headers, 595),
+            helpFetch.getAchievXP(data.achievements.href, headers, result.achieves),
+            helpFetch.getCharMedia(data.media.href, headers),
+            helpFetch.getCharGear(data.equipment.href, headers),
+            helpFetch.getStats(data.statistics.href, headers)
+        ]);
+
+        // Assign fetched values to result
+        result.class.media = classMedia;
+        result.activeSpec.media = activeSpecMedia;
+        result.rating = rating;
+        result.rating["2v2"].record = rating2v2Record;
+        result.rating["3v3"].record = rating3v3Record;
+        result.achieves = achievements;
+        result.media = media;
+        result.gear = gear;
+        result.equipmentStats = equipmentStats;
+
+        return result;
     } catch (error) {
         return false
-        throw new Error(error);
     }
 }
 export default fetchData
