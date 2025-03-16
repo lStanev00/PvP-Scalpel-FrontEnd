@@ -1,10 +1,6 @@
 import dotenv from 'dotenv';
 import helpFetch from './blizFetch-helpers/endpointFetchesBliz.js'
-import { DBconnect } from './mongoHelper.js';
-// import Char from '../src/Models/Chars.js';
 dotenv.config({ path: '../../.env' });
-
-// await DBconnect()
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -50,17 +46,12 @@ async function fetchData(server, realm, name) {
         result.gear = await helpFetch.getCharGear(data.equipment.href, headers);
         result.equipmentStats = await helpFetch.getStats(data.statistics.href, headers)
 
-        // const memTry = new Char(result);
-        // await memTry.save();
-        console.log('Data: ', data)
+        return result
     } catch (error) {
-        console.log(error)
+        return false
+        throw new Error(error);
     }
-
-    console.log(result);
-    debugger
 }
-
-
-
-fetchData(`eu`, `dun-morogh`, `Drunkenele`)
+export default fetchData
+// Example usage
+// fetchData(`eu`, `chamber-of-aspects`, `Lychezar`)
