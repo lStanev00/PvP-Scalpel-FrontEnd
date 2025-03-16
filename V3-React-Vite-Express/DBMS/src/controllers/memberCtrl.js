@@ -29,11 +29,8 @@ async function onPost(req, res) {
     const Authorization = validateToken(req.headers[`in-auth`], JWT_SECRET);
 
     if(!Authorization) return res.status(401).json({403: `Auth Error`});
-    // console.log(`Authorized!`);
     
     let mem = Authorization
-    console.log(mem);
-    // debugger
     
 
     
