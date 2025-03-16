@@ -26,4 +26,4 @@ and are NOT covered under this proprietary license.
 
 You are responsible for reviewing and complying with the licenses of any included third-party software.
 
-For licensing inquiries, contact: Lychezarcho@gmail.com.
+For licensing inquiries, contact: l.stanev2000@gmail.com.
