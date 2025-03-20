@@ -4,6 +4,7 @@ import Home from "./pages/home";
 import LDB from "./pages/LDB";
 import RosterPage from "./pages/roster";
 import GoToTopButton from "./components/topBtn";
+import CharDetails from "./pages/charDetails";
 
 function App() {
     return (
@@ -12,7 +13,7 @@ function App() {
                 <div className="page-wrapper">
                     <header className="header">
                         <div className="logo">
-                            <img className="logo-img" src="./logo/logo_resized.png" alt="logo pic" />
+                            <img className="logo-img" src="/logo/logo_resized.png" alt="logo pic" />
                             PvP Scalpel
                         </div>
                         <Navigation />
@@ -22,6 +23,7 @@ function App() {
                             <Route path='/' element={<Home />}></Route>
                             <Route path='/roster' element={<RosterPage />}></Route>
                             <Route path='/leaderboard' element={<LDB />}></Route>
+                            <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route>
                         </Routes>
                         
                     </main>

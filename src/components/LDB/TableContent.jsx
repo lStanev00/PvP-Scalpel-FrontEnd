@@ -67,7 +67,7 @@ export default function TableContent({  page, content, refs  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
+                            <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
