@@ -147,12 +147,14 @@ function renderPvPCard(title, bracketData) {
             </div>
             <div className={Style["pvp-spec"]}>
             {/* This Season */}
-
+                
                 <div className={Style["pvp-details"]}>
-                        <p>Rating</p>
-                        <img src={bracketData.currentSeason.title.media} alt="PvP Rank Icon" />
+                    <p>Rating</p>
+                    <img src={bracketData.currentSeason.title.media} alt="PvP Rank Icon" />
+                    <div className={Style["pvp-card-info"]}>
                         <strong>{bracketData.currentSeason.title.name}</strong>
-                        <span className={Style["pvp-rating"]}> {bracketData.currentSeason.rating}</span>
+                        <span className={Style["pvp-rating"]}> {bracketData.currentSeason.rating}</span>  
+                    </div>
 
                 </div>
 
@@ -161,8 +163,8 @@ function renderPvPCard(title, bracketData) {
                 {bracketData.achieves && (
                     <div className={Style["pvp-details"]}>
                         <p>Record</p>
+                        <img src={bracketData.achieves.media} alt="PvP Rank Icon" />
                         <div className={Style['pvp-card-info']}>
-                            <img src={bracketData.achieves.media} alt="PvP Rank Icon" />
                             <strong>{bracketData.achieves.name}</strong>
                             {bracketData.record && (<span className={Style["pvp-rating"]}> {bracketData.record}</span>)}
                         </div>
