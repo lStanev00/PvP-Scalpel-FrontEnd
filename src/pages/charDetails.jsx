@@ -87,8 +87,6 @@ export default function CharDetails() {
                         <h1>Solo Shuffle Ratings</h1>
                         <div className={Style["pvp-container"]}>
                             {Object.entries(shuffleRatings).map(([key, bracket]) => {
-                                console.log(bracket)
-
                                 let [bracketName, charClass, spec] = key.split(`-`);
                                 const title = spec.replace(/^./, match => match.toUpperCase());
                                 return renderPvPCard(title, bracket)
