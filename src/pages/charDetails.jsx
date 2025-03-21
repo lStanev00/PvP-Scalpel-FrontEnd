@@ -133,7 +133,7 @@ export default function CharDetails() {
 
 
                 {/* Achievements Section */}
-                <div className={Style["section"]}>
+                {/* <div className={Style["section"]}>
                     <h1>Achievements ({data.achieves.points} Points)</h1>
                     <div className={Style["card"]}>
                         <img src="https://render.worldofwarcraft.com/eu/icons/56/achievement_arena_2v2_4.jpg" alt="Achievement" />
@@ -142,14 +142,14 @@ export default function CharDetails() {
                             <span>Earn a 1750 personal rating in the 2v2 bracket of the arena.</span>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Talent Trees Section */}
-                <div className={Style["section"]}>
-                    <h3>Talent Trees</h3>
+                {/* <div className={Style["section"]}> */}
+                    {/* <h3>Talent Trees</h3>
                     <button className={Style["button"]}>Copy Talent Code</button>
                     <p>Protection Warrior Talents</p>
-                </div>
+                </div> */}
             </section>
         </>
     );

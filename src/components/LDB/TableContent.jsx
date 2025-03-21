@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import CharXP from "./CharXP";
 
 export default function TableContent({  page, content, refs  }) {
+    const navigate = useNavigate();
+    const clickIt = (realm, name) => {navigate(`/check/eu/${realm}/${name}`)}
 
     if (content == `blitzContent`){
         try {
@@ -22,9 +25,10 @@ export default function TableContent({  page, content, refs  }) {
                     <tbody id="leaderboard-body">
                         {
                         page.map(char =>{
+                            console.log(char)
                             return (
                                 
-                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
+                                  <tr onClick={() => {clickIt(char.playerRealmSlug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
@@ -67,7 +71,7 @@ export default function TableContent({  page, content, refs  }) {
                         page.map(char =>{
                             return (
                                 
-                            <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
+                            <tr onClick={() => {clickIt(char.playerRealmSlug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
@@ -109,7 +113,7 @@ export default function TableContent({  page, content, refs  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
+                                  <tr onClick={() => {clickIt(char.playerRealmSlug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
@@ -152,7 +156,7 @@ export default function TableContent({  page, content, refs  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
+                                  <tr onClick={() => {clickIt(char.playerRealmSlug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
@@ -195,7 +199,7 @@ export default function TableContent({  page, content, refs  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr key={char?._id} ref={el => (refs.current[char?._id] = el)}>
+                                  <tr onClick={() => {clickIt(char.playerRealmSlug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
