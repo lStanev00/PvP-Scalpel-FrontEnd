@@ -81,7 +81,7 @@
 .pvp-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px; 
+    gap: 9px; 
     justify-content: center;
 }
 
@@ -95,19 +95,13 @@
 }
 
 .pvp-spec {
-    /* display: flex;
-    align-items: center;
-    margin-bottom: 10px; */
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    
 }
 
 .pvp-spec img {
     width: 48px;
     height: 48px;
-    /* margin-right: 10px;/ */
     mix-blend-mode: lighten;
     background-color: transparent;
     filter: contrast(2) brightness(1.1);
@@ -119,25 +113,40 @@
 }
 
 .pvp-rating {
-    color: #0ea5e9;
+    color: #facc15;
     font-size: 14px;
-}
-
-.pvp-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
 }
 .pvp-details {
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: auto;
+    gap: 8px;
+  
+    justify-content: center;
+    align-content: start;
+    justify-items: center;
     background: #334155;
     padding: 12px;
     border-radius: 6px;
     text-align: center;
     flex: 1;
     margin: 5px;
-
 }
-.pvp-stat-box {
+.pvp-card-info {
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: auto;
+    gap: 8px;
+    grid-auto-flow: row dense;
+  
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
     background: #334155;
     padding: 12px;
     border-radius: 6px;
@@ -146,16 +155,8 @@
     margin: 5px;
 }
 
-.pvp-stat-box small {
-    font-size: 12px;
-    color: #aaa;
-    display: block;
-}
-
-.pvp-stat-box span {
-    font-size: 14px;
-    font-weight: bold;
-    color: #ffffff;
+.pvp-details p {
+    color: #0ea5e9;
 }
 
 .card {
@@ -185,10 +186,15 @@
 .spec-title {
     color: #1abc9c;
     text-align: center;
+    font-weight: bold;
+    font-size: 130%;
 }
 
 .spec-border-div {
-    margin-bottom: 4%;
+    padding: 5px 12px;
+}
+
+.inner-section {
     border: 2px solid rgba(255, 204, 0, 0.6); /* Gold outline */
     padding: 5px 12px;
     border-radius: 6px;

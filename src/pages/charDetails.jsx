@@ -139,26 +139,33 @@ function renderPvPCard(title, bracketData) {
     console.log(bracketData.achieves)
     return (
         <div key={title} className={Style["pvp-card"]}>
+            <section className={Style["inner-section"]}>
+
+                
             <div className={Style["spec-border-div"]}>
-            <h2 className={Style["spec-title"]}>{title}</h2>
+                <p className={Style["spec-title"]}>{title}</p>
             </div>
-            {/* This Season */}
             <div className={Style["pvp-spec"]}>
+            {/* This Season */}
+
                 <div className={Style["pvp-details"]}>
-                <img src={bracketData.currentSeason.title.media} alt="PvP Rank Icon" />
-                    <strong>{bracketData.currentSeason.title.name}</strong>
-                    <br />
-                    <span className={Style["pvp-rating"]}> {bracketData.currentSeason.rating}</span>
+                        <p>Rating</p>
+                        <img src={bracketData.currentSeason.title.media} alt="PvP Rank Icon" />
+                        <strong>{bracketData.currentSeason.title.name}</strong>
+                        <span className={Style["pvp-rating"]}> {bracketData.currentSeason.rating}</span>
+
                 </div>
+
                 {/* XP */}
+
                 {bracketData.achieves && (
                     <div className={Style["pvp-details"]}>
-                    <img src={bracketData.achieves.media} alt="PvP Rank Icon" />
-                        <strong>{bracketData.achieves.name}</strong>
-                        <br />
-                        {bracketData.record && (
-                            <span className={Style["pvp-rating"]}> {bracketData.record}</span>
-                        )}
+                        <p>Record</p>
+                        <div className={Style['pvp-card-info']}>
+                            <img src={bracketData.achieves.media} alt="PvP Rank Icon" />
+                            <strong>{bracketData.achieves.name}</strong>
+                            {bracketData.record && (<span className={Style["pvp-rating"]}> {bracketData.record}</span>)}
+                        </div>
                     </div>
 
                 )}
@@ -192,6 +199,7 @@ function renderPvPCard(title, bracketData) {
                     </tr>
                 </tbody>
             </table>
+            </section>
 
         </div>
     );
