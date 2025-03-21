@@ -104,6 +104,9 @@
     width: 48px;
     height: 48px;
     margin-right: 10px;
+    mix-blend-mode: lighten;
+    background-color: transparent;
+    filter: contrast(2) brightness(1.1);
 }
 
 .pvp-details strong {
