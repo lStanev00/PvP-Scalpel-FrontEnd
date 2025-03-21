@@ -2,13 +2,13 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
-    background: rgba(20, 30, 45, 0.9);
+    background: rgba(20, 30, 45, 0.2); /* base table background */
     border-radius: 8px;
     overflow: hidden;
 }
 
 .pvp-table thead {
-    background: rgba(10, 15, 25, 0.95);
+    background: rgba(10, 15, 25, 0.25); /* header background */
 }
 
 .pvp-table th {
@@ -31,15 +31,15 @@
 }
 
 .pvp-table tbody tr:nth-child(odd) {
-    background: rgba(25, 35, 50, 0.6);
+    background: rgba(25, 35, 50, 0.15); /* odd rows */
 }
 
 .pvp-table tbody tr:nth-child(even) {
-    background: rgba(35, 45, 60, 0.6);
+    background: rgba(35, 45, 60, 0.15); /* even rows */
 }
 
 .pvp-table tbody tr:hover {
-    background: rgba(50, 65, 85, 0.4);
+    background: rgba(50, 65, 85, 0.2); /* hover effect */
 }
 
 /* Text Colors for Readability */
@@ -47,4 +47,3 @@
     font-weight: 400;
     color: #0ea5e9;
 }
-

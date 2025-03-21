@@ -47,7 +47,7 @@ export default function CharDetails() {
 
     return (
         <>
-            <section className={"container"}>
+            <section style={{backgroundImage: `url('${data.media.charImg}')`, backgroundPosition: 'center'}} className={"container"}>
                 {/* Character Banner */}
                 <div className={Style["banner"]}>
                     <img src={data.media.avatar} alt="Character Avatar" />
@@ -58,29 +58,35 @@ export default function CharDetails() {
                     <span className={Style["last-updated"]}>Last updated: {timeAgo(data.updatedAt)}</span>
                     <button className={Style["button"]}>{data.nowUpdating ?  "Updating now!" : "Update Now"}</button>
                 </div>
+                <section className={Style["pvp-div"]}>
 
-                {/* General PvP Ratings Section (2v2, 3v3, RBG) */}
-                {Object.keys(otherRatings).length > 0 && (
-                    <div className={Style["section"]}>
-                        <h1>PvP Ratings</h1>
-                        <div className={Style["pvp-container"]}>
-                            {Object.entries(otherRatings).map(([key, bracket]) => {
-                                let title = String;
-                                if (key ==`rbg`) {
-                                    title = `Rated Battleground`;
-                                    bracket.achieves = data.achieves?.RBG?.XP
-                                } else if (key == `2v2`) {
-                                    title = `Arena 2v2`;
-                                    bracket.achieves = data?.achieves['2s']
-                                } else {
-                                    title = `Arena 3v3`;
-                                    bracket.achieves = data?.achieves['3s']
-                                }
-                                return renderPvPCard(title, bracket)
-                                })}
+                <section className={Style["pvp-section"]}>
+                    {/* General PvP Ratings Section (2v2, 3v3, RBG) */}
+                    {Object.keys(otherRatings).length > 0 && (
+                        <div className={Style["section"]}>
+                            <h1>PvP Ratings</h1>
+                            <div className={Style["pvp-container"]}>
+                                {Object.entries(otherRatings).map(([key, bracket]) => {
+                                    let title = String;
+                                    if (key ==`rbg`) {
+                                        title = `Rated Battleground`;
+                                        bracket.achieves = data.achieves?.RBG?.XP
+                                    } else if (key == `2v2`) {
+                                        title = `Arena 2v2`;
+                                        bracket.achieves = data?.achieves['2s']
+                                    } else {
+                                        title = `Arena 3v3`;
+                                        bracket.achieves = data?.achieves['3s']
+                                    }
+                                    return renderPvPCard(title, bracket)
+                                    })}
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </section>
+
+                <section className={Style["pvp-section"]}>
+                
                 {/* Blitz Section */}
                 {Object.keys(blitzRatings).length > 0 && (
                     <div className={Style["section"]}>
@@ -95,6 +101,11 @@ export default function CharDetails() {
                         </div>
                     </div>
                 )}
+                </section>
+
+
+                <section className={Style["pvp-section"]}>
+
                 {/* Solo Shuffle Section */}
                 {Object.keys(shuffleRatings).length > 0 && (
                     <div className={Style["section"]}>
@@ -108,6 +119,9 @@ export default function CharDetails() {
                         </div>
                     </div>
                 )}
+                </section>
+
+                </section>
 
 
 
@@ -136,7 +150,6 @@ export default function CharDetails() {
 
 // Function to Render PvP Cards
 function renderPvPCard(title, bracketData) {
-    console.log(bracketData.achieves)
     return (
         <div key={title} className={Style["pvp-card"]}>
             <section className={Style["inner-section"]}>

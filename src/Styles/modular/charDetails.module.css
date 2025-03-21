@@ -1,8 +1,9 @@
 .container {
+    display: flex;
     max-width: 900px;
     margin: auto;
     padding: 20px;
-    background: #121b27;
+    background: rgba(18, 27, 39, 0.75);
     color: #c7d5e0;
     border-radius: 8px;
     font-family: Arial, sans-serif;
@@ -11,7 +12,8 @@
 .banner {
     display: flex;
     align-items: center;
-    background: #1e293b;
+    /* background: #1e293b; */
+    background: rgba(30, 41, 59, 0.75);
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -47,6 +49,7 @@
 
 .button {
     background: #0ea5e9;
+    /* background: rgba(14, 165, 233, 0.75); */
     color: #ffffff;
     padding: 8px 12px;
     border: none;
@@ -62,7 +65,8 @@
 .section {
     margin-bottom: 20px;
     padding: 15px;
-    background: #1e293b;
+    /* background: #1e293b; */
+    background: rgba(30, 41, 59, 0.75);
     border-radius: 8px;
 }
 
@@ -79,19 +83,21 @@
 }
 
 .pvp-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    /* width: 100%; */
+    /* grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
     gap: 9px; 
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 
 .pvp-card {
-    background: #26354a;
+    /* background: #26354a; */
+    /* background: rgba(38, 53, 74, 0.75); */
     padding: 20px;
     border-radius: 8px;
     width: 100%;
-    min-width: 280px; /* Ensures it doesn’t get too small */
+    max-width: 280px; /* Ensures it doesn’t get too small */
 }
 
 .pvp-spec {
@@ -103,7 +109,9 @@
     mix-blend-mode: lighten;
     background-color: transparent;
     /* filter: contrast(2) brightness(1.1); */
-    filter: brightness(120%) contrast(110%) saturate(350%) sepia(15%) hue-rotate(-10deg);
+    filter: brightness(120%) contrast(170%) saturate(350%) sepia(15%) hue-rotate(-10deg);
+    /* filter: brightness(110%) contrast(110%) saturate(250%) sepia(10%) hue-rotate(-5deg); */
+
 }
 
 .pvp-details strong {
@@ -131,7 +139,8 @@
     grid-auto-flow: row dense;
   
     justify-items: center;
-    background: #334155;
+    /* background: #334155; */
+    background: rgba(51, 65, 85, 0.75);
     padding: 12px;
     border-radius: 6px;
     text-align: center;
@@ -153,7 +162,8 @@
     color: #0ea5e9;
 }
 .pvp-stat-box {
-    background: #334155;
+    /* background: #334155; */
+    background: rgba(51, 65, 85, 0.75);
     padding: 12px;
     border-radius: 6px;
     text-align: center;
@@ -176,7 +186,8 @@
 .card {
     display: flex;
     align-items: center;
-    background: #26354a;
+    /* background: #26354a; */
+    background: rgba(38, 53, 74, 0.75);
     padding: 15px;
     border-radius: 8px;
 }
@@ -219,3 +230,24 @@
     background: rgba(15, 23, 42, 0.85); /* Slight transparency */
 }
 
+.pvp-section {
+    display: flex;
+}
+
+.pvp-div {
+    display: flex;
+    gap: 10px;
+    max-width: 100%; /* Allow full width usage */
+    justify-content: center; /* Centers cards */
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.character-img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 100%;
+    height: auto;
+    z-index: -1;
+}
