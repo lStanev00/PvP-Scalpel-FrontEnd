@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Style from "./../Styles/modular/charDetails.module.css"
+import TableStyle from "./../Styles/modular/checkDetailsPvPTable.module.css"
 
 export default function CharDetails() {
     const [data, setData] = useState(undefined);
@@ -135,50 +136,34 @@ function renderPvPCard(title, bracketData) {
             </div>
 
             {/* Matches Played Stats */}
-            <h3 style={{textAlign: "center"}}>Match info</h3>
-            <div className={Style["pvp-stats"]}>
-                <div className={Style["pvp-stat-box"]}>
-                    <small>Season Played</small>
-                    <span>{bracketData.currentSeason.seasonMatchStatistics.played}</span>
-                </div>
-                <div className={Style["pvp-stat-box"]}>
-                    <small>Season Won</small>
-                    <span>{bracketData.currentSeason.seasonMatchStatistics.won}</span>
-                </div>
-                <div className={Style["pvp-stat-box"]}>
-                    <small>Season Lost</small>
-                    <span>{bracketData.currentSeason.seasonMatchStatistics.lost}</span>
-                </div>
-            </div>
+            <table className={TableStyle["pvp-table"]}>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Weekly</th>
+                        <th>Season</th>
+                    </tr>
+                </thead>
 
-            <div className={Style["pvp-stats"]}>
-                <div className={Style["pvp-stat-box"]}>
-                    <small>Weekly Played</small>
-                    <span>{bracketData.currentSeason.weeklyMatchStatistics.played}</span>
-                </div>
-                <div className={Style["pvp-stat-box"]}>
-                    <small>Weekly Won</small>
-                    <span>{bracketData.currentSeason.weeklyMatchStatistics.won}</span>
-                </div>
-                <div className={Style["pvp-stat-box"]}>
-                    <small>Weekly Lost</small>
-                    <span>{bracketData.currentSeason.weeklyMatchStatistics.lost}</span>
-                </div>
-            </div>
+                <tbody>
+                    <tr>
+                        <td>Played</td>
+                        <td>{bracketData.currentSeason.weeklyMatchStatistics.played}</td>
+                        <td>{bracketData.currentSeason.seasonMatchStatistics.played}</td>
+                    </tr>
+                    <tr>
+                        <td>Won</td>
+                        <td>{bracketData.currentSeason.weeklyMatchStatistics.won}</td>
+                        <td>{bracketData.currentSeason.seasonMatchStatistics.won}</td>
+                    </tr>
+                    <tr>
+                        <td>Lost</td>
+                        <td>{bracketData.currentSeason.weeklyMatchStatistics.lost}</td>
+                        <td>{bracketData.currentSeason.seasonMatchStatistics.lost}</td>
+                    </tr>
+                </tbody>
+            </table>
 
-            {/* <table className={Style["pvp-stats"]}>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th className={Style["pvp-stat-box"]}>Weekly</th>
-                            <th className={Style["pvp-stat-box"]}>Season</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <td className={Style["pvp-stat-box"]}>Played</td>
-                    </tbody>
-            </table> */}
         </div>
     );
 }
