@@ -64,7 +64,17 @@ export default function CharDetails() {
                     <div className={Style["section"]}>
                         <h1>PvP Ratings</h1>
                         <div className={Style["pvp-container"]}>
-                            {Object.entries(otherRatings).map(([key, bracket]) => renderPvPCard(key, bracket))}
+                            {Object.entries(otherRatings).map(([key, bracket]) => {
+                                let title = String;
+                                if (key ==`rbg`) {
+                                    title = `Rated Battleground`;
+                                } else if (key == `2v2`) {
+                                    title = `Arena 2v2`;
+                                } else {
+                                    title = `Arena 3v3`;
+                                }
+                                return renderPvPCard(title, bracket)
+                                })}
                         </div>
                     </div>
                 )}
