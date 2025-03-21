@@ -47,7 +47,14 @@ export default function CharDetails() {
 
     return (
         <>
-            <section style={{backgroundImage: `url('${data.media.charImg}')`, backgroundPosition: 'center'}} className={"container"}>
+            <section style={{
+                backgroundImage: `url('${data.media.charImg}')`,
+                backgroundPosition: 'center -400px',
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundAttachment: 'fixed',
+                overflow: "hidden"
+                }} className={"container"}>
                 {/* Character Banner */}
                 <div className={Style["banner"]}>
                     <img src={data.media.avatar} alt="Character Avatar" />
