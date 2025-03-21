@@ -134,12 +134,15 @@ export default function CharDetails() {
 function renderPvPCard(title, bracketData) {
     return (
         <div key={title} className={Style["pvp-card"]}>
+            <div className={Style["spec-border-div"]}>
             <h2 className={Style["spec-title"]}>{title}</h2>
+            </div>
             <div className={Style["pvp-spec"]}>
                 <img src={bracketData.currentSeason.title.media} alt="PvP Rank Icon" />
                 <div className={Style["pvp-details"]}>
-                    <strong>Rating:  </strong>
-                    <span className={Style["pvp-rating"]}>{bracketData.currentSeason.rating} <small>({bracketData.currentSeason.title.name})</small></span>
+                    <strong>{bracketData.currentSeason.title.name}</strong>
+                    <br />
+                    <span className={Style["pvp-rating"]}> {bracketData.currentSeason.rating}</span>
                 </div>
             </div>
 

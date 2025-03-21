@@ -44,14 +44,7 @@
 
 /* Text Colors for Readability */
 .pvp-table td:first-child {
-    font-weight: bold;
-    color: #22c55e;
+    font-weight: 400;
+    color: #0ea5e9;
 }
 
-.pvp-table tbody tr:nth-child(2) td:first-child { 
-    color: #0ea5e9; /* Blue for "Won" */
-}
-
-.pvp-table tbody tr:nth-child(3) td:first-child { 
-    color: #f43f5e; /* Red for "Lost" */
-}
