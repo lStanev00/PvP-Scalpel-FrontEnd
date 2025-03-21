@@ -95,15 +95,19 @@
 }
 
 .pvp-spec {
-    display: flex;
+    /* display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 10px; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    
 }
 
 .pvp-spec img {
     width: 48px;
     height: 48px;
-    margin-right: 10px;
+    /* margin-right: 10px;/ */
     mix-blend-mode: lighten;
     background-color: transparent;
     filter: contrast(2) brightness(1.1);
@@ -124,7 +128,15 @@
     flex-wrap: wrap;
     gap: 10px;
 }
+.pvp-details {
+    background: #334155;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    flex: 1;
+    margin: 5px;
 
+}
 .pvp-stat-box {
     background: #334155;
     padding: 12px;
