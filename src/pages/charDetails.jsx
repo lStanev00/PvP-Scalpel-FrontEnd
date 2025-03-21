@@ -68,10 +68,13 @@ export default function CharDetails() {
                                 let title = String;
                                 if (key ==`rbg`) {
                                     title = `Rated Battleground`;
+                                    bracket.achieves = data.achieves?.RBG?.XP
                                 } else if (key == `2v2`) {
                                     title = `Arena 2v2`;
+                                    bracket.achieves = data?.achieves['2s']
                                 } else {
                                     title = `Arena 3v3`;
+                                    bracket.achieves = data?.achieves['3s']
                                 }
                                 return renderPvPCard(title, bracket)
                                 })}
@@ -86,6 +89,7 @@ export default function CharDetails() {
                             {Object.entries(blitzRatings).map(([key, bracket]) => {
                                 let [bracketName, charClass, spec] = key.split(`-`);
                                 const title = spec.replace(/^./, match => match.toUpperCase());
+                                bracket.achieves = data?.achieves.Blitz?.XP
                                 return renderPvPCard(title, bracket)
                             })}
                         </div>
@@ -132,18 +136,32 @@ export default function CharDetails() {
 
 // Function to Render PvP Cards
 function renderPvPCard(title, bracketData) {
+    console.log(bracketData.achieves)
     return (
         <div key={title} className={Style["pvp-card"]}>
             <div className={Style["spec-border-div"]}>
             <h2 className={Style["spec-title"]}>{title}</h2>
             </div>
+            {/* This Season */}
             <div className={Style["pvp-spec"]}>
-                <img src={bracketData.currentSeason.title.media} alt="PvP Rank Icon" />
                 <div className={Style["pvp-details"]}>
+                <img src={bracketData.currentSeason.title.media} alt="PvP Rank Icon" />
                     <strong>{bracketData.currentSeason.title.name}</strong>
                     <br />
                     <span className={Style["pvp-rating"]}> {bracketData.currentSeason.rating}</span>
                 </div>
+                {/* XP */}
+                {bracketData.achieves && (
+                    <div className={Style["pvp-details"]}>
+                    <img src={bracketData.achieves.media} alt="PvP Rank Icon" />
+                        <strong>{bracketData.achieves.name}</strong>
+                        <br />
+                        {bracketData.record && (
+                            <span className={Style["pvp-rating"]}> {bracketData.record}</span>
+                        )}
+                    </div>
+
+                )}
             </div>
 
             {/* Matches Played Stats */}
