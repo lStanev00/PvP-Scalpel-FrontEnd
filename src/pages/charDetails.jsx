@@ -167,16 +167,18 @@ function renderPvPCard(title, bracketData) {
             </div>
             <div className={Style["pvp-spec"]}>
             {/* This Season */}
-                
+                {bracketData.currentSeason.rating != 0 && (
                 <div className={Style["pvp-details"]}>
                     <p>Rating</p>
-                    <img src={bracketData.currentSeason.title.media} alt="PvP Rank Icon" />
+                    <img src={bracketData.currentSeason.title.media || ""} alt="PvP Rank Icon" />
                     <div className={Style["pvp-card-info"]}>
                         <strong>{bracketData.currentSeason.title.name}</strong>
                         <span className={Style["pvp-rating"]}> {bracketData.currentSeason.rating}</span>  
                     </div>
 
                 </div>
+
+                )}
 
                 {/* XP */}
 
@@ -206,18 +208,18 @@ function renderPvPCard(title, bracketData) {
                 <tbody>
                     <tr>
                         <td>Played</td>
-                        <td>{bracketData.currentSeason.weeklyMatchStatistics.played}</td>
-                        <td>{bracketData.currentSeason.seasonMatchStatistics.played}</td>
+                            <td>{bracketData.currentSeason.weeklyMatchStatistics?.played ?? '0'}</td>
+                            <td>{bracketData.currentSeason.seasonMatchStatistics?.played ?? '0'}</td>
                     </tr>
                     <tr>
                         <td>Won</td>
-                        <td>{bracketData.currentSeason.weeklyMatchStatistics.won}</td>
-                        <td>{bracketData.currentSeason.seasonMatchStatistics.won}</td>
+                        <td>{bracketData.currentSeason.weeklyMatchStatistics?.won ?? 0}</td>
+                        <td>{bracketData.currentSeason.seasonMatchStatistics?.won ?? 0}</td>
                     </tr>
                     <tr>
                         <td>Lost</td>
-                        <td>{bracketData.currentSeason.weeklyMatchStatistics.lost}</td>
-                        <td>{bracketData.currentSeason.seasonMatchStatistics.lost}</td>
+                        <td>{bracketData.currentSeason.weeklyMatchStatistics?.lost ?? 0}</td>
+                        <td>{bracketData.currentSeason.seasonMatchStatistics?.lost ?? 0}</td>
                     </tr>
                 </tbody>
             </table>
