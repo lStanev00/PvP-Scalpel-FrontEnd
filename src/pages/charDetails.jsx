@@ -49,7 +49,7 @@ export default function CharDetails() {
         <>
             <section style={{
                 backgroundImage: `url('${data.media.charImg}')`,
-                backgroundPosition: 'center -400px',
+                backgroundPosition: 'center -100px',
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundAttachment: 'fixed',
