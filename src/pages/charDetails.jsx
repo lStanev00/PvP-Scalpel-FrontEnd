@@ -2,32 +2,40 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Style from "./../Styles/modular/charDetails.module.css"
 import TableStyle from "./../Styles/modular/checkDetailsPvPTable.module.css"
-import timeAgo from "../helpers/timeAgo.js";
+import ReloadBTN from "../components/checkDetails/reloadBTN.jsx";
 
 export default function CharDetails() {
     const [data, setData] = useState(undefined);
     const { server, realm, name } = useParams();
-    const fetchData = async () => {
+
+    const getCharacterData = async () => { // This will be a websocket in the future
         try {
             const apiEndpoint = `https://api.pvpscalpel.com/checkCharacter/${server}/${realm}/${name}`;
-            const response = await fetch(apiEndpoint);
+            let response = await fetch(apiEndpoint);
 
             if (!response.ok) return setData(undefined);
-
             const fetchData = await response.json();
-            if (response.status === 202) fetchData["nowUpdating"] = true;
+
+            if (response.status == 404) return setData({errorMSG : fetchData.messege});
 
             setData(fetchData);
         } catch (error) {
             console.error("Fetch error:", error);
-            setData(undefined);
+            setData(404);
         }
     };
 
-    useEffect(() => {fetchData()}, []);
+    useEffect(() => {getCharacterData()}, []);
 
+    if (data === undefined) return (<>LOADING......</>);
 
-    if (!data) return (<>LOADING......</>);
+    if (data.errorMSG) return (
+        <>
+            <h1>
+                {data.errorMSG}
+            </h1>
+        </>
+    );
     // Sort PvP Ratings into Categories
     const shuffleRatings = {};
     const blitzRatings = {};
@@ -42,7 +50,6 @@ export default function CharDetails() {
             otherRatings[bracketKey] = bracketData;
         }
     });
-    console.log(otherRatings)
 
     return (
         <>
@@ -64,8 +71,7 @@ export default function CharDetails() {
                         <strong>{data.name} - {data.playerRealm.name}</strong>
                         <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name})</span>
                     </div>
-                    <span className={Style["last-updated"]}>Last updated: {timeAgo(data.updatedAt)}</span>
-                    <button className={Style["button"]}>{data.nowUpdating ?  "Updating now!" : "Update Now"}</button>
+                    <ReloadBTN setData={setData} data={data} />
                 </div>
                 <section className={Style["pvp-div"]}>
 

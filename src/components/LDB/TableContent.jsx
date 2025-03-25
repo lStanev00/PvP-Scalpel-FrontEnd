@@ -25,7 +25,6 @@ export default function TableContent({  page, content, refs  }) {
                     <tbody id="leaderboard-body">
                         {
                         page.map(char =>{
-                            console.log(char)
                             return (
                                 
                                   <tr onClick={() => {clickIt(char.playerRealmSlug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
