@@ -7,6 +7,8 @@ import ReloadBTN from "../components/checkDetails/reloadBTN.jsx";
 export default function CharDetails() {
     const [data, setData] = useState(undefined);
     const { server, realm, name } = useParams();
+    const [isUpdating, setUpdating] = useState(false);
+
 
     const getCharacterData = async () => { // This will be a websocket in the future
         try {
@@ -53,6 +55,16 @@ export default function CharDetails() {
 
     return (
         <>
+            {/* Character Banner */}
+            <div className={Style["banner"]}>
+                    <img src={data.media.avatar} alt="Character Avatar" />
+                    <div className={Style["banner-content"]}>
+                        <strong>{data.name} - {data.playerRealm.name}</strong>
+                        <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name})</span>
+                    </div>
+                    <ReloadBTN setData={setData} data={data} isUpdating={isUpdating} setUpdating={setUpdating} />
+            </div>
+
             <section style={
                 {
                     backgroundImage: `url('${data.media.charImg}')`,
@@ -60,19 +72,12 @@ export default function CharDetails() {
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
                     backgroundAttachment: 'fixed',
-                    overflow: "hidden"
+                    overflow: "hidden",
+                    filter: isUpdating ? 'blur(5px)' : 'none'
                 }} 
                 className={"container"}
                 >
-                {/* Character Banner */}
-                <div className={Style["banner"]}>
-                    <img src={data.media.avatar} alt="Character Avatar" />
-                    <div className={Style["banner-content"]}>
-                        <strong>{data.name} - {data.playerRealm.name}</strong>
-                        <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name})</span>
-                    </div>
-                    <ReloadBTN setData={setData} data={data} />
-                </div>
+
                 <section className={Style["pvp-div"]}>
 
                 <section className={Style["pvp-section"]}>
