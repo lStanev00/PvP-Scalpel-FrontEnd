@@ -87,12 +87,15 @@
     padding: 20px;
     border-radius: 8px;
     width: 100%;
-    max-width: 280px; 
+    max-width: 290px;
+    min-height: 442px;
 }
 
 .pvp-spec {
     display: flex;
     flex-wrap: wrap;
+    /* max-height: 164px; */
+    justify-content: center;
 }
 
 .pvp-spec img {
@@ -120,6 +123,7 @@
 }
 .pvp-details {
     width: 100%;
+    max-width: 96px;
     min-height: 154px;
     display: grid;
     grid-template-rows: repeat(3, auto);
