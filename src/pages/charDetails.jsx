@@ -6,27 +6,24 @@ import TableStyle from "./../Styles/modular/checkDetailsPvPTable.module.css"
 export default function CharDetails() {
     const [data, setData] = useState(undefined);
     const { server, realm, name } = useParams();
+    const fetchData = async () => {
+        try {
+            const apiEndpoint = `https://api.pvpscalpel.com/checkCharacter/${server}/${realm}/${name}`;
+            const response = await fetch(apiEndpoint);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const apiEndpoint = `https://api.pvpscalpel.com/checkCharacter/${server}/${realm}/${name}`;
-                const response = await fetch(apiEndpoint);
-    
-                if (!response.ok) return setData(undefined);
-    
-                const fetchData = await response.json();
-                if (response.status === 202) fetchData["nowUpdating"] = true;
-    
-                setData(fetchData);
-            } catch (error) {
-                console.error("Fetch error:", error);
-                setData(undefined);
-            }
-        };
-    
-        fetchData();
-    }, []);
+            if (!response.ok) return setData(undefined);
+
+            const fetchData = await response.json();
+            if (response.status === 202) fetchData["nowUpdating"] = true;
+
+            setData(fetchData);
+        } catch (error) {
+            console.error("Fetch error:", error);
+            setData(undefined);
+        }
+    };
+
+    useEffect(() => {fetchData()}, []);
 
 
     if (!data) return (<>LOADING......</>);
@@ -44,17 +41,21 @@ export default function CharDetails() {
             otherRatings[bracketKey] = bracketData;
         }
     });
+    console.log(data)
 
     return (
         <>
-            <section style={{
-                backgroundImage: `url('${data.media.charImg}')`,
-                backgroundPosition: 'center -100px',
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundAttachment: 'fixed',
-                overflow: "hidden"
-                }} className={"container"}>
+            <section style={
+                {
+                    backgroundImage: `url('${data.media.charImg}')`,
+                    backgroundPosition: 'center -100px',
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundAttachment: 'fixed',
+                    overflow: "hidden"
+                }} 
+                className={"container"}
+                >
                 {/* Character Banner */}
                 <div className={Style["banner"]}>
                     <img src={data.media.avatar} alt="Character Avatar" />
@@ -157,6 +158,7 @@ export default function CharDetails() {
 
 // Function to Render PvP Cards
 function renderPvPCard(title, bracketData) {
+    console.log(bracketData)
     return (
         <div key={title} className={Style["pvp-card"]}>
             <section className={Style["inner-section"]}>
@@ -167,19 +169,18 @@ function renderPvPCard(title, bracketData) {
             </div>
             <div className={Style["pvp-spec"]}>
             {/* This Season */}
-                {bracketData.currentSeason.rating != 0 && (
+                {bracketData.currentSeason && bracketData.currentSeason.rating && (
                 <div className={Style["pvp-details"]}>
                     <p>Rating</p>
-                    <img src={bracketData.currentSeason.title.media || ""} alt="PvP Rank Icon" />
+                    <img src={bracketData?.currentSeason?.title.media || ""} alt="PvP Rank Icon" />
                     <div className={Style["pvp-card-info"]}>
-                        <strong>{bracketData.currentSeason.title.name}</strong>
-                        <span className={Style["pvp-rating"]}> {bracketData.currentSeason.rating}</span>  
+                        <strong>{bracketData.currentSeason?.title?.name}</strong>
+                        <span className={Style["pvp-rating"]}> {bracketData.currentSeason?.rating}</span>  
                     </div>
 
                 </div>
 
                 )}
-
                 {/* XP */}
 
                 {bracketData.achieves && (
@@ -208,18 +209,18 @@ function renderPvPCard(title, bracketData) {
                 <tbody>
                     <tr>
                         <td>Played</td>
-                            <td>{bracketData.currentSeason.weeklyMatchStatistics?.played ?? '0'}</td>
-                            <td>{bracketData.currentSeason.seasonMatchStatistics?.played ?? '0'}</td>
+                            <td>{bracketData?.currentSeason?.weeklyMatchStatistics?.played ?? '0'}</td>
+                            <td>{bracketData?.currentSeason?.seasonMatchStatistics?.played ?? '0'}</td>
                     </tr>
                     <tr>
                         <td>Won</td>
-                        <td>{bracketData.currentSeason.weeklyMatchStatistics?.won ?? 0}</td>
-                        <td>{bracketData.currentSeason.seasonMatchStatistics?.won ?? 0}</td>
+                        <td>{bracketData?.currentSeason?.weeklyMatchStatistics?.won ?? 0}</td>
+                        <td>{bracketData?.currentSeason?.seasonMatchStatistics?.won ?? 0}</td>
                     </tr>
                     <tr>
                         <td>Lost</td>
-                        <td>{bracketData.currentSeason.weeklyMatchStatistics?.lost ?? 0}</td>
-                        <td>{bracketData.currentSeason.seasonMatchStatistics?.lost ?? 0}</td>
+                        <td>{bracketData?.currentSeason?.weeklyMatchStatistics?.lost ?? 0}</td>
+                        <td>{bracketData?.currentSeason?.seasonMatchStatistics?.lost ?? 0}</td>
                     </tr>
                 </tbody>
             </table>
