@@ -109,9 +109,11 @@
 .pvp-details strong {
     color: #ffffff;
     font-size: 14px;
+    text-align: center;
 }
 
 .pvp-rating {
+    margin-top: 5px;
     color: #facc15;
     font-size: 14px;
 }
@@ -121,9 +123,10 @@
     flex-wrap: wrap;
     gap: 10px;
 }
+
 .pvp-details {
     width: 100%;
-    max-width: 96px;
+    max-width: 100px;
     min-height: 154px;
     display: grid;
     grid-template-rows: repeat(3, auto);
