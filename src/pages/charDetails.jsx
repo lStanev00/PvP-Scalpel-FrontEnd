@@ -37,11 +37,11 @@ export default function CharDetails() {
             shuffleRatings[bracketKey] = bracketData;
         } else if (bracketKey.includes("blitz")) {
             blitzRatings[bracketKey] = bracketData;
-        } else {
+        } else if (bracketKey == `2v2` || bracketKey == `3v3` || bracketKey == `rbg`){
             otherRatings[bracketKey] = bracketData;
         }
     });
-    console.log(data)
+    console.log(otherRatings)
 
     return (
         <>
@@ -86,7 +86,7 @@ export default function CharDetails() {
                                         title = `Arena 3v3`;
                                         bracket.achieves = data?.achieves['3s']
                                     }
-                                    return renderPvPCard(title, bracket)
+                                    return PvPCards(title, bracket)
                                     })}
                             </div>
                         </div>
@@ -104,7 +104,7 @@ export default function CharDetails() {
                                 let [bracketName, charClass, spec] = key.split(`-`);
                                 const title = spec.replace(/^./, match => match.toUpperCase());
                                 bracket.achieves = data?.achieves.Blitz?.XP
-                                return renderPvPCard(title, bracket)
+                                return PvPCards(title, bracket)
                             })}
                         </div>
                     </div>
@@ -122,7 +122,7 @@ export default function CharDetails() {
                             {Object.entries(shuffleRatings).map(([key, bracket]) => {
                                 let [bracketName, charClass, spec] = key.split(`-`);
                                 const title = spec.replace(/^./, match => match.toUpperCase());
-                                return renderPvPCard(title, bracket)
+                                return PvPCards(title, bracket)
                             })}
                         </div>
                     </div>
@@ -157,8 +157,8 @@ export default function CharDetails() {
 }
 
 // Function to Render PvP Cards
-function renderPvPCard(title, bracketData) {
-    console.log(bracketData)
+function PvPCards(title, bracketData) {
+    if (bracketData?.currentSeason?.rating == 0) bracketData.currentSeason.rating = null;
     return (
         <div key={title} className={Style["pvp-card"]}>
             <section className={Style["inner-section"]}>
@@ -175,7 +175,7 @@ function renderPvPCard(title, bracketData) {
                     <img src={bracketData?.currentSeason?.title.media || ""} alt="PvP Rank Icon" />
                     <div className={Style["pvp-card-info"]}>
                         <strong>{bracketData.currentSeason?.title?.name}</strong>
-                        <span className={Style["pvp-rating"]}> {bracketData.currentSeason?.rating}</span>  
+                        <span className={Style["pvp-rating"]}> {bracketData.currentSeason?.rating == 0 ? null : bracketData.currentSeason?.rating}</span>  
                     </div>
 
                 </div>
@@ -183,7 +183,7 @@ function renderPvPCard(title, bracketData) {
                 )}
                 {/* XP */}
 
-                {bracketData.achieves && (
+                {bracketData?.achieves && (
                     <div className={Style["pvp-details"]}>
                         <p>Record</p>
                         <img src={bracketData.achieves.media} alt="PvP Rank Icon" />
@@ -209,8 +209,8 @@ function renderPvPCard(title, bracketData) {
                 <tbody>
                     <tr>
                         <td>Played</td>
-                            <td>{bracketData?.currentSeason?.weeklyMatchStatistics?.played ?? '0'}</td>
-                            <td>{bracketData?.currentSeason?.seasonMatchStatistics?.played ?? '0'}</td>
+                            <td>{bracketData?.currentSeason?.weeklyMatchStatistics?.played ?? 0}</td>
+                            <td>{bracketData?.currentSeason?.seasonMatchStatistics?.played ?? 0}</td>
                     </tr>
                     <tr>
                         <td>Won</td>
