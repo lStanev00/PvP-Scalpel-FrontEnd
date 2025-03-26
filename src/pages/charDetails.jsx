@@ -98,7 +98,6 @@ export default function CharDetails() {
                                         title = `Arena 3v3`;
                                         bracket.achieves = data?.achieves['3s']
                                     }
-                                    // return PvPCards(title, bracket)
                                     return <PvPCards key={bracket._id} title = {title} bracketData = {bracket} Style={Style}/>
                                     })}
                             </div>
