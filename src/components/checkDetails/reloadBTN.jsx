@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom"
-import { useState } from "react";
 import Style from '../../Styles/modular/charDetails.module.css';
 import timeAgo from "../../helpers/timeAgo.js";
 export default function ReloadBTN({setData, data, isUpdating, setUpdating}) {
