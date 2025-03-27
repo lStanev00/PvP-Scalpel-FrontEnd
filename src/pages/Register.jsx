@@ -117,8 +117,8 @@ export default function Register() {
                                 and may result in a permanent ban and legal action.
                             </span>
                             <div style={{display:"flex", alignItems:"center"}}>
-                                <p style={{margin:"10px"}}>Please agree:</p> 
-                                <input className={Style.checkbox} type="checkbox" name="agreement" />
+                                <p style={{margin:"10px"}}>Terms agreement:</p> 
+                                <input style={{bottom:"3px"}} className={Style.checkbox} type="checkbox" name="agreement" />
                             </div>
                             {checkError && <p className={Style["error-msg"]}>{checkError}</p>}
                         </label>
