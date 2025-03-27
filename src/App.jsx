@@ -7,6 +7,7 @@ import GoToTopButton from "./components/topBtn";
 import CharDetails from "./pages/CharDetails.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/Login.jsx";
+import GotoEmail from "./pages/ValidateEmail.jsx";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                             <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route>
                             <Route path="/register" element={<Register />} />
                             <Route path="/login" element={<Login />} />
+                            <Route path="/goto/email" element={<GotoEmail />} />
                         </Routes>
                         
                     </main>
