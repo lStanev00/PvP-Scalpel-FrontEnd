@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Style from "../Styles/modular/logReg.module.css";
 import getFingerprint from "../helpers/getFingerpring.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
     const [usernameError, setUsernameError] = useState();
@@ -137,7 +137,7 @@ export default function Register() {
 
                         <button type="submit">Register</button>
                         {serverError && <p className={Style["error-msg"]}><b>{serverError}</b></p>}
-                        <p style={{marginTop: "10px"}}>Already have an account? <a href="/login">Login here</a></p>
+                        <p style={{marginTop: "10px"}}>Already have an account? <Link to="/login">Login here</Link></p>
                     </form>
 
                 </div>
