@@ -5,6 +5,7 @@ import LDB from "./pages/LDB";
 import RosterPage from "./pages/Roster";
 import GoToTopButton from "./components/topBtn";
 import CharDetails from "./pages/CharDetails.jsx";
+import Register from "./pages/register.jsx";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                             <Route path='/roster' element={<RosterPage />}></Route>
                             <Route path='/leaderboard' element={<LDB />}></Route>
                             <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route>
+                            <Route path="/register" element={<Register />} />
                         </Routes>
                         
                     </main>
