@@ -67,17 +67,17 @@ export default function Register() {
                 })
             });
 
-            console.log(req.status);
             console.log("Form is valid. Submitting...");
+            console.log(req.status);
             if (req.status == 201) return e.target.reset(); 
             const data = await req.json();
+            console.log(data)
             if (req.status === 409) {
                 const error = (errorCase) => {return `This ${errorCase} already exists! Try another one.`};
                 if (data.username) setUsernameError(error(`username`));
                 if (data.email) setEmailError(error(`email`));
                 return;
             }
-            console.log(data)
         }
     }
 
@@ -85,19 +85,19 @@ export default function Register() {
         <div className={Style["register-box"]}>
             <form onSubmit={handleSubmit}>
                 <label>Username</label>
-                <input type="text" name="username" placeholder="Username.." />
+                <input autoComplete="username" type="text" name="username" placeholder="Username.." />
                 {usernameError && <p className={Style["error-msg"]}>{usernameError}</p>}
 
                 <label>Email</label>
-                <input type="email" name="email" placeholder="Email.." />
+                <input type="email" autoComplete="email" name="email" placeholder="Email.." />
                 {emailError && <p className={Style["error-msg"]}>{emailError}</p>}
 
                 <label>Password</label>
-                <input type="password" name="password" placeholder="Password.." />
+                <input type="password" autoComplete="password" name="password" placeholder="Password.." />
                 {passError && <p className={Style["error-msg"]}>{passError}</p>}
 
                 <label>Confirm Password</label>
-                <input type="password" name="confirm-password" placeholder="Confirm password.." />
+                <input type="password" name="confirm-password" autoComplete="password" placeholder="Confirm password.." />
                 {rePassError && <p className={Style["error-msg"]}>{rePassError}</p>}
 
                 <label className={Style["terms-label"]}>
