@@ -69,7 +69,15 @@ export default function Register() {
 
             console.log(req.status);
             console.log("Form is valid. Submitting...");
-            // Example: send to backend or reset form
+            if (req.status == 201) return e.target.reset(); 
+            const data = await req.json();
+            if (req.status === 409) {
+                const error = (errorCase) => {return `This ${errorCase} already exists! Try another one.`};
+                if (data.username) setUsernameError(error(`username`));
+                if (data.email) setEmailError(error(`email`));
+                return;
+            }
+            console.log(data)
         }
     }
 

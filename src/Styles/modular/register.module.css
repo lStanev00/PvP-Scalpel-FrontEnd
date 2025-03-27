@@ -81,3 +81,6 @@
     font-size: 0.9rem;
   }
   
+  .error-msg {
+    color: #ff4d4d;
+  }
