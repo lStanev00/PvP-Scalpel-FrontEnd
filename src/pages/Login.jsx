@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Style from "../Styles/modular/logReg.module.css";
 import getFingerprint from "../helpers/getFingerpring.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [error, setError] = useState();
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -45,19 +47,10 @@ export default function Login() {
                 })
             });
 
-            console.log("Form is valid. Submitting...");
-            console.log(req.status);
-            if (req.status == 200) return e.target.reset(); 
-            const data = await req.json();
-            console.log(data)
-            if (req.status === 409) {
-                const error = (errorCase) => {return `This ${errorCase} already exists! Try another one.`};
-                if (data.username) setUsernameError(error(`username`));
-                if (data.email) setEmailError(error(`email`));
-                return;
-            } else if (req.status === 500) {
-                setError(data.message);
-            }
+            if (req.status == 200) return navigate(`/`);
+            if (req.status === 409) return setError(`Bad credentials! Check the input or create an account.`);
+            else if (req.status === 500) return setError("Internal server error. Please report to admin.");
+            else if (!req.ok) return setError("Internal server error. Please report to admin.");
         }
     }
 
