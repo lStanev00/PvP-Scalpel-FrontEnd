@@ -47,6 +47,11 @@
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
   }
+
+  .checkbox:hover {
+    border-color: #fff;
+    box-shadow: 0 0 4px #00ffc3;
+  }
   
   form input[type="checkbox"] {
     transform: scale(1.2);
