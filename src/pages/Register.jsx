@@ -109,22 +109,24 @@ export default function Register() {
                             {rePassError && <p className={Style["error-msg"]}>{rePassError}</p>}
 
                         </div>
-
-                        <label className={Style["inner-section"]}>
+                        <div  className={Style["inner-section"]}>
+                        <label>
                             <span >
                                 I agree to follow the community rules. I understand that hate speech, discrimination, 
                                 sexual or violent content involving minors, or any illegal activity is strictly forbidden 
                                 and may result in a permanent ban and legal action.
                             </span>
+                        </label>
                             <div style={{display:"flex", alignItems:"center"}}>
                                 <p style={{margin:"10px"}}>Terms agreement:</p> 
                                 <input style={{bottom:"3px"}} className={Style.checkbox} type="checkbox" name="agreement" />
                             </div>
                             {checkError && <p className={Style["error-msg"]}>{checkError}</p>}
-                        </label>
 
-                        {serverError && <p className={Style["error-msg"]}><b>{serverError}</b></p>}
+                        </div>
+
                         <button type="submit">Register</button>
+                        {serverError && <p className={Style["error-msg"]}><b>{serverError}</b></p>}
                     </form>
 
                     <p>Already have an account? <a href="/login">Login here</a></p>
