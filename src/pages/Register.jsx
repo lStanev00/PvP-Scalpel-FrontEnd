@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Style from "../Styles/modular/register.module.css";
+import Style from "../Styles/modular/logReg.module.css";
 
 export default function Register() {
     const [usernameError, setUsernameError] = useState();
@@ -88,7 +88,7 @@ export default function Register() {
     return (
         <>
             <section className={Style["container"]}>
-            <section className={Style["inner-section"]} style={{color: "#facc15", fontWeight:"", fontSize: "40px"}}>New account</section>
+            <section className={Style["inner-section"]} style={{color: "#facc15", fontWeight:"", fontSize: "40px"}}><h4>New account</h4></section>
                 <div>
                     <form onSubmit={handleSubmit}>
                         <div className={Style["inner-section"]}>
