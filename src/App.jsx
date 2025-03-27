@@ -7,7 +7,7 @@ import GoToTopButton from "./components/topBtn";
 import CharDetails from "./pages/CharDetails.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/Login.jsx";
-import GotoEmail from "./pages/ValidateEmail.jsx";
+import GotoEmail from "./pages/EmailSend.jsx";
 
 function App() {
     return (
