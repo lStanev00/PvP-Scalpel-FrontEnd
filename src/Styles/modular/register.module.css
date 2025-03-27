@@ -52,20 +52,31 @@
     transform: scale(1.2);
   }
   
-  form button {
-    color: white;
-    padding: 0.6rem 1.5rem;
-    border: none;
+form button {
+    background: linear-gradient(90deg, #1abc9c, #16a085);
+    color: #fff;
+    border: 2px solid #16a085;
     border-radius: 8px;
-    background-color: #01d1a1;
+    font-size: 1rem;
     font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  form button:hover {
-    background-color: #2fd1ae;
-  }
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background: linear-gradient(90deg, #16a085, #1abc9c);
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+}
+
+form button:active {
+    background: #149174;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: scale(0.95);
+}
   
   form a {
     color: #00ffff;
