@@ -37,6 +37,7 @@ export default function Login() {
                     "Content-Type": "application/json",
                     "600": "BasicPass"
                 },
+                credentials: "include",
                 body: JSON.stringify({
                     email: email,
                     password: password,
@@ -46,7 +47,7 @@ export default function Login() {
 
             console.log("Form is valid. Submitting...");
             console.log(req.status);
-            if (req.status == 201) return e.target.reset(); 
+            if (req.status == 200) return e.target.reset(); 
             const data = await req.json();
             console.log(data)
             if (req.status === 409) {
