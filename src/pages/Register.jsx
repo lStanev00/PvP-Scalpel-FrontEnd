@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Style from "../Styles/modular/logReg.module.css";
+import getFingerprint from "../helpers/getFingerpring.js";
 
 export default function Register() {
     const [usernameError, setUsernameError] = useState();
@@ -18,6 +19,7 @@ export default function Register() {
         const password = formData.get("password");
         const confirmPassword = formData.get("confirm-password");
         const agreement = formData.get("agreement");
+        const fingerprint = getFingerprint();
 
         let isValid = true;
 
@@ -65,7 +67,8 @@ export default function Register() {
                 body: JSON.stringify({
                     username: username,
                     email: email,
-                    password: password
+                    password: password,
+                    fingerprint: fingerprint,
                 })
             });
 
@@ -127,9 +130,9 @@ export default function Register() {
 
                         <button type="submit">Register</button>
                         {serverError && <p className={Style["error-msg"]}><b>{serverError}</b></p>}
+                        <p style={{marginTop: "10px"}}>Already have an account? <a href="/login">Login here</a></p>
                     </form>
 
-                    <p>Already have an account? <a href="/login">Login here</a></p>
                 </div>
             </section>
         </>
