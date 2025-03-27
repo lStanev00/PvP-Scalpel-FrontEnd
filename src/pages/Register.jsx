@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Style from "../Styles/modular/logReg.module.css";
 import getFingerprint from "../helpers/getFingerpring.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
     const [usernameError, setUsernameError] = useState();
@@ -9,6 +10,7 @@ export default function Register() {
     const [rePassError, setRePassError] = useState();
     const [checkError, setCheckError] = useState();
     const [serverError, setServerError] = useState();
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -74,7 +76,12 @@ export default function Register() {
 
             console.log("Form is valid. Submitting...");
             console.log(req.status);
-            if (req.status == 201) return e.target.reset(); 
+            if (req.status == 201) {
+                
+                e.target.reset();
+
+                navigate("/goto/email")
+            } 
             const data = await req.json();
             console.log(data)
             if (req.status === 409) {
