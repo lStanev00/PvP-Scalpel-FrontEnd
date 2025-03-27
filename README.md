@@ -1,6 +1,6 @@
 This application is currently in development. Expect accurate documentation with the first stable release. If you encounter a bug, 
 please report it. Thank you in advance!
-The application is partialy deployed at : www.pvpscalpel.com
+The application is partialy deployed at : https://www.pvpscalpel.com
 
 ## 🔐 Privacy & Session Tracking Disclaimer
 
