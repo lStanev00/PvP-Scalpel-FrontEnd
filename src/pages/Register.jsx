@@ -7,6 +7,7 @@ export default function Register() {
     const [passError, setPassError] = useState();
     const [rePassError, setRePassError] = useState();
     const [checkError, setCheckError] = useState();
+    const [serverError, setServerError] = useState();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -26,6 +27,7 @@ export default function Register() {
         setPassError(undefined);
         setRePassError(undefined);
         setCheckError(undefined);
+        setServerError(undefined);
 
         if (!username || username.length < 3) {
             setUsernameError("Username must be at least 3 characters long.");
@@ -77,41 +79,49 @@ export default function Register() {
                 if (data.username) setUsernameError(error(`username`));
                 if (data.email) setEmailError(error(`email`));
                 return;
+            } else if (req.status === 500) {
+                setServerError(data.message);
             }
         }
     }
 
     return (
-        <div className={Style["register-box"]}>
-            <form onSubmit={handleSubmit}>
-                <label>Username</label>
-                <input autoComplete="username" type="text" name="username" placeholder="Username.." />
-                {usernameError && <p className={Style["error-msg"]}>{usernameError}</p>}
+        <>
+            <section className={Style["banner"]}>New account</section>
+            <section className={Style["container"]}>
+                <div className={Style["register-box"]}>
+                    <form onSubmit={handleSubmit}>
+                        <label>Username</label>
+                        <input autoComplete="username" type="text" name="username" placeholder="Username.." />
+                        {usernameError && <p className={Style["error-msg"]}>{usernameError}</p>}
 
-                <label>Email</label>
-                <input type="email" autoComplete="email" name="email" placeholder="Email.." />
-                {emailError && <p className={Style["error-msg"]}>{emailError}</p>}
+                        <label>Email</label>
+                        <input type="email" autoComplete="email" name="email" placeholder="Email.." />
+                        {emailError && <p className={Style["error-msg"]}>{emailError}</p>}
 
-                <label>Password</label>
-                <input type="password" autoComplete="password" name="password" placeholder="Password.." />
-                {passError && <p className={Style["error-msg"]}>{passError}</p>}
+                        <label>Password</label>
+                        <input type="password" autoComplete="password" name="password" placeholder="Password.." />
+                        {passError && <p className={Style["error-msg"]}>{passError}</p>}
 
-                <label>Confirm Password</label>
-                <input type="password" name="confirm-password" autoComplete="password" placeholder="Confirm password.." />
-                {rePassError && <p className={Style["error-msg"]}>{rePassError}</p>}
+                        <label>Confirm Password</label>
+                        <input type="password" name="confirm-password" autoComplete="password" placeholder="Confirm password.." />
+                        {rePassError && <p className={Style["error-msg"]}>{rePassError}</p>}
 
-                <label className={Style["terms-label"]}>
-                    I agree to follow the community rules. I understand that hate speech, discrimination, 
-                    sexual or violent content involving minors, or any illegal activity is strictly forbidden 
-                    and may result in a permanent ban and legal action.
-                    <input type="checkbox" name="agreement" />
-                </label>
-                {checkError && <p className={Style["error-msg"]}>{checkError}</p>}
+                        <label className={Style["terms-label"]}>
+                            I agree to follow the community rules. I understand that hate speech, discrimination, 
+                            sexual or violent content involving minors, or any illegal activity is strictly forbidden 
+                            and may result in a permanent ban and legal action.
+                            <input type="checkbox" name="agreement" />
+                        </label>
+                        {checkError && <p className={Style["error-msg"]}>{checkError}</p>}
 
-                <button type="submit">Register</button>
-            </form>
+                        {serverError && <p className={Style["error-msg"]}><b>{serverError}</b></p>}
+                        <button type="submit">Register</button>
+                    </form>
 
-            <p>Already have an account? <a href="/login">Login here</a></p>
-        </div>
+                    <p>Already have an account? <a href="/login">Login here</a></p>
+                </div>
+            </section>
+        </>
     );
 }
