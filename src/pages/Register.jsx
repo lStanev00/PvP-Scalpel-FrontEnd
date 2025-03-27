@@ -87,33 +87,41 @@ export default function Register() {
 
     return (
         <>
-            <section className={Style["banner"]}>New account</section>
             <section className={Style["container"]}>
-                <div className={Style["register-box"]}>
+            <section className={Style["inner-section"]} style={{color: "#facc15", fontWeight:"", fontSize: "40px"}}>New account</section>
+                <div>
                     <form onSubmit={handleSubmit}>
-                        <label>Username</label>
-                        <input autoComplete="username" type="text" name="username" placeholder="Username.." />
-                        {usernameError && <p className={Style["error-msg"]}>{usernameError}</p>}
+                        <div className={Style["inner-section"]}>
+                            <label>Username</label>
+                            <input autoComplete="username" type="text" name="username" placeholder="Username.." />
+                            {usernameError && <p className={Style["error-msg"]}>{usernameError}</p>}
 
-                        <label>Email</label>
-                        <input type="email" autoComplete="email" name="email" placeholder="Email.." />
-                        {emailError && <p className={Style["error-msg"]}>{emailError}</p>}
+                            <label>Email</label>
+                            <input type="email" autoComplete="email" name="email" placeholder="Email.." />
+                            {emailError && <p className={Style["error-msg"]}>{emailError}</p>}
 
-                        <label>Password</label>
-                        <input type="password" autoComplete="password" name="password" placeholder="Password.." />
-                        {passError && <p className={Style["error-msg"]}>{passError}</p>}
+                            <label>Password</label>
+                            <input type="password" autoComplete="password" name="password" placeholder="Password.." />
+                            {passError && <p className={Style["error-msg"]}>{passError}</p>}
 
-                        <label>Confirm Password</label>
-                        <input type="password" name="confirm-password" autoComplete="password" placeholder="Confirm password.." />
-                        {rePassError && <p className={Style["error-msg"]}>{rePassError}</p>}
+                            <label>Confirm Password</label>
+                            <input type="password" name="confirm-password" autoComplete="password" placeholder="Confirm password.." />
+                            {rePassError && <p className={Style["error-msg"]}>{rePassError}</p>}
 
-                        <label className={Style["terms-label"]}>
-                            I agree to follow the community rules. I understand that hate speech, discrimination, 
-                            sexual or violent content involving minors, or any illegal activity is strictly forbidden 
-                            and may result in a permanent ban and legal action.
-                            <input type="checkbox" name="agreement" />
+                        </div>
+
+                        <label className={Style["inner-section"]}>
+                            <span >
+                                I agree to follow the community rules. I understand that hate speech, discrimination, 
+                                sexual or violent content involving minors, or any illegal activity is strictly forbidden 
+                                and may result in a permanent ban and legal action.
+                            </span>
+                            <div style={{display:"flex", alignItems:"center"}}>
+                                <p style={{margin:"10px"}}>Please agree:</p> 
+                                <input className={Style.checkbox} type="checkbox" name="agreement" />
+                            </div>
+                            {checkError && <p className={Style["error-msg"]}>{checkError}</p>}
                         </label>
-                        {checkError && <p className={Style["error-msg"]}>{checkError}</p>}
 
                         {serverError && <p className={Style["error-msg"]}><b>{serverError}</b></p>}
                         <button type="submit">Register</button>
