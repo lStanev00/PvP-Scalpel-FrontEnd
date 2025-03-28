@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Style from "../Styles/modular/logReg.module.css";
-import getFingerprint from "../helpers/getFingerpring.js";
+import getFingerprint from "../helpers/getFingerprint.js";
 import { useNavigate, Link } from "react-router-dom";
+import httpFetch from "../helpers/httpFetch.js";
 
 export default function Login() {
     const [error, setError] = useState();
@@ -32,14 +33,12 @@ export default function Login() {
 
 
         if (isValid) {
-            const apiEndpoint = `https://api.pvpscalpel.com/login`;
-            const req = await fetch(apiEndpoint, {
+            const apiEndpoint = `/login`;
+            const req = await httpFetch(apiEndpoint, {
                 method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
                     "600": "BasicPass"
                 },
-                credentials: "include",
                 body: JSON.stringify({
                     email: email,
                     password: password,

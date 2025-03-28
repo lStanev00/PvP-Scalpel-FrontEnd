@@ -1,14 +1,15 @@
 import { useParams } from "react-router-dom"
 import Style from '../../Styles/modular/charDetails.module.css';
 import timeAgo from "../../helpers/timeAgo.js";
+import httpFetch from "../../helpers/httpFetch.js";
 export default function ReloadBTN({setData, data, isUpdating, setUpdating}) {
     const { server, realm, name } = useParams();
 
     const patchCharacterData = async () => {
-        const apiEndpoint = `https://api.pvpscalpel.com/patchCharacter/${server}/${realm}/${name}`;
+        const apiEndpoint = `/patchCharacter/${server}/${realm}/${name}`;
         setUpdating(state => {return true}); // No waiting set
         try {
-            const request = await fetch(apiEndpoint, {
+            const request = await httpFetch(apiEndpoint, {
                 method: "PATCH"
             });
 

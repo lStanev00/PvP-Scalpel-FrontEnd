@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import Style from "./../Styles/modular/charDetails.module.css"
 import ReloadBTN from "../components/checkDetails/reloadBTN.jsx";
 import PvPCards from "../components/checkDetails/PvPCards.jsx";
+import httpFetch from "../helpers/httpFetch.js";
 
 export default function CharDetails() {
     const [data, setData] = useState(undefined);
@@ -12,8 +13,8 @@ export default function CharDetails() {
 
     const getCharacterData = async () => { // This will be a websocket in the future
         try {
-            const apiEndpoint = `https://api.pvpscalpel.com/checkCharacter/${server}/${realm}/${name}`;
-            let response = await fetch(apiEndpoint);
+            const apiEndpoint = `/checkCharacter/${server}/${realm}/${name}`;
+            let response = await httpFetch(apiEndpoint);
 
             if (!response.ok) return setData(undefined);
             const fetchData = await response.json();

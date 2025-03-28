@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import getFingerprint from "../helpers/getFingerprint.js";
+import httpFetch from "../helpers/httpFetch.js";
 
 export default function VerifyEmail() {
   const { token } = useParams();
@@ -10,14 +11,11 @@ export default function VerifyEmail() {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const validationApiEndpoint = 'https://api.pvpscalpel.com/validate/email';
+        const validationApiEndpoint = '/validate/email';
         const result = {};
 
-        const req = await fetch(validationApiEndpoint, {
+        const req = await httpFetch(validationApiEndpoint, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify({ token: token, fingerprint :getFingerprint() })
         });
 

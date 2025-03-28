@@ -1,7 +1,8 @@
+import httpFetch from "../../../helpers/httpFetch.js";
 export default function BGBtn({  setData, setPage, setContent  }){
     const clickHandler = async (event) => {
         let reqData;
-        const res = await fetch(`https://api.pvpscalpel.com/LDB/BG`);
+        const res = await httpFetch(`/LDB/BG`);
         reqData = await res.json();
         let rank = 1;
         const paginatedData = [];

@@ -1,6 +1,7 @@
 import {useState, useEffect} from  'react';
 import CharCard from '../components/Roster/charCard';
 import SearchBox from '../components/Roster/searchBox';
+import httpFetch from '../helpers/httpFetch.js';
 
 export default function RosterPage() {
 
@@ -9,10 +10,7 @@ export default function RosterPage() {
     
     useEffect(() => {
         const fetchData = async () => {
-            const req = await fetch(`https://api.pvpscalpel.com/member/list`,{
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+            const req = await httpFetch(`/member/list`,{
                 method: `POST`,
                 cache: 'no-store',
                 body: JSON.stringify({
