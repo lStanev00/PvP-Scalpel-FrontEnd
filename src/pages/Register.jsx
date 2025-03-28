@@ -63,9 +63,6 @@ export default function Register() {
             const apiEndpoint = `/register`;
             const req = await httpFetch(apiEndpoint, {
                 method: 'POST',
-                headers: {
-                    "600": "BasicPass"
-                },
                 body: JSON.stringify({
                     username: username,
                     email: email,

@@ -6,6 +6,7 @@ export default async function httpFetch(endpoint, options = {}) {
 
         credentials: "include", // always include cookies
         headers: {
+          "600": "BasicPass",
           "Content-Type": "application/json",
           ...options.headers,
         },

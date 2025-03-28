@@ -36,9 +36,6 @@ export default function Login() {
             const apiEndpoint = `/login`;
             const req = await httpFetch(apiEndpoint, {
                 method: 'POST',
-                headers: {
-                    "600": "BasicPass"
-                },
                 body: JSON.stringify({
                     email: email,
                     password: password,
