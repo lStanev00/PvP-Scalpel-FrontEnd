@@ -9,6 +9,7 @@ import Register from "./pages/register.jsx";
 import Login from "./pages/Login.jsx";
 import GotoEmail from "./pages/EmailSend.jsx";
 import VerifyEmail from "./pages/VerifyEmail.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                             <Route path="/login" element={<Login />} />
                             <Route path="/goto/email" element={<GotoEmail />} />
                             <Route path="/verify/:token" element={<VerifyEmail />} />
+                            <Route path="/profilePage" element={<ProfilePage />} />
                         </Routes>
                         
                     </main>
