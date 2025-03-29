@@ -10,7 +10,8 @@ export default defineConfig({
       "/api" : {
         target: "https://api.pvpscalpel.com",
         changeOrigin: true,
-        secure: true
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
 
     }

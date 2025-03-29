@@ -32,6 +32,7 @@ export const UserProvider = ({ children }) => {
 
 async function httpFetchWithCredentials(endpoint, options = {}) {
     const apiDomain = import.meta.env.VITE_API_URL;
+    console.log(apiDomain)
 
     const defaultOptions = {
 
