@@ -15,7 +15,7 @@ import { UserProvider } from "./hooks/ContextVariables.jsx";
 function App() {
     return (
         <>
-        <UserProvider>
+        {/* <UserProvider> */}
             <Router>
                 <div className="page-wrapper">
                     <header className="header">
@@ -47,7 +47,7 @@ function App() {
             <GoToTopButton />
             </Router>
             
-        </UserProvider>
+        {/* </UserProvider> */}
         </>
     )
 }
