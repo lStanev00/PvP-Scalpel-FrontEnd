@@ -6,15 +6,14 @@ export default function ProfilePage() {
 
     const contextUser = useContext(UserContext);
 
-    const user = {
-        username: "lychezar",
-        email: "l.stanev2000@gmail.com",
-        role: "user",
-        isVerified: true
-    }
-
+    // const user = {
+    //     username: "lychezar",
+    //     email: "l.stanev2000@gmail.com",
+    //     role: "user",
+    //     isVerified: true
+    // }
+    const user = contextUser.user;
     return (<>
-        {contextUser.name}
 
         <div className={Style.banner}>
             <h4>Profile</h4>
