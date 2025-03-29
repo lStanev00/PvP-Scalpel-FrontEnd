@@ -1,6 +1,10 @@
 import Style from "../Styles/modular/ProfilePage.module.css"
+import { useContext } from "react";
+import { UserContext } from "../hooks/ContextVariables";
 
 export default function ProfilePage() {
+
+    const contextUser = useContext(UserContext);
 
     const user = {
         username: "lychezar",
@@ -10,6 +14,8 @@ export default function ProfilePage() {
     }
 
     return (<>
+        {contextUser.name}
+
         <div className={Style.banner}>
             <h4>Profile</h4>
         </div>

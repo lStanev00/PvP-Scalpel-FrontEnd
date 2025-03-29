@@ -10,10 +10,12 @@ import Login from "./pages/Login.jsx";
 import GotoEmail from "./pages/EmailSend.jsx";
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import { UserProvider } from "./hooks/ContextVariables.jsx";
 
 function App() {
     return (
         <>
+        <UserProvider>
             <Router>
                 <div className="page-wrapper">
                     <header className="header">
@@ -44,6 +46,8 @@ function App() {
                 </div>
             <GoToTopButton />
             </Router>
+            
+        </UserProvider>
         </>
     )
 }
