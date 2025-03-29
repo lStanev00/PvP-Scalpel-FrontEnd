@@ -1,6 +1,6 @@
-const apiDomain = "https://api.pvpscalpel.com";
 
-export default async function httpFetch(endpoint, options = {}) {
+export default async function httpFetchWithCredentials(endpoint, options = {}) {
+    const apiDomain = "https://api.pvpscalpel.com";
 
     const defaultOptions = {
 
