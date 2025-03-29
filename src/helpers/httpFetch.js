@@ -9,6 +9,7 @@ export default async function httpFetchWithCredentials(endpoint, options = {}) {
           "600": "BasicPass",
           "Content-Type": "application/json",
           ...options.headers,
+          cache: 'no-store',
         },
     };
 

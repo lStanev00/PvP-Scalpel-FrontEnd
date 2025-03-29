@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Style from "../Styles/modular/logReg.module.css";
 import getFingerprint from "../helpers/getFingerprint.js";
 import { useNavigate, Link } from "react-router-dom";
-import httpFetch from "../helpers/httpFetch.js";
+import { UserContext } from "../hooks/ContextVariables.jsx";
 
 export default function Login() {
     const [error, setError] = useState();
     const navigate = useNavigate();
+    const { httpFetch } = useContext(UserContext);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -34,6 +35,7 @@ export default function Login() {
 
         if (isValid) {
             const apiEndpoint = `/login`;
+
             const req = await httpFetch(apiEndpoint, {
                 method: 'POST',
                 body: JSON.stringify({

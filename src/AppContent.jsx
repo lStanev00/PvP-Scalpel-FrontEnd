@@ -18,14 +18,17 @@ export default function AppContent() {
     const {user, setUser, httpFetch} = useContext(UserContext);
 
     const fetcData = async () => {
-        const req = httpFetch("/verify/me");
-        const data = await req.json();
-        console.log(req)
+        const req = await httpFetch("/verify/me");
+        if (req.status == 200) {
+            const data = await req.json();
+            console.log(data)
+            setUser(data)
+        }
     }
 
     useEffect(() => { 
         fetcData()
-    })
+    }, [])
 
     return (
         <Router>

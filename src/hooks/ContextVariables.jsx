@@ -3,10 +3,9 @@ import { createContext, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState({username:`dasd`});
+    const [user, setUser] = useState(undefined);
     
     async function httpFetch(endpoint, options = {}) {
-    
         const req = await httpFetchWithCredentials(endpoint, options);
     
         if (req.status === 403) {
@@ -32,8 +31,6 @@ export const UserProvider = ({ children }) => {
 
 async function httpFetchWithCredentials(endpoint, options = {}) {
     const apiDomain = import.meta.env.VITE_API_URL;
-    console.log(apiDomain)
-
     const defaultOptions = {
 
         credentials: "include", // always include cookies
@@ -43,6 +40,10 @@ async function httpFetchWithCredentials(endpoint, options = {}) {
           ...options.headers,
         },
     };
+
+    if (import.meta.env.MODE == `development`) {
+        defaultOptions.headers.ga6n1fa4fcvt = "EiDcafRc45$td4aedrgh4615tokenbtw"
+    }
 
     const finalOptions = { ...defaultOptions, ...options };
 
