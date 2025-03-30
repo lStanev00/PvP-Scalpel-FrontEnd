@@ -1,4 +1,4 @@
-import Style from '../Styles/modular/validateEmail.module.css'
+// import Style from '../Styles/modular/validateEmail.module.css'
 export default function GotoEmail() {
     return (<>
             <div className={Style["banner"]}>

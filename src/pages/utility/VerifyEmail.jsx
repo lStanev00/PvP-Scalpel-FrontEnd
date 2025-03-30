@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import getFingerprint from "../helpers/getFingerprint.js";
-import httpFetch from "../helpers/httpFetch.js";
+// import { useEffect, useState } from "react";
+// import { useNavigate, useParams } from "react-router-dom";
+// import getFingerprint from "../helpers/getFingerprint.js";
+// import httpFetch from "../helpers/httpFetch.js";
 
 export default function VerifyEmail() {
   const { token } = useParams();
