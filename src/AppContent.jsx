@@ -7,8 +7,7 @@ import GoToTopButton from "./components/topBtn";
 import CharDetails from "./pages/CharDetails.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/Login.jsx";
-import GotoEmail from "./pages/EmailSend.jsx";
-import VerifyEmail from "./pages/VerifyEmail.jsx";
+import GotoEmail from "./pages/utility/EmailSend.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./hooks/ContextVariables.jsx";
@@ -22,12 +21,19 @@ export default function AppContent() {
         if (req.status == 200) {
             const data = await req.json();
             console.log(data)
+
+            if (!data._id) {
+                return setUser(undefined);
+            }
             setUser(data)
         }
     }
-
+    
     useEffect(() => { 
-        fetcData()
+        try {
+            fetcData()
+        } catch (error) {console.warn(error)}
+        console.log(user)
     }, [])
 
     return (
@@ -49,7 +55,7 @@ export default function AppContent() {
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/goto/email" element={<GotoEmail />} />
-                        <Route path="/verify/:token" element={<VerifyEmail />} />
+                        <Route path="/reset/password" element={<ResetPasword />} />
                         <Route path="/profilePage" element={<ProfilePage />} />
                     </Routes>
                     
