@@ -12,7 +12,7 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./hooks/ContextVariables.jsx";
 import ResetPassword from "./pages/utility/ResetPassword.jsx";
-import VerifyToken from "./pages/utility/VerifyToken.jsx";
+import VlidateToken from "./pages/utility/VlidateToken.jsx";
 
 
 export default function AppContent() {
@@ -23,7 +23,7 @@ export default function AppContent() {
         const req = await httpFetch("/verify/me");
         if (req.status == 200) {
             console.log(req)
-            setUser(req.data)
+            setUser((user)=> {return req.data})
         }
     }
     
@@ -54,7 +54,7 @@ export default function AppContent() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/goto/:email" element={<GotoEmail />} />
                         <Route path="/profilePage" element={<ProfilePage />} />
-                        <Route path="/verify/:scenario" element={<VerifyToken />} />
+                        <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/reset/password" element={<ResetPassword />} />
                     </Routes>
                     
