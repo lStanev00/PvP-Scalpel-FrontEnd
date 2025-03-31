@@ -1,9 +1,10 @@
 import Style from '../../Styles/modular/Verify.module.css';
-import {  useParams  } from 'react-router-dom';
+import {  useNavigate, useParams  } from 'react-router-dom';
 import {  useContext, useEffect, useRef, useState  } from 'react'; 
 import { handleKeydown, handlePaste } from '../../helpers/6digitHandlers';
 import { UserContext } from '../../hooks/ContextVariables';
 export default function VlidateToken() {
+    const navigate = useNavigate();
     const { scenario } = useParams();
     const sixDigitRef = useRef([]);
     const {httpFetch} = useContext(UserContext);
@@ -12,9 +13,13 @@ export default function VlidateToken() {
     const handleValidatePatch = async ( e ) => {
         let sixDigitCode = ``;
         const subURL = `validate/token`
+
+        setError(undefined);
     
         for (const el of sixDigitRef.current) {
-            // if (el.value === ``) return
+            if (el.value === ``) {
+                setError(`Please provide the FULL 6 digits code provided on your email!`)
+            }
             sixDigitCode += String(el.value);
         }
     
@@ -25,9 +30,20 @@ export default function VlidateToken() {
                 option: scenario
             })
         })
+        let msg = ``;
+        const status = req.status;
+        if (status == 500) {
+            msg = `Internal server error!`
+            if (import.meta.env.MODE == `development`) {
+                msg += ` Please submit error ticked at issues in the github repo.`
+            } else {
+                msg += ` Please report to an admin => Discord Lychezar or Drunk ingame guild chat announce. Thanks in advance happy hittin ^^`  
+            }
+        } else if (status == 401) msg = `Bad authorization 6 digit code!`
+        else if (status == 200) return navigate(`/profile`);
+
+        if (msg != ``) return setError(msg);
     
-        console.log(req)
-        return req
     }
 
     useEffect(() => {
@@ -123,6 +139,14 @@ export default function VlidateToken() {
                     onKeyDown={(e) => handleKeydown(e, sixDigitRef)}
                     />
             </div>
+            
+            {error && (
+                <>
+                <div style={{color:`red`}}>
+                    {error}
+                </div>
+                </>
+            )}
 
             <button onClick={async(e) => await handleValidatePatch(e)}>Verify email</button>
 
