@@ -75,7 +75,7 @@ export default function Login() {
                             <input id="email" type="email" autoComplete="email" name="email" placeholder="Email.." />
 
                             <label htmlFor="password">Password</label>
-                            <input type="password" id="password" autoComplete="password" name="password" placeholder="Password.." />
+                            <input type="password" id="password" autoComplete="current-password" name="password" placeholder="Password.." />
 
                         {error && <p className={Style["error-msg"]}><b>{error}</b></p>}
                         {newDivError && (newDivError)}
