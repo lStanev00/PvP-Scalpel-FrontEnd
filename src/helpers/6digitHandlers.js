@@ -16,7 +16,7 @@ export const handleKeydown = (e, refList) => {
             (refList.current[prevElId]).focus();
         }
         refList.current[curentTargetIndex].value = ``;
-    } 
+    }  else if(e.key==`Enter`) document.querySelector("body > div > main > section > button").click();
 
     // ToDo delete logic
     // else if (e.key == 'Delete') {
