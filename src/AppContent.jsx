@@ -11,6 +11,8 @@ import GotoEmail from "./pages/utility/EmailSend.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./hooks/ContextVariables.jsx";
+import ResetPassword from "./pages/utility/ResetPassword.jsx";
+
 
 export default function AppContent() {
 
@@ -55,13 +57,13 @@ export default function AppContent() {
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/goto/email" element={<GotoEmail />} />
-                        <Route path="/reset/password" element={<ResetPasword />} />
                         <Route path="/profilePage" element={<ProfilePage />} />
+                        <Route path="/reset/password" element={<ResetPassword />} />
                     </Routes>
                     
                 </main>
                 <footer className="footer">
-                    <p>&copy; 2024 Lachezar Stanev. ALL RIGHTS RESERVED.</p>
+                    <p>&copy; 2025 Lachezar Stanev. ALL RIGHTS RESERVED.</p>
                 </footer>
             </div>
             <GoToTopButton />
