@@ -49,7 +49,7 @@ export default function HandlePasswordReset ({token}) {
             <h1 className={Style["header"]}>Done!</h1>
 
             <div className={Style["info-header"]}>
-                <p>You can now <Link to="/login" >Login</Link> with your new password!</p>
+                <p>You can now <Link style={{fontWeight: "bolder", color:'#1abc9c'}} to="/login" >Login</Link> with your new password!</p>
             </div>
         </>)
     }
