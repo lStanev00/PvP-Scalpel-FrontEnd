@@ -16,6 +16,4 @@ export default async function httpFetchWithCredentials(endpoint, options = {}) {
     const finalOptions = { ...defaultOptions, ...options };
 
     return fetch(apiDomain + endpoint, finalOptions)
-
-
 }
