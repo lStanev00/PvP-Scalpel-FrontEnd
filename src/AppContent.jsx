@@ -12,6 +12,7 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./hooks/ContextVariables.jsx";
 import ResetPassword from "./pages/utility/ResetPassword.jsx";
+import VerifyToken from "./pages/utility/VerifyToken.jsx";
 
 
 export default function AppContent() {
@@ -53,6 +54,7 @@ export default function AppContent() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/goto/:email" element={<GotoEmail />} />
                         <Route path="/profilePage" element={<ProfilePage />} />
+                        <Route path="/verify/:scenario" element={<VerifyToken />} />
                         <Route path="/reset/password" element={<ResetPassword />} />
                     </Routes>
                     

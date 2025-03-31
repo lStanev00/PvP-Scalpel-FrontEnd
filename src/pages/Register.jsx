@@ -72,7 +72,7 @@ export default function Register() {
             });
 
             console.log("Form is valid. Submitting...");
-            console.log(req.status);
+            console.log(req.data);
             if (req.status == 201) {
                 
                 e.target.reset();
@@ -108,11 +108,11 @@ export default function Register() {
                             {emailError && <p className={Style["error-msg"]}>{emailError}</p>}
 
                             <label htmlFor="password">Password</label>
-                            <input type="password" id="password" autoComplete="password" name="password" placeholder="Password.." />
+                            <input type="password" id="password" autoComplete="new-password" name="password" placeholder="Password.." />
                             {passError && <p className={Style["error-msg"]}>{passError}</p>}
 
                             <label htmlFor="repas">Confirm Password</label>
-                            <input type="password" id="repas" name="confirm-password" autoComplete="password" placeholder="Confirm password.." />
+                            <input type="password" id="repas" name="confirm-password" autoComplete="new-password" placeholder="Confirm password.." />
                             {rePassError && <p className={Style["error-msg"]}>{rePassError}</p>}
 
                         </div>
@@ -135,7 +135,7 @@ export default function Register() {
                                     style={{margin:"10px"}}>
                                     Terms agreement:
                                 </p> 
-                                <input id="agreement" style={{bottom:"3px"}} className={Style.checkbox} type="checkbox" name="agreement" />
+                                <input id="agreement" autoComplete="off" style={{bottom:"3px"}} className={Style.checkbox} type="checkbox" name="agreement" />
                             </div>
                             {checkError && <p className={Style["error-msg"]}>{checkError}</p>}
 
