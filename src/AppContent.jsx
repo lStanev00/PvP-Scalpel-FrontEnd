@@ -21,13 +21,8 @@ export default function AppContent() {
     const fetcData = async () => {
         const req = await httpFetch("/verify/me");
         if (req.status == 200) {
-            const data = await req.json();
-            console.log(data)
-
-            if (!data._id) {
-                return setUser(undefined);
-            }
-            setUser(data)
+            console.log(req)
+            setUser(req.data)
         }
     }
     

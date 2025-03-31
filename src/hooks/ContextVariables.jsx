@@ -47,5 +47,33 @@ async function httpFetchWithCredentials(endpoint, options = {}) {
 
     const finalOptions = { ...defaultOptions, ...options };
 
-    return fetch(apiDomain + endpoint, finalOptions)
+    // return fetch(apiDomain + endpoint, finalOptions);
+
+    // To keep the console clean keep make the errors catched...
+
+    try {
+        const res = await fetch(apiDomain + endpoint, finalOptions);
+
+        let data = null;
+        const contetType = res.headers.get("content-type");
+
+        if (contetType && contetType.includes(`application/json`)){
+            data = await res.json();
+        }
+
+        return {
+            status : res.status,
+            ok: res.ok,
+            data,
+        }
+    } catch (error) {
+
+        return {
+            status: 0,
+            ok: false,
+            error: error.message || "Debug this case"
+        }
+        
+    }
+
 }
