@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { UserContext } from '../../hooks/ContextVariables';
 import getFingerprint from "../../helpers/getFingerprint";
 import GotoEmail from "../EmailSend";
