@@ -6,6 +6,7 @@ import { UserContext } from "../hooks/ContextVariables.jsx";
 
 export default function Login() {
     const [error, setError] = useState();
+    const [newDivError, setnewDivError] = useState();
     const navigate = useNavigate();
     const { user, setUser, httpFetch } = useContext(UserContext);
 
@@ -21,6 +22,7 @@ export default function Login() {
 
         // Reset errors
         setError(undefined);
+        setnewDivError(undefined)
 
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             setError("Invalid email address.");
@@ -50,7 +52,7 @@ export default function Login() {
             else if (req.status === 500) return setError("Internal server error. Please report to admin.");
             else if (req.status === 400) {
                 setUser({email: email, fingerprint: fingerprint})
-                return setError(
+                return setnewDivError(
                     <div style={{ textAlign: "center", fontSize:"medium" }}>
                         <p style={{ color: "red"}}>Bad credentials!</p>
                         Try <Link to="/reset/password">Reset password</Link>
@@ -76,6 +78,7 @@ export default function Login() {
                             <input type="password" id="password" autoComplete="password" name="password" placeholder="Password.." />
 
                         {error && <p className={Style["error-msg"]}><b>{error}</b></p>}
+                        {newDivError && (newDivError)}
                         <button type="submit">Login</button>
                         <p>Don't have an account? <Link to="/register">Register here</Link></p>
                         </div>
