@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Style from '../../Styles/modular/utils.module.css';
 import getFingerprint from '../../helpers/getFingerprint';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../hooks/ContextVariables';
 
 export default function HandlePasswordReset ({token}) {
     const [ error, setError ] = useState();
     const [ success, setSuccess ] = useState();
+
+    const { httpFetch } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,7 +29,7 @@ export default function HandlePasswordReset ({token}) {
         }
 
         const req = await httpFetch('/reset/password', {
-            method: "Patch",
+            method: "PATCH",
             body: JSON.stringify({
                 JWT: token,
                 newPassword: newPassword,
@@ -38,7 +41,7 @@ export default function HandlePasswordReset ({token}) {
 
         else if (req.status === 400) return setError(`Verification email already sent! Please check your inbox.`)
 
-        else if (req.status == 201) return setSuccess(email);
+        else if (req.status == 201) return setSuccess(true);
     }
 
     if (success) {
