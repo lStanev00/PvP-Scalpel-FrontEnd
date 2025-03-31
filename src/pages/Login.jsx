@@ -7,7 +7,7 @@ import { UserContext } from "../hooks/ContextVariables.jsx";
 export default function Login() {
     const [error, setError] = useState();
     const navigate = useNavigate();
-    const { httpFetch } = useContext(UserContext);
+    const { user, setUser, httpFetch } = useContext(UserContext);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -46,9 +46,18 @@ export default function Login() {
             });
 
             if (req.status == 200) return navigate(`/`);
-            if (req.status === 409) return setError(`Bad credentials! Check the input or create an account.`);
+            if (req.status === 409) return setError(<>Bad credentials! Check the input or create an account. <Link to='reset/password'></Link></>);
             else if (req.status === 500) return setError("Internal server error. Please report to admin.");
-            else if (!req.ok) return setError("Internal server error. Please report to admin.");
+            else if (req.status === 400) {
+                setUser({email: email, fingerprint: fingerprint})
+                return setError(
+                    <div style={{ textAlign: "center", fontSize:"medium" }}>
+                        <p style={{ color: "red"}}>Bad credentials!</p>
+                        Try <Link to="/reset/password">Reset password</Link>
+                    </div>
+            )
+            }
+            else if (!req.ok) return console.log(req)
         }
     }
 
@@ -60,14 +69,14 @@ export default function Login() {
                     <form onSubmit={handleSubmit}>
                         <div className={Style["inner-section"]}>
 
-                            <label>Email</label>
-                            <input type="email" autoComplete="email" name="email" placeholder="Email.." />
+                            <label htmlFor="email">Email</label>
+                            <input id="email" type="email" autoComplete="email" name="email" placeholder="Email.." />
 
-                            <label>Password</label>
-                            <input type="password" autoComplete="password" name="password" placeholder="Password.." />
+                            <label htmlFor="password">Password</label>
+                            <input type="password" id="password" autoComplete="password" name="password" placeholder="Password.." />
 
-                        <button type="submit">Login</button>
                         {error && <p className={Style["error-msg"]}><b>{error}</b></p>}
+                        <button type="submit">Login</button>
                         <p>Don't have an account? <Link to="/register">Register here</Link></p>
                         </div>
 

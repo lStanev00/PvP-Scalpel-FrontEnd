@@ -44,3 +44,7 @@
     margin: 15px;
     margin-top: 50px;
 }
+
+.error-msg b{
+    color: red;
+}

@@ -7,7 +7,7 @@ import GoToTopButton from "./components/topBtn";
 import CharDetails from "./pages/CharDetails.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/Login.jsx";
-import GotoEmail from "./pages/utility/EmailSend.jsx";
+import GotoEmail from "./components/EmailSend.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import { useContext, useEffect } from "react";
 import { UserContext } from "./hooks/ContextVariables.jsx";
@@ -56,7 +56,7 @@ export default function AppContent() {
                         <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route>
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/goto/email" element={<GotoEmail />} />
+                        <Route path="/goto/:email" element={<GotoEmail />} />
                         <Route path="/profilePage" element={<ProfilePage />} />
                         <Route path="/reset/password" element={<ResetPassword />} />
                     </Routes>
