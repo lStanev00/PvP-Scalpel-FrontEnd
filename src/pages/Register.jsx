@@ -99,20 +99,20 @@ export default function Register() {
                 <div>
                     <form onSubmit={handleSubmit}>
                         <div className={Style["inner-section"]}>
-                            <label>Username</label>
-                            <input autoComplete="username" type="text" name="username" placeholder="Username.." />
+                            <label htmlFor="username">Username</label>
+                            <input id="username" autoComplete="username" type="text" name="username" placeholder="Username.." />
                             {usernameError && <p className={Style["error-msg"]}>{usernameError}</p>}
 
-                            <label>Email</label>
-                            <input type="email" autoComplete="email" name="email" placeholder="Email.." />
+                            <label htmlFor="email">Email</label>
+                            <input type="email" id="email" autoComplete="email" name="email" placeholder="Email.." />
                             {emailError && <p className={Style["error-msg"]}>{emailError}</p>}
 
-                            <label>Password</label>
-                            <input type="password" autoComplete="password" name="password" placeholder="Password.." />
+                            <label htmlFor="password">Password</label>
+                            <input type="password" id="password" autoComplete="password" name="password" placeholder="Password.." />
                             {passError && <p className={Style["error-msg"]}>{passError}</p>}
 
-                            <label>Confirm Password</label>
-                            <input type="password" name="confirm-password" autoComplete="password" placeholder="Confirm password.." />
+                            <label htmlFor="repas">Confirm Password</label>
+                            <input type="password" id="repas" name="confirm-password" autoComplete="password" placeholder="Confirm password.." />
                             {rePassError && <p className={Style["error-msg"]}>{rePassError}</p>}
 
                         </div>
@@ -125,8 +125,18 @@ export default function Register() {
                             </span>
                         </label>
                             <div style={{display:"flex", alignItems:"center"}}>
-                                <p style={{margin:"10px"}}>Terms agreement:</p> 
-                                <input style={{bottom:"3px"}} className={Style.checkbox} type="checkbox" name="agreement" />
+                                <p onClick={
+                                    (e)=> {
+                                        const box = e.target.parentNode.querySelector(`#agreement`);
+                                        if (box.checked) return box.checked = false;
+                                        else box.checked = true
+                                    }
+                                }
+
+                                    style={{margin:"10px"}}>
+                                    Terms agreement:
+                                </p> 
+                                <input id="agreement" style={{bottom:"3px"}} className={Style.checkbox} type="checkbox" name="agreement" />
                             </div>
                             {checkError && <p className={Style["error-msg"]}>{checkError}</p>}
 
