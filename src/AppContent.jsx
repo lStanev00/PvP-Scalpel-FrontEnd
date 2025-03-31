@@ -53,7 +53,7 @@ export default function AppContent() {
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/goto/:email" element={<GotoEmail />} />
-                        <Route path="/profilePage" element={<ProfilePage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
                         <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/reset/password" element={<ResetPassword />} />
                     </Routes>
