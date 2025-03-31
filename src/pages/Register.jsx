@@ -128,8 +128,7 @@ export default function Register() {
                                 <p onClick={
                                     (e)=> {
                                         const box = e.target.parentNode.querySelector(`#agreement`);
-                                        if (box.checked) return box.checked = false;
-                                        else box.checked = true
+                                        box.checked = box.checked ? false : true;
                                     }
                                 }
 
