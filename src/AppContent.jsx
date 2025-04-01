@@ -16,22 +16,10 @@ import VlidateToken from "./pages/utility/VlidateToken.jsx";
 
 
 export default function AppContent() {
+    const { httpFetch } = useContext(UserContext);
 
-    const {user, setUser, httpFetch} = useContext(UserContext);
-
-    const fetcData = async () => {
-        const req = await httpFetch("/verify/me");
-        if (req.status == 200) {
-            console.log(req)
-            setUser((user)=> {return req.data})
-        }
-    }
-    
     useEffect(() => { 
-        try {
-            fetcData()
-        } catch (error) {console.warn(error)}
-        console.log(user)
+        const fetcData = (async () => {const req = await httpFetch("/verify/me")})();
     }, [])
 
     return (
