@@ -14,7 +14,7 @@ export default function RosterPage() {
                 method: `POST`,
                 cache: 'no-store',
                 body: JSON.stringify({
-                    "query": ["rank", "media"]
+                    "query": ["rank", "media", "playerRealmSlug"]
                 })
             })
             const data = await req.json();
@@ -24,7 +24,6 @@ export default function RosterPage() {
         fetchData();
     }, []);
 
-    console.log(data)
     return (
         <>
             <SearchBox data = {data} setSearch={setSearch} />
