@@ -3,14 +3,16 @@ import { useContext, useState } from "react";
 import { UserContext } from "../hooks/ContextVariables";
 import AccInfo from "../components/ProfilePage/AccInfo";
 import ChangePassword from "../components/ProfilePage/ChangePassword";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
+    const navigate = useNavigate();
 
     const [content, setContent] = useState(`AccInfo`)
 
     const {user, httpFetch} = useContext(UserContext);
 
-    if (!user) return
+    if (!user || !user._id) return navigate(`/login`);
     return (<>
 
         <div className={Style.banner}>
