@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import Style from '../../Styles/modular/AccInfo.module.css'
-import { UsernameForm } from './AccInfoModifyForm';
+import { EmailForm, UsernameForm } from './AccInfoModifyForm';
 export default function AccInfo({user}) {
     const [editUsername, setEditUsername] = useState(false);
+    const [editEmail, setEditEmail] = useState(false);
     return (
         <>
         <h2>Account Info</h2>
@@ -28,12 +29,16 @@ export default function AccInfo({user}) {
 
                 <strong>Email:</strong>
 
+                {!editEmail && (
                 <div>
-
-                    {user.email}<span title="Edit"> ✏️</span>
-
+                    {user.email}
+                    <span style={{cursor: "pointer"}} onClick={() => setEditEmail(true)} title="Edit"> ✏️ </span>
                 </div>
 
+                )}
+                {editEmail && (
+                <EmailForm setEditEmail={setEditEmail} email={user.email} />
+                )}
             </div>
 
             <div className={Style.card}>
