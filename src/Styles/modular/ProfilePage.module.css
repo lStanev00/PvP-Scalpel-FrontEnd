@@ -32,14 +32,13 @@
 .inner-section {
     display: flex;
     background-color: #1c2533;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 12px;
     width: fit-content;
     margin: 15px;
     color: #fff;
     font-family: Arial, sans-serif;
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    display: flex;
     flex-direction: column;
     gap: 20px;
     align-items: start;
@@ -71,4 +70,28 @@ button:active {
     background: #0284c7;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transform: scale(0.95);
+}
+
+.inner-nav-menu {
+    position: sticky;
+    top: 20px;
+    align-self: flex-start; /* Prevents stretch inside flex parent */
+    z-index: 2; /* Keeps it above other elements just in case */
+    align-items: center;
+}
+
+
+.content-section { 
+    display: flex;
+    background-color: #1c253386;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 700px;
+    margin: 15px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }
