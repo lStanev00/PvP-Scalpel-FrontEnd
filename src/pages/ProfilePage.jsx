@@ -1,12 +1,16 @@
 import Style from "../Styles/modular/ProfilePage.module.css"
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../hooks/ContextVariables";
+import AccInfo from "../components/ProfilePage/AccInfo";
+import ChangePassword from "../components/ProfilePage/ChangePassword";
 
 export default function ProfilePage() {
 
-    const contextUser = useContext(UserContext);
+    const [content, setContent] = useState(`AccInfo`)
 
-    const user = contextUser.user;
+    const {user, httpFetch} = useContext(UserContext);
+
+    if (!user) return
     return (<>
 
         <div className={Style.banner}>
@@ -15,25 +19,22 @@ export default function ProfilePage() {
         
         <div className={Style.container}>
 
-            <div style={{alignItems: "center"}} className={Style['inner-section']}>
-                <h2>Account Actions</h2>
-                <div className={Style[`button-div`]}>
-                    <button>Profile Settings</button>
-                    <button>Change password</button>
-                    <button>View all posts</button>
-                </div>
+        <div className={`${Style['inner-section']} ${Style['inner-nav-menu']}`}>
+            <h2>Menu</h2>
+            <div className={Style[`button-div`]}>
+                <button>Profile Settings</button>
+                <button onClick={()=> setContent(`ChangePassword`)}>Change password</button>
+                <button>View your posts</button>
             </div>
+        </div>
 
-            <div className={Style['inner-section']}>
-                <h2>Account Actions</h2>
-                <div><strong>Username:</strong> {user.username}</div>
-                <div><strong>Email:</strong> {user.email}</div>
-                <div><strong>Role:</strong> {user.role}</div>
-                {user.isVerified && (<div><strong>✅ Verified</strong></div>)}
+
+            <div className={Style['content-section']}>
+                {content == 'AccInfo' && (<AccInfo user={user} />)}
+                {content == "ChangePassword" && (<ChangePassword setContent={setContent} httpFetch={httpFetch} />)}
             </div>
       </div>
     
     </>
     );
   }
-
