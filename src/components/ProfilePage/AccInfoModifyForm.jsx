@@ -1,9 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import { UserContext } from '../../hooks/ContextVariables';
 
 export function UsernameForm ({currentUsername, setEditUsername}) {
     const {httpFetch, setUser} = useContext(UserContext);
     const [error, setError] = useState();
+    const refList = useRef([]);
 
     const handleUsernameModification = async (e) => {
         e.preventDefault();
@@ -39,17 +40,17 @@ export function UsernameForm ({currentUsername, setEditUsername}) {
     }
     return(<>
         <div>
-            <form style={{gap:`10px`}} onSubmit={async (e) => await handleUsernameModification(e)}>
+            <form ref={el => refList.current = el} style={{marginBottom:`10px`}} onSubmit={async (e) => await handleUsernameModification(e)}>
 
                 <input type="text" name='username' defaultValue={currentUsername} />
                 {error && (
                     <p style={{color:'red', fontWeight: `bold`}}>{error}</p>
                 )}
 
-                <button type='submit'>Submit</button>
 
-                <button onClick={(e) => {e.preventDefault();setEditUsername(false)}}>Cancel</button>
             </form>
+                <button style={{marginRight:`10px`}} onClick={(e) => {e.preventDefault();refList.current.requestSubmit()}}>Submit</button>
+                <button onClick={(e) => {e.preventDefault();setEditUsername(false)}}>Cancel</button>
         </div>
     </>)
 }
