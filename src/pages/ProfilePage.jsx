@@ -22,7 +22,7 @@ export default function ProfilePage() {
         <div className={`${Style['inner-section']} ${Style['inner-nav-menu']}`}>
             <h2>Menu</h2>
             <div className={Style[`button-div`]}>
-                <button>Profile Settings</button>
+                <button onClick={() => setContent(`AccInfo`)}>Account Info</button>
                 <button onClick={()=> setContent(`ChangePassword`)}>Change password</button>
                 <button>View your posts</button>
             </div>

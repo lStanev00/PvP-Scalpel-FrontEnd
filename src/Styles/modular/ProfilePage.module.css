@@ -94,4 +94,9 @@ button:active {
     flex-direction: column;
     gap: 20px;
     align-items: center;
+    font-size: 1.5rem;
+}
+
+.content-section h2 {
+    font-size: 3rem;
 }
