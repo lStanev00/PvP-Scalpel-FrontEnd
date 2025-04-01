@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Style from "./../Styles/modular/charDetails.module.css"
 import ReloadBTN from "../components/checkDetails/reloadBTN.jsx";
 import PvPCards from "../components/checkDetails/PvPCards.jsx";
-import httpFetch from "../helpers/httpFetch.js";
+import PostTemplate from "../components/PostTemplate.jsx";
+import { UserContext } from "../hooks/ContextVariables.jsx";
 
 export default function CharDetails() {
     const [data, setData] = useState(undefined);
     const { server, realm, name } = useParams();
     const [isUpdating, setUpdating] = useState(false);
+    const { httpFetch } = useContext(UserContext)
 
 
     const getCharacterData = async () => { // This will be a websocket in the future
@@ -17,7 +19,7 @@ export default function CharDetails() {
             let response = await httpFetch(apiEndpoint);
 
             if (!response.ok) return setData(undefined);
-            const fetchData = await response.json();
+            const fetchData = response.data;
 
             if (response.status == 404) return setData({errorMSG : fetchData.messege});
 
@@ -148,6 +150,10 @@ export default function CharDetails() {
 
 
                 {/* Achievements Section */}
+                <div className={Style["section"]}>
+                    <h1>Comments </h1>
+                    <PostTemplate post={undefined} />
+                </div>
                 {/* <div className={Style["section"]}>
                     <h1>Achievements ({data.achieves.points} Points)</h1>
                     <div className={Style["card"]}>
