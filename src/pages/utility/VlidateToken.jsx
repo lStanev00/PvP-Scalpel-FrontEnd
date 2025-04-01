@@ -32,6 +32,7 @@ export default function VlidateToken() {
         })
         let msg = ``;
         const status = req.status;
+        if (status == 400) return setError(`There's no such token`)
         if (status == 500) {
             msg = `Internal server error!`
             if (import.meta.env.MODE == `development`) {
@@ -40,34 +41,24 @@ export default function VlidateToken() {
                 msg += ` Please report to an admin => Discord Lychezar or Drunk ingame guild chat announce. Thanks in advance happy hittin ^^`  
             }
         } else if (status == 401) msg = `Bad authorization 6 digit code!`
-        else if (status == 200) return navigate(`/profile`);
+        else if (status == 201) {
+
+            setTimeout(async () => {
+                await httpFetch("/verify/me");
+            }, 300);
+            return navigate(`/profile`);
+        }
 
         if (msg != ``) return setError(msg);
     
     }
 
-    useEffect(() => {
-        if (sixDigitRef.current.length > 4) {
-            for (const input of sixDigitRef.current) {
-                input.addEventListener("paste", (e) => handlePaste(e, sixDigitRef));
-            };
-        };
-
-        return () => {
-            for (const input of sixDigitRef.current) {
-                input.removeEventListener("paste", (e) => handlePaste(e, sixDigitRef));
-                
-            }
-        }
-    })
-
-    if (scenario == `verify`) {
         return (<>
         <div className={Style.banner}>Verify email</div>
         <section className={Style.container}>
 
             <div>
-                <div>Please fill the boxes with the provided code in your {scenario}</div>
+                <div>Please fill the boxes with the provided 6 digits code in your email</div>
             </div>
             <br />
             
@@ -82,6 +73,7 @@ export default function VlidateToken() {
                     className={Style.codeBox} 
                     type="text" 
                     onKeyDown={(e) => handleKeydown(e, sixDigitRef)}
+                    onPaste={(e) => handlePaste(e, sixDigitRef)}
                     />
                 <input 
                 ref={
@@ -93,6 +85,7 @@ export default function VlidateToken() {
                     className={Style.codeBox} 
                     type="text" 
                     onKeyDown={(e) => handleKeydown(e, sixDigitRef)}
+                    onPaste={(e) => handlePaste(e, sixDigitRef)}
                     />
                 <input 
                     ref={
@@ -104,6 +97,7 @@ export default function VlidateToken() {
                     className={Style.codeBox} 
                     type="text" 
                     onKeyDown={(e) => handleKeydown(e, sixDigitRef)}
+                    onPaste={(e) => handlePaste(e, sixDigitRef)}
                     />
                 <input 
                     ref={
@@ -115,6 +109,7 @@ export default function VlidateToken() {
                     className={Style.codeBox} 
                     type="text" 
                     onKeyDown={(e) => handleKeydown(e, sixDigitRef)}
+                    onPaste={(e) => handlePaste(e, sixDigitRef)}
                     />
                 <input 
                     ref={
@@ -126,6 +121,7 @@ export default function VlidateToken() {
                     className={Style.codeBox} 
                     type="text" 
                     onKeyDown={(e) => handleKeydown(e, sixDigitRef)}
+                    onPaste={(e) => handlePaste(e, sixDigitRef)}
                     />
                 <input 
                     ref={
@@ -137,6 +133,7 @@ export default function VlidateToken() {
                     className={Style.codeBox} 
                     type="text" 
                     onKeyDown={(e) => handleKeydown(e, sixDigitRef)}
+                    onPaste={(e) => handlePaste(e, sixDigitRef)}
                     />
             </div>
             
@@ -152,5 +149,4 @@ export default function VlidateToken() {
 
         </section>
         </>)
-    }
 }
