@@ -31,7 +31,7 @@ export function UsernameForm ({currentUsername, setEditUsername}) {
                 setUser(req.data)
                 setTimeout(async () => {
                     await httpFetch("/verify/me")
-                }, 500);
+                }, 200);
 
             }
         } catch (error) {
@@ -87,7 +87,7 @@ export function EmailForm ({ email, setEditEmail }) {
                 setTimeout(async () => {
                     await httpFetch("/verify/me");
                     navigate(`/validate/email`)
-                }, 500);
+                }, 200);
 
             }
         } catch (error) {
@@ -107,7 +107,7 @@ export function EmailForm ({ email, setEditEmail }) {
                     <p style={{color:'red', fontWeight: `bold`}}>{error}</p>
             )}
             <button style={{marginRight:`10px`}} onClick={(e) => {e.preventDefault();refList.current.requestSubmit()}}>Submit</button>
-            <button onClick={(e) => {e.preventDefault();setEmailUsername(false)}}>Cancel</button>
+            <button onClick={(e) => {e.preventDefault();setEditEmail(false)}}>Cancel</button>
         </div>
     </>)
 }
