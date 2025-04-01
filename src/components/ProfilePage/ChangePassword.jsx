@@ -14,6 +14,7 @@ export default function ChangePassword({setContent, httpFetch}) {
         const newPassword = formData.get(`newPassword`)
         const rePas = formData.get(`rePas`);
 
+        if(!password || !newPassword || !rePas) return setError(`Please fill all the fields`)
         if(newPassword.length < 6) return setError(`Password must be at last 6 characters`);
         if (newPassword != rePas) return setError(`Confirm Password does not match your New Password.`);
 
@@ -45,11 +46,11 @@ export default function ChangePassword({setContent, httpFetch}) {
                 Change Password
             </h4>
         </div>
-        <form onSubmit={onSubmit} style={{alignContent:'center', gap:'15px'}}>
+        <form onSubmit={onSubmit} style={{alignContent:'center', gap:'15px', marginBottom:"1rem"}}>
 
             <label htmlFor='password'>Current Password: </label>
             <input autoComplete='password' id='password' name='password' type="password" />
-
+            
             <label htmlFor='newPassword'>New Password: </label>
             <input autoComplete='new-password' id='newPassword' name='newPassword' type="password" />
 
@@ -61,7 +62,7 @@ export default function ChangePassword({setContent, httpFetch}) {
                     {error}
                 </p>
             </div>)}
-            <button type='submit'>Change Password</button>
+            <button style={{marginTop:`1rem`}} type='submit'>Change Password</button>
 
 
         </form>
