@@ -1,8 +1,72 @@
-This application is currently in development. Expect accurate documentation with the first stable release. If you encounter a bug, 
-please report it. Thank you in advance!
-The application is partialy deployed at : https://www.pvpscalpel.com
+# PvP Scalpel – Frontend
 
-## 🔐 Privacy & Session Tracking Disclaimer
+Fan-made World of Warcraft PvP statistics dashboard built using React.
+
+🔗 [Live Preview](https://www.pvpscalpel.com)
+
+## About
+
+PvP Scalpel is a frontend React application that displays real-time PvP statistics and rankings for WoW players. It connects to a custom backend that fetches and stores data from the official Blizzard WoW API. Users can view profiles, top player rankings, and more in a sleek, responsive UI.
+
+> **Note:** The application is still under development. Bug reports and feedback are welcome.
+
+---
+
+## Features
+
+- 🧙 WoW PvP leaderboard with role/class-based filtering
+- 🔐 User authentication (JWT-based)
+- 📸 Profile picture uploads (secure validation supported on backend)
+- 🌐 Connected to Blizzard's WoW API via backend service
+- ⚛️ Built with React + Vite
+- 🌙 Dark mode UI
+
+---
+
+## Tech Stack
+
+- **Frontend:** React, Vite, JavaScript (ES6+)
+- **Routing:** React Router
+- **State Management:** Context API (Redux coming soon)
+- **Styling:** CSS modules / global styles
+- **Backend (connected to):** Node.js + Express + MongoDB
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16+ recommended)
+- npm or yarn
+
+### Installation
+
+git clone https://github.com/lStanev00/PvP-Scalpel-FrontEnd
+cd PvP-Scalpel-FrontEnd
+npm install
+
+
+### Run the Application
+
+npm run dev
+
+### Folder Structure
+
+src/
+├── assets/             # Images & static assets
+├── components/         # Reusable UI components
+├── pages/              # Route pages (Home, Login, Leaderboard, etc.)
+├── services/           # API requests
+├── App.jsx             # Main app layout & routing
+└── main.jsx            # Root entry
+
+
+
+## Made with love for the WoW PvP community.
+
+
+### 🔐 Privacy & Session Tracking Disclaimer
 
 This application tracks user sessions for authentication, security, and account protection purposes.
 
