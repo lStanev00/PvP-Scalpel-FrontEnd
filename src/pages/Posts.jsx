@@ -24,7 +24,7 @@ export default function Posts() {
     return (<>
     <div className={style["post-grid"]}>
         {Object.entries(posts).map(([key, post]) => (
-            <div key={post._id} className={style["post-card"]}>
+            <div onClick={(e) => navigate(`/check/${post.character.server}/${post.character.playerRealm.slug}/${post.character.name}?comment=${post._id}`)} key={post._id} className={style["post-card"]}>
                 <div className={style["post-header"]}>
                     <span className={style["author"]}>Posted by User:🧑 {post.author.username}</span>
                     <span className={style["date"]}>🕓 {new Date(post.createdAt).toLocaleDateString()}</span>
