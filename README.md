@@ -16,7 +16,6 @@ PvP Scalpel is a frontend React application that displays real-time PvP statisti
 
 - 🧙 WoW PvP leaderboard with role/class-based filtering
 - 🔐 User authentication (JWT-based)
-- 📸 Profile picture uploads (secure validation supported on backend)
 - 🌐 Connected to Blizzard's WoW API via backend service
 - ⚛️ Built with React + Vite
 - 🌙 Dark mode UI
