@@ -34,7 +34,6 @@ export default function ViewUserPosts() {
 
 
     if (error) return (<><p>Error fetching data</p></>);
-    console.log(posts)
     if (!posts) return (<><p>Loading...</p></>)
     if(posts.length == 0) return (<><p>You don't have yet posts, go write some.</p></>)
     if (posts) return (<>
