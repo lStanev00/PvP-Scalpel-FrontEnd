@@ -90,6 +90,7 @@ export default function Login() {
                         {error && <p className={Style["error-msg"]}><b>{error}</b></p>}
                         {newDivError && (newDivError)}
                         <button type="submit">Login</button>
+                        <p>Forgot your password? <Link to="/reset/password">Reset here</Link></p>
                         <p>Don't have an account? <Link to="/register">Register here</Link></p>
                         </div>
 
