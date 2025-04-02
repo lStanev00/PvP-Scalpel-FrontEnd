@@ -142,13 +142,10 @@ export default function Details({data, setData}) {
                         {optimisticPosts.length == 0 && (<>
                             
                             <p style={{textAlign:"center", fontWeight:"bold"}}>No comments yet! Be the first to submit one.</p>
-                            {!user._id && (<>
-                                <br />
-                                <p style={{textAlign:"center", fontWeight:"bold"}}><Link style={{color: "#0ea5e9"}} to='/login' >Login </Link> or <Link style={{color: "#0ea5e9"}} to='/register' >Register here </Link> if you don't have an account</p>
-                            </>)}
+
                         </>
                         )}
-                       { Object.entries(optimisticPosts).map(([key, post]) => {
+                       {Object.entries(optimisticPosts).map(([key, post]) => {
                            return <PostTemplate 
                            key={post._id} 
                            post={post} 
