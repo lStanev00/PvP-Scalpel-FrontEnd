@@ -1,6 +1,6 @@
 import { startTransition, useContext, useState } from "react";
-import styles from '../Styles/modular/NewPostForm.module.css'; 
-import { UserContext } from "../hooks/ContextVariables";
+import styles from '../../Styles/modular/NewPostForm.module.css'; 
+import { UserContext } from "../../hooks/ContextVariables";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function NewPostForm({characterID, addOptimisticPost, setPosts}) {

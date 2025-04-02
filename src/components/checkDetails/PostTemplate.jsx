@@ -1,6 +1,6 @@
-import postStyle from '../Styles/modular/PostTemplate.module.css'
+import postStyle from '../../Styles/modular/PostTemplate.module.css'
 import { useContext } from "react";
-import { UserContext } from "../hooks/ContextVariables";
+import { UserContext } from "./../../hooks/ContextVariables";
 
 export default function PostTemplate({ post, optimistic, setPosts }) {
   const { user, httpFetch } = useContext(UserContext);

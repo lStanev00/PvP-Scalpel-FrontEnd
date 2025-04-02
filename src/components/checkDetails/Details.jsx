@@ -2,8 +2,8 @@ import { useContext, useState, useOptimistic } from "react";
 import Style from '../../Styles/modular/charDetails.module.css';
 import ReloadBTN from "./reloadBTN";
 import PvPCards from "./PvPCards";
-import PostTemplate from "../PostTemplate";
-import NewPostForm from "../NewPostForm";
+import PostTemplate from "./PostTemplate";
+import NewPostForm from "./NewPostForm";
 import { UserContext } from "../../hooks/ContextVariables";
 
 
