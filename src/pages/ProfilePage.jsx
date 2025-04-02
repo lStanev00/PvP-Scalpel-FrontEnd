@@ -4,6 +4,7 @@ import { UserContext } from "../hooks/ContextVariables";
 import AccInfo from "../components/ProfilePage/AccInfo";
 import ChangePassword from "../components/ProfilePage/ChangePassword";
 import { useNavigate } from "react-router-dom";
+import ViewUserPosts from "../components/ProfilePage/ViewUserPosts";
 
 export default function ProfilePage() {
     const navigate = useNavigate();
@@ -26,13 +27,14 @@ export default function ProfilePage() {
             <div className={Style[`button-div`]}>
                 <button onClick={() => setContent(`AccInfo`)}>Account Info</button>
                 <button onClick={()=> setContent(`ChangePassword`)}>Change password</button>
-                <button>View your posts</button>
+                <button onClick={()=> setContent(`ViewPosts`)}>View your posts</button>
             </div>
         </div>
 
 
             <div className={Style['content-section']}>
                 {content == 'AccInfo' && (<AccInfo user={user} />)}
+                {content == 'ViewPosts' && (<ViewUserPosts />)}
                 {content == "ChangePassword" && (<ChangePassword setContent={setContent} httpFetch={httpFetch} />)}
             </div>
       </div>
