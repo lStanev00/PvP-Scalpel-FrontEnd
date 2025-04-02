@@ -43,7 +43,9 @@ PvP Scalpel is a frontend React application that displays real-time PvP statisti
 ### Installation
 
 git clone https://github.com/lStanev00/PvP-Scalpel-FrontEnd
+
 cd PvP-Scalpel-FrontEnd
+
 npm install
 
 
