@@ -1,4 +1,4 @@
-.post-warp {
+/* .post-warp {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -8,11 +8,24 @@
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     margin-bottom: 15px;
-    max-width: 400px;
+    max-width: 350px;
     height: max-content;
-    margin-inline: auto;
+    color: #cbd5e1;
+  } */
+
+  .post-warp {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(100, 100, 100, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    height: max-content;
     color: #cbd5e1;
   }
+  
 
   .post-content {
     display: flex;

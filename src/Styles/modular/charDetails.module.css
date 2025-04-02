@@ -242,3 +242,31 @@
     height: auto;
     z-index: -1;
 }
+
+.post-section-wrap {
+    margin-bottom: 20px;
+    padding: 15px;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    
+}
+
+.post-section h3 {
+    font-size: 16px;
+    color: #facc15;
+    margin-bottom: 10px;
+}
+.post-section h1 {
+    display: block;
+    color: #facc15;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.post-section {
+    padding: 15px;
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: 8px;
+
+}

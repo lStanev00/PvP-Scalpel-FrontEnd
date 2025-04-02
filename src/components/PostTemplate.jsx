@@ -1,12 +1,13 @@
 import postStyle from '../Styles/modular/PostTemplate.module.css'
 import { useContext } from "react";
-import { UserContext } from "../hooks/ContextVariables"; // adjust path if needed
+import { UserContext } from "../hooks/ContextVariables";
 
-export default function PostTemplate({ post, onEdit, onDelete }) {
+export default function PostTemplate({ post }) {
   const { user } = useContext(UserContext);
+  console.log("Rendering post:", post);
 
-//   const isOwner = user?._id === post?.author?._id;
-  const isOwner = true;
+  const isOwner = user?._id === post?.author?._id;
+//   const isOwner = true;
 
   return (
     <div className={postStyle["post-warp"]}>
@@ -20,12 +21,12 @@ export default function PostTemplate({ post, onEdit, onDelete }) {
         <span>{post?.content || "No content provided."}</span>
       </div>
 
-      {isOwner && (
+      {/* {isOwner && (
         <div className={postStyle["post-actions"]}>
           <button onClick={() => onEdit(post)}>📝 Edit</button>
           <button onClick={() => onDelete(post._id)}>🗑️ Delete</button>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

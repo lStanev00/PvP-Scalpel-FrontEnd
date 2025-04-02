@@ -5,12 +5,13 @@ import ReloadBTN from "../components/checkDetails/reloadBTN.jsx";
 import PvPCards from "../components/checkDetails/PvPCards.jsx";
 import PostTemplate from "../components/PostTemplate.jsx";
 import { UserContext } from "../hooks/ContextVariables.jsx";
+import NewPostForm from "../components/NewPostForm.jsx";
 
 export default function CharDetails() {
     const [data, setData] = useState(undefined);
     const { server, realm, name } = useParams();
     const [isUpdating, setUpdating] = useState(false);
-    const { httpFetch } = useContext(UserContext)
+    const {user, httpFetch } = useContext(UserContext)
 
 
     const getCharacterData = async () => { // This will be a websocket in the future
@@ -24,6 +25,7 @@ export default function CharDetails() {
             if (response.status == 404) return setData({errorMSG : fetchData.messege});
 
             setData(fetchData);
+            console.log(data)
         } catch (error) {
             console.error("Fetch error:", error);
             setData(404);
@@ -33,7 +35,7 @@ export default function CharDetails() {
     useEffect(() => {getCharacterData()}, []);
 
     if (data === undefined) return (<>LOADING......</>);
-
+    console.log(data)
     if (data.errorMSG) return (
         <>
             <h1>
@@ -149,11 +151,25 @@ export default function CharDetails() {
 
 
 
-                {/* Achievements Section */}
-                <div className={Style["section"]}>
-                    <h1>Comments </h1>
-                    <PostTemplate post={undefined} />
+                {/* Posts Section */}
+                {data.posts && (<>
+                    <section className={Style[`post-section`]}>
+                    <h1>Comments</h1>
+
+                <div className={Style["post-section-wrap"]}>
+
+                   { Object.entries(data.posts).map(([key, post]) => {
+                       return <PostTemplate key={post._id} post={post} />
+                    })
+                   }
+                   
                 </div>
+                    </section>
+                </> 
+                )}
+
+                {user && (<NewPostForm characterID={data._id}/>)}
+                
                 {/* <div className={Style["section"]}>
                     <h1>Achievements ({data.achieves.points} Points)</h1>
                     <div className={Style["card"]}>
