@@ -1,10 +1,11 @@
-import { useContext, useState, useOptimistic } from "react";
+import { useContext, useState, useOptimistic, useRef, useEffect } from "react";
 import Style from '../../Styles/modular/charDetails.module.css';
 import ReloadBTN from "./reloadBTN";
 import PvPCards from "./PvPCards";
 import PostTemplate from "./PostTemplate";
 import NewPostForm from "./NewPostForm";
 import { UserContext } from "../../hooks/ContextVariables";
+import { useSearchParams } from "react-router-dom";
 
 
 export default function Details({data, setData}) {
@@ -15,6 +16,29 @@ export default function Details({data, setData}) {
         posts,
         (currentPosts, newPost) => [...currentPosts, newPost]
     );
+    const commentsRef = useRef([]);
+    const [lookingForComment, setLFCom] = useSearchParams();
+
+    useEffect(() => {
+        const commentID = lookingForComment.get(`comment`);
+        if (!commentID) return
+
+        const div = commentsRef?.current[commentID];
+
+        div.scrollIntoView({ behavior: "smooth" });
+
+        // Save original styles
+        const originalColor = div.style.backgroundColor;
+
+        // Apply new styles
+        div.style.backgroundColor = "green";
+
+        // Revert after 4 secs
+        setTimeout(() => {
+        div.style.backgroundColor = originalColor;
+        }, 4000);
+
+    }, [lookingForComment])
 
     if (data.errorMSG) return (
         <>
@@ -145,13 +169,19 @@ export default function Details({data, setData}) {
                         </>
                         )}
                        {Object.entries(optimisticPosts).map(([key, post]) => {
-                           return <PostTemplate 
-                           key={post._id} 
-                           post={post} 
-                           optimisticPosts={optimisticPosts}
-                           optimistic={post.isOptimistic ? true : false}
-                           setPosts={setPosts}
-                           />
+                           return (
+                            <div
+                                ref={(el) => commentsRef.current[post._id] = el}
+                                key={post._id} 
+                            >
+
+                                <PostTemplate 
+                                post={post} 
+                                optimisticPosts={optimisticPosts}
+                                optimistic={post.isOptimistic ? true : false}
+                                setPosts={setPosts}
+                                />
+                            </div>)
                         })
                        }
                        
