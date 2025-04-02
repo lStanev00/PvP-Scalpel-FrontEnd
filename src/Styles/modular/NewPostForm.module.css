@@ -9,6 +9,8 @@
     max-width: 500px;
     margin: 0 auto 30px;
     color: #e2e8f0;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
   
   .heading {
@@ -58,5 +60,4 @@
   .button:hover {
     background: #0284c7;
   }
-  
   
