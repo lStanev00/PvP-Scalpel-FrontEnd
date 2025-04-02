@@ -76,8 +76,10 @@ export default function Register() {
             if (req.status == 201) {
                 
                 e.target.reset();
-
-                navigate("/goto/email")
+                navigate("/validate/verify")
+                await new Promise(resolve => setTimeout(resolve, 500)); 
+                await httpFetch(`/verify/me`);
+                
             } 
             const data = await req.json();
             console.log(data)
