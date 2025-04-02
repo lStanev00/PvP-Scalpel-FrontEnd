@@ -36,7 +36,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(90deg, #1abc9c, #16a085);
+    background: linear-gradient(90deg, #0ea5e9, #10b981);
     padding: 1rem 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
@@ -87,23 +87,21 @@ body {
 }
 
 .nav-links a {
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 1.4rem;
-    font-weight: bold;
+    background: #14b8a6;
     padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    border: 2px solid transparent;
-    background: linear-gradient(90deg, #1abc9c, #16a085);
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 1.1rem;
 }
 
 .nav-links a:hover {
-    background: linear-gradient(90deg, #f1c40f, #e67e22);
-    color: #1c1c2e;
+    background: linear-gradient(90deg, #14b8a6, #0a89c4);
     transform: scale(1.1);
-    box-shadow: 0 8px 12px rgba(241, 196, 15, 0.8);
+    box-shadow: 0 8px 12px rgba(1, 37, 26, 0.8);
 }
 
 .nav-links a:active {

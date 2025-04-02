@@ -1,25 +1,42 @@
-import '../Styles/home.css'
-export default function Home() {
+import { Link } from "react-router-dom";
+import styles from "../Styles/modular/Landing.module.css";
+
+export default function LandingPage() {
     return (
-        <>
-        <section id="home" className="hero">
-        <div className="roadmap">
-            <h2 className="hero-text">Spoiler Alert: The App Is Under Development!</h2>
-            <p>Actively working on bringing this app to life. Here's the priority roadmap:</p>
-            <ol>
-                <li><strong>Server-Side Data Integration:</strong> Fetch data from Blizzard's API.</li>
-                <li><strong>Server-Side Data Storage:</strong> Efficiently store and manage data.</li>
-                <li><strong>Achievements Storage Optimization:</strong> Improve how achievements are stored and retrieved.</li>
-                <li><strong>Basic User Interface:</strong> Establish a foundational UI for the site.</li>
-                <li><strong>Leaderboard Optimization:</strong> Enhance leaderboard functionality and performance.</li>
-                <li><strong>Roster Banner:</strong> Add a roster banner with links to personal character pages.</li>
-                <li><strong>Personal Character Pages:</strong> Create detailed pages for individual characters.</li>
-                <li><strong>Enhanced Functionality:</strong> Expand and refine app features.</li>
-                <li><strong>User-Friendly Interface:</strong> Build an intuitive and engaging UI for users.</li>
-                <li><strong>Seamless Navigation:</strong> Ensure smooth and user-friendly navigation throughout the site.</li>
-            </ol>
+        <div className={styles.wrapper}>
+            <section className={styles.intro}>
+                <h2>Welcome to PvP Scalpel</h2>
+                <p>Track, Share & Dominate the Battlegrounds</p>
+                <div className={styles.cta}>
+                    <Link to="/leaderboard" className={styles.btn}>View Leaderboard</Link>
+                    <Link to="https://discord.gg/devdT4nVgb" className={styles.btn}>Join the Guild</Link>
+                </div>
+            </section>
+
+            <section className={styles.features}>
+                <div className={styles.card}>
+                    <h3>Live PvP Stats</h3>
+                    <p>Get real-time performance tracking across brackets.</p>
+                </div>
+                <div className={styles.card}>
+                    <h3>Guild Insights</h3>
+                    <p>See how your guildmates are climbing the ladder.</p>
+                </div>
+                <div className={styles.card}>
+                    <h3>Post & Discuss</h3>
+                    <p>Comment, share builds, and discuss meta.</p>
+                </div>
+                <div className={styles.card}>
+                    <h3>Armory Integration</h3>
+                    <p> ... To be integrated</p>
+                </div>
+            </section>
+
+            <section className={styles.leaderboardPreview}>
+                <h3>Top Rated Players</h3>
+                <p>Peek at who's dominating the ladder right now.</p>
+                <Link style={{marginTop:"1rem"}} to="/leaderboard" className={styles.btn}>Full Leaderboard</Link>
+            </section>
         </div>
-    </section>
-        </>
-    )
+    );
 }
