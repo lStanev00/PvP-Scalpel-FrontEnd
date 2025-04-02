@@ -45,8 +45,8 @@ export default function NewPostForm({characterID, addOptimisticPost, setPosts}) 
         if (status == 201 ) {
             const data = req.data;
 
-            // setTitle("");
-            // setContent("");
+            setTitle("");
+            setContent("");
 
             return setPosts(prev => [...prev.filter(post => post._id !== fakePost._id), data]);
 
@@ -68,7 +68,7 @@ export default function NewPostForm({characterID, addOptimisticPost, setPosts}) 
 
   return (
     <form className={styles.form} onSubmit={async(e)=>await handleSubmit(e)}>
-      <h3 className={styles.heading}>Create a New Post</h3>
+      <h3 className={styles.heading}>Add new Comment</h3>
 
       <input
         type="text"
@@ -87,6 +87,11 @@ export default function NewPostForm({characterID, addOptimisticPost, setPosts}) 
         required
       />
 
+    {error && (
+        <>
+        <p style={{color:"red"}}>{error}</p>
+        </>
+    )}
       <button type="submit" className={styles.button}>
         📝 Submit Post
       </button>

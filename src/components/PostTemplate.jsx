@@ -2,7 +2,7 @@ import postStyle from '../Styles/modular/PostTemplate.module.css'
 import { useContext } from "react";
 import { UserContext } from "../hooks/ContextVariables";
 
-export default function PostTemplate({ post, optimistic }) {
+export default function PostTemplate({ post, optimistic, setPosts }) {
   const { user, httpFetch } = useContext(UserContext);
 
   const isOwner = user?._id === post?.author?._id;
@@ -19,6 +19,10 @@ export default function PostTemplate({ post, optimistic }) {
                 postID: post._id
             })
         });
+
+        if (req.status === 200) {
+            setPosts(prev => prev.filter(p => p._id !== post._id));
+        }
 
 
     } catch (error) {

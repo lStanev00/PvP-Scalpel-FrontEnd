@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState, useOptimistic } from "react";
+import { useContext, useState, useOptimistic } from "react";
 import Style from '../../Styles/modular/charDetails.module.css';
 import ReloadBTN from "./reloadBTN";
 import PvPCards from "./PvPCards";
 import PostTemplate from "../PostTemplate";
 import NewPostForm from "../NewPostForm";
 import { UserContext } from "../../hooks/ContextVariables";
+import { Link } from "react-router-dom";
 
 
 export default function Details({data, setData}) {
@@ -137,13 +138,21 @@ export default function Details({data, setData}) {
                         <h1>Comments</h1>
     
                     <div className={Style["post-section-wrap"]}>
-    
+                        
+                        {optimisticPosts.length == 0 && (<>
+                            
+                            <p style={{textAlign:"center", fontWeight:"bold"}}>No comments yet! Be the first to submit one.</p>
+                            <br />
+                            <p style={{textAlign:"center", fontWeight:"bold"}}><Link style={{color: "#0ea5e9"}} to='/register' >Register here </Link> if you don't have an account</p>
+                        </>
+                        )}
                        { Object.entries(optimisticPosts).map(([key, post]) => {
                            return <PostTemplate 
                            key={post._id} 
                            post={post} 
                            optimisticPosts={optimisticPosts}
                            optimistic={post.isOptimistic ? true : false}
+                           setPosts={setPosts}
                            />
                         })
                        }
@@ -153,7 +162,7 @@ export default function Details({data, setData}) {
                     </> 
                     )}
     
-                    {user && (<NewPostForm addOptimisticPost={addOptimisticPost} setPosts={setPosts} characterID={data._id}/>)}
+                    {user && (<NewPostForm setPosts={setPosts} addOptimisticPost={addOptimisticPost} characterID={data._id}/>)}
                     
                     {/* <div className={Style["section"]}>
                         <h1>Achievements ({data.achieves.points} Points)</h1>
