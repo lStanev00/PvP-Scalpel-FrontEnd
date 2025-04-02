@@ -12,7 +12,6 @@ export default function Posts() {
         (async function fetchPosts() {
             const res = await httpFetch(`/get/posts`)
             const status = res.status
-            console.log(res.data)
             if (status == 200) return setPosts(res.data);
         })();
 
