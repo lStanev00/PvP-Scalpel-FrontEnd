@@ -17,6 +17,7 @@ export default function Navigation() {
                     {user?._id && (
                         <>
                             <li><Link to="/profile">Profile</Link></li>
+                            <li><Link to="/logout">Logout</Link></li>
                         </>
                     )}
                     <li><Link to="/">Posts</Link></li>
