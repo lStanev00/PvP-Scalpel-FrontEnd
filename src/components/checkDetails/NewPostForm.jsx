@@ -94,11 +94,11 @@ export default function NewPostForm({characterID, addOptimisticPost, setPosts}) 
         </>
     )}
 
-      <button disabled={!user._id} type="submit" className={styles.button}>
+      <button disabled={!user?._id} type="submit" className={styles.button}>
         📝 Submit Post
       </button>
 
-      {!user._id && (
+      {!user?._id && (
         <div style={{display:"flex" ,gap: "10px"}}>
             <button onClick={(e) => navigate(`/login?target=${location}`)} type="submit" className={styles.button}>
               Login
