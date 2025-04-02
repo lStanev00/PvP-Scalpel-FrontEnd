@@ -6,6 +6,7 @@ export function UsernameForm ({currentUsername, setEditUsername}) {
     const {httpFetch, setUser} = useContext(UserContext);
     const [error, setError] = useState();
     const refList = useRef([]);
+    const navigate = useNavigate()
 
     const handleUsernameModification = async (e) => {
         e.preventDefault();
@@ -32,7 +33,8 @@ export function UsernameForm ({currentUsername, setEditUsername}) {
                 setTimeout(async () => {
                     await httpFetch("/verify/me")
                 }, 200);
-
+                setTimeout(async () => {setEditUsername(false)}, 200);
+                
             }
         } catch (error) {
             return setError(`Fetch error: ${error}`);
