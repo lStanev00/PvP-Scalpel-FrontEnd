@@ -9,8 +9,8 @@ import { UserContext } from "../../hooks/ContextVariables";
 
 export default function Details({data, setData}) {
     const {user} = useContext(UserContext);
-    const [posts, setPosts] = useState(data.posts);
     const [isUpdating, setUpdating] = useState(false);
+    const [posts, setPosts] = useState(data.posts);
     const [optimisticPosts, addOptimisticPost] = useOptimistic(
         posts,
         (currentPosts, newPost) => [...currentPosts, newPost]
@@ -142,7 +142,8 @@ export default function Details({data, setData}) {
                            return <PostTemplate 
                            key={post._id} 
                            post={post} 
-                           optimistic={post.isOptimistic}
+                           optimisticPosts={optimisticPosts}
+                           optimistic={post.isOptimistic ? true : false}
                            />
                         })
                        }
@@ -152,7 +153,7 @@ export default function Details({data, setData}) {
                     </> 
                     )}
     
-                    {user && (<NewPostForm characterID={data._id}/>)}
+                    {user && (<NewPostForm addOptimisticPost={addOptimisticPost} setPosts={setPosts} characterID={data._id}/>)}
                     
                     {/* <div className={Style["section"]}>
                         <h1>Achievements ({data.achieves.points} Points)</h1>

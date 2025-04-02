@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
+import { startTransition, useContext, useState } from "react";
 import styles from '../Styles/modular/NewPostForm.module.css'; 
 import { UserContext } from "../hooks/ContextVariables";
 import { useNavigate } from "react-router-dom";
 
-export default function NewPostForm({characterID}) {
+export default function NewPostForm({characterID, addOptimisticPost, optimisticPosts, setPosts}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const {user, httpFetch} = useContext(UserContext);
@@ -15,9 +15,21 @@ export default function NewPostForm({characterID}) {
     setError(undefined);
 
     if (!title.trim() || !content.trim()) return;
-    console.log(user)
     if (!user._id || user._id == undefined) return navigate(`/login`);
-    console.log(characterID)
+
+    const fakePost = {
+        isOptimistic: true,
+        _id: `FAKE` + String(Math.random()),
+        title,
+        content,
+        author: {
+            _id: user._id,
+            id: user._id,
+            username: user.username,
+        },
+        createdAt: new Date().toISOString(),
+    }
+    startTransition(() => addOptimisticPost(fakePost))
 
     try {
         const req = await httpFetch(`/new/post`, {
@@ -31,11 +43,22 @@ export default function NewPostForm({characterID}) {
         });
         const status = req.status;
         if (status == 201 ) {
-            
-        }
+            const data = req.data;
+
+            // setTitle("");
+            // setContent("");
+
+            return setPosts(prev => [...prev.filter(post => post._id !== fakePost._id), data]);
+
+        } else if (status === 400) setError(req.data.msg)
+        else setError(`Failed to create post. Request status: ${req?.status}`)
+        setPosts(prev => prev.filter(p => p._id !== fakePost._id));
     } catch (error) {
-        console.log(error)
-        return setError(error);
+        console.error('Post failed:', err);
+
+        setPosts(prev => prev.filter(p => p._id !== fakePost._id));
+        
+        setError('Failed to create post. Try again!');
         
     }
 
