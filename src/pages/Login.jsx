@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import Style from "../Styles/modular/logReg.module.css";
 import getFingerprint from "../helpers/getFingerprint.js";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { UserContext } from "../hooks/ContextVariables.jsx";
 
 export default function Login() {
@@ -9,6 +9,8 @@ export default function Login() {
     const [newDivError, setnewDivError] = useState();
     const navigate = useNavigate();
     const { user, setUser, httpFetch } = useContext(UserContext);
+    const [commingFrom, setRelocation] = useSearchParams();
+    const goto = commingFrom.get(`target`);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -48,9 +50,12 @@ export default function Login() {
             });
 
             if (req.status == 200){ 
+                await httpFetch(`/verify/me`)
+                if(goto) {
+                    return navigate(`${goto}`);
+                }
                 navigate(`/`);
                 await new Promise(resolve => setTimeout(resolve, 200)); 
-                return await httpFetch(`/verify/me`)
 
             }
             if (req.status === 409) return setError(<>Bad credentials! Check the input or create an account. <Link to='reset/password'></Link></>);

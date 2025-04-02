@@ -1,13 +1,14 @@
 import { startTransition, useContext, useState } from "react";
 import styles from '../Styles/modular/NewPostForm.module.css'; 
 import { UserContext } from "../hooks/ContextVariables";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function NewPostForm({characterID, addOptimisticPost, setPosts}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const {user, httpFetch} = useContext(UserContext);
   const [error, setError] = useState();
+  const location = (useLocation()).pathname;
   
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -99,7 +100,7 @@ export default function NewPostForm({characterID, addOptimisticPost, setPosts}) 
 
       {!user._id && (
         <div style={{display:"flex" ,gap: "10px"}}>
-            <button onClick={(e) => navigate('/login')} type="submit" className={styles.button}>
+            <button onClick={(e) => navigate(`/login?target=${location}`)} type="submit" className={styles.button}>
               Login
             </button>
 
