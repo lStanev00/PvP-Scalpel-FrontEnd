@@ -47,7 +47,12 @@ export default function Login() {
                 })
             });
 
-            if (req.status == 200) return navigate(`/`);
+            if (req.status == 200){ 
+                navigate(`/`);
+                await new Promise(resolve => setTimeout(resolve, 200)); 
+                return await httpFetch(`/verify/me`)
+
+            }
             if (req.status === 409) return setError(<>Bad credentials! Check the input or create an account. <Link to='reset/password'></Link></>);
             else if (req.status === 500) return setError("Internal server error. Please report to admin.");
             else if (req.status === 400) {
