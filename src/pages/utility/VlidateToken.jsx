@@ -12,7 +12,7 @@ export default function VlidateToken() {
 
     const handleValidatePatch = async ( e ) => {
         let sixDigitCode = ``;
-        const subURL = `validate/token`
+        const subURL = `/validate/token`
 
         setError(undefined);
     
