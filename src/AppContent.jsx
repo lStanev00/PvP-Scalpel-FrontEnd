@@ -13,6 +13,8 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "./hooks/ContextVariables.jsx";
 import ResetPassword from "./pages/utility/ResetPassword.jsx";
 import VlidateToken from "./pages/utility/VlidateToken.jsx";
+import { GuestRoute, UserRoute } from "./hooks/Guards.jsx";
+import Logout from "./pages/utility/Logout.jsx";
 
 
 export default function AppContent() {
@@ -36,16 +38,23 @@ export default function AppContent() {
             </header>
             <main>
                 <Routes>
+                    <Route element={<UserRoute />}>
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/logout" element={<Logout />} />
+                    </Route>
+
+                    <Route element={<GuestRoute />}>
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/reset/password" element={<ResetPassword />} />
+                    </Route>
+
                     <Route path='/' element={<Home />}></Route>
                     <Route path='/roster' element={<RosterPage />}></Route>
                     <Route path='/leaderboard' element={<LDB />}></Route>
                     <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route>
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
                     <Route path="/goto/:email" element={<GotoEmail />} />
-                    <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/validate/:scenario" element={<VlidateToken />} />
-                    <Route path="/reset/password" element={<ResetPassword />} />
                 </Routes>
                 
             </main>
