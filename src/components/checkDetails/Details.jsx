@@ -184,7 +184,7 @@ export default function Details({data, setData}) {
                             >
 
                                 <PostTemplate 
-                                post={post} 
+                                postValue={post} 
                                 optimisticPosts={optimisticPosts}
                                 optimistic={post.isOptimistic ? true : false}
                                 setPosts={setPosts}
