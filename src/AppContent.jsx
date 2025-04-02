@@ -15,6 +15,7 @@ import ResetPassword from "./pages/utility/ResetPassword.jsx";
 import VlidateToken from "./pages/utility/VlidateToken.jsx";
 import { GuestRoute, UserRoute } from "./hooks/Guards.jsx";
 import Logout from "./pages/utility/Logout.jsx";
+import Posts from "./pages/Posts.jsx";
 
 
 export default function AppContent() {
@@ -55,6 +56,7 @@ export default function AppContent() {
                     <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route>
                     <Route path="/goto/:email" element={<GotoEmail />} />
                     <Route path="/validate/:scenario" element={<VlidateToken />} />
+                    <Route path="/posts" element={<Posts />} />
                 </Routes>
                 
             </main>

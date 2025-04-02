@@ -20,7 +20,7 @@ export default function Navigation() {
                             <li><Link to="/logout">Logout</Link></li>
                         </>
                     )}
-                    <li><Link to="/">Posts</Link></li>
+                    <li><Link to="/posts">Posts</Link></li>
                     <li><Link to="/roster">Members</Link></li>
                     <li><Link to="/leaderboard">Leaderboard</Link></li>
                 </ul>
