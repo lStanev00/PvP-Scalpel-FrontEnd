@@ -5,7 +5,6 @@ import PvPCards from "./PvPCards";
 import PostTemplate from "../PostTemplate";
 import NewPostForm from "../NewPostForm";
 import { UserContext } from "../../hooks/ContextVariables";
-import { Link } from "react-router-dom";
 
 
 export default function Details({data, setData}) {
