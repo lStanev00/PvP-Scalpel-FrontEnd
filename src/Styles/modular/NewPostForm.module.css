@@ -53,11 +53,18 @@
     border: none;
     border-radius: 6px;
     font-weight: bold;
-    cursor: pointer;
     transition: background 0.2s ease;
-  }
-  
-  .button:hover {
+}
+
+.button:hover {
+    cursor: pointer;
     background: #0284c7;
   }
+
+  .button:disabled {
+    background: gray;
+  }
   
+.button:disabled:hover {
+    cursor: not-allowed;
+}

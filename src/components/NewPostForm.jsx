@@ -8,8 +8,8 @@ export default function NewPostForm({characterID, addOptimisticPost, setPosts}) 
   const [content, setContent] = useState("");
   const {user, httpFetch} = useContext(UserContext);
   const [error, setError] = useState();
+  
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(undefined);
@@ -92,9 +92,22 @@ export default function NewPostForm({characterID, addOptimisticPost, setPosts}) 
         <p style={{color:"red"}}>{error}</p>
         </>
     )}
-      <button type="submit" className={styles.button}>
+
+      <button disabled={!user._id} type="submit" className={styles.button}>
         📝 Submit Post
       </button>
+
+      {!user._id && (
+        <div style={{display:"flex" ,gap: "10px"}}>
+            <button onClick={(e) => navigate('/login')} type="submit" className={styles.button}>
+              Login
+            </button>
+
+            <button onClick={(e) => navigate('/register')} type="submit" className={styles.button}>
+              Register
+            </button>
+        </div>
+      )}
     </form>
   );
 }
