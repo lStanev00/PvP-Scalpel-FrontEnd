@@ -20,23 +20,30 @@ export default function Details({data, setData}) {
     const [lookingForComment, setLFCom] = useSearchParams();
 
     useEffect(() => {
-        const commentID = lookingForComment.get(`comment`);
-        if (!commentID) return
 
-        const div = commentsRef?.current[commentID];
+        try {
+            const commentID = lookingForComment.get(`comment`);
+            if (!commentID) return
+    
+            const div = commentsRef?.current[commentID];
+    
+            div.scrollIntoView({ behavior: "smooth" });
 
-        div.scrollIntoView({ behavior: "smooth" });
+            // Save original styles
+            const originalBorder = div.style.border;
+    
+            // Apply new styles
+            div.style.border = "2px solid rgba(255, 204, 0, 0.6)";
+    
+            // Revert after 3 secs
+            setTimeout(() => {
+                div.style.border = originalBorder;
+            }, 3000);
+    
+        } catch (error) {
+            return
+        }
 
-        // Save original styles
-        const originalColor = div.style.backgroundColor;
-
-        // Apply new styles
-        div.style.backgroundColor = "green";
-
-        // Revert after 4 secs
-        setTimeout(() => {
-        div.style.backgroundColor = originalColor;
-        }, 4000);
 
     }, [lookingForComment])
 
@@ -168,9 +175,10 @@ export default function Details({data, setData}) {
 
                         </>
                         )}
-                       {Object.entries(optimisticPosts).map(([key, post]) => {
+                       {optimisticPosts.length > 0 && Object.entries(optimisticPosts).map(([key, post]) => {
                            return (
                             <div
+                                style={{}}
                                 ref={(el) => commentsRef.current[post._id] = el}
                                 key={post._id} 
                             >
