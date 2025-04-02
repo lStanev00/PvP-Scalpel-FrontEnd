@@ -3,7 +3,7 @@ import styles from '../Styles/modular/NewPostForm.module.css';
 import { UserContext } from "../hooks/ContextVariables";
 import { useNavigate } from "react-router-dom";
 
-export default function NewPostForm({characterID, addOptimisticPost, optimisticPosts, setPosts}) {
+export default function NewPostForm({characterID, addOptimisticPost, setPosts}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const {user, httpFetch} = useContext(UserContext);
