@@ -52,15 +52,18 @@ npm install
 
 npm run dev
 
-### Folder Structure
+### 📁 Folder Structure
 
+```
 src/
-├── assets/             # Images & static assets
-├── components/         # Reusable UI components
-├── pages/              # Route pages (Home, Login, Leaderboard, etc.)
-├── services/           # API requests
-├── App.jsx             # Main app layout & routing
-└── main.jsx            # Root entry
+├── assets/       # Images & static assets
+├── components/   # Reusable UI components
+├── pages/        # Route pages (Home, Login, Leaderboard, etc.)
+├── services/     # API requests
+├── App.jsx       # Main app layout & routing
+└── main.jsx      # Root entry
+```
+
 
 
 
