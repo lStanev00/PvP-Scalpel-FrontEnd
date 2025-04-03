@@ -1,17 +1,59 @@
 .main {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.card {
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .card {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
     background: rgba(51, 65, 85, 0.75);
-    border-radius: 6px;
-    padding: 25px;
-}
-
-.card strong {
+    border-radius: 10px;
+    padding: 16px 20px;
+    gap: 10px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card:hover {
+    background: rgba(71, 85, 105, 0.9);
+    transform: translateY(-2px);
+  }
+  
+  .card strong {
     color: #0ea5e9;
-}
+    min-width: 100px;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .card div,
+  .card p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #f1f5f9;
+    font-size: 1rem;
+  }
+  
+  .card span[title="Edit"] {
+    font-size: 0.9rem;
+    color: #facc15;
+    transition: transform 0.2s ease;
+  }
+  
+  .card span[title="Edit"]:hover {
+    transform: scale(1.2);
+  }
+  
+  .card p {
+    background-color: #10b981;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
