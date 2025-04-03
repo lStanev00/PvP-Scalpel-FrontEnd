@@ -53,10 +53,18 @@ export default function AccInfo({user}) {
 
             </div>
 
-            <div className={Style.card}><strong>Status:</strong>{user.isVerified ? ( <p>✅ Verified</p> ) : ( <p>❌ Not Verified <br /> Please verify your email to be able to use all functionalities</p> )}</div>
+            <div className={Style.card}>
+                <strong>Status:</strong>
+
+                {user.isVerified 
+                ? ( <p>Verified</p> ) 
+                : ( <p style={{backgroundColor:"red"}}>Not Verified</p> )}
+
+            </div>
 
         </section>
         </>
     )
 }
+
 
