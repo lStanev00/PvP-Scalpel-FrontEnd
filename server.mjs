@@ -13,6 +13,16 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "dist")));
 
 // Serve assets from the correct path
+
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  next();
+});
+
+
 app.use(
   "/assets",
   express.static(path.join(__dirname, "dist/assets"), {
