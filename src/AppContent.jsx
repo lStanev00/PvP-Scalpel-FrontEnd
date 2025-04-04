@@ -29,7 +29,15 @@ export default function AppContent() {
     return (
         // <Router>
         <>
-        <div className="page-wrapper">
+        <div
+        className="page-wrapper"
+        style={{
+            backgroundImage:"url('/backgrounds/main_background.png')",
+            backgroundSize: "100% auto",
+            backgroundPosition: "center",
+            backgroundBlendMode: "multiply"
+        }}
+        >
             <header className="header">
                 <div onClick={(e) => {navigate(`/`)}} className="logo">
                     <img className="logo-img" src="/logo/logo_resized.png" alt="logo pic" />

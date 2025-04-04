@@ -3,7 +3,9 @@ import styles from "../Styles/modular/Landing.module.css";
 
 export default function LandingPage() {
     return (
-        <div className={styles.wrapper}>
+        <div 
+        className={styles.wrapper}
+        >
             <section className={styles.intro}>
                 <h2>Welcome to PvP Scalpel</h2>
                 <p>Track, Share & Dominate the Battlegrounds</p>
