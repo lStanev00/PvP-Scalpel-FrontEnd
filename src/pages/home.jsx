@@ -11,7 +11,7 @@ export default function LandingPage() {
                 <p>Track, Share & Dominate the Battlegrounds</p>
                 <div className={styles.cta}>
                     <Link to="/leaderboard" className={styles.btn}>View Leaderboard</Link>
-                    <Link to="https://discord.gg/devdT4nVgb" className={styles.btn}>Join the Guild</Link>
+                    <Link to="https://discord.gg/devdT4nVgb" className={styles.btn}>Join Discord</Link>
                 </div>
             </section>
 
