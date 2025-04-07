@@ -7,6 +7,7 @@ import NewPostForm from "./NewPostForm";
 import { UserContext } from "../../hooks/ContextVariables";
 import { useSearchParams } from "react-router-dom";
 import { CharacterContext } from "../../pages/CharDetails";
+import UserDataContainer from "./UserDataContainer";
 
 
 export default function Details() {
@@ -82,6 +83,8 @@ export default function Details() {
                         </div>
                         <ReloadBTN isUpdating={isUpdating} setUpdating={setUpdating} />
                 </div>
+
+                <UserDataContainer />
     
                 <section style={
                     {
