@@ -6,10 +6,12 @@ import PostTemplate from "./PostTemplate";
 import NewPostForm from "./NewPostForm";
 import { UserContext } from "../../hooks/ContextVariables";
 import { useSearchParams } from "react-router-dom";
+import { CharacterContext } from "../../pages/CharDetails";
 
 
-export default function Details({data, setData}) {
+export default function Details() {
     const {user} = useContext(UserContext);
+    const {data} = useContext(CharacterContext);
     const [isUpdating, setUpdating] = useState(false);
     const [posts, setPosts] = useState(data.posts);
     const [optimisticPosts, addOptimisticPost] = useOptimistic(
@@ -78,7 +80,7 @@ export default function Details({data, setData}) {
                             <strong>{data.name} - {data.playerRealm.name}</strong>
                             <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name})</span>
                         </div>
-                        <ReloadBTN setData={setData} data={data} isUpdating={isUpdating} setUpdating={setUpdating} />
+                        <ReloadBTN isUpdating={isUpdating} setUpdating={setUpdating} />
                 </div>
     
                 <section style={

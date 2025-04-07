@@ -2,8 +2,11 @@ import { useParams } from "react-router-dom"
 import Style from '../../Styles/modular/charDetails.module.css';
 import timeAgo from "../../helpers/timeAgo.js";
 import httpFetch from "../../helpers/httpFetch.js";
-export default function ReloadBTN({setData, data, isUpdating, setUpdating}) {
+import { useContext } from "react";
+import { CharacterContext } from "../../pages/CharDetails.jsx";
+export default function ReloadBTN({isUpdating, setUpdating}) {
     const { server, realm, name } = useParams();
+    const {setData, data} = useContext(CharacterContext);
 
     const patchCharacterData = async () => {
         const apiEndpoint = `/patchCharacter/${server}/${realm}/${name}`;

@@ -1,7 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import Details from "../components/checkDetails/Details.jsx";
+
+export const CharacterContext = createContext();
+
 
 export default function CharDetails() {
     const [data, setData] = useState(undefined);
@@ -21,6 +24,7 @@ export default function CharDetails() {
             if (response.status == 404) return setData({errorMSG : fetchData.messege});
 
             setData(fetchData);
+            console.log(fetchData)
         } catch (error) {
             console.error("Fetch error:", error);
             setData(404);
@@ -31,6 +35,14 @@ export default function CharDetails() {
 
     if (data === undefined) return (<>LOADING......</>);
 
-    return <Details setData={setData} data={data} />
+    return (
+    <CharacterContext.Provider value={{data, setData}}>
+
+        <Details />
+
+    </CharacterContext.Provider>
+)
 
 }
+
+
