@@ -10,8 +10,16 @@ export default function UserDataContainer() {
     const { user, httpFetch} = useContext(UserContext);
     const {data, location} = useContext(CharacterContext);
     const [ isLiked, setIsLiked ] = useState();
+    const [ likesCount, setLikesCount ] = useState();
+    const [ viewCount, setViewCount ] = useState(data?.checkedCount);
 
-    useEffect(() => {   if (user?._id) setIsLiked((data?.likes).includes(user._id))   }, [])
+    useEffect(() => {   
+
+        if (user?._id && data?.likes) setIsLiked((data?.likes).includes(user?._id));
+
+        if (data?.likes) setLikesCount(data.likes.length);
+
+    }, []);
 
     const likeHandler = async (e) => {
         e.preventDefault();
@@ -21,22 +29,36 @@ export default function UserDataContainer() {
         console.log(req.status);
         if(req.status == 401) return navigate(`/login?target=${location}`)
         setIsLiked(req.data?.isLiked);
+        setLikesCount(req.data.likesCount)
     }
 
     return (<>
     <div className={Style["banner"]}>
 
             <img
+            style={{
+                cursor: "pointer",
+                transition: "transform 0.2s ease",
+                
+            }}
             onClick={async (e) => await likeHandler(e)}
             src= {`/user_action_icons/${isLiked ? "Liked" : "Like" }.png`} 
             alt="Character Avatar"
             />
             <div className={Style["banner-content"]}>
-                <strong>{data.name} - {data.playerRealm.name}</strong>
-                <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name})</span>
+                <strong>{likesCount ? likesCount : 0} Likes</strong>
+                <span>{isLiked
+                    ? "You Liked this Character"
+                    : "Give a like hit the thumbup"
+                }</span>
             </div>
             
-            {/* <img src= "/user_action_icons/Like.png" alt="Character Avatar" />
+            <img src= "/user_action_icons/View_Count.png" alt="Character Avatar" />
+            <div className={Style["banner-content"]}>
+                <strong>{viewCount} Views</strong>
+                {/* <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name})</span> */}
+            </div>
+            {/* <img src= "/user_action_icons/View_Count.png" alt="Character Avatar" />
             <div className={Style["banner-content"]}>
                 <strong>{data.name} - {data.playerRealm.name}</strong>
                 <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name})</span>

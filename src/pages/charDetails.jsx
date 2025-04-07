@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import Details from "../components/checkDetails/Details.jsx";
 
@@ -10,6 +10,7 @@ export default function CharDetails() {
     const [data, setData] = useState(undefined);
     const { server, realm, name } = useParams();
     const {  httpFetch } = useContext(UserContext)
+    const location = (useLocation()).pathname;
 
 
 
@@ -36,7 +37,7 @@ export default function CharDetails() {
     if (data === undefined) return (<>LOADING......</>);
 
     return (
-    <CharacterContext.Provider value={{data, setData}}>
+    <CharacterContext.Provider value={{data, setData, location}}>
 
         <Details />
 
