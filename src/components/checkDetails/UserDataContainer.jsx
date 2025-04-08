@@ -13,9 +13,9 @@ export default function UserDataContainer() {
     const [ isLiked, setIsLiked ] = useState();
     const [ likesCount, setLikesCount ] = useState();
     const [ viewCount, setViewCount ] = useState(data?.checkedCount);
-    const {posts} = useContext(DetailsProvider);
-    console.log(posts)
+    const { posts, commentsRef} = useContext(DetailsProvider);
     const [ commentsCount, setCMCount ] = useState(posts.length);
+
     useEffect(() => {   
 
         if (user?._id && data?.likes) setIsLiked((data?.likes).includes(user?._id));
@@ -35,6 +35,13 @@ export default function UserDataContainer() {
         if(req.status == 401) return navigate(`/login?target=${location}`)
         setIsLiked(req.data?.isLiked);
         setLikesCount(req.data.likesCount)
+    }
+
+    const commentsSectionClickHandler = (e) => {
+        e.preventDefault();
+        
+        const commentsSection = commentsRef.headSection;
+        return commentsSection.scrollIntoView({ behavior: "smooth" });
     }
 
     return (<>
@@ -58,8 +65,19 @@ export default function UserDataContainer() {
                 }</span>
             </div>
 
-            <img src= "/user_action_icons/Comments.png" alt="Character Avatar" />
-            <div className={Style["banner-content"]}>
+            <img
+            style={{
+                cursor: "pointer",
+            }}
+            onClick={commentsSectionClickHandler} 
+            src= "/user_action_icons/Comments.png" 
+            alt="Character Avatar" />
+            <div
+            style={{
+                cursor: "pointer",
+            }}
+            onClick={commentsSectionClickHandler} className={Style["banner-content"]}
+            >
                 <strong>{commentsCount} {commentsCount == 1 ? "Comment" : "Comments"}</strong>
             </div>
             

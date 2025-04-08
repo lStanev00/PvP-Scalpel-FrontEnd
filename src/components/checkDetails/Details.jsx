@@ -12,7 +12,6 @@ import UserDataContainer from "./UserDataContainer";
 export const DetailsProvider = createContext();
 
 export default function Details() {
-    const {user} = useContext(UserContext);
     const {data} = useContext(CharacterContext);
     const [isUpdating, setUpdating] = useState(false);
     const [posts, setPosts] = useState(data.posts);
@@ -74,7 +73,7 @@ export default function Details() {
     });
 
     return (
-            <DetailsProvider.Provider value={{optimisticPosts, addOptimisticPost, setPosts, posts}} >
+            <DetailsProvider.Provider value={{commentsRef, optimisticPosts, addOptimisticPost, setPosts, posts}} >
 
 
                 {/* Character Banner */}
@@ -175,7 +174,7 @@ export default function Details() {
                         <section className={Style[`post-section`]}>
                         <h1>Comments</h1>
     
-                    <div className={Style["post-section-wrap"]}>
+                    <div ref={(el) => commentsRef.headSection = el} className={Style["post-section-wrap"]}>
                         
                         {optimisticPosts.length == 0 && (<>
                             
