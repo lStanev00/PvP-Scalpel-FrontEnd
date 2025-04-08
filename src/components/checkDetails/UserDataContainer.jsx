@@ -13,8 +13,9 @@ export default function UserDataContainer() {
     const [ isLiked, setIsLiked ] = useState();
     const [ likesCount, setLikesCount ] = useState();
     const [ viewCount, setViewCount ] = useState(data?.checkedCount);
-    const {addOptimisticPost} = useContext(DetailsProvider);
-    const [ commentsCount, setCMCount ] = useState(addOptimisticPost.length);
+    const {posts} = useContext(DetailsProvider);
+    console.log(posts)
+    const [ commentsCount, setCMCount ] = useState(posts.length);
     useEffect(() => {   
 
         if (user?._id && data?.likes) setIsLiked((data?.likes).includes(user?._id));
@@ -22,6 +23,8 @@ export default function UserDataContainer() {
         if (data?.likes) setLikesCount(data.likes.length);
 
     }, []);
+
+    useEffect(() => {   setCMCount(posts.length)    }, [posts]);
 
     const likeHandler = async (e) => {
         e.preventDefault();
@@ -54,7 +57,7 @@ export default function UserDataContainer() {
                     : "Give a like hit the thumbup"
                 }</span>
             </div>
-            
+
             <img src= "/user_action_icons/Comments.png" alt="Character Avatar" />
             <div className={Style["banner-content"]}>
                 <strong>{commentsCount} {commentsCount == 1 ? "Comment" : "Comments"}</strong>
