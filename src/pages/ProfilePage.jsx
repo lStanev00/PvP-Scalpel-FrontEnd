@@ -33,7 +33,7 @@ export default function ProfilePage() {
 
 
             <div className={Style['content-section']}>
-                {content == 'AccInfo' && (<AccInfo user={user} />)}
+                {content == 'AccInfo' && (<AccInfo />)}
                 {content == 'ViewPosts' && (<ViewUserPosts />)}
                 {content == "ChangePassword" && (<ChangePassword setContent={setContent} httpFetch={httpFetch} />)}
             </div>

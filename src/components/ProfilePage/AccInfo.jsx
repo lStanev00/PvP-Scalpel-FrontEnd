@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Style from '../../Styles/modular/AccInfo.module.css'
 import { EmailForm, UsernameForm } from './AccInfoModifyForm';
-export default function AccInfo({user}) {
+import { UserProvider } from '../../hooks/ContextVariables';
+export default function AccInfo() {
     const [editUsername, setEditUsername] = useState(false);
     const [editEmail, setEditEmail] = useState(false);
+    const {user} = useContext(UserProvider);
     return (
         <>
         <h2>Account Info</h2>
