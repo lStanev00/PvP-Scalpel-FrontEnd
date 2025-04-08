@@ -3,6 +3,7 @@ import { UserContext } from "../../hooks/ContextVariables";
 import { CharacterContext } from "../../pages/CharDetails";
 import Style from '../../Styles/modular/charDetails.module.css';
 import { useNavigate } from "react-router-dom";
+import { DetailsProvider } from "./Details";
 
 
 export default function UserDataContainer() {
@@ -12,7 +13,8 @@ export default function UserDataContainer() {
     const [ isLiked, setIsLiked ] = useState();
     const [ likesCount, setLikesCount ] = useState();
     const [ viewCount, setViewCount ] = useState(data?.checkedCount);
-
+    const {addOptimisticPost} = useContext(DetailsProvider);
+    const [ commentsCount, setCMCount ] = useState(addOptimisticPost.length);
     useEffect(() => {   
 
         if (user?._id && data?.likes) setIsLiked((data?.likes).includes(user?._id));
@@ -53,11 +55,16 @@ export default function UserDataContainer() {
                 }</span>
             </div>
             
+            <img src= "/user_action_icons/Comments.png" alt="Character Avatar" />
+            <div className={Style["banner-content"]}>
+                <strong>{commentsCount} {commentsCount == 1 ? "Comment" : "Comments"}</strong>
+            </div>
+            
             <img src= "/user_action_icons/View_Count.png" alt="Character Avatar" />
             <div className={Style["banner-content"]}>
                 <strong>{viewCount} Views</strong>
-                {/* <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name})</span> */}
             </div>
+            
             {/* <img src= "/user_action_icons/View_Count.png" alt="Character Avatar" />
             <div className={Style["banner-content"]}>
                 <strong>{data.name} - {data.playerRealm.name}</strong>
