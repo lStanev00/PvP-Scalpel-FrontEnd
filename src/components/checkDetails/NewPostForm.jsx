@@ -2,13 +2,15 @@ import { startTransition, useContext, useState } from "react";
 import styles from '../../Styles/modular/NewPostForm.module.css'; 
 import { UserContext } from "../../hooks/ContextVariables";
 import { useLocation, useNavigate } from "react-router-dom";
+import { DetailsProvider } from "./Details";
 
-export default function NewPostForm({characterID, addOptimisticPost, setPosts}) {
+export default function NewPostForm({characterID}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const {user, httpFetch} = useContext(UserContext);
   const [error, setError] = useState();
   const location = (useLocation()).pathname;
+  const {addOptimisticPost, setPosts} = useContext(DetailsProvider)
   
   const navigate = useNavigate();
   const handleSubmit = async (e) => {

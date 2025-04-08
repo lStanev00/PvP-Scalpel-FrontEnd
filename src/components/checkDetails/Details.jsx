@@ -1,4 +1,4 @@
-import { useContext, useState, useOptimistic, useRef, useEffect } from "react";
+import { useContext, useState, useOptimistic, useRef, useEffect, createContext } from "react";
 import Style from '../../Styles/modular/charDetails.module.css';
 import ReloadBTN from "./reloadBTN";
 import PvPCards from "./PvPCards";
@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import { CharacterContext } from "../../pages/CharDetails";
 import UserDataContainer from "./UserDataContainer";
 
+export const DetailsProvider = createContext();
 
 export default function Details() {
     const {user} = useContext(UserContext);
@@ -73,7 +74,9 @@ export default function Details() {
     });
 
     return (
-            <>
+            <DetailsProvider.Provider value={{optimisticPosts, addOptimisticPost, setPosts, posts}} >
+
+
                 {/* Character Banner */}
                 <div className={Style["banner"]}>
                         <img src={data.media.avatar} alt="Character Avatar" />
@@ -190,9 +193,7 @@ export default function Details() {
 
                                 <PostTemplate 
                                 postValue={post} 
-                                optimisticPosts={optimisticPosts}
                                 optimistic={post.isOptimistic ? true : false}
-                                setPosts={setPosts}
                                 />
                             </div>)
                         })
@@ -203,7 +204,7 @@ export default function Details() {
                     </> 
                     )}
 
-                    <NewPostForm setPosts={setPosts} addOptimisticPost={addOptimisticPost} characterID={data._id}/>
+                    <NewPostForm characterID={data._id}/>
     
                     
                     {/* <div className={Style["section"]}>
@@ -224,6 +225,6 @@ export default function Details() {
                         <p>Protection Warrior Talents</p>
                     </div> */}
                 </section>
-            </>
+            </DetailsProvider.Provider>
         );
 }

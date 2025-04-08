@@ -2,13 +2,15 @@ import postStyle from '../../Styles/modular/PostTemplate.module.css'
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "./../../hooks/ContextVariables";
 import editStyle from '../../Styles/modular/NewPostForm.module.css'
+import { DetailsProvider } from './Details';
 
-export default function PostTemplate({ postValue, optimistic, setPosts }) {
+export default function PostTemplate({ postValue, optimistic }) {
   const { user, httpFetch } = useContext(UserContext);
   const [ edit, setEdit ] = useState(undefined);
   const [ editTitle, setEditTitle ] = useState(undefined);
   const [ editContent, setEditContent ] = useState(undefined);
   const [post, setPost] = useState(postValue);
+  const {setPosts} = useContext(DetailsProvider);
 
   const isOwner = user?._id === post?.author?._id;
 
