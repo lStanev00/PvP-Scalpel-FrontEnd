@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom"
 import { UserContext } from "../hooks/ContextVariables.jsx";
-import Details from "../components/checkDetails/Details.jsx";
+import { Details } from "../components/checkDetails/Details.jsx";
 
 export const CharacterContext = createContext();
 

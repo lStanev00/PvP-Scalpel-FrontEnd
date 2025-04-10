@@ -7,10 +7,11 @@ import NewPostForm from "./NewPostForm";
 import { useSearchParams } from "react-router-dom";
 import { CharacterContext } from "../../pages/CharDetails";
 import UserDataContainer from "./UserDataContainer";
+import StatsChart from "./StatsChart";
 
 export const DetailsProvider = createContext();
 
-export default function Details() {
+export function Details() {
     const {data} = useContext(CharacterContext);
     const [isUpdating, setUpdating] = useState(false);
     const [posts, setPosts] = useState(data.posts);
@@ -165,7 +166,11 @@ export default function Details() {
                     </section>
     
                     </section>
+
+
+                    {/* Character Stats Graph Section */}
     
+                    <StatsChart />
     
     
                     {/* Posts Section */}

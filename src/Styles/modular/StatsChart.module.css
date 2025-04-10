@@ -1,0 +1,11 @@
+.section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(30, 41, 59, 0.75);
+    border-radius: 8px;
+}
+
+.section h2 {
+    text-align: center;
+    color: #facc15;
+}

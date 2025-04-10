@@ -8,7 +8,7 @@ export default function Login() {
     const [error, setError] = useState();
     const [newDivError, setnewDivError] = useState();
     const navigate = useNavigate();
-    const { user, setUser, httpFetch } = useContext(UserContext);
+    const { setUser, httpFetch } = useContext(UserContext);
     const [commingFrom, setRelocation] = useSearchParams();
     const goto = commingFrom.get(`target`);
 
