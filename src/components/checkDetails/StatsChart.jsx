@@ -33,23 +33,51 @@ export default function StatsChart () {
         <section className={Style.section}>
             <h2>Stats Priority</h2>
 
-            <div className={Style.graph}>
+            <div className={Style.content}>
 
-                <div>
-                    <h3>{stats.secondary[0][0]}</h3>
-                    <div  style={{height: "50px", backgroundColor:'red'}}>D</div>
+                <div className={Style.graph}>
+
+                    {stats.secondary.map(([name, statValue]) => {
+                        return <DivStat key={`${name}/GRAPH`} name={name} statValue={statValue} />
+                    })}
+
+                    
                 </div>
-                <div>
-                    <h3>{stats.secondary[1][0]}</h3>
+
+                <div className={Style.graph}>
+
+                    {stats.secondary.map(([name, statValue]) => {
+                        return <DivStat key={`${name}/GRAPH`} name={name} statValue={statValue} />
+                    })}
+
+                    
                 </div>
-                <div>
-                    <h3>{stats.secondary[2][0]}</h3>
-                </div>
-                <div>
-                    <h3>{stats.secondary[3][0]}</h3>
-                </div>
-                
+
             </div>
+
         </section>
     )
+}
+
+function DivStat({name, statValue}) { 
+    const statValueNumber = Number(statValue.replace(`%`, ``));
+
+    return (
+    <div>
+
+        <h3>{name}</h3>
+
+        <div>
+            <p>
+                {statValue}
+            </p>
+
+            <div  style={{height: `${statValueNumber}%`, backgroundColor:'red'}}></div>
+
+        </div>
+
+
+    </div>
+    )
+    
 }
