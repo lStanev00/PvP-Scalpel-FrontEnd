@@ -61,6 +61,7 @@ export default function StatsChart () {
 
 function DivStat({name, statValue}) { 
     const statValueNumber = Number(statValue.replace(`%`, ``));
+    let divSize = statValueNumber * 10 / 2
 
     return (
     <div>
@@ -68,11 +69,12 @@ function DivStat({name, statValue}) {
         <h3>{name}</h3>
 
         <div>
+            
             <p>
                 {statValue}
             </p>
 
-            <div  style={{height: `${statValueNumber}%`, backgroundColor:'red'}}></div>
+            <div  style={{height: `${divSize}px`, backgroundColor:'red', width: "20px"}}></div>
 
         </div>
 

@@ -19,8 +19,7 @@
 .graph {
     display: grid;
     grid-template-areas: ". . . .";
-    grid-row: 1fr;
-    padding: 8px;
+    align-items: end;
     max-width: 900px;
     margin: auto;
     padding: 20px;
@@ -29,18 +28,17 @@
     border-radius: 8px;
     font-family: Arial, sans-serif;
     width: 400px;
-    height: 500px;
     
 }
 
 .graph div {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    /* width: 30px; */
-    height: 100px;
+    justify-content: center;
+    margin-top: 10px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+    align-items: center;
 }
 
 .graph div h3 {
