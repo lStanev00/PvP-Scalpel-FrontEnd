@@ -4,7 +4,6 @@ import ReloadBTN from "./reloadBTN";
 import PvPCards from "./PvPCards";
 import PostTemplate from "./PostTemplate";
 import NewPostForm from "./NewPostForm";
-import { UserContext } from "../../hooks/ContextVariables";
 import { useSearchParams } from "react-router-dom";
 import { CharacterContext } from "../../pages/CharDetails";
 import UserDataContainer from "./UserDataContainer";
