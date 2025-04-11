@@ -44,15 +44,6 @@ export default function StatsChart () {
                     
                 </div>
 
-                <div className={Style.graph}>
-
-                    {stats.secondary.map(([name, statValue]) => {
-                        return <DivStat key={`${name}/GRAPH`} name={name} statValue={statValue} />
-                    })}
-
-                    
-                </div>
-
             </div>
 
         </section>
@@ -74,7 +65,7 @@ function DivStat({name, statValue}) {
                 {statValue}
             </p>
 
-            <div  style={{height: `${divSize}px`, backgroundColor:'red', width: "20px"}}></div>
+            <div  style={{height: `${divSize}px`, background: 'linear-gradient(to bottom, #ffcc00,rgba(106, 0, 182, 0.67))', width: "20px"}}></div>
 
         </div>
 
