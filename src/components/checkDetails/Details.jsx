@@ -164,13 +164,13 @@ export function Details() {
                         </div>
                     )}
                     </section>
+                    {/* Character Stats Graph Section */}
+    
+                    <StatsChart />
     
                     </section>
 
 
-                    {/* Character Stats Graph Section */}
-    
-                    <StatsChart />
     
     
                     {/* Posts Section */}
