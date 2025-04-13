@@ -11,7 +11,7 @@
 .section h2 {
     text-align: center;
     color: #facc15;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .content {
@@ -25,7 +25,7 @@
     align-items: end;
     max-width: 900px;
     margin: auto;
-    padding: 20px;
+    padding: 10px 20px;
     background: rgba(18, 27, 39, 0.75);
     color: #c7d5e0;
     border-radius: 8px;
@@ -44,7 +44,8 @@
     align-items: center;
 }
 
-.graph div h3 {
+.graph h3 {
     text-align: center;
+    color: #1abc9c;
 }
 

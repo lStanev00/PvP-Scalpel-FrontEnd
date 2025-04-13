@@ -65,7 +65,7 @@ function DivStat({name, statValue}) {
                 {statValue}
             </p>
 
-            <div  style={{height: `${divSize}px`, background: 'linear-gradient(to bottom, #ffcc00,rgba(106, 0, 182, 0.67))', width: "20px"}}></div>
+            <div title={name} style={{height: `${divSize}px`, background: 'linear-gradient(to bottom, #ffcc00, #0ea5e9)', width: "20px"}}></div>
 
         </div>
 
