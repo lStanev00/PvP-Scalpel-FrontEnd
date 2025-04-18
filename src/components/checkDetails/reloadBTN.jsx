@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import Style from '../../Styles/modular/charDetails.module.css';
 import timeAgo from "../../helpers/timeAgo.js";
 import httpFetch from "../../helpers/httpFetch.js";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CharacterContext } from "../../pages/CharDetails.jsx";
 export default function ReloadBTN({isUpdating, setUpdating}) {
     const { server, realm, name } = useParams();
@@ -38,9 +38,33 @@ export default function ReloadBTN({isUpdating, setUpdating}) {
             </>
         )
     }
+
+    const [ lastUpdatedAt, setLastUpdatedAt ] = useState(timeAgo( data.updatedAt ));
+    useEffect(() => {
+        const updateDataIfNeeded = async () => {
+            if (lastUpdatedAt === false) {
+                await patchCharacterData();
+            }
+        };
+    
+        updateDataIfNeeded();
+    }, [ lastUpdatedAt ]);
+
+    useEffect(() => {
+        setLastUpdatedAt(timeAgo( data.updatedAt ))
+    }, [ data ])
+    
     return (<>
         <span className={Style["last-updated"]}>Last updated: {timeAgo(data.updatedAt)}</span>
-        <button onClick={async () => {await patchCharacterData()}} className={Style["button"]}>{data.nowUpdating ?  "Updating now!" : "Update Now"}</button>
+        <button onClick={async () => {
+            await patchCharacterData()}
+        }
+
+        className={Style["button"]}>{
+            data.nowUpdating ?  "Updating now!" : "Update Now"
+        }
+
+        </button>
     </>)
 
 }
