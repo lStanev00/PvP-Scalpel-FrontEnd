@@ -14,7 +14,16 @@ export default function UserDataContainer() {
     const [ likesCount, setLikesCount ] = useState();
     const [ viewCount, setViewCount ] = useState(data?.checkedCount);
     const { posts, commentsRef} = useContext(DetailsProvider);
-    const [ commentsCount, setCMCount ] = useState(posts.length);
+    const [ commentsCount, setCMCount ] = useState(posts?.length);
+
+    useEffect(()=> {
+        const errorHandleForComs = () => {
+            if (!commentsCount) setCMCount(now => { return 0 });
+        }
+
+        errorHandleForComs();
+
+    },[ commentsCount ])
 
     useEffect(() => {   
 
