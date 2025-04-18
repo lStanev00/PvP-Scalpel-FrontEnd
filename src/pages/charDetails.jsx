@@ -25,7 +25,7 @@ export default function CharDetails() {
             if (response.status == 404) return setData({errorMSG : fetchData.messege});
 
             setData(fetchData);
-            console.log(fetchData)
+            // console.log(fetchData)
         } catch (error) {
             console.error("Fetch error:", error);
             setData(404);
