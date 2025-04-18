@@ -55,7 +55,7 @@ export default function ReloadBTN({isUpdating, setUpdating}) {
     }, [ data ])
     
     return (<>
-        <span className={Style["last-updated"]}>Last updated: {timeAgo(data.updatedAt)}</span>
+        <span className={Style["last-updated"]}>Last updated: {lastUpdatedAt}</span>
         <button onClick={async () => {
             await patchCharacterData()}
         }
