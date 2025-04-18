@@ -10,5 +10,6 @@ export default function timeAgo(updatedAt) {
     if (days > 0) return false;
     if (hours > 0) return `${hours} hour(s) ago`;
     if (minutes > 0) return `${minutes} minute(s) ago`;
+    if (seconds < 2 ) return "Just Now"
     return `${seconds} second(s) ago`;
 }
