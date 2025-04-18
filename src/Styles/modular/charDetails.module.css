@@ -59,6 +59,10 @@
     background: #0284c7;
 }
 
+.button:disabled {
+    cursor: not-allowed;
+}
+
 .section {
     margin-bottom: 20px;
     padding: 15px;

@@ -13,3 +13,10 @@ export default function timeAgo(updatedAt) {
     if (seconds < 2 ) return "Just Now"
     return `${seconds} second(s) ago`;
 }
+
+export function isOlderThan30Minutes(updatedAt) {
+    const updatedTime = new Date(updatedAt).getTime();
+    const now = Date.now();
+    const diff = now - updatedTime;
+    return diff >= 30 * 60 * 1000;
+}

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import Style from '../../Styles/modular/charDetails.module.css';
-import timeAgo from "../../helpers/timeAgo.js";
+import timeAgo, { isOlderThan30Minutes } from "../../helpers/timeAgo.js";
 import httpFetch from "../../helpers/httpFetch.js";
 import { useContext, useEffect, useState } from "react";
 import { CharacterContext } from "../../pages/CharDetails.jsx";
@@ -40,6 +40,8 @@ export default function ReloadBTN({isUpdating, setUpdating}) {
     }
 
     const [ lastUpdatedAt, setLastUpdatedAt ] = useState(timeAgo( data.updatedAt ));
+    const [ isDataOld, setIsDataOld ] = useState ( isOlderThan30Minutes( data.updatedAt ) );
+    
     useEffect(() => {
         const updateDataIfNeeded = async () => {
             if (lastUpdatedAt === false) {
@@ -55,14 +57,31 @@ export default function ReloadBTN({isUpdating, setUpdating}) {
     }, [ data ])
     
     return (<>
-        <span className={Style["last-updated"]}>Last updated: {lastUpdatedAt}</span>
-        <button onClick={async () => {
-            await patchCharacterData()}
-        }
+        <span 
+            className={
+                Style["last-updated"]
+            }
+
+        >
+                Last updated: {lastUpdatedAt}
+            </span>
+        <button 
+
+            disabled={!isDataOld}
+            
+            title={isDataOld 
+                ?  'Click to update'
+                : 'Data is already fresh'
+            }
+
+            onClick={async () => {
+                await patchCharacterData()}
+            }
 
         className={Style["button"]}>{
             data.nowUpdating ?  "Updating now!" : "Update Now"
         }
+
 
         </button>
     </>)
