@@ -65,11 +65,11 @@ export function Details() {
 
     Object.entries(data.rating).forEach(([bracketKey, bracketData]) => {
         if (bracketKey.includes("shuffle")) {
-            if(bracketData.achieves != undefined && bracketData.currentSeason.title != null) shuffleRatings[bracketKey] = bracketData;
+            shuffleRatings[bracketKey] = bracketData;
         } else if (bracketKey.includes("blitz")) {
-            if(bracketData.achieves != undefined && bracketData.currentSeason.title != null) blitzRatings[bracketKey] = bracketData;
+            blitzRatings[bracketKey] = bracketData;
         } else if (bracketKey == `2v2` || bracketKey == `3v3` || bracketKey == `rbg`){
-            if(bracketData.achieves != undefined && bracketData.currentSeason.title != null) otherRatings[bracketKey] = bracketData;
+            otherRatings[bracketKey] = bracketData;
         }
     });
 
