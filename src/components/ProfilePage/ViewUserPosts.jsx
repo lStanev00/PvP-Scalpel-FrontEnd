@@ -20,7 +20,6 @@ export default function ViewUserPosts() {
                 const status = req.status;
 
                 if (status === 200) {
-                    console.log(req.data.posts)
                     return setPosts(req.data.posts);
                 }else {
                     return setError(`Fail to load Posts`)

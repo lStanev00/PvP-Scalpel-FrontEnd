@@ -13,7 +13,6 @@ export const DetailsProvider = createContext();
 
 export function Details() {
     const {data} = useContext(CharacterContext);
-    console.log(data)
     const [isUpdating, setUpdating] = useState(false);
     const [posts, setPosts] = useState(data.posts);
     const [optimisticPosts, addOptimisticPost] = useOptimistic(

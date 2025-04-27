@@ -69,7 +69,7 @@ export default function Login() {
                     </div>
             )
             }
-            else if (!req.ok) return console.log(req)
+            else if (!req.ok) return 
         }
     }
 

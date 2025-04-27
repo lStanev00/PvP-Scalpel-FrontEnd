@@ -38,7 +38,6 @@ export const handleKeydown = (e, refList) => {
 export const handlePaste = (e, refList) => {
     // e.preventDefault();
     const pasteValue = e.clipboardData.getData(`text`).trim();
-    console.log(pasteValue)
 
     if(/^\d{6}$/.test(pasteValue)) {
         for (let i = 0; i <= 5; i++) {

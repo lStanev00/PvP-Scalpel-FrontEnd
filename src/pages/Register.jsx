@@ -72,8 +72,6 @@ export default function Register() {
                 })
             });
 
-            console.log("Form is valid. Submitting...");
-            console.log(req.data);
             if (req.status == 201) {
                 
                 e.target.reset();
@@ -83,7 +81,6 @@ export default function Register() {
                 
             } 
             const data = await req.json();
-            console.log(data)
             if (req.status === 409) {
                 const error = (errorCase) => {return `This ${errorCase} already exists! Try another one.`};
                 if (data.username) setUsernameError(error(`username`));

@@ -13,7 +13,7 @@ export const UserProvider = ({ children }) => {
 
             if (import.meta.env.DEV) {
             console.warn("Session expired please login again ( 403's expected )\nPlease if you have not been loging on other device you can submit issue in github's issues section!");
-            } else console.log("Session expired please login again ( 403's expected )\nPlease if you have not been loging on other device you can report this issue to GM Lychezar or in Discord!");
+            } else console.warn("Session expired please login again ( 403's expected )\nPlease if you have not been loging on other device you can report this issue to GM Lychezar or in Discord!");
         }
 
         if(endpoint === `/verify/me`) {

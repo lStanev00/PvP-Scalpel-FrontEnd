@@ -40,7 +40,6 @@ export default function UserDataContainer() {
         const likeURL = `/like/${data._id}`
         const req = await httpFetch(likeURL);
 
-        console.log(req.status);
         if(req.status == 401) return navigate(`/login?target=${location}`)
         setIsLiked(req.data?.isLiked);
         setLikesCount(req.data.likesCount)
