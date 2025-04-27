@@ -13,6 +13,7 @@ export const DetailsProvider = createContext();
 
 export function Details() {
     const {data} = useContext(CharacterContext);
+    console.log(data)
     const [isUpdating, setUpdating] = useState(false);
     const [posts, setPosts] = useState(data.posts);
     const [optimisticPosts, addOptimisticPost] = useOptimistic(
@@ -64,11 +65,11 @@ export function Details() {
 
     Object.entries(data.rating).forEach(([bracketKey, bracketData]) => {
         if (bracketKey.includes("shuffle")) {
-            shuffleRatings[bracketKey] = bracketData;
+            if(bracketData.achieves != undefined && bracketData.currentSeason.title != null) shuffleRatings[bracketKey] = bracketData;
         } else if (bracketKey.includes("blitz")) {
-            blitzRatings[bracketKey] = bracketData;
+            if(bracketData.achieves != undefined && bracketData.currentSeason.title != null) blitzRatings[bracketKey] = bracketData;
         } else if (bracketKey == `2v2` || bracketKey == `3v3` || bracketKey == `rbg`){
-            otherRatings[bracketKey] = bracketData;
+            if(bracketData.achieves != undefined && bracketData.currentSeason.title != null) otherRatings[bracketKey] = bracketData;
         }
     });
 
@@ -89,15 +90,20 @@ export function Details() {
                 <UserDataContainer />
     
                 <section style={
-                    {
-                        backgroundImage: `url('${data.media.charImg}')`,
-                        backgroundPosition: 'center -100px',
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
-                        backgroundAttachment: 'fixed',
-                        overflow: "hidden",
+                    data.media === null
+                    ? {
                         filter: isUpdating ? 'blur(5px)' : 'none'
-                    }} 
+                    }
+                    
+                    :   {
+                            backgroundImage: `url('${data.media.charImg}')`,
+                            backgroundPosition: 'center -100px',
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                            backgroundAttachment: 'fixed',
+                            overflow: "hidden",
+                            filter: isUpdating ? 'blur(5px)' : 'none'
+                        }} 
                     className={"container"}
                     >
     
@@ -121,6 +127,7 @@ export function Details() {
                                             title = `Arena 3v3`;
                                             bracket.achieves = data?.achieves['3s']
                                         }
+                                        if (!bracket.currentSeason.title?.media && bracket?.achieves) return (<></>);
                                         return <PvPCards key={bracket._id} title = {title} bracketData = {bracket} Style={Style}/>
                                         })}
                                 </div>
