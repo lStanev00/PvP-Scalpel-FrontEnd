@@ -127,7 +127,7 @@ export function Details() {
                                             title = `Arena 3v3`;
                                             bracket.achieves = data?.achieves['3s']
                                         }
-                                        if (!bracket.currentSeason.title?.media && bracket?.achieves) return (<></>);
+                                        if (!bracket?.currentSeason?.title?.media && bracket?.achieves) return (<></>);
                                         return <PvPCards key={bracket._id} title = {title} bracketData = {bracket} Style={Style}/>
                                         })}
                                 </div>
