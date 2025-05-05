@@ -49,6 +49,7 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
 
 
                     char.XP = XP
+                    char.ladderRank = rank;
                         
                     pageMap.push(char)
                     rank = rank + 1;
@@ -56,7 +57,7 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
                 paginatedData.push(pageMap);
             
             }
-            
+
             setData(paginatedData);
             setPage(paginatedData[0]);
             setContent(`blitzContent`);
