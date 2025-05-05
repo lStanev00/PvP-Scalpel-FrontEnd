@@ -10,7 +10,17 @@ export default function CharXP({  XP  }) {
         } else if(XP.name){
             return (
                 
-                    <td >{XP.name}</td>
+                    <td 
+                        style={{
+                            color: "#c7cf2b",
+                            fontWeight: "bold"
+                        }}
+                    >
+
+                        {XP.name}
+                        
+                    </td>
+                    
                 
             )
         }
