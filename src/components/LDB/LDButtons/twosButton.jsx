@@ -13,11 +13,23 @@ export default function TwosBTN({  setData, setPage, setContent  }){
                    
                    const achieves = char?.achieves?.['2s'] ?? undefined;
 
+
                     if(achieves){
-                        
-                        char.XP = {
-                            name: achieves.name
+
+                        try {
+                            const description = (achieves.description)
+                                .replace("Earn a ", "")
+                                .replace(" personal rating in the 2v2 bracket of the arena.", "");
+                            
+                            char.XP = {
+                                name: "Just the Two of Us:",
+                                description
+                            }
+                            
+                        } catch (error) {
+                            console.log(achieves)
                         }
+
                         
                     };
                     char.ladderRank = rank;
