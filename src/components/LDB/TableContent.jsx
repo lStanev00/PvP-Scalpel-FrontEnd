@@ -205,8 +205,8 @@ export default function TableContent({  page, content, refs  }) {
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
                                 <td><b>{char?.ladderRank}.</b> {char?.name}</td>
-                                <td><b>{char?.spec}</b> ({char?.class})</td>
-                                <td>{char?.rating.rbg}</td>
+                                <td><b>{char?.activeSpec?.name}</b> ({char?.class?.name})</td>
+                                <td>{char?.rating.rbg.currentSeason.rating}</td>
                                     <CharXP key={char?.ladderRank} XP={char?.XP} />
                             </tr>
                                 

@@ -13,28 +13,26 @@ export default function BGBtn({  setData, setPage, setContent  }){
                 for (const char of page) {
                     let XP = undefined;
                     
-                    const achieves = char?.achieves?.BG;
+                    const achieves = char?.achieves?.RBG?.XP;
                     if(achieves){
-                        for (const { name, description, _id } of achieves) {
-                            
-                            if ((name).includes(`Hero of the Alliance`) || (name).includes(`Hero of the Horde`)) {
-                                XP = {
-                                    _id: _id,
-                                    name: name,
-                                }
-                                break;
-                            } else if(description.includes(`Earn a rating of`)) {
-                                XP = {_id: _id, name: name};
-                                const numXP = description.replace(`Earn a rating of `, ``)
-                                .replace(` in either Rated Battlegrounds or Rated Battleground Blitz.`, ``);
 
-                                XP.description = numXP;
-                                break;
-                            }
-                        }
+                        let name = achieves?.name;
+                        let description = achieves.description;
+
+                        if (name == undefined) name = "";
+                        if (description == undefined) description = "";
+
+                        XP = {name: name};
+
+                        const numXP = description
+                            .replace(`Earn a rating of `, ``)
+                            .replace(` in either Rated Battlegrounds or Rated Battleground Blitz.`, ``);
+
+                        XP.description = numXP;
+
                         char.XP = XP
-                        
                     };
+
                     char.ladderRank = rank;
                     pageMap.push(char)
                     rank = rank + 1;
