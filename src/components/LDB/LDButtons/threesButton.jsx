@@ -15,26 +15,21 @@ export default function ThreesBTN({  setData, setPage, setContent  }){
                    
                    const achieves = char?.achieves?.['3s'] ?? undefined;
 
-                    if(achieves){
-                        let XPRate;
-                        let XPName = undefined;
-
-                        if (achieves.name) {
-                            XPRate = achieves.name ? achieves.name.replace(`Three's Company: `, ``): achieves;
-                            XPName = `Three's Company: `;
-                        } else {
-                            XPRate = achieves
-                        }
+                   try {
+                    
+                    const description = achieves.description
+                        .replace("Earn a ", "")
+                        .replace(" personal rating in the 3v3 bracket of the arena.", "")
 
                         char.XP = {
-                            name: XPName,
-                            description: XPRate
-                        }
-                        if(XPName == undefined) {
-                            char.XP = undefined
+                            name: "Three's Company:",
+                            description
                         }
                         
-                    };
+                   } catch (error) {
+                    
+                   }
+
                     char.ladderRank = rank;
                     pageMap.push(char)
                     rank = rank + 1;

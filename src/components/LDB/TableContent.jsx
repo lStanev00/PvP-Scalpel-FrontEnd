@@ -157,13 +157,13 @@ export default function TableContent({  page, content, refs  }) {
                         page.map(char =>{
                             return (
                                 
-                                  <tr onClick={() => {clickIt(char.playerRealmSlug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
+                                  <tr onClick={() => {clickIt(char.playerRealm.slug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
                                 <td><b>{char?.ladderRank}.</b> {char?.name}</td>
-                                <td><b>{char?.spec}</b> ({char?.class})</td>
-                                <td>{char?.rating?.['3v3']}</td>
+                                <td><b>{char?.activeSpec?.name}</b> ({char?.class?.name})</td>
+                                <td>{char?.rating?.['3v3'].currentSeason?.rating}</td>
                                 <CharXP XP={char?.XP} />
                             </tr>
                                 
