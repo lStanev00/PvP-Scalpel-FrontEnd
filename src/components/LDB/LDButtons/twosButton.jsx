@@ -27,7 +27,6 @@ export default function TwosBTN({  setData, setPage, setContent  }){
                             }
                             
                         } catch (error) {
-                            console.log(achieves)
                         }
 
                         
