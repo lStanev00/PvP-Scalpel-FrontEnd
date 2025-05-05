@@ -1,7 +1,6 @@
 import TableStyle from '../../Styles/modular/checkDetailsPvPTable.module.css'
 export default function PvPCards({ title, bracketData, Style }) {
     if (bracketData?.currentSeason?.rating == 0) bracketData.currentSeason.rating = null;
-    console.log(bracketData)
     return (
             <div className={Style["pvp-card"]}>
                 <section className={Style["inner-section"]}>
