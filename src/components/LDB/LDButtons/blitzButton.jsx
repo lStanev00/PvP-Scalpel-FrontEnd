@@ -56,7 +56,7 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
                 paginatedData.push(pageMap);
             
             }
-            console.log(paginatedData)
+            
             setData(paginatedData);
             setPage(paginatedData[0]);
             setContent(`blitzContent`);
