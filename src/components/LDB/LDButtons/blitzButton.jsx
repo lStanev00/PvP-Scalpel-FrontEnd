@@ -14,7 +14,10 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
                     let XP = undefined;
                     
                     const blitzAchieves = char?.achieves?.Blitz;
-                    console.log(blitzAchieves)
+                    let [ bracket, bracketClass, bracketSpec] = ((Object.keys(char.rating))[0]).split(`-`);
+                    char["class"] = bracketClass.replace(/^./, c => c.toUpperCase());
+                    char["spec"] = bracketSpec.replace(/^./, c => c.toUpperCase());
+
 
                     if (blitzAchieves){
 
