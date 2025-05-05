@@ -1,7 +1,7 @@
 import httpFetch from "../../../helpers/httpFetch.js";
 export default function ThreesBTN({  setData, setPage, setContent  }){
     const clickHandler = async (event) => {
-        const res = await httpFetch(`/LDB/3v3`);
+        const res = await httpFetch(`/LDBtest/3v3`);
         // const res = await fetch(`http://localhost:59534/LDB/3v3`);
 
         let reqData = await res.json();
