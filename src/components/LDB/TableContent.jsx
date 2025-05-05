@@ -69,15 +69,16 @@ export default function TableContent({  page, content, refs  }) {
                     <tbody id="leaderboard-body">
                         {
                         page.map(char =>{
+                            const rating = ((Object.entries(char.rating))[0][1]).currentSeason.rating;
                             return (
                                 
-                            <tr onClick={() => {clickIt(char.playerRealmSlug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
+                            <tr onClick={() => {clickIt(char.playerRealm.slug, char.name)}} key={char?._id} ref={el => (refs.current[char?._id] = el)}>
                                 <td>
                                     <img style={{width: '3rem', height: '3rem'}} alt="Char IMG" src={char?.media?.avatar} />
                                 </td>
                                 <td><b>{char?.ladderRank}.</b> {char?.name}</td>
                                 <td><b>{char?.spec}</b> ({char?.class})</td>
-                                <td>{char?.rating.solo}</td>
+                                <td>{rating}</td>
                             </tr>
                                 
                             )}

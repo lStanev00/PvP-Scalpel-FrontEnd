@@ -12,6 +12,11 @@ export default function ShuffleBTN({  setData, setPage, setContent  }) {
             let pageMap = [];
 
             for (const char of page) {
+
+                let [ bracket, bracketClass, bracketSpec] = ((Object.keys(char.rating))[0]).split(`-`);
+                char["class"] = bracketClass.replace(/^./, c => c.toUpperCase());
+                char["spec"] = bracketSpec.replace(/^./, c => c.toUpperCase());
+
                 char.ladderRank = rank;
                 pageMap.push(char)
                 rank = rank + 1;
