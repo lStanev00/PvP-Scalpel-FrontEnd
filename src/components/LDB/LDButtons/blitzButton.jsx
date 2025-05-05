@@ -13,35 +13,50 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
                 for (const char of page) {
                     let XP = undefined;
                     
-                    const achieves = char?.achieves?.BG;
-                    if(achieves){
-                        for (const { name, description, _id } of achieves) {
-                            
-                            if ((name).includes(`Hero of the Alliance`) || (name).includes(`Hero of the Horde`)) {
-                                XP = {
-                                    _id: _id,
-                                    name: name,
-                                }
-                                break;
-                            } else if(description.includes(`Earn a rating of`)) {
-                                XP = {_id: _id, name: name};
-                                const numXP = description.replace(`Earn a rating of `, ``)
-                                .replace(` in either Rated Battlegrounds or Rated Battleground Blitz.`, ``);
+                    const blitzAchieves = char?.achieves?.Blitz;
+                    console.log(blitzAchieves)
 
-                                XP.description = numXP;
-                                break;
-                            }
-                        }
-                        char.XP = XP
+                    if (blitzAchieves){
+
+                        const name = blitzAchieves.XP.name;
+                        const description = blitzAchieves.XP.description;
+                        let strategistCheckup = blitzAchieves?.WINS?.name;
+
+                        if (strategistCheckup == undefined) strategistCheckup = "";
+
                         
-                    };
-                    char.ladderRank = rank;
+                        if ((strategistCheckup).includes(`Strategist`) || (name).includes(`Hero of the Horde`)) {
+                            XP = {};
+
+                            if((strategistCheckup).includes(`Strategist`)) XP.name = "Strategist"
+                            else if ((name).includes(`Hero of the Horde`)) XP.name = "Hero of the Horde"
+                            else if ((name).includes(`Hero of the Alliance`)) XP.name = "Hero of the Alliance"
+
+                            // break;
+
+                        } else if(description.includes(`Earn a rating of`)) {
+
+                            XP = {name: name};
+
+                            const numXP = description.replace(`Earn a rating of `, ``)
+                            .replace(` in either Rated Battlegrounds or Rated Battleground Blitz.`, ``);
+
+                            XP.description = numXP;
+
+                            // break;
+                        }
+                    }
+
+
+                    char.XP = XP
+                        
                     pageMap.push(char)
                     rank = rank + 1;
                 }
                 paginatedData.push(pageMap);
             
             }
+            console.log(paginatedData)
             setData(paginatedData);
             setPage(paginatedData[0]);
             setContent(`blitzContent`);
