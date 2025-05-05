@@ -21,11 +21,13 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
 
                     if (blitzAchieves){
 
-                        const name = blitzAchieves.XP.name;
-                        const description = blitzAchieves.XP.description;
+                        let name = blitzAchieves?.XP?.name;
+                        let description = blitzAchieves.XP.description;
                         let strategistCheckup = blitzAchieves?.WINS?.name;
 
                         if (strategistCheckup == undefined) strategistCheckup = "";
+                        if (name == undefined) name = "";
+                        if (description == undefined) description = "";
 
                         
                         if ((strategistCheckup).includes(`Strategist`) || (name).includes(`Hero of the Horde`)) {
