@@ -110,7 +110,7 @@ export default function Suggestions({
           >
             <img alt="Char IMG" src={player.media?.avatar} />
             {player.name} -{" "}
-            {player.playerRealmSlug
+            {player.playerRealm.slug
               .replace(/-/g, " ")
               .replace(/\b\w/g, (c) => c.toUpperCase())}
           </li>
