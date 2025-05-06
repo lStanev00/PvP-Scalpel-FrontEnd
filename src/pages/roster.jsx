@@ -10,13 +10,7 @@ export default function RosterPage() {
     
     useEffect(() => {
         const fetchData = async () => {
-            const req = await httpFetch(`/member/list`,{
-                method: `POST`,
-                cache: 'no-store',
-                body: JSON.stringify({
-                    "query": ["rank", "media", "playerRealmSlug"]
-                })
-            })
+            const req = await httpFetch(`/member/list`)
             const data = await req.json();
             setData(data);
             setSearch(data);
