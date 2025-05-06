@@ -2,7 +2,7 @@ import httpFetch from "../../../helpers/httpFetch.js";
 
 export default function ShuffleBTN({  setData, setPage, setContent  }) {
     const clickHandler = async (event) => {
-        const res = await httpFetch(`/LDBtest/solo`);
+        const res = await httpFetch(`/LDB/solo`);
         let reqData = await res.json();
         let rank = 1;
         const paginatedData = [];

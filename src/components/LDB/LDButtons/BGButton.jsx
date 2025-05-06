@@ -2,7 +2,7 @@ import httpFetch from "../../../helpers/httpFetch.js";
 export default function BGBtn({  setData, setPage, setContent  }){
     const clickHandler = async (event) => {
         let reqData;
-        const res = await httpFetch(`/LDBtest/BG`);
+        const res = await httpFetch(`/LDB/BG`);
         reqData = await res.json();
         let rank = 1;
         const paginatedData = [];
