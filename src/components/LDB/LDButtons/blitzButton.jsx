@@ -30,7 +30,7 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
                         if (description == undefined) description = "";
 
                         
-                        if ((strategistCheckup).includes(`Strategist`) || (name).includes(`Hero of the Horde`)) {
+                        if ((strategistCheckup).includes(`Strategist`) || (name).includes(`Hero of the Horde`) || (name).includes(`Hero of the Alliance`)) {
                             XP = {};
 
                             if((strategistCheckup).includes(`Strategist`)) XP.name = "Strategist"
