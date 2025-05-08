@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BlitzBtn from "../components/LDB/LDButtons/blitzButton";
 import ContentContainer from "../components/LDB/ContentContainer";
 import ShuffleBTN from "../components/LDB/LDButtons/shuffleButton";
@@ -10,6 +10,14 @@ export default function LDB() {
     const [data, setData] = useState(undefined);
     const [page, setPage] = useState([]);
     const [content, setContent] = useState(undefined);
+
+    useEffect(() => {
+        
+        const blitzBtn = document.querySelector("#blitz");
+
+        if(blitzBtn) blitzBtn.click();
+    }, [])
+
     return (
         <>
         <div className="bracket-buttons">
