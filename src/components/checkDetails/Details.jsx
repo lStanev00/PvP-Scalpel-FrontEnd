@@ -8,7 +8,7 @@ import { useSearchParams } from "react-router-dom";
 import { CharacterContext } from "../../pages/CharDetails";
 import UserDataContainer from "./UserDataContainer";
 import StatsChart from "./StatsChart";
-import AchevementSection from "./Achievements";
+import AchevementsSection from "./Achievements";
 
 export const DetailsProvider = createContext();
 
@@ -174,7 +174,7 @@ export function Details() {
                         {/* Character Stats Graph Section */}
     
                         <StatsChart />
-                        <AchevementSection />
+                        <AchevementsSection />
         
                         {/* Talent Trees Section */}
                         {/* <div className={Style["section"]}>
