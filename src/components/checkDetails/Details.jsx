@@ -8,6 +8,7 @@ import { useSearchParams } from "react-router-dom";
 import { CharacterContext } from "../../pages/CharDetails";
 import UserDataContainer from "./UserDataContainer";
 import StatsChart from "./StatsChart";
+import AchevementSection from "./Achievements";
 
 export const DetailsProvider = createContext();
 
@@ -170,14 +171,19 @@ export function Details() {
                         </div>
                     )}
                     </section>
-                    {/* Character Stats Graph Section */}
+                        {/* Character Stats Graph Section */}
     
-                    <StatsChart />
+                        <StatsChart />
+                        <AchevementSection />
+        
+                        {/* Talent Trees Section */}
+                        {/* <div className={Style["section"]}>
+                            <h3>Talent Trees</h3>
+                            <button className={Style["button"]}>Copy Talent Code</button>
+                            <p>Protection Warrior Talents</p>
+                        </div> */}
     
                     </section>
-
-
-    
     
                     {/* Posts Section */}
                     {optimisticPosts && (<>
@@ -215,24 +221,6 @@ export function Details() {
 
                     <NewPostForm characterID={data._id}/>
     
-                    
-                    {/* <div className={Style["section"]}>
-                        <h1>Achievements ({data.achieves.points} Points)</h1>
-                        <div className={Style["card"]}>
-                            <img src="https://render.worldofwarcraft.com/eu/icons/56/achievement_arena_2v2_4.jpg" alt="Achievement" />
-                            <div className={Style["card-content"]}>
-                                <strong>Just the Two of Us: 1750</strong>
-                                <span>Earn a 1750 personal rating in the 2v2 bracket of the arena.</span>
-                            </div>
-                        </div>
-                    </div> */}
-    
-                    {/* Talent Trees Section */}
-                    {/* <div className={Style["section"]}> */}
-                        {/* <h3>Talent Trees</h3>
-                        <button className={Style["button"]}>Copy Talent Code</button>
-                        <p>Protection Warrior Talents</p>
-                    </div> */}
                 </section>
             </DetailsProvider.Provider>
         );
