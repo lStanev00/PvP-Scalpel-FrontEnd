@@ -20,7 +20,12 @@ export default function AchevementsSection() {
         {achievements && (
             Object.entries(achievements).map(([key, value]) => {
 
-                if(key == "RBG") return;
+                if(key == "RBG") {
+                    if(achievements.Blitz.XP.name == value.XP.name) {
+                        const rbgWins = value.WINS;
+                        if(rbgWins) return <AchievementDiv key = {key} achData={rbgWins} /> 
+                    }
+                }
 
                 if(value.XP || value.WINS) {
                     return (<>
