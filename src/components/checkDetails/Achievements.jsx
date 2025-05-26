@@ -11,13 +11,36 @@ export default function AchevementSection() {
     return(
     <>
         <div className={Style["section"]}>
-            <h1>Achievements ({data.achieves.points} Points)</h1>
-            <div className={Style["card"]}>
-                <img src="https://render.worldofwarcraft.com/eu/icons/56/achievement_arena_2v2_4.jpg" alt="Achievement" />
-                <div className={Style["card-content"]}>
-                    <strong>Just the Two of Us: 1750</strong>
-                    <span>Earn a 1750 personal rating in the 2v2 bracket of the arena.</span>
+            <div className={Style.headerDiv}>
+                <h1>Achievements</h1>
+                <p>-=[* {data.achieves.points} Points *]=-</p>
+            </div>
+            <div className={Style.achContent}>
+
+                <div className={Style["card"]}>
+                    <img src="https://render.worldofwarcraft.com/eu/icons/56/achievement_arena_2v2_4.jpg" alt="Achievement" />
+                    <div className={Style["card-content"]}>
+                        <strong>Just the Two of Us: 1750</strong>
+                        <span>Earn a 1750 personal rating in the 2v2 bracket of the arena.</span>
+                    </div>
                 </div>
+                
+                <div className={Style["card"]}>
+                    <img src="https://render.worldofwarcraft.com/eu/icons/56/achievement_arena_2v2_4.jpg" alt="Achievement" />
+                    <div className={Style["card-content"]}>
+                        <strong>Just the Two of Us: 1750</strong>
+                        <span>Earn a 1750 personal rating in the 2v2 bracket of the arena.</span>
+                    </div>
+                </div>
+
+                <div className={Style["card"]}>
+                    <img src="https://render.worldofwarcraft.com/eu/icons/56/achievement_arena_2v2_4.jpg" alt="Achievement" />
+                    <div className={Style["card-content"]}>
+                        <strong>Just the Two of Us: 1750</strong>
+                        <span>Earn a 1750 personal rating in the 2v2 bracket of the arena.</span>
+                    </div>
+                </div>
+
             </div>
         </div>
     </>

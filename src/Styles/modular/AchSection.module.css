@@ -3,6 +3,35 @@
     padding: 15px;
     background: rgba(30, 41, 59, 0.75);
     border-radius: 8px;
+    width: 100%;
+}
+
+.section h3 {
+    font-size: 16px;
+    color: #facc15;
+    margin-bottom: 10px;
+}
+
+.headerDiv h1 {
+    color: #facc15;
+    margin-bottom: 0.5%;
+    text-align: center;
+    font-size: large;
+}
+
+.headerDiv p {
+    color: #2cb5f2;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: large;
+}
+
+.achContent {
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    justify-content: center;
+
 }
 
 .card {
@@ -11,6 +40,13 @@
     background: rgba(38, 53, 74, 0.75);
     padding: 15px;
     border-radius: 8px;
+    width: 45%;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
 }
 
 .card-content strong {
