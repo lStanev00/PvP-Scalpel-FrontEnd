@@ -1,0 +1,24 @@
+.section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(30, 41, 59, 0.75);
+    border-radius: 8px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    background: rgba(38, 53, 74, 0.75);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.card-content strong {
+    color: #facc15;
+    font-size: 14px;
+}
+
+.card-content span {
+    font-size: 12px;
+    color: #c7d5e0;
+}
