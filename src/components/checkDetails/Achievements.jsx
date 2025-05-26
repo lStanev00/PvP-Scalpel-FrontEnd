@@ -37,3 +37,18 @@ export default function AchevementsSection() {
     )
 
 }
+
+function AchievementDiv({achData}){
+
+    if(achData) return (
+    <>
+        <div className={Style["card"]}>
+            <img src={achData.media} alt="Achievement Image" />
+            <div className={Style["card-content"]}>
+                <strong>{achData.name}</strong>
+                <span>{achData.description}</span>
+            </div>
+        </div>
+    </>
+    )
+}
