@@ -8,7 +8,7 @@ export default function AchevementsSection() {
     console.log(achievements);
 
 
-    return(
+    if (achievements) return(
     <>
         <div className={Style["section"]}>
             <div className={Style.headerDiv}>
@@ -16,17 +16,21 @@ export default function AchevementsSection() {
                 <p>-=[* {data.achieves.points} Points *]=-</p>
             </div>
             <div className={Style.achContent}>
-
-                <div className={Style["card"]}>
-                    <img src="https://render.worldofwarcraft.com/eu/icons/56/achievement_arena_2v2_4.jpg" alt="Achievement" />
-                    <div className={Style["card-content"]}>
-                        <strong>Just the Two of Us: 1750</strong>
-                        <span>Earn a 1750 personal rating in the 2v2 bracket of the arena.</span>
-                    </div>
-                </div>
                 
         {achievements && (
-            achievements.map(achiev => {
+            Object.entries(achievements).map(([key, value]) => {
+
+                if(key == "RBG") return;
+
+                if(value.XP || value.WINS) {
+                    return (<>
+                        {Object.entries(value).map(([achKey, achData]) => {
+                            return(<AchievementDiv key={key +  achKey} achData={achData} />)
+                        })}
+                    </>)
+                }
+
+                if(value.name)return <AchievementDiv key={ key } achData={value} />
 
             })
         )}
