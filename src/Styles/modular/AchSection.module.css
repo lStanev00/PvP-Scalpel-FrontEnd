@@ -1,6 +1,6 @@
 .section {
     margin-bottom: 20px;
-    padding: 15px;
+    padding-top: 15px;
     background: rgba(30, 41, 59, 0.75);
     border-radius: 8px;
     width: 100%;
@@ -16,7 +16,8 @@
     color: #facc15;
     margin-bottom: 0.5%;
     text-align: center;
-    font-size: large;
+    font-size: 2rem;
+
 }
 
 .headerDiv p {
@@ -29,9 +30,9 @@
 .achContent {
     display: flex;
     flex-direction: row;
-    gap: 5%;
+    /* gap: 2%; */
     justify-content: space-between;
-    padding: 2%;
+    padding: 1% 4%;
     flex-wrap: wrap;
 
 }
@@ -44,7 +45,7 @@
     border-radius: 8px;
     width: 47%;
     height: fit-content;
-    margin-bottom: 2.5%;
+    margin-bottom: 1%;
     border: 2px solid rgba(255, 204, 0, 0.6)
 }
 
