@@ -1,12 +1,33 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CharacterContext } from "../../pages/CharDetails";
 import Style from "../../Styles/modular/AchSection.module.css"
 
 export default function AchevementsSection() {
     const {data} = useContext(CharacterContext);
     const [achievements, setAchievements] = useState(data.achieves);
-    const [seasonalAch, setSeasonalAch] = useState(data.listAchievements);
-    console.log(seasonalAch);
+    const [seasonalAchives, setSeasonalAchives] = useState(new Map())
+
+    useEffect(() => {
+        const seasonalAchList = data?.listAchievements;
+        seasonalAchives.set("noSeason", []);
+
+        if (seasonalAchList) {
+            for (const sAch of seasonalAchList) {
+                if (sAch?.expansion) {
+                    const existing = seasonalAchives.get(sAch.expansion.name) || [];
+                    existing.push(sAch);
+                    seasonalAchives.set(sAch.expansion.name, existing);
+                } else {
+                    const fallback = seasonalAchives.get("noSeason") || [];
+                    fallback.push(sAch);
+                    seasonalAchives.set("noSeason", fallback);
+                }
+            }
+
+            console.log(seasonalAchives);
+        }
+    }, []);
+
 
 
     if (achievements) return(
