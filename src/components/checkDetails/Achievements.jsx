@@ -26,6 +26,21 @@ export default function AchevementsSection() {
                 }
             }
 
+            const cheatSheat = [`Elite:`, `Duelist`, `Rival II`, "Rival I", `Challenger II`, `Challenger I`, `Combatant II`, `Combatant I`].reverse();
+
+            for (const [expansion, seasonList] of seasonalAchives.entries()) {
+                if (expansion == "noSeason") continue;
+                
+                for (const [seasonIndex, ssAches] of Object.entries(seasonList)) {
+                    let biggest = null;
+                    for (const title of cheatSheat) {
+                        const titleIndex = ssAches.findIndex(ach => ach.name.includes(title));
+                        if(titleIndex != -1) biggest = ssAches.splice(titleIndex, 1)[0]
+                    }
+                    if(biggest != null) ssAches.push(biggest)
+                }
+            }
+
             console.log(seasonalAchives);
         }
     }, []);
