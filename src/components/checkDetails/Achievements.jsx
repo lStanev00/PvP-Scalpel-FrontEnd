@@ -14,11 +14,13 @@ export default function AchevementsSection() {
         if (seasonalAchList) {
             for (const sAch of seasonalAchList) {
                 if (sAch?.expansion) {
-                    const existing = seasonalAchives.get(sAch.expansion.name) || [];
-                    existing.push(sAch);
+                    const existing = seasonalAchives.get(sAch.expansion.name) || {};
+                    const existingSeason = existing[sAch.expansion.season] || [];
+                    existingSeason.push(sAch);
+                    existing[sAch.expansion.season] = existingSeason
                     seasonalAchives.set(sAch.expansion.name, existing);
                 } else {
-                    const fallback = seasonalAchives.get("noSeason") || [];
+                    const fallback = seasonalAchives.get("noSeason") || {};
                     fallback.push(sAch);
                     seasonalAchives.set("noSeason", fallback);
                 }
