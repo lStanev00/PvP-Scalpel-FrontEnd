@@ -5,7 +5,8 @@ import Style from "../../Styles/modular/AchSection.module.css"
 export default function AchevementsSection() {
     const {data} = useContext(CharacterContext);
     const [achievements, setAchievements] = useState(data.achieves);
-    console.log(achievements);
+    const [seasonalAch, setSeasonalAch] = useState(data.listAchievements);
+    console.log(seasonalAch);
 
 
     if (achievements) return(
@@ -13,7 +14,7 @@ export default function AchevementsSection() {
         <div className={Style["section"]}>
             <div className={Style.headerDiv}>
                 <h1>Achievements</h1>
-                <p>-=[* {data.achieves.points} Points *]=-</p>
+                <p>{data.achieves.points} Points</p>
             </div>
             <div className={Style.achContent}>
                 
