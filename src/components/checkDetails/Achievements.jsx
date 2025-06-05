@@ -40,7 +40,7 @@ export default function AchevementsSection() {
                     if(biggest != null) ssAches.push(biggest)
                 }
             }
-
+            console.info(`This feature is not developed yet! It will break is not live on build aswell you can preview the page at https://www.pvpscalpel.com `)
             console.log(seasonalAchives);
         }
     }, []);
@@ -79,7 +79,22 @@ export default function AchevementsSection() {
             })
         )}
 
+
             </div>
+
+        {seasonalAchives && seasonalAchives.size !== 0 && ( // WONT WORK IN DRAFT PROCESS
+            seasonalAchives.entries.map((key, value) => {
+                return (<>
+                
+                    <div className={Style.headerDiv} key={key}> 
+                        <h1>
+                            {key}
+                        </h1>
+                    </div>
+                </>
+                )
+            })
+        )}
         </div>
     </>
     )
