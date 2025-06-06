@@ -20,6 +20,14 @@
 
 }
 
+.headerDiv h2 {
+    color: #1abc9c;
+    margin-bottom: 0.5%;
+    text-align: center;
+    font-size: 2rem;
+
+}
+
 .headerDiv p {
     color: #2cb5f2;
     margin-bottom: 10px;
@@ -63,4 +71,37 @@
 .card-content span {
     font-size: 0.9rem;
     color: #c7d5e0;
+}
+
+.seasonalMain {
+    width: 50%;
+}
+
+.seasonalAchieves {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.seasonal-card-content strong {
+    color: #facc15;
+    font-size: 1.2rem;
+}
+
+.seasonal-card-content span {
+    font-size: 0.9rem;
+    color: #c7d5e0;
+}
+
+.seasonal-card {
+    display: flex;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.85);
+    padding: 0px 15px;
+    border-radius: 8px;
+    width: 47%;
+    height: fit-content;
+    margin-bottom: 1%;
+    border: 2px solid rgba(255, 204, 0, 0.6)
 }

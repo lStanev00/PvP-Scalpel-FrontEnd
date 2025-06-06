@@ -82,32 +82,38 @@ export default function AchevementsSection() {
 
             </div>
 
-        {seasonalAchives && seasonalAchives.size !== 0 && ( // WONT WORK IN DRAFT PROCESS
-            seasonalAchives.entries.map((key, value) => {
-                return (<>
-                
-                    <div className={Style.headerDiv} key={key}> 
-                        <h1>
-                            {key}
-                        </h1>
-                    </div>
-                </>
-                )
-            })
-        )}
+                {seasonalAchives && seasonalAchives.size !== 0 && (
+                    Array.from(seasonalAchives.entries()).map(([key, value]) => {
+                        if (key === "noSeason") return null;
+                        return (<>
+                        <div className={Style.seasonalMain}>
+                            <h2>{key}</h2>
+                            <div className={Style.seasonalAchieves}>
+                                {value && Object.entries(value).map(([seasonIndex, achList]) => (
+                                    achList.map(ach => (
+                                        <AchievementDiv key={ach.criteria || ach.name} seasonal={true} achData={ach} />
+                                    ))
+                                ))}
+                            </div>
+                        </div>
+                        </>
+                        );
+                    })
+                )}
+
         </div>
     </>
     )
 
 }
 
-function AchievementDiv({achData}){
+function AchievementDiv({achData, seasonal = undefined}){
 
     if(achData) return (
     <>
-        <div className={Style["card"]}>
+        <div className={Style[seasonal == undefined? "card": `seasonal-card`]}>
             <img src={achData.media} alt="Achievement Image" />
-            <div className={Style["card-content"]}>
+            <div className={Style[seasonal == undefined? "card-content": "seasonal-card-content"]}>
                 <strong>{achData.name}</strong>
                 <span>{achData.description}</span>
             </div>
