@@ -82,7 +82,9 @@ export default function AchevementsSection() {
 
             </div>
 
-                {seasonalAchives && seasonalAchives.size !== 0 && (
+            <div className={Style.seasonalContainer}>
+
+                {seasonalAchives.size !== 0 && (
                     Array.from(seasonalAchives.entries()).map(([key, value]) => {
                         if (key === "noSeason") return null;
                         return (<>
@@ -100,6 +102,8 @@ export default function AchevementsSection() {
                         );
                     })
                 )}
+            </div>
+
 
         </div>
     </>
