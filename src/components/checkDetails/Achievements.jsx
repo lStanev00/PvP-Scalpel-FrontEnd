@@ -41,8 +41,6 @@ export default function AchevementsSection() {
                     if(biggest != null) ssAches.push(biggest)
                 }
             }
-            console.info(`This feature is not developed yet! It will break is not live on build aswell you can preview the page at https://www.pvpscalpel.com `)
-            console.log(shadowSeasonMap);
             setSeasonalAchives(shadowSeasonMap)
 
             
