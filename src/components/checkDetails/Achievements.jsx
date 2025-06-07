@@ -10,6 +10,7 @@ export default function AchevementsSection() {
     useEffect(() => {
         const shadowSeasonMap = new Map();
         const seasonalAchList = data?.listAchievements;
+        console.log(seasonalAchList)
         shadowSeasonMap.set("noSeason", []);
 
         if (seasonalAchList) {
@@ -27,7 +28,9 @@ export default function AchevementsSection() {
                 }
             }
 
-            const cheatSheat = [`Elite:`, `Duelist`, `Rival II`, "Rival I", `Challenger II`, `Challenger I`, `Combatant II`, `Combatant I`].reverse();
+            console.log(shadowSeasonMap)
+
+            const cheatSheat = [`Elite:`, `Duelist:`, `Rival II:`, "Rival I:", `Challenger II:`, `Challenger I:`, `Combatant II:`, `Combatant I:`].reverse();
 
             for (const [expansion, seasonList] of shadowSeasonMap.entries()) {
                 if (expansion == "noSeason") continue;
