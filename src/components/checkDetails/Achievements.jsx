@@ -5,30 +5,31 @@ import Style from "../../Styles/modular/AchSection.module.css"
 export default function AchevementsSection() {
     const {data} = useContext(CharacterContext);
     const [achievements, setAchievements] = useState(data.achieves);
-    const [seasonalAchives, setSeasonalAchives] = useState(new Map())
+    const [seasonalAchives, setSeasonalAchives] = useState(undefined)
 
     useEffect(() => {
+        const shadowSeasonMap = new Map();
         const seasonalAchList = data?.listAchievements;
-        seasonalAchives.set("noSeason", []);
+        shadowSeasonMap.set("noSeason", []);
 
         if (seasonalAchList) {
             for (const sAch of seasonalAchList) {
                 if (sAch?.expansion) {
-                    const existing = seasonalAchives.get(sAch.expansion.name) || {};
+                    const existing = shadowSeasonMap.get(sAch.expansion.name) || {};
                     const existingSeason = existing[sAch.expansion.season] || [];
                     existingSeason.push(sAch);
                     existing[sAch.expansion.season] = existingSeason
-                    seasonalAchives.set(sAch.expansion.name, existing);
+                    shadowSeasonMap.set(sAch.expansion.name, existing);
                 } else {
-                    const fallback = seasonalAchives.get("noSeason") || {};
+                    const fallback = shadowSeasonMap.get("noSeason") || {};
                     fallback.push(sAch);
-                    seasonalAchives.set("noSeason", fallback);
+                    shadowSeasonMap.set("noSeason", fallback);
                 }
             }
 
             const cheatSheat = [`Elite:`, `Duelist`, `Rival II`, "Rival I", `Challenger II`, `Challenger I`, `Combatant II`, `Combatant I`].reverse();
 
-            for (const [expansion, seasonList] of seasonalAchives.entries()) {
+            for (const [expansion, seasonList] of shadowSeasonMap.entries()) {
                 if (expansion == "noSeason") continue;
                 
                 for (const [seasonIndex, ssAches] of Object.entries(seasonList)) {
@@ -41,13 +42,16 @@ export default function AchevementsSection() {
                 }
             }
             console.info(`This feature is not developed yet! It will break is not live on build aswell you can preview the page at https://www.pvpscalpel.com `)
-            console.log(seasonalAchives);
+            console.log(shadowSeasonMap);
+            setSeasonalAchives(shadowSeasonMap)
+
+            
         }
     }, []);
 
 
 
-    if (achievements) return(
+    if (achievements && seasonalAchives) return(
     <>
         <div className={Style["section"]}>
             <div className={Style.headerDiv}>

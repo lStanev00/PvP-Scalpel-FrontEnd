@@ -24,8 +24,9 @@
     color: #1abc9c;
     margin-bottom: 0.5%;
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.6rem;
     margin-top: 15px;
+    margin-bottom: 13px;
 }
 
 .headerDiv p {
@@ -51,7 +52,7 @@
     background: rgba(15, 23, 42, 0.85);
     padding: 0px 15px;
     border-radius: 8px;
-    width: 47%;
+    width: 45%;
     height: fit-content;
     margin-bottom: 1%;
     border: 2px solid rgba(255, 204, 0, 0.6)
