@@ -88,6 +88,7 @@
     background: rgba(15, 23, 42, 0.85);
     border: 2px solid rgba(255, 204, 0, 0.6);
     border-radius: 8px;
+    height: fit-content;
 }
 
 .seasonalAchieves {
@@ -118,11 +119,11 @@
     align-items: center;
     /* background: rgba(15, 23, 42, 0.85); */
     padding: 15px 15px;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     width: 100%;
     height: fit-content;
     margin-bottom: 1%;
-    /* border: 2px solid rgba(255, 204, 0, 0.6) */
+    border-top: 1px dotted rgba(255, 204, 0, 0.6)
 }
 
 .seasonal-card img {
