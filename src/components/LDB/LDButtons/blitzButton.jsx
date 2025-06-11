@@ -22,7 +22,7 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
                     if (blitzAchieves){
 
                         let name = blitzAchieves?.XP?.name;
-                        let description = blitzAchieves.XP.description;
+                        let description = blitzAchieves.XP?.description;
                         let strategistCheckup = blitzAchieves?.WINS?.name;
 
                         if (strategistCheckup == undefined) strategistCheckup = "";
