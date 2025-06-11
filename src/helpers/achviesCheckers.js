@@ -13,7 +13,7 @@ const legacyData = [
 const cheatSheat = [`Elite:`, `Duelist:`, `Rival II:`, "Rival I:", `Challenger II:`, `Challenger I:`, `Combatant II:`, `Combatant I:`].reverse();
 const legacyCheatSheat = [`Elite:`, `Duelist:`, "Rival:", `Challenger:`, `Combatant:`].reverse();
 
-function filterAchieves(mapArr) {
+export default function filterAchieves(mapArr) {
 
     if (!(mapArr instanceof Map)) {
         throw new TypeError("Expected mapArr to be a Map");
