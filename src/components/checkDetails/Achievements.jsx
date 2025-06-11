@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { CharacterContext } from "../../pages/CharDetails";
 import Style from "../../Styles/modular/AchSection.module.css"
+import filterAchieves from "../../helpers/achviesCheckers.js";
 
 export default function AchevementsSection() {
     const {data} = useContext(CharacterContext);
@@ -30,22 +31,23 @@ export default function AchevementsSection() {
 
             console.log(shadowSeasonMap)
 
-            const cheatSheat = [`Elite:`, `Duelist:`, `Rival II:`, "Rival I:", `Challenger II:`, `Challenger I:`, `Combatant II:`, `Combatant I:`].reverse();
+            // const cheatSheat = [`Elite:`, `Duelist:`, `Rival II:`, "Rival I:", `Challenger II:`, `Challenger I:`, `Combatant II:`, `Combatant I:`].reverse();
 
-            for (const [expansion, seasonList] of shadowSeasonMap.entries()) {
-                if (expansion == "noSeason") continue;
+            // for (const [expansion, seasonList] of shadowSeasonMap.entries()) {
+            //     if (expansion == "noSeason") continue;
                 
-                for (const [seasonIndex, ssAches] of Object.entries(seasonList)) {
-                    let biggest = null;
-                    for (const title of cheatSheat) {
-                        const titleIndex = ssAches.findIndex(ach => ach.name.includes(title));
-                        if(titleIndex != -1) biggest = ssAches.splice(titleIndex, 1)[0]
-                    }
-                    if(biggest != null) ssAches.push(biggest)
-                }
-            }
-            setSeasonalAchives(shadowSeasonMap)
+            //     for (const [seasonIndex, ssAches] of Object.entries(seasonList)) {
+            //         let biggest = null;
+            //         for (const title of cheatSheat) {
+            //             const titleIndex = ssAches.findIndex(ach => ach.name.includes(title));
+            //             if(titleIndex != -1) biggest = ssAches.splice(titleIndex, 1)[0]
+            //         }
+            //         if(biggest != null) ssAches.push(biggest)
+            //     }
+            // }
 
+            const sortedAches = filterAchieves(shadowSeasonMap);
+            if (sortedAches) setSeasonalAchives(sortedAches)
             
         }
     }, []);
