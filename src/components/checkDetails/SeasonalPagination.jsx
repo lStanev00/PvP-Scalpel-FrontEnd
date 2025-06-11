@@ -10,24 +10,33 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
     const [paginatedData, setPaginatedData] = useState([]);
 
     useEffect(() => {
-        if (!seasonalAchievesMap || seasonalAchievesMap.size === 0) return;
-
-        let pageAdded = 0;
+        if (!seasonalAchievesMap || seasonalAchievesMap.size <= 1) return;
         const shadowResult = [];
-        let pageShadow = [];
-
-        for (const entry of seasonalAchievesMap.entries()) {
-            if (pageAdded >= 2) {
-                shadowResult.push(pageShadow);
-                pageShadow = [];
-                pageAdded = 0;
+        
+        if(seasonalAchievesMap.size <= 3) {
+            shadowResult.push([])
+            for (const entry of seasonalAchievesMap.entries()) {
+                shadowResult[0].push(entry);
             }
-
-            pageShadow.push(entry);
-            pageAdded += 1;
+        } else {
+            
+            let pageAdded = 0;
+            let pageShadow = [];
+    
+            for (const entry of seasonalAchievesMap.entries()) {
+                if (pageAdded >= 2) {
+                    shadowResult.push(pageShadow);
+                    pageShadow = [];
+                    pageAdded = 0;
+                }
+    
+                pageShadow.push(entry);
+                pageAdded += 1;
+            }
+            if (pageShadow.length > 0) shadowResult.push(pageShadow);
         }
 
-        if (pageShadow.length > 0) shadowResult.push(pageShadow);
+
 
         setPaginatedData(() => shadowResult);
         setCurrentPage(() => 0);
@@ -83,15 +92,19 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
 
 
                             </div>
+
+                            {paginatedData.length > 1 && (
+
                                 <div className={Style.navDiv}>
+
                                     <button
-    	                                disabled={currentPageIndex === 0 ? true : false}
+                                        disabled={currentPageIndex === 0 ? true : false}
                                         onClick={() => setCurrentPageIndex(0)}
                                     >First Page
                                     </button>
 
                                     <button
-    	                                disabled={currentPageIndex == 0 ? true : false}
+                                        disabled={currentPageIndex == 0 ? true : false}
                                         onClick={() => setCurrentPageIndex((now) => now - 1)}
                                     >
                                         {"< Prev"}
@@ -101,18 +114,20 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
 
                                     <button
                                         onClick={() => setCurrentPageIndex((now) => now + 1)}
-    	                                disabled={currentPageIndex === (paginatedData.length - 1) ? true : false}
+                                        disabled={currentPageIndex === (paginatedData.length - 1) ? true : false}
                                     >
                                         {"Next >"}
                                     </button>
+
                                     <button
                                         onClick={() => setCurrentPageIndex((paginatedData.length -1))}
-    	                                disabled={currentPageIndex === (paginatedData.length - 1) ? true : false}
-
+                                        disabled={currentPageIndex === (paginatedData.length - 1) ? true : false}
                                     >
                                         Last Page
                                     </button>
+
                                 </div>
+                            )}
 
                 </div>
                 )}
