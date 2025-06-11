@@ -71,7 +71,7 @@ export default function AchevementsSection() {
             </div>
 
         </div> */}
-            {seasonalAchives.size !== 0 && (
+            {seasonalAchives.size > 1 && (
                 <div 
                 className={Style["section"]}
                 style={{
