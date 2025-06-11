@@ -1,3 +1,5 @@
+import { syncIndexes } from "mongoose";
+
 const legacyData = [
     "World of Warcraft",
     "The Burning Crusade",
@@ -20,9 +22,10 @@ function filterAchieves(mapArr) {
     for (const [expansion, seasonList] of mapArr.entries()) {
         if (expansion == "noSeason") continue;
 
-        const legacyChecker = legacyData.indexOf(expansion);
-
+        let legacyChecker = legacyData.indexOf(expansion);
+        
         for (const [seasonIndex, ssAches] of Object.entries(seasonList)) {
+        if (expansion == `Shadowlands` && seasonIndex == 1) legacyChecker = 1;
             let biggest = null;
             const checker = legacyChecker == -1 ? cheatSheat : legacyCheatSheat;
             for (const title of checker) {
