@@ -29,59 +29,63 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
 
         if (pageShadow.length > 0) shadowResult.push(pageShadow);
 
-        setPaginatedData(shadowResult);
-        setCurrentPage(shadowResult[0]);
+        setPaginatedData(() => shadowResult);
+        setCurrentPage(() => 0);
+        setCurrentPage(() => shadowResult[currentPageIndex]);
     }, [seasonalAchievesMap]);
 
     if (!seasonalAchievesMap || !currentPage) return null;
 
     return (
         <>
-            <div>
-                <h2>Seasonal Achievements - Page {currentPageIndex + 1}</h2>
-                {currentPage.map(([expansion, seasonData]) => (
-                    <div key={expansion}>
-                        <h3>{expansion}</h3>
-                        {/* You can render the seasonData here */}
-                    </div>
-                ))}
-            </div>
+                    {seasonalAchievesMap.size !== 0 && (
 
                         <div className={Style.seasonalContainer}>
-
-                {seasonalAchievesMap.size !== 0 && (
-                    Array.from(seasonalAchievesMap.entries()).map(([key, value]) => {
-                        if (key === "noSeason") return null;
-                        return (
-                        <div key={uuidv4()} className={Style.seasonalMain}>
-                            <h2>{key}</h2>
-                            <div className={Style.seasonalAchieves}>
-                                {value && Object.entries(value).map(([seasonIndex, achList]) => (
-                                    achList.map(ach => {
-
-                                        if(!ach.criteria) {
-                                            <AchievementDiv key={uuidv4()} seasonal={true} achData={ach} />
-
-                                        }
-
-                                        try {
-                                            
-                                            return (
-                                                <AchievementDiv key={(ach._id || ach.criteria || ach.name).replace(/\s+/g, "-")} seasonal={true} achData={ach} />
-                                            )
-                                        } catch (error) {
-                                        return <AchievementDiv key={ach._id ||ach.criteria} seasonal={true} achData={ach} />
-
-                                        }
-
-                                    })
+                                <h2>Seasonal Achievements</h2>
+                                {currentPage.map(([expansion, seasonData]) => (
+                                    <div key={expansion}>
+                                        <h3>{expansion}</h3>
+                                        {/* You can render the seasonData here */}
+                                    </div>
                                 ))}
-                            </div>
+
+                        <div className={Style.pageContent}>
+
+                            {Array.from(currentPage).map(([key, value]) => {
+                                if (key === "noSeason") return null;
+                                return (
+                                <div key={uuidv4()} className={Style.seasonalMain}>
+                                    <h2>{key}</h2>
+                                    <div className={Style.seasonalAchieves}>
+                                        {value && Object.entries(value).map(([seasonIndex, achList]) => (
+                                            achList.map(ach => {
+
+                                                if(!ach.criteria) {
+                                                    <AchievementDiv key={uuidv4()} seasonal={true} achData={ach} />
+
+                                                }
+
+                                                try {
+                                                    
+                                                    return (
+                                                        <AchievementDiv key={(ach._id || ach.criteria || ach.name).replace(/\s+/g, "-")} seasonal={true} achData={ach} />
+                                                    )
+                                                } catch (error) {
+                                                return <AchievementDiv key={ach._id ||ach.criteria} seasonal={true} achData={ach} />
+
+                                                }
+
+                                            })
+                                        ))}
+                                    </div>
+                                </div>
+                                );
+                            })}
+
                         </div>
-                        );
-                    })
+
+                </div>
                 )}
-            </div>
         </>
     );
 }

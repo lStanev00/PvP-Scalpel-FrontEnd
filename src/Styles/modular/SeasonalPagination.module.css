@@ -7,8 +7,19 @@ h2 {
     margin-bottom: 13px;
 }
 
+
+
+.pageContent {
+    display: flex;
+    flex: row;
+    width: 100%;
+    justify-content: space-between;
+
+}
+
 .seasonalContainer {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 55px;
@@ -26,10 +37,10 @@ h2 {
     margin-bottom: 15px;
 }
 
-/* .seasonalAchieves {
+.seasonalAchieves {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
-} */
+}
