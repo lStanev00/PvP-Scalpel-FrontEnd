@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Style from "../../Styles/modular/SeasonalPagination.modlule.css"
+import Style from "../../Styles/modular/SeasonalPagination.module.css"
 
 export default function SeasonalPagination({ seasonalAchievesMap }) {
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
