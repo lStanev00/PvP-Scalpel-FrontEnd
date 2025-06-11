@@ -101,12 +101,14 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
 
                                     <button
                                         onClick={() => setCurrentPageIndex((now) => now + 1)}
-
+    	                                disabled={currentPageIndex === (paginatedData.length - 1) ? true : false}
                                     >
                                         {"Next >"}
                                     </button>
                                     <button
                                         onClick={() => setCurrentPageIndex((paginatedData.length -1))}
+    	                                disabled={currentPageIndex === (paginatedData.length - 1) ? true : false}
+
                                     >
                                         Last Page
                                     </button>
