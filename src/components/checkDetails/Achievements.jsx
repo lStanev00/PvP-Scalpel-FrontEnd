@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { CharacterContext } from "../../pages/CharDetails";
 import Style from "../../Styles/modular/AchSection.module.css"
 import filterAchieves from "../../helpers/achviesCheckers.js";
-import { v4 as uuidv4 } from 'uuid';
 import SeasonalPagination from "./SeasonalPagination.jsx";
 
 export default function AchevementsSection() {
