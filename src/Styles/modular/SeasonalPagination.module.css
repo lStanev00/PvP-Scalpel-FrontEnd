@@ -18,6 +18,11 @@ h1 {
     flex: row;
     width: 100%;
     justify-content: space-between;
+    border: 2px solid rgba(17, 82, 82, 0.26);
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.226);
+    /* align-items: center; */
+    padding: 15px;
 
 }
 
@@ -48,4 +53,47 @@ h1 {
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
+}
+
+.navDiv {
+    margin-top: 15px;
+    display: flex;
+    flex: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.navDiv button {
+    border: 2px solid none;
+    border-radius: 0.5rem;
+    /* color:#1abc9c; */
+    color:#ffffff;
+    /* background: rgba(15, 23, 42, 0.85);  */
+    background: #0284c7; 
+}
+
+.navDiv button:disabled {
+    cursor: not-allowed;
+}
+
+.navDiv button:hover {
+    background-color: unset;
+    background-color: #0178b4;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.253);
+
+}
+
+.navDiv p {
+    padding: 7px 12px;
+    width: fit-content;
+    /* font-size: 1.5rem; */
+    font-weight: bold;
+    margin: 0 10px;
+    color: #1abc9c;
+    border: 2px solid none;
+    border-radius: 0.5rem;
+    color:#1abc9c;
+    background: rgba(15, 23, 42, 0.85); 
+    text-align: center;
 }

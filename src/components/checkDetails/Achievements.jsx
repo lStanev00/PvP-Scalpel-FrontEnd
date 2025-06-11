@@ -73,7 +73,12 @@ export default function AchevementsSection() {
 
         </div> */}
             {seasonalAchives.size !== 0 && (
-                <div className={Style["section"]}> 
+                <div 
+                className={Style["section"]}
+                style={{
+                   paddingBottom: "15px" 
+                }}
+                > 
                     <SeasonalPagination seasonalAchievesMap={seasonalAchives} />
                 </div>
 

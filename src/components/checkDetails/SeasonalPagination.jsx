@@ -75,7 +75,32 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                                     );
                                 })}
 
+
                             </div>
+                                <div className={Style.navDiv}>
+                                    <button
+    	                                disabled={currentPageIndex == 0 ? `true` : "false"}
+                                    >First Page
+                                    </button>
+
+                                    <button
+    	                                disabled={currentPageIndex == 0 ? `true` : "false"}
+                                    >
+                                        {"< Prev"}
+                                    </button>
+
+                                    <p>{currentPageIndex + 1}</p>
+
+                                    <button
+                                    >
+                                        {"Next >"}
+                                    </button>
+
+                                    <button
+                                    >
+                                        Last Page
+                                    </button>
+                                </div>
 
                 </div>
                 )}
