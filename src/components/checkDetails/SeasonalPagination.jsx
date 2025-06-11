@@ -34,6 +34,12 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
         setCurrentPage(() => shadowResult[currentPageIndex]);
     }, [seasonalAchievesMap]);
 
+    useEffect(() => {
+        if(paginatedData.length != 0) {
+            setCurrentPage(paginatedData[currentPageIndex])
+        }
+    }, [currentPageIndex, seasonalAchievesMap])
+
     if (!seasonalAchievesMap || !currentPage) return null;
 
     return (
@@ -79,12 +85,14 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                             </div>
                                 <div className={Style.navDiv}>
                                     <button
-    	                                disabled={currentPageIndex == 0 ? `true` : "false"}
+    	                                disabled={currentPageIndex === 0 ? true : false}
+                                        onClick={() => setCurrentPageIndex(0)}
                                     >First Page
                                     </button>
 
                                     <button
-    	                                disabled={currentPageIndex == 0 ? `true` : "false"}
+    	                                disabled={currentPageIndex == 0 ? true : false}
+                                        onClick={() => setCurrentPageIndex((now) => now - 1)}
                                     >
                                         {"< Prev"}
                                     </button>
@@ -92,11 +100,13 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                                     <p>Page {currentPageIndex + 1} of {paginatedData.length}</p>
 
                                     <button
+                                        onClick={() => setCurrentPageIndex((now) => now + 1)}
+
                                     >
                                         {"Next >"}
                                     </button>
-
                                     <button
+                                        onClick={() => setCurrentPageIndex((paginatedData.length -1))}
                                     >
                                         Last Page
                                     </button>
