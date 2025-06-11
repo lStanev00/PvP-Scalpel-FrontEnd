@@ -71,8 +71,5 @@ export default function filterAchieves(mapArr) {
         return hierarchyIndex1 - hierarchyIndex2;
     }))
     
-    console.log(sortedMap)
-
     return sortedMap
-
 }
