@@ -3,6 +3,7 @@ import { CharacterContext } from "../../pages/CharDetails";
 import Style from "../../Styles/modular/AchSection.module.css"
 import filterAchieves from "../../helpers/achviesCheckers.js";
 import { v4 as uuidv4 } from 'uuid';
+import SeasonalPagination from "./SeasonalPagination.jsx";
 
 export default function AchevementsSection() {
     const {data} = useContext(CharacterContext);
@@ -71,6 +72,7 @@ export default function AchevementsSection() {
             </div>
 
             <div className={Style.seasonalContainer}>
+                {seasonalAchives.size !== 0 && (<SeasonalPagination seasonalAchievesMap={seasonalAchives} />)}
 
                 {seasonalAchives.size !== 0 && (
                     Array.from(seasonalAchives.entries()).map(([key, value]) => {
