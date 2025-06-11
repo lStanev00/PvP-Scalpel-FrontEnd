@@ -76,7 +76,7 @@ h1 {
 .navDiv button:hover {
     background-color: unset;
     background-color: #0178b4;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.253);
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.253);
 
 }
 
@@ -84,10 +84,8 @@ h1 {
     padding: 7px 12px;
     width: fit-content;
     font-weight: bold;
-    margin: 0 10px;
     color: #ffffff;
     border: 2px solid none;
     border-radius: 0.5rem;
-    background: rgba(15, 23, 42, 0.85); 
     text-align: center;
 }
