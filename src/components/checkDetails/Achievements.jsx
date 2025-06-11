@@ -71,51 +71,14 @@ export default function AchevementsSection() {
 
             </div>
 
-            <div className={Style.seasonalContainer}>
-                {seasonalAchives.size !== 0 && (<SeasonalPagination seasonalAchievesMap={seasonalAchives} />)}
-
-                {seasonalAchives.size !== 0 && (
-                    Array.from(seasonalAchives.entries()).map(([key, value]) => {
-                        if (key === "noSeason") return null;
-                        return (
-                        <div key={uuidv4()} className={Style.seasonalMain}>
-                            <h2>{key}</h2>
-                            <div className={Style.seasonalAchieves}>
-                                {value && Object.entries(value).map(([seasonIndex, achList]) => (
-                                    achList.map(ach => {
-
-                                        if(!ach.criteria) {
-                                            <AchievementDiv key={uuidv4()} seasonal={true} achData={ach} />
-
-                                        }
-
-                                        try {
-                                            
-                                            return (
-                                                <AchievementDiv key={(ach._id || ach.criteria || ach.name).replace(/\s+/g, "-")} seasonal={true} achData={ach} />
-                                            )
-                                        } catch (error) {
-                                        return <AchievementDiv key={ach._id ||ach.criteria} seasonal={true} achData={ach} />
-
-                                        }
-
-                                    })
-                                ))}
-                            </div>
-                        </div>
-                        );
-                    })
-                )}
-            </div>
-
-
+            {seasonalAchives.size !== 0 && (<SeasonalPagination seasonalAchievesMap={seasonalAchives} />)}
         </div>
     </>
     )
 
 }
 
-function AchievementDiv({achData, seasonal = undefined}){
+export function AchievementDiv({achData, seasonal = undefined}){
 
     if(achData) return (
         <div className={Style[seasonal == undefined? "card": `seasonal-card`]}>

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import Style from "../../Styles/modular/SeasonalPagination.module.css"
+import {AchievementDiv} from "./Achievements.jsx";
+import { v4 as uuidv4 } from 'uuid';
+
 
 export default function SeasonalPagination({ seasonalAchievesMap }) {
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -42,6 +45,42 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                         {/* You can render the seasonData here */}
                     </div>
                 ))}
+            </div>
+
+                        <div className={Style.seasonalContainer}>
+
+                {seasonalAchievesMap.size !== 0 && (
+                    Array.from(seasonalAchievesMap.entries()).map(([key, value]) => {
+                        if (key === "noSeason") return null;
+                        return (
+                        <div key={uuidv4()} className={Style.seasonalMain}>
+                            <h2>{key}</h2>
+                            <div className={Style.seasonalAchieves}>
+                                {value && Object.entries(value).map(([seasonIndex, achList]) => (
+                                    achList.map(ach => {
+
+                                        if(!ach.criteria) {
+                                            <AchievementDiv key={uuidv4()} seasonal={true} achData={ach} />
+
+                                        }
+
+                                        try {
+                                            
+                                            return (
+                                                <AchievementDiv key={(ach._id || ach.criteria || ach.name).replace(/\s+/g, "-")} seasonal={true} achData={ach} />
+                                            )
+                                        } catch (error) {
+                                        return <AchievementDiv key={ach._id ||ach.criteria} seasonal={true} achData={ach} />
+
+                                        }
+
+                                    })
+                                ))}
+                            </div>
+                        </div>
+                        );
+                    })
+                )}
             </div>
         </>
     );

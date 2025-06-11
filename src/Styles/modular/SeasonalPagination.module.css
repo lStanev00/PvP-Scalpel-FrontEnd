@@ -1,3 +1,12 @@
+h2 {
+    color: #1abc9c;
+    margin-bottom: 0.5%;
+    text-align: center;
+    font-size: 1.6rem;
+    margin-top: 15px;
+    margin-bottom: 13px;
+}
+
 .seasonalContainer {
     display: flex;
     flex-wrap: wrap;
@@ -17,41 +26,10 @@
     margin-bottom: 15px;
 }
 
-.seasonalAchieves {
+/* .seasonalAchieves {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
-}
-
-.seasonal-card-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.seasonal-card-content strong {
-    color: #facc15;
-    font-size: 1.2rem;
-}
-
-.seasonal-card-content span {
-    font-size: 0.9rem;
-    color: #c7d5e0;
-}
-
-.seasonal-card {
-    display: flex;
-    align-items: center;
-    /* background: rgba(15, 23, 42, 0.85); */
-    padding: 15px 15px;
-    /* border-radius: 8px; */
-    width: 100%;
-    height: fit-content;
-    margin-bottom: 1%;
-    border-top: 1px dotted rgba(255, 204, 0, 0.6)
-}
-
-.seasonal-card img {
-    margin-right: 15px;
-}
+} */
