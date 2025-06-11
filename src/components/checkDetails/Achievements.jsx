@@ -40,7 +40,7 @@ export default function AchevementsSection() {
 
     if (achievements && seasonalAchives) return(
     <>
-        <div className={Style["section"]}>
+        {/* <div className={Style["section"]}>
             <div className={Style.headerDiv}>
                 <h1>Achievements</h1>
                 <p>{data.achieves.points} Points</p>
@@ -71,8 +71,13 @@ export default function AchevementsSection() {
 
             </div>
 
-            {seasonalAchives.size !== 0 && (<SeasonalPagination seasonalAchievesMap={seasonalAchives} />)}
-        </div>
+        </div> */}
+            {seasonalAchives.size !== 0 && (
+                <div className={Style["section"]}> 
+                    <SeasonalPagination seasonalAchievesMap={seasonalAchives} />
+                </div>
+
+                )}
     </>
     )
 

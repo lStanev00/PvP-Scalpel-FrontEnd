@@ -41,48 +41,41 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                     {seasonalAchievesMap.size !== 0 && (
 
                         <div className={Style.seasonalContainer}>
-                                <h2>Seasonal Achievements</h2>
-                                {currentPage.map(([expansion, seasonData]) => (
-                                    <div key={expansion}>
-                                        <h3>{expansion}</h3>
-                                        {/* You can render the seasonData here */}
+                            <h1>Seasonal Achievements</h1>
+                            <div className={Style.pageContent}>
+
+                                {Array.from(currentPage).map(([key, value]) => {
+                                    if (key === "noSeason") return null;
+                                    return (
+                                    <div key={uuidv4()} className={Style.seasonalMain}>
+                                        <h2>{key}</h2>
+                                        <div className={Style.seasonalAchieves}>
+                                            {value && Object.entries(value).map(([seasonIndex, achList]) => (
+                                                achList.map(ach => {
+
+                                                    if(!ach.criteria) {
+                                                        <AchievementDiv key={uuidv4()} seasonal={true} achData={ach} />
+
+                                                    }
+
+                                                    try {
+                                                        
+                                                        return (
+                                                            <AchievementDiv key={(ach._id || ach.criteria || ach.name).replace(/\s+/g, "-")} seasonal={true} achData={ach} />
+                                                        )
+                                                    } catch (error) {
+                                                    return <AchievementDiv key={ach._id ||ach.criteria} seasonal={true} achData={ach} />
+
+                                                    }
+
+                                                })
+                                            ))}
+                                        </div>
                                     </div>
-                                ))}
+                                    );
+                                })}
 
-                        <div className={Style.pageContent}>
-
-                            {Array.from(currentPage).map(([key, value]) => {
-                                if (key === "noSeason") return null;
-                                return (
-                                <div key={uuidv4()} className={Style.seasonalMain}>
-                                    <h2>{key}</h2>
-                                    <div className={Style.seasonalAchieves}>
-                                        {value && Object.entries(value).map(([seasonIndex, achList]) => (
-                                            achList.map(ach => {
-
-                                                if(!ach.criteria) {
-                                                    <AchievementDiv key={uuidv4()} seasonal={true} achData={ach} />
-
-                                                }
-
-                                                try {
-                                                    
-                                                    return (
-                                                        <AchievementDiv key={(ach._id || ach.criteria || ach.name).replace(/\s+/g, "-")} seasonal={true} achData={ach} />
-                                                    )
-                                                } catch (error) {
-                                                return <AchievementDiv key={ach._id ||ach.criteria} seasonal={true} achData={ach} />
-
-                                                }
-
-                                            })
-                                        ))}
-                                    </div>
-                                </div>
-                                );
-                            })}
-
-                        </div>
+                            </div>
 
                 </div>
                 )}
