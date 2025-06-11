@@ -89,7 +89,7 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                                         {"< Prev"}
                                     </button>
 
-                                    <p>{currentPageIndex + 1}</p>
+                                    <p>Page {currentPageIndex + 1} of {paginatedData.length}</p>
 
                                     <button
                                     >
