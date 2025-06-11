@@ -22,16 +22,18 @@ function filterAchieves(mapArr) {
 
         const legacyChecker = legacyData.indexOf(expansion);
 
-        if(legacyChecker == -1)
         for (const [seasonIndex, ssAches] of Object.entries(seasonList)) {
             let biggest = null;
-            for (const title of cheatSheat) {
+            const checker = legacyChecker == -1 ? cheatSheat : legacyCheatSheat;
+            for (const title of checker) {
                 const titleIndex = ssAches.findIndex(ach => ach.name.includes(title));
                 if(titleIndex != -1) biggest = ssAches.splice(titleIndex, 1)[0]
             }
             if(biggest != null) ssAches.push(biggest)
         }
+
     }
 
+    return mapArr
 
 }
