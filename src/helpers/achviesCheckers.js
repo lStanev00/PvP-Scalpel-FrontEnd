@@ -25,13 +25,18 @@ export default function filterAchieves(mapArr) {
         let legacyChecker = legacyData.indexOf(expansion);
         
         for (const [seasonIndex, ssAches] of Object.entries(seasonList)) {
-        if (expansion == `Shadowlands` && seasonIndex == 1) legacyChecker = 1;
+
+            if (expansion === "Shadowlands" && seasonIndex == "1") legacyChecker = 1
+            if (expansion === "Shadowlands" && seasonIndex !== "1") legacyChecker = -1;
+
             let biggest = null;
             const checker = legacyChecker == -1 ? cheatSheat : legacyCheatSheat;
+
             for (const title of checker) {
                 const titleIndex = ssAches.findIndex(ach => ach.name.includes(title));
                 if(titleIndex != -1) biggest = ssAches.splice(titleIndex, 1)[0]
             }
+            
             if(biggest != null) ssAches.push(biggest)
         }
 
