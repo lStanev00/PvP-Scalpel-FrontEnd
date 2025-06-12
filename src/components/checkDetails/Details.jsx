@@ -180,6 +180,8 @@ export function Details() {
                             alignItems: "center",
                             height: "fit-content",
                             background: "rgba(18, 27, 39, 0.75)",
+                            border: "10px solid rgba(30, 41, 59, 0.75)",
+                            padding: "5px"
                             
                         }} className={Style["section"]}>
                             <h1 style={{
