@@ -173,9 +173,26 @@ export function Details() {
                             </div>
                         </div>
                     )}
+
                     </section>
-                        {/* Character Stats Graph Section */}
+                    {Object.keys(otherRatings).length === 0 && Object.keys(shuffleRatings).length === 0 && Object.keys(otherRatings).length === 0 && (
+                        <div style={{
+                            alignItems: "center",
+                            height: "fit-content",
+                            background: "rgba(18, 27, 39, 0.75)",
+                            
+                        }} className={Style["section"]}>
+                            <h1 style={{
+                                fontSize: "2rem",
+                                textShadow: "2px 2px rgba(0, 0, 0, 0.25)",
+                                color: "#1abc9c",
+                                margin: "0",
+
+                            }}>There's no PvP Information for that character</h1>
+                        </div>
+                    )}
     
+                        {/* Character Stats Graph Section */}
                         <StatsChart />
                         <AchevementsSection />
         
