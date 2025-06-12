@@ -15,7 +15,7 @@ export const DetailsProvider = createContext();
 export function Details() {
     const {data} = useContext(CharacterContext);
     const [isUpdating, setUpdating] = useState(false);
-    const [posts, setPosts] = useState(data.posts);
+    const [posts, setPosts] = useState(data?.posts);
     const [optimisticPosts, addOptimisticPost] = useOptimistic(
         posts,
         (currentPosts, newPost) => [...currentPosts, newPost]
@@ -51,7 +51,7 @@ export function Details() {
 
     }, [lookingForComment])
 
-    if (data.errorMSG) return (
+    if (data?.errorMSG) return (
         <>
             <h1>
                 {data.errorMSG}

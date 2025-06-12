@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom"
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import { Details } from "../components/checkDetails/Details.jsx";
+import delay from "../helpers/delay.js";
 
 export const CharacterContext = createContext();
 
@@ -20,17 +21,22 @@ export default function CharDetails() {
             let response = await httpFetch(apiEndpoint);
 
             if (!response.ok) return setData(undefined);
-            const fetchData = response.data;
+            let fetchData = response.data;
 
             if (response.status == 404) return setData({errorMSG : fetchData.messege});
-
+            if (fetchData === null || !fetchData || !response?.data) {
+                await delay(1500);
+                response = await httpFetch(apiEndpoint);
+                fetchData = response.data;
+                
+            }
             setData(fetchData);
         } catch (error) {
             console.error("Fetch error:", error);
             setData(404);
         }
     };
-
+    
     useEffect(() => {getCharacterData()}, []);
 
     if (data === undefined) return (<>LOADING......</>);
