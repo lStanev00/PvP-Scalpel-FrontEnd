@@ -2,7 +2,12 @@ import TableStyle from '../../Styles/modular/checkDetailsPvPTable.module.css'
 export default function PvPCards({ title, bracketData, Style }) {
     if (bracketData?.currentSeason?.rating == 0) bracketData.currentSeason.rating = null;
     console.log(title, bracketData)
-    if(bracketData?.achieves && bracketData.currentSeason.title?.media )return (
+    if( bracketData.currentSeason.title?.media ){
+        
+        const soloChecker = bracketData._id.includes(`solo`);
+        if(!soloChecker && !bracketData?.achieves) return null
+
+        return (
             <div className={Style["pvp-card"]}>
                 <section className={Style["inner-section"]}>
 
@@ -73,5 +78,5 @@ export default function PvPCards({ title, bracketData, Style }) {
                 </section>
 
             </div>
-    );
+    );}
 }

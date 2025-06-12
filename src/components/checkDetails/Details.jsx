@@ -77,7 +77,23 @@ export function Details() {
     });
 
     return (
-            <DetailsProvider.Provider value={{commentsRef, optimisticPosts, addOptimisticPost, setPosts, posts}} >
+        <div
+                    style={
+                    data.media === null
+                    ? {
+                        filter: isUpdating ? 'blur(5px)' : 'none'
+                    }
+                    
+                    :   {
+                            backgroundImage: `url('${data.media.charImg}')`,
+                            backgroundPosition: 'center -100px',
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                            backgroundAttachment: 'fixed',
+                            overflow: "hidden",
+                            filter: isUpdating ? 'blur(5px)' : 'none'
+                        }} >
+            <DetailsProvider.Provider value={{commentsRef, optimisticPosts, addOptimisticPost, setPosts, posts}}>
 
 
                 {/* Character Banner */}
@@ -92,21 +108,22 @@ export function Details() {
 
                 <UserDataContainer />
     
-                <section style={
-                    data.media === null
-                    ? {
-                        filter: isUpdating ? 'blur(5px)' : 'none'
-                    }
+                <section 
+                // style={
+                //     data.media === null
+                //     ? {
+                //         filter: isUpdating ? 'blur(5px)' : 'none'
+                //     }
                     
-                    :   {
-                            backgroundImage: `url('${data.media.charImg}')`,
-                            backgroundPosition: 'center -100px',
-                            backgroundSize: "cover",
-                            backgroundRepeat: "no-repeat",
-                            backgroundAttachment: 'fixed',
-                            overflow: "hidden",
-                            filter: isUpdating ? 'blur(5px)' : 'none'
-                        }} 
+                //     :   {
+                //             backgroundImage: `url('${data.media.charImg}')`,
+                //             backgroundPosition: 'center -100px',
+                //             backgroundSize: "cover",
+                //             backgroundRepeat: "no-repeat",
+                //             backgroundAttachment: 'fixed',
+                //             overflow: "hidden",
+                //             filter: isUpdating ? 'blur(5px)' : 'none'
+                //         }} 
                     className={"container"}
                     >
     
@@ -245,5 +262,7 @@ export function Details() {
     
                 </section>
             </DetailsProvider.Provider>
+
+        </div>
         );
 }
