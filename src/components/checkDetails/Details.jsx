@@ -69,7 +69,7 @@ export function Details() {
         } else if (bracketKey.includes("blitz")) {
             blitzRatings[bracketKey] = bracketData;
         } else if (bracketKey == `2v2` || bracketKey == `3v3` || bracketKey == `rbg`){
-            if (!bracketData?.achieves && bracketData?.currentSeason?.rating === 0) {}
+            if (!bracketData?.achieves && bracketData?.currentSeason?.rating === 0 || bracketData?.currentSeason?.rating === undefined) {}
             else{
                 otherRatings[bracketKey] = bracketData;
             }
