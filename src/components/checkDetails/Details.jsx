@@ -69,7 +69,10 @@ export function Details() {
         } else if (bracketKey.includes("blitz")) {
             blitzRatings[bracketKey] = bracketData;
         } else if (bracketKey == `2v2` || bracketKey == `3v3` || bracketKey == `rbg`){
-            otherRatings[bracketKey] = bracketData;
+            if (!bracketData?.achieves && bracketData?.currentSeason?.rating === 0) {}
+            else{
+                otherRatings[bracketKey] = bracketData;
+            }
         }
     });
 
@@ -116,18 +119,18 @@ export function Details() {
                                 <h1>PvP Ratings</h1>
                                 <div className={Style["pvp-container"]}>
                                     {Object.entries(otherRatings).map(([key, bracket]) => {
-                                        let title = String;
+                                        let title = undefined;
                                         if (key ==`rbg`) {
                                             title = `Rated Battleground`;
                                             bracket.achieves = data.achieves?.RBG?.XP
-                                        } else if (key == `2v2`) {
+                                        } else if (key == `2v2` && data?.achieves?.["2s"]) {
                                             title = `Arena 2v2`;
                                             bracket.achieves = data?.achieves['2s']
-                                        } else {
+                                        } else if(key == `3v3` && data?.achieves['3s']) {
                                             title = `Arena 3v3`;
                                             bracket.achieves = data?.achieves['3s']
                                         }
-                                        if (!bracket?.currentSeason?.title?.media && bracket?.achieves) return (<></>);
+                                        if (!bracket?.currentSeason?.title?.media && bracket?.achieves || title === undefined) return (<></>);
                                         return <PvPCards key={bracket._id} title = {title} bracketData = {bracket} Style={Style}/>
                                         })}
                                 </div>
