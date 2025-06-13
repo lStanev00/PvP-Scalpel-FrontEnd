@@ -203,18 +203,10 @@ export function Details() {
                         </div>
                     )}
     
-                        {/* Character Stats Graph Section */}
-                        <TallentsSection talentCode={data?.talentCode} />
+                        <TallentsSection />
                         <StatsChart />
                         <AchevementsSection />
         
-                        {/* Talent Trees Section */}
-                        {/* <div className={Style["section"]}>
-                            <h3>Talent Trees</h3>
-                            <button className={Style["button"]}>Copy Talent Code</button>
-                            <p>Protection Warrior Talents</p>
-                        </div> */}
-    
                     </section>
     
                     {/* Posts Section */}
