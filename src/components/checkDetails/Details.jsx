@@ -78,21 +78,21 @@ export function Details() {
 
     return (
         <div
-                    style={
-                    data.media === null
-                    ? {
-                        filter: isUpdating ? 'blur(5px)' : 'none'
-                    }
-                    
-                    :   {
-                            backgroundImage: `url('${data.media.charImg}')`,
-                            backgroundPosition: 'center -100px',
-                            backgroundSize: "cover",
-                            backgroundRepeat: "no-repeat",
-                            backgroundAttachment: 'fixed',
-                            overflow: "hidden",
-                            filter: isUpdating ? 'blur(5px)' : 'none'
-                        }} >
+        style={
+        data.media === null
+        ? {
+            filter: isUpdating ? 'blur(5px)' : 'none'
+        }
+        
+        :   {
+                backgroundImage: `url('${data.media.charImg}')`,
+                backgroundPosition: 'center -100px',
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundAttachment: 'fixed',
+                overflow: "hidden",
+                filter: isUpdating ? 'blur(5px)' : 'none'
+            }} >
             <DetailsProvider.Provider value={{commentsRef, optimisticPosts, addOptimisticPost, setPosts, posts}}>
 
 
@@ -109,105 +109,96 @@ export function Details() {
                 <UserDataContainer />
     
                 <section 
-                // style={
-                //     data.media === null
-                //     ? {
-                //         filter: isUpdating ? 'blur(5px)' : 'none'
-                //     }
-                    
-                //     :   {
-                //             backgroundImage: `url('${data.media.charImg}')`,
-                //             backgroundPosition: 'center -100px',
-                //             backgroundSize: "cover",
-                //             backgroundRepeat: "no-repeat",
-                //             backgroundAttachment: 'fixed',
-                //             overflow: "hidden",
-                //             filter: isUpdating ? 'blur(5px)' : 'none'
-                //         }} 
                     className={"container"}
                     >
     
                     <section className={Style["pvp-div"]}>
     
+                        <section className={Style["pvp-section"]}>
+                            {/* General PvP Ratings Section (2v2, 3v3, RBG) */}
+                            {Object.keys(otherRatings).length > 0 && (
+                                <div className={Style["section"]}>
+                                    <h1>PvP Ratings</h1>
+                                    <div className={Style["pvp-container"]}>
+                                        {Object.entries(otherRatings).map(([key, bracket]) => {
+                                            let title = undefined;
+                                            if (key ==`rbg`) {
+                                                title = `Rated Battleground`;
+                                                bracket.achieves = data.achieves?.RBG?.XP
+                                            } else if (key == `2v2` && data?.achieves?.["2s"]) {
+                                                title = `Arena 2v2`;
+                                                bracket.achieves = data?.achieves['2s']
+                                            } else if(key == `3v3` && data?.achieves['3s']) {
+                                                title = `Arena 3v3`;
+                                                bracket.achieves = data?.achieves['3s']
+                                            }
+                                            if (!bracket?.currentSeason?.title?.media && bracket?.achieves || title === undefined) return (<></>);
+                                            return <PvPCards key={bracket._id} title = {title} bracketData = {bracket} Style={Style}/>
+                                            })}
+                                    </div>
+                                </div>
+                            )}
+                        </section>
+        
                     <section className={Style["pvp-section"]}>
-                        {/* General PvP Ratings Section (2v2, 3v3, RBG) */}
-                        {Object.keys(otherRatings).length > 0 && (
+                    
+                        {/* Blitz Section */}
+                        {Object.keys(blitzRatings).length > 0 && (
                             <div className={Style["section"]}>
-                                <h1>PvP Ratings</h1>
+                                <h1>Blitz Ratings</h1>
                                 <div className={Style["pvp-container"]}>
-                                    {Object.entries(otherRatings).map(([key, bracket]) => {
-                                        let title = undefined;
-                                        if (key ==`rbg`) {
-                                            title = `Rated Battleground`;
-                                            bracket.achieves = data.achieves?.RBG?.XP
-                                        } else if (key == `2v2` && data?.achieves?.["2s"]) {
-                                            title = `Arena 2v2`;
-                                            bracket.achieves = data?.achieves['2s']
-                                        } else if(key == `3v3` && data?.achieves['3s']) {
-                                            title = `Arena 3v3`;
-                                            bracket.achieves = data?.achieves['3s']
-                                        }
-                                        if (!bracket?.currentSeason?.title?.media && bracket?.achieves || title === undefined) return (<></>);
+                                    {Object.entries(blitzRatings).map(([key, bracket]) => {
+                                        let [bracketName, charClass, spec] = key.split(`-`);
+                                        const title = spec.replace(/^./, match => match.toUpperCase());
+                                        bracket.achieves = data?.achieves.Blitz?.XP
                                         return <PvPCards key={bracket._id} title = {title} bracketData = {bracket} Style={Style}/>
-                                        })}
+                                    })}
                                 </div>
                             </div>
                         )}
                     </section>
     
-                    <section className={Style["pvp-section"]}>
-                    
-                    {/* Blitz Section */}
-                    {Object.keys(blitzRatings).length > 0 && (
-                        <div className={Style["section"]}>
-                            <h1>Blitz Ratings</h1>
-                            <div className={Style["pvp-container"]}>
-                                {Object.entries(blitzRatings).map(([key, bracket]) => {
-                                    let [bracketName, charClass, spec] = key.split(`-`);
-                                    const title = spec.replace(/^./, match => match.toUpperCase());
-                                    bracket.achieves = data?.achieves.Blitz?.XP
-                                    return <PvPCards key={bracket._id} title = {title} bracketData = {bracket} Style={Style}/>
-                                })}
-                            </div>
-                        </div>
-                    )}
-                    </section>
-    
     
                     <section className={Style["pvp-section"]}>
     
-                    {/* Solo Shuffle Section */}
-                    {Object.keys(shuffleRatings).length > 0 && (
-                        <div className={Style["section"]}>
-                            <h1>Solo Shuffle Ratings</h1>
-                            <div className={Style["pvp-container"]}>
-                                {Object.entries(shuffleRatings).map(([key, bracket]) => {
-                                    let [bracketName, charClass, spec] = key.split(`-`);
-                                    const title = spec.replace(/^./, match => match.toUpperCase());
-                                    return <PvPCards key={bracket._id} title = {title} bracketData = {bracket} Style={Style}/>
-    
-                                })}
+                        {/* Solo Shuffle Section */}
+                        {Object.keys(shuffleRatings).length > 0 && (
+                            <div className={Style["section"]}>
+                                <h1>Solo Shuffle Ratings</h1>
+                                <div className={Style["pvp-container"]}>
+                                    {Object.entries(shuffleRatings).map(([key, bracket]) => {
+                                        let [bracketName, charClass, spec] = key.split(`-`);
+                                        const title = spec.replace(/^./, match => match.toUpperCase());
+                                        return <PvPCards key={bracket._id} title = {title} bracketData = {bracket} Style={Style}/>
+        
+                                    })}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
 
                     </section>
+
                     {Object.keys(otherRatings).length === 0 && Object.keys(shuffleRatings).length === 0 && Object.keys(otherRatings).length === 0 && (
-                        <div style={{
+                        <div style={
+                            {
                             alignItems: "center",
                             height: "fit-content",
                             background: "rgba(18, 27, 39, 0.75)",
                             border: "10px solid rgba(30, 41, 59, 0.75)",
                             padding: "5px"
-                            
-                        }} className={Style["section"]}>
-                            <h1 style={{
+                            }
+                        }
+                        className={Style["section"]}
+                        >
+                            <h1 style={
+                                {
                                 fontSize: "2rem",
                                 textShadow: "2px 2px rgba(0, 0, 0, 0.25)",
                                 color: "#1abc9c",
                                 margin: "0",
 
-                            }}>There's no PvP Information for that character</h1>
+                                }
+                            }>There's no PvP Information for that character</h1>
                         </div>
                     )}
     
