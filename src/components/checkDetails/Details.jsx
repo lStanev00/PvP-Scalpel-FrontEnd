@@ -93,7 +93,7 @@ export function Details() {
                 overflow: "hidden",
                 filter: isUpdating ? 'blur(5px)' : 'none'
             }} >
-            <DetailsProvider.Provider value={{commentsRef, optimisticPosts, addOptimisticPost, setPosts, posts}}>
+            <DetailsProvider.Provider value={{commentsRef, optimisticPosts, addOptimisticPost, setPosts, posts, Style}}>
 
 
                 {/* Character Banner */}

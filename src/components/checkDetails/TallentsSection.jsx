@@ -1,0 +1,3 @@
+function TallentsSection({talentCode}) {
+
+}
