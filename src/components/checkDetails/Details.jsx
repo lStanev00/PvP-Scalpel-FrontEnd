@@ -9,6 +9,7 @@ import { CharacterContext } from "../../pages/CharDetails";
 import UserDataContainer from "./UserDataContainer";
 import StatsChart from "./StatsChart";
 import AchevementsSection from "./Achievements";
+import TallentsSection from "./TallentsSection";
 
 export const DetailsProvider = createContext();
 
@@ -203,6 +204,7 @@ export function Details() {
                     )}
     
                         {/* Character Stats Graph Section */}
+                        <TallentsSection talentCode={data?.talentCode} />
                         <StatsChart />
                         <AchevementsSection />
         
