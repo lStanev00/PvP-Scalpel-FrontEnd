@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "../Styles/modular/Landing.module.css";
 
-export default function LandingPage() {
+export default function Home() {
     return (
         <div 
         className={styles.wrapper}
