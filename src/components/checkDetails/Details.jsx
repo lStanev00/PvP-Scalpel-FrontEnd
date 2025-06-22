@@ -1,15 +1,15 @@
 import { useContext, useState, useOptimistic, useRef, useEffect, createContext } from "react";
 import Style from '../../Styles/modular/charDetails.module.css';
-import ReloadBTN from "./reloadBTN";
-import PvPCards from "./PvPCards";
-import PostTemplate from "./PostTemplate";
-import NewPostForm from "./NewPostForm";
+import ReloadBTN from "./reloadBTN.jsx";
+import PvPCards from "./PvPCards.jsx";
+import PostTemplate from "./PostTemplate.jsx";
+import NewPostForm from "./NewPostForm.jsx";
 import { useSearchParams } from "react-router-dom";
-import { CharacterContext } from "../../pages/CharDetails";
-import UserDataContainer from "./UserDataContainer";
-import StatsChart from "./StatsChart";
-import AchevementsSection from "./Achievements";
-import TallentsSection from "./TallentsSection";
+import { CharacterContext } from "../../pages/CharDetails.jsx";
+import UserDataContainer from "./UserDataContainer.jsx";
+import StatsChart from "./StatsChart.jsx";
+import AchevementsSection from "./Achievements.jsx";
+import TalentsSection from "./TallentsSection.jsx";
 
 export const DetailsProvider = createContext();
 
@@ -203,7 +203,7 @@ export function Details() {
                         </div>
                     )}
     
-                        <TallentsSection />
+                        {/* <TalentsSection /> */}
                         <StatsChart />
                         <AchevementsSection />
         

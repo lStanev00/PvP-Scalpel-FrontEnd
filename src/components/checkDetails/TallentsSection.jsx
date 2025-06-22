@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { DetailsProvider } from "./Details"
 import { CharacterContext } from "../../pages/CharDetails";
 
-export default function TallentsSection() {
+export default function TalentsSection() {
     const {Style} = useContext(DetailsProvider);
     const {data} = useContext(CharacterContext);
     const {talentCode, activeSpec} = data;
