@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-import Navigation from "./components/Router";
-import Home from "./pages/Home";
-import LDB from "./pages/LDB";
-import RosterPage from "./pages/Roster";
-import GoToTopButton from "./components/topBtn";
+import Navigation from "./components/Router.jsx";
+import Home from "./pages/Home.jsx";
+import LDB from "./pages/LDB.jsx";
+import RosterPage from "./pages/Roster.jsx";
+import GoToTopButton from "./components/topBtn.jsx";
 import CharDetails from "./pages/CharDetails.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/Login.jsx";
