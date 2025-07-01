@@ -5,10 +5,8 @@ import Style from "../../Styles/modular/TallentSection.module.css"
 import delay from "../../helpers/delay";
 
 export default function TalentsSection() {
-    const {Style: ParentStyle} = useContext(DetailsProvider);
     const {data} = useContext(CharacterContext);
     const {activeSpec, talents} = data;
-    console.log(data)
 
     async function handleCopy(e) {
         e.preventDefault();
