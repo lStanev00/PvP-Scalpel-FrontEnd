@@ -2,12 +2,31 @@ import { useContext } from "react"
 import { DetailsProvider } from "./Details"
 import { CharacterContext } from "../../pages/CharDetails";
 import Style from "../../Styles/modular/TallentSection.module.css"
+import delay from "../../helpers/delay";
 
 export default function TalentsSection() {
     const {Style: ParentStyle} = useContext(DetailsProvider);
     const {data} = useContext(CharacterContext);
-    const {talentCode, activeSpec, talents} = data;
+    const {activeSpec, talents} = data;
     console.log(data)
+
+    async function handleCopy(e) {
+        e.preventDefault();
+        const btnEl = e.target;
+
+        navigator.clipboard.writeText(talents?.talentsCode)
+            .then(async () => {
+                if(btnEl) {
+                    const pastValue = btnEl.textContent
+                    btnEl.textContent = "Copied!";
+                    await delay(3000);
+                    btnEl.textContent = pastValue
+                }
+                
+            })
+            .catch((err) => {if(btnEl) btnEl.textContent = "Error"} );
+    }
+
     
     if (data) return (
         <div 
@@ -27,7 +46,7 @@ export default function TalentsSection() {
                 </div>
 
                 <p className={Style.talentSpec}>{talents?.talentsSpec}</p>
-                <button className={Style["button"]}>Copy Active Code</button>
+                <button onClick={async (e) => await handleCopy(e)} className={Style["button"]}>Copy Active Code</button>
 
             </div>
         </div> 

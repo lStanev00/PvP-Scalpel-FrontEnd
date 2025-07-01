@@ -2,6 +2,7 @@
     padding: 2rem 3rem;
     background-color: rgba(30, 41, 59, 0.75);
     border-radius: 12px;
+    padding-top: 1rem;
 }
 
 .main h3 {
@@ -18,6 +19,9 @@
     border-radius: 12px;
     padding: 2rem;
     box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.2), 0 0 12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+
 }
 
 
@@ -39,7 +43,7 @@
 .charInfo {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    gap: 1rem;
 }
 .charInfo img {
     width: 4rem;
@@ -55,16 +59,21 @@
     color: #ffda6b;
     font-weight: bold;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    background-color: rgba(51, 65, 85, 0.75);
+    width: 50%;
+    padding: 1rem;
+    border-radius: 6px;
 }
 
 
 .talentSpec {
     margin-top: 1rem;
     font-size: 1.4rem;
-    color: #f9d423;
+    color: #1abc9c;
     letter-spacing: 0.5px;
-    text-shadow: 0 0 3px #000;
+    text-shadow: 0 0 3px #1a7237;
     text-align: center;
+    font-size: 1.7rem;
 }
 
 .content button {
