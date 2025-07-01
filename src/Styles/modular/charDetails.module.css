@@ -77,9 +77,11 @@
 }
 .section h1 {
     color: #facc15;
-    margin-bottom: 10px;
+    margin-bottom: unset;
     text-align: center;
     font-size: large;
+    font-size: 1.4rem;
+    text-shadow: 0 0 10px #000, 0 0 2px #ffc400;
 }
 
 .pvp-container {
