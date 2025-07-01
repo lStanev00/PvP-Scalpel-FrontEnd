@@ -24,12 +24,13 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
             let pageShadow = [];
     
             for (const entry of seasonalAchievesMap.entries()) {
+                if(entry[0] === "noSeason") continue;
                 if (pageAdded >= 2) {
                     shadowResult.push(pageShadow);
                     pageShadow = [];
                     pageAdded = 0;
                 }
-    
+                
                 pageShadow.push(entry);
                 pageAdded += 1;
             }
