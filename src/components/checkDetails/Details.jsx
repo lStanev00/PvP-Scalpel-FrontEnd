@@ -203,8 +203,8 @@ export function Details() {
                         </div>
                     )}
     
-                        {/* <TalentsSection /> */}
                         <StatsChart />
+                        <TalentsSection /> 
                         <AchevementsSection />
         
                     </section>
