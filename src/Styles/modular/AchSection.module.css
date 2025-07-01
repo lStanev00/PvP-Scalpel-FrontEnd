@@ -14,9 +14,12 @@
 
 .headerDiv h1 {
     color: #facc15;
-    margin-bottom: 0.5%;
+    /* margin-bottom: 0.5%; */
+    margin-bottom: 0;
     text-align: center;
-    font-size: 2rem;
+        font-size: 2.4rem;
+
+    text-shadow: 0 0 10px #000, 0 0 2px #ffc400;
 
 }
 

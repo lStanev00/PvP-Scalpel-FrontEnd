@@ -39,45 +39,8 @@ export default function AchevementsSection() {
 
     if (achievements && seasonalAchives) return(
     <>
-        {/* <div className={Style["section"]}>
-            <div className={Style.headerDiv}>
-                <h1>Achievements</h1>
-                <p>{data.achieves.points} Points</p>
-            </div>
-            <div className={Style.achContent}>
-                
-        {achievements && (
-            Object.entries(achievements).map(([key, value]) => {
-
-                if(key == "RBG") {
-                    if(achievements.Blitz.XP.name == value.XP.name) {
-                        const rbgWins = value.WINS;
-                        if(rbgWins) return <AchievementDiv key = {key} achData={rbgWins} /> 
-                    }
-                }
-
-                if(value.XP || value.WINS) {
-                    return Object.entries(value).map(([achKey, achData]) => (
-                        <AchievementDiv key={`${key}-${achKey}`} achData={achData} />
-                    ));
-                }
-
-                if(value.name)return <AchievementDiv key={ key } achData={value} />
-
-            })
-        )}
-
-
-            </div>
-
-        </div> */}
             {seasonalAchives.size > 1 && (
-                <div 
-                className={Style["section"]}
-                style={{
-                   paddingBottom: "15px" 
-                }}
-                > 
+                <div className={Style["section"]}> 
                     <SeasonalPagination seasonalAchievesMap={seasonalAchives} />
                 </div>
 
