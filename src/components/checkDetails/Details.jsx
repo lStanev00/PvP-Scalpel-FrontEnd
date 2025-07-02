@@ -10,6 +10,7 @@ import UserDataContainer from "./UserDataContainer.jsx";
 import StatsChart from "./StatsChart.jsx";
 import AchevementsSection from "./Achievements.jsx";
 import TalentsSection from "./TallentsSection.jsx";
+import Armory from "./Armory.jsx";
 
 export const DetailsProvider = createContext();
 
@@ -205,6 +206,7 @@ export function Details() {
     
                         <StatsChart />
                         <TalentsSection /> 
+                        <Armory />
                         <AchevementsSection />
         
                     </section>
