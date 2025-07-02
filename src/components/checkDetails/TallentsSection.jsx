@@ -7,6 +7,7 @@ import delay from "../../helpers/delay";
 export default function TalentsSection() {
     const {data} = useContext(CharacterContext);
     const {activeSpec, talents} = data;
+    const buttonDefaultText = "Copy Active Code";
 
     async function handleCopy(e) {
         e.preventDefault();
@@ -15,10 +16,9 @@ export default function TalentsSection() {
         navigator.clipboard.writeText(talents?.talentsCode)
             .then(async () => {
                 if(btnEl) {
-                    const pastValue = btnEl.textContent
                     btnEl.textContent = "Copied!";
                     await delay(3000);
-                    btnEl.textContent = pastValue
+                    btnEl.textContent = buttonDefaultText;
                 }
                 
             })
@@ -44,7 +44,7 @@ export default function TalentsSection() {
                 </div>
 
                 <p className={Style.talentSpec}>{talents?.talentsSpec}</p>
-                <button onClick={async (e) => await handleCopy(e)} className={Style["button"]}>Copy Active Code</button>
+                <button onClick={async (e) => await handleCopy(e)} className={Style["button"]}>{buttonDefaultText}</button>
 
             </div>
         </div> 
