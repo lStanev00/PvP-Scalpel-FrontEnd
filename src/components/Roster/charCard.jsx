@@ -9,11 +9,11 @@ export default function CharCard({ charArr }){
         <>
         <div className="roster-container" id="rosterContainer">
             {charArr.map(char => 
-                <div onClick={(e) => clickIt(char.playerRealm.slug, char.name)} className="character-card" key={char._id}>
+                <div onClick={(e) => clickIt(char.playerRealm.slug, char.name)} className="character-card" key={char?._id}>
                     <img alt="No img in blizzard's API" src={char.media?.banner} />
                     <div className="character-details">
-                        <h3>{char.name}</h3>
-                        <p>Guild Rank: {char.guildInsight.rank}</p>
+                        <h3>{char?.name}</h3>
+                        <p>Guild Rank: {char?.guildInsight?.rank}</p>
                     </div>
                 </div>
             )}
