@@ -3,6 +3,7 @@
 }
 
 .wrapper {
+    position: fixed;
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -12,6 +13,7 @@
     border-radius: 8px;
     color: white;
     max-width: 600px;
+    z-index: 1000;
 }
 
 .icon {

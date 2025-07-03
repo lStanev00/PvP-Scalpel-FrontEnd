@@ -3,6 +3,7 @@ import { useLocation, useParams } from "react-router-dom"
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import { Details } from "../components/checkDetails/Details.jsx";
 import delay from "../helpers/delay.js";
+import ArmoryItemHover from "../components/checkDetails/ArmoryItemHover.jsx";
 
 export const CharacterContext = createContext();
 
@@ -47,6 +48,7 @@ export default function CharDetails() {
     <CharacterContext.Provider value={{data, setData, location, hoverItem, setHoverItem, coursorPosition, setCoursorPosition}}>
 
         <Details />
+        <ArmoryItemHover />
 
     </CharacterContext.Provider>
 )

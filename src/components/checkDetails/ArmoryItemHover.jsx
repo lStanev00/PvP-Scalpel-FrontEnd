@@ -2,13 +2,19 @@ import { useContext } from 'react';
 import Style from '../../Styles/modular/ArmoryItemHover.module.css';
 import { CharacterContext } from '../../pages/CharDetails';
 
-export default function ArmoryItem() {
-    const {hoverItem: item} = useContext(CharacterContext);
+export default function ArmoryItemHover() {
+    const {hoverItem: item, coursorPosition} = useContext(CharacterContext);
 
     if (!item) return null;
 
     return (
-        <div className={Style.wrapper}>
+        <div 
+            className={Style.wrapper}
+            style={{
+                top: (coursorPosition.y + 10),
+                left: (coursorPosition.x + 10)
+            }}
+        >
             <img src={item.media} alt={item.name} className={Style.icon} />
 
             <div className={Style.details}>
