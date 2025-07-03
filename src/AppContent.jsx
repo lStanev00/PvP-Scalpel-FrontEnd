@@ -1,21 +1,23 @@
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"; // Dont
 import Navigation from "./components/Router.jsx";
 import Home from "./pages/Home";
 import LDB from "./pages/LDB.jsx";
 import RosterPage from "./pages/Roster.jsx";
 import GoToTopButton from "./components/topBtn.jsx";
-import CharDetails from "./pages/CharDetails.jsx";
+// import CharDetails from "./pages/CharDetails.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/Login.jsx";
 import GotoEmail from "./components/EmailSend.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import { useContext, useEffect } from "react";
+import { lazy, Suspense, useContext, useEffect } from "react";
 import { UserContext } from "./hooks/ContextVariables.jsx";
 import ResetPassword from "./pages/utility/ResetPassword.jsx";
 import VlidateToken from "./pages/utility/VlidateToken.jsx";
 import { GuestRoute, UserRoute } from "./hooks/Guards.jsx";
 import Logout from "./pages/utility/Logout.jsx";
 import Posts from "./pages/Posts.jsx";
+
+const CharDetails = lazy(() => import("./pages/CharDetails.jsx"))
 
 
 export default function AppContent() {
@@ -61,7 +63,15 @@ export default function AppContent() {
                     <Route path='/' element={<Home />}></Route>
                     <Route path='/roster' element={<RosterPage />}></Route>
                     <Route path='/leaderboard' element={<LDB />}></Route>
-                    <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route>
+                    {/* <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route> */}
+                    <Route 
+                        path="/check/:server/:realm/:name"
+                        element={
+                            <Suspense fallback={<div>Loading Character...</div>}>
+                                <CharDetails />
+                            </Suspense>
+                        }
+                    />
                     <Route path="/goto/:email" element={<GotoEmail />} />
                     <Route path="/validate/:scenario" element={<VlidateToken />} />
                     <Route path="/posts" element={<Posts />} />
