@@ -44,7 +44,7 @@ export default function ArmoryItemHover() {
                 )}
 
                 {item.enchantments?.length > 0 && (
-                    <p className={Style.enchant}>{item.enchantments[0].description}</p>
+                    <p className={Style.enchant}>{item.enchantments[0].description.replace(/\|A:.*?\|a/g, '')}</p>
                 )}
 
                 {item.transmog && (
