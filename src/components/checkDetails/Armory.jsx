@@ -6,26 +6,22 @@ import fallback_img from "/item_fallback.png"
 
 export default function Armory () {
     const {Style: ParentStyle} = useContext(DetailsProvider);
-    const {data} = useContext(CharacterContext);
+    const {data, coursorPosition, setCoursorPosition} = useContext(CharacterContext);
     const {gear} = data;
-    console.log(ParentStyle)
+    console.log(gear)
     return (
         <section className={`${ParentStyle.section} ${Style.parentSection}`}>
 
             <h1 style={{fontSize: "2.4rem", marginBottom: "1rem"}}>Armory</h1>
 
-            <div className={`${ParentStyle["inner-section"]} ${Style.main}`}
-                // style={{
-                //     backgroundImage: 'url(/inventory_backg.png)',
-                //     backgroundPosition: 'center',
-                //     backgroundSize: 'cover',
-                //     backgroundRepeat: 'no-repeat'
-                // }}
+            <div 
+                className={`${ParentStyle["inner-section"]} ${Style.main}`}
+                onMouseMove={(e) => setCoursorPosition({x: e.clientX, y : e.clientY})} 
             >
                 <div className={Style.bgLayer}></div>
                 <div className={Style.container}>
                     <ItemsTab1 />
-                    <img className={Style.charImg} src={data.media.charImg} alt="" />
+                    <img className={Style.charImg} src={data.media.charImg} alt={`${data?.name}'s Character Image`} />
                     <ItemsTab2 />
 
                 </div>
@@ -80,13 +76,22 @@ function ItemsTab3() {
 
 
 function ItemGenerator({ name }) {
-    const { data } = useContext(CharacterContext);
+    const { data, setHoverItem } = useContext(CharacterContext);
     const { gear: items } = data;
+    const item = items?.[name]
 
-    if (typeof name !== "string") return (<img className={Style.itemImg} src={fallback_img} />);
+    if (!item) return (<img className={Style.itemImg} src={fallback_img} />);
     if (name.length <= 2) return (<img className={Style.itemImg} src={fallback_img} />);
+    if(item) return (
+        <>
 
-    return (
-        <img className={Style.itemImg} src={items?.[name]?.media ? items?.[name]?.media : fallback_img } />
+            <img 
+            className={Style.itemImg} 
+            src={item?.media ? item?.media : fallback_img } 
+            onMouseEnter={() => setHoverItem(item)}
+            onMouseLeave={() => setHoverItem(null)}
+        />
+            
+        </>
     );
 }

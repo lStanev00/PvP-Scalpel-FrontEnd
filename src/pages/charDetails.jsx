@@ -12,6 +12,8 @@ export default function CharDetails() {
     const { server, realm, name } = useParams();
     const {  httpFetch } = useContext(UserContext)
     const location = (useLocation()).pathname;
+    const [hoverItem, setHoverItem] = useState(null);
+    const [coursorPosition, setCoursorPosition] = useState({x : 0, y : 0});
 
 
 
@@ -42,7 +44,7 @@ export default function CharDetails() {
     if (data === undefined) return (<>LOADING......</>);
 
     return (
-    <CharacterContext.Provider value={{data, setData, location}}>
+    <CharacterContext.Provider value={{data, setData, location, hoverItem, setHoverItem, coursorPosition, setCoursorPosition}}>
 
         <Details />
 

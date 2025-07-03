@@ -1,0 +1,65 @@
+.wrapper * {
+    pointer-events: none;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid gold;
+    padding: 1rem;
+    border-radius: 8px;
+    color: white;
+    max-width: 600px;
+}
+
+.icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: gold;
+}
+
+.level {
+    font-size: 0.9rem;
+}
+
+.stats {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.sockets {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.socket {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.enchant {
+    font-size: 0.8rem;
+    color: lightgreen;
+}
+
+.transmog {
+    font-size: 0.75rem;
+    color: skyblue;
+}

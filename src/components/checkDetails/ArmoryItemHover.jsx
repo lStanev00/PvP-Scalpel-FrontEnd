@@ -1,0 +1,52 @@
+import { useContext } from 'react';
+import Style from '../../Styles/modular/ArmoryItemHover.module.css';
+import { CharacterContext } from '../../pages/CharDetails';
+
+export default function ArmoryItem() {
+    const {hoverItem: item} = useContext(CharacterContext);
+
+    if (!item) return null;
+
+    return (
+        <div className={Style.wrapper}>
+            <img src={item.media} alt={item.name} className={Style.icon} />
+
+            <div className={Style.details}>
+                <h4 className={Style.name}>{item.name}</h4>
+                <p className={Style.level}>Item Level {item.level}</p>
+
+                <ul className={Style.stats}>
+                    {item.stats?.map((stat, index) => (
+                        <li key={index}>
+                            {stat.type}: <b>{stat.value}</b>
+                        </li>
+                    ))}
+                </ul>
+
+                {item.sockets?.length > 0 && (
+                    <div className={Style.sockets}>
+                        {item.sockets.map((socket, i) => (
+                            <img
+                                key={i}
+                                src={socket.media}
+                                alt={socket.gemName}
+                                title={`${socket.gemName} (${socket.bonus})`}
+                                className={Style.socket}
+                            />
+                        ))}
+                    </div>
+                )}
+
+                {item.enchantments?.length > 0 && (
+                    <p className={Style.enchant}>{item.enchantments[0].description}</p>
+                )}
+
+                {item.transmog && (
+                    <p className={Style.transmog}>
+                        Transmog: <i>{item.transmog.name}</i>
+                    </p>
+                )}
+            </div>
+        </div>
+    );
+}
