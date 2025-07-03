@@ -81,13 +81,62 @@
     color: #aaa;
 }
 
-
-.enchant {
-    font-size: 0.8rem;
-    color: lightgreen;
+.enchants {
+    margin-top: 0.6rem;
 }
+
+.enchantLine {
+    font-size: 0.85rem;
+    color: #a3f4af;
+    margin: 0.1rem 0;
+}
+
+.enchantName {
+    font-weight: bold;
+    color: #3eff9e;
+}
+
 
 .transmog {
     font-size: 0.75rem;
     color: skyblue;
+}
+
+.spells {
+    margin-top: 0.8rem;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(255, 215, 0, 0.7);
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    box-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
+
+.spellHeader {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FFD700;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    padding-bottom: 0.3rem;
+}
+
+.spellList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.spell {
+    font-size: 0.85rem;
+    color: #f0f0f0;
+    margin-top: 0.4rem;
+    line-height: 1.3rem;
+}
+
+.spellName {
+    font-weight: bold;
+    color: #FFD700;
+    font-family: 'Arial', sans-serif;
 }

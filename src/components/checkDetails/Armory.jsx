@@ -8,7 +8,6 @@ export default function Armory () {
     const {Style: ParentStyle} = useContext(DetailsProvider);
     const {data, coursorPosition, setCoursorPosition} = useContext(CharacterContext);
     const {gear} = data;
-    console.log(gear)
     return (
         <section className={`${ParentStyle.section} ${Style.parentSection}`}>
 

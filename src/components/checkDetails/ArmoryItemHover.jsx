@@ -28,7 +28,7 @@ export default function ArmoryItemHover() {
                         </li>
                     ))}
                 </ul>
-                
+
                 {item.sockets?.length > 0 && (
                     <div className={Style.sockets}>
                         {item.sockets.map((socket, i) => (
@@ -47,10 +47,36 @@ export default function ArmoryItemHover() {
                     </div>
                 )}
 
+                {item.spells?.length > 0 && (
+                    <div className={Style.spells}>
+                        <h5 className={Style.spellHeader}>Spells</h5>
+                        <ul className={Style.spellList}>
+                            {item.spells.map((spellObj, i) => (
+                                <li key={i} className={Style.spell}>
+                                    <span className={Style.spellName}>{spellObj.spell.name}</span>: {spellObj.description}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+
+
 
                 {item.enchantments?.length > 0 && (
-                    <p className={Style.enchant}>{item.enchantments[0].description.replace(/\|A:.*?\|a/g, '')}</p>
+                    <div className={Style.enchants}>
+                        {item.enchantments.map((ench, i) => {
+                            const cleanedDesc = ench.description.replace(/\|A:.*?\|a/g, '');
+                            const [_, name, detail] = cleanedDesc.match(/^Enchanted: (.*?)(?: - )?(.*)?$/) || [];
+                            return (
+                                <p key={i} className={Style.enchantLine}>
+                                    <span className={Style.enchantName}>{name || 'Enchant'}</span>
+                                    {detail ? `: ${detail}` : ''}
+                                </p>
+                            );
+                        })}
+                    </div>
                 )}
+
 
                 {item.transmog && (
                     <p className={Style.transmog}>
