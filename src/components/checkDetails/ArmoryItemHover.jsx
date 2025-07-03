@@ -28,20 +28,25 @@ export default function ArmoryItemHover() {
                         </li>
                     ))}
                 </ul>
-
+                
                 {item.sockets?.length > 0 && (
                     <div className={Style.sockets}>
                         {item.sockets.map((socket, i) => (
-                            <img
-                                key={i}
-                                src={socket.media}
-                                alt={socket.gemName}
-                                title={`${socket.gemName} (${socket.bonus})`}
-                                className={Style.socket}
-                            />
+                            <div key={i} className={Style.socketWrapper}>
+                                <img
+                                    src={socket.media}
+                                    alt={socket.gemName}
+                                    className={Style.socket}
+                                />
+                                <div className={Style.gemInfo}>
+                                    <p className={Style.gemName}>{socket.gemName}</p>
+                                    <p className={Style.gemBonus}>{socket.bonus}</p>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 )}
+
 
                 {item.enchantments?.length > 0 && (
                     <p className={Style.enchant}>{item.enchantments[0].description.replace(/\|A:.*?\|a/g, '')}</p>

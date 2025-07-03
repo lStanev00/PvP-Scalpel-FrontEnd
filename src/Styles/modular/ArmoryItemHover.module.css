@@ -47,14 +47,40 @@
 
 .sockets {
     display: flex;
-    gap: 0.25rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.socketWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .socket {
     width: 24px;
     height: 24px;
     border-radius: 4px;
+    border: 1px solid gold;
 }
+
+.gemInfo {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.75rem;
+    color: lightgreen;
+}
+
+.gemName {
+    font-weight: bold;
+    color: #fff;
+}
+
+.gemBonus {
+    color: #aaa;
+}
+
 
 .enchant {
     font-size: 0.8rem;
