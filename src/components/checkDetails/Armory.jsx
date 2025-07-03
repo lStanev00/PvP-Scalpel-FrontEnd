@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { DetailsProvider } from "./Details"
 import Style from "../../Styles/modular/Armory.module.css"
 import { CharacterContext } from "../../pages/CharDetails";
-import fallback_img from "../../../public/item_fallback.png"
+import fallback_img from "/item_fallback.png"
 
 export default function Armory () {
     const {Style: ParentStyle} = useContext(DetailsProvider);
