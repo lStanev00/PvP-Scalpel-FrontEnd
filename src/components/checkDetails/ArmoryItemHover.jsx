@@ -11,8 +11,8 @@ export default function ArmoryItemHover() {
         <div 
             className={Style.wrapper}
             style={{
-                top: (coursorPosition.y + 10),
-                left: (coursorPosition.x + 10)
+                top: `calc(${(coursorPosition.y)}px + 0.5rem)`,
+                left: `calc(${(coursorPosition.x)}px + 1.5rem)`
             }}
         >
             <img src={item.media} alt={item.name} className={Style.icon} />
