@@ -18,7 +18,7 @@ export default function CharDetails() {
 
 
 
-    const getCharacterData = async () => { // This will be a websocket in the future
+    const getCharacterData = async () => {
         try {
             const apiEndpoint = `/checkCharacter/${server}/${realm}/${name}`;
             let response = await httpFetch(apiEndpoint);
