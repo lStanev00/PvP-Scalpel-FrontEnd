@@ -4,12 +4,13 @@ import { UserContext } from "../hooks/ContextVariables.jsx";
 import { Details } from "../components/checkDetails/Details.jsx";
 import delay from "../helpers/delay.js";
 import ArmoryItemHover from "../components/checkDetails/ArmoryItemHover.jsx";
+import Loading from "../components/loading.jsx";
 
 export const CharacterContext = createContext();
 
 
 export default function CharDetails() {
-    const [data, setData] = useState(undefined);
+    const [data, setData] = useState(null);
     const { server, realm, name } = useParams();
     const {  httpFetch } = useContext(UserContext)
     const location = (useLocation()).pathname;
@@ -19,36 +20,45 @@ export default function CharDetails() {
 
 
     const getCharacterData = async () => {
+        const apiEndpoint = `/checkCharacter/${server}/${realm}/${name}`;
+        let response = await httpFetch(apiEndpoint);
         try {
-            const apiEndpoint = `/checkCharacter/${server}/${realm}/${name}`;
-            let response = await httpFetch(apiEndpoint);
 
-            if (!response.ok) return setData(undefined);
             let fetchData = response.data;
+            if (!response.ok) return setData(undefined);
 
-            if (response.status == 404) return setData({errorMSG : fetchData.messege});
+            if (response.status == 404) return setData(undefined);
             if (fetchData === null || !fetchData || !response?.data) {
                 await delay(1500);
                 response = await httpFetch(apiEndpoint);
                 fetchData = response.data;
                 
             }
+            setData(undefined)
             setData(fetchData);
         } catch (error) {
             console.error("Fetch error:", error);
-            setData(404);
+            setData(undefined);
         }
     };
     
     useEffect(() => {getCharacterData()}, []);
 
-    if (data === undefined) return (<>LOADING......</>);
+if (data === null) return (<Loading />)
+if (data === undefined) return (<>Character not found.</>)
+if (data?.errorMSG) return (<><h2>Error:</h2><p>{data.errorMSG}</p></>)
 
-    return (
+
+    if (data.rating) return (
     <CharacterContext.Provider value={{data, setData, location, hoverItem, setHoverItem, coursorPosition, setCoursorPosition}}>
 
-        <Details />
-        <ArmoryItemHover />
+
+        {data.rating && (
+            <>
+                <Details />
+                <ArmoryItemHover />
+            </>
+        )}
 
     </CharacterContext.Provider>
 )
