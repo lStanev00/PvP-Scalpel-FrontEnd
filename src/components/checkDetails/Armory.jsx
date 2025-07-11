@@ -82,15 +82,11 @@ function ItemGenerator({ name }) {
     if (!item) return (<img className={Style.itemImg} src={fallback_img} />);
     if (name.length <= 2) return (<img className={Style.itemImg} src={fallback_img} />);
     if(item) return (
-        <>
-
-            <img 
+        <img 
             className={Style.itemImg} 
             src={item?.media ? item?.media : fallback_img } 
             onMouseEnter={() => setHoverItem(item)}
             onMouseLeave={() => setHoverItem(null)}
         />
-            
-        </>
     );
 }
