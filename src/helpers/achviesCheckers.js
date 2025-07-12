@@ -1,5 +1,3 @@
-import { syncIndexes } from "mongoose";
-
 const legacyData = [
     "World of Warcraft",
     "The Burning Crusade",
