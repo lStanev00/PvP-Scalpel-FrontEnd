@@ -1,6 +1,7 @@
 import httpFetch from "../../../helpers/httpFetch.js";
 export default function BGBtn({  setData, setPage, setContent  }){
-    const clickHandler = async (event) => {
+    const clickHandler = async () => {
+        setData(() => undefined);
         let reqData;
         const res = await httpFetch(`/LDB/BG`);
         reqData = await res.json();

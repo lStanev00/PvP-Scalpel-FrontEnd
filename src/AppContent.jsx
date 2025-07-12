@@ -16,6 +16,7 @@ import VlidateToken from "./pages/utility/VlidateToken.jsx";
 import { GuestRoute, UserRoute } from "./hooks/Guards.jsx";
 import Logout from "./pages/utility/Logout.jsx";
 import Posts from "./pages/Posts.jsx";
+import Loading from "./components/loading.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"))
 
@@ -67,7 +68,7 @@ export default function AppContent() {
                     <Route 
                         path="/check/:server/:realm/:name"
                         element={
-                            <Suspense fallback={<div>Loading Character...</div>}>
+                            <Suspense fallback={<Loading />}>
                                 <CharDetails />
                             </Suspense>
                         }

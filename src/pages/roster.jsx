@@ -2,10 +2,11 @@ import {useState, useEffect} from  'react';
 import CharCard from '../components/Roster/charCard';
 import SearchBox from '../components/Roster/searchBox';
 import httpFetch from '../helpers/httpFetch.js';
+import Loading from '../components/loading.jsx';
 
 export default function RosterPage() {
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(undefined);
     const [search, setSearch] = useState([]);
     
     useEffect(() => {
@@ -17,6 +18,8 @@ export default function RosterPage() {
         }
         fetchData();
     }, []);
+
+    if (data === undefined) return (<Loading />)
 
     return (
         <>

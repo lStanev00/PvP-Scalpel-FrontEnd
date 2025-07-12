@@ -1,8 +1,9 @@
 import httpFetch from "../../../helpers/httpFetch.js";
 export default function BlitzBtn({  setData, setPage, setContent  }){
-    const clickHandler = async (event) => {
+    const clickHandler = async () => {
         const res = await httpFetch(`/LDB/blitz`);
-        // const res = await fetch(`http://localhost:59534/LDB/blitz`);
+        setData(() => undefined);
+
         let reqData = await res.json();
         let rank = 1;
         const paginatedData = [];

@@ -1,3 +1,4 @@
+import Loading from "../loading";
 import LDBHeaderContent from "./LDBHeader";
 import LDBSearch from "./LDBSearch";
 import TableContent from "./TableContent";
@@ -5,6 +6,8 @@ import PaginatioContainer from "./paginationContainer";
 import { useRef } from "react";
 export default function ContentContainer({ data, content, page, setPage }) {
     const refs = useRef({});
+
+    if (data === undefined) return (<Loading/>);
 
     if (data) {return (
         

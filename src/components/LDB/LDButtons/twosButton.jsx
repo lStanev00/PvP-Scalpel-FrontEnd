@@ -1,6 +1,7 @@
 import httpFetch from "../../../helpers/httpFetch.js";
 export default function TwosBTN({  setData, setPage, setContent  }){
-    const clickHandler = async (event) => {
+    const clickHandler = async () => {
+        setData(() => undefined);
         const res = await httpFetch(`/LDB/2v2`);
         let reqData = await res.json();
         let rank = 1;
