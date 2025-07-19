@@ -503,3 +503,9 @@ td>b {
     right: -200px;
     position: absolute;
 }
+
+@media (min-width: 1440px) {
+    body {
+        zoom: 1.2;
+    }
+}
