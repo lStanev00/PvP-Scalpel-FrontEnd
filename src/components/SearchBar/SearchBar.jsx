@@ -9,16 +9,16 @@ export default function SearchBar({ onSearch }) {
         onSearch?.(e.target.value);
     };
 
-    const handleDivClick = (e) => {
+    const handleDivClick = (e, isChild = false) => {
         e.preventDefault();
-        const target = e.target;
+        const target = isChild ? e.target.parentNode : e.target;
 
         const inputEl = target.querySelector("input");
         return inputEl.focus();
     }
     return (
         <div onClick={(e) => {handleDivClick(e)}} className={Style.searchBar}>
-            <img src="/magnifierLupe.png" alt="" width={40}/>
+            <img src="/magnifierLupe.png" alt="" width={40} onClick={(e) => {handleDivClick(e, true)}}/>
             <input
                 type="text"
                 placeholder="Search characters..."
