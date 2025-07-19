@@ -17,14 +17,12 @@ import { GuestRoute, UserRoute } from "./hooks/Guards.jsx";
 import Logout from "./pages/utility/Logout.jsx";
 import Posts from "./pages/Posts.jsx";
 import Loading from "./components/loading.jsx";
-import SearchBar from "./components/SearchBar/SearchBar.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"))
 
 
 export default function AppContent() {
     const { httpFetch } = useContext(UserContext);
-    const navigate = useNavigate();
 
     useEffect(() => { 
         const fetcData = (async () => {const req = await httpFetch("/verify/me")})();
@@ -42,13 +40,8 @@ export default function AppContent() {
             backgroundBlendMode: "multiply"
         }}
         >
-            <header className="header">
-                <div onClick={(e) => {navigate(`/`)}} className="logo">
-                    <img className="logo-img" src="/logo/logo_resized.png" alt="logo pic" />
-                    PvP Scalpel
-                </div>
-                <Navigation />
-            </header>
+            <Navigation />
+
             <main>
                 <Routes>
                     <Route element={<UserRoute />}>

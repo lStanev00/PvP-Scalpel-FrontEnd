@@ -20,6 +20,7 @@ export default function SearchBar({ onSearch }) {
         <div onClick={(e) => {handleDivClick(e)}} className={Style.searchBar}>
             <img src="/magnifierLupe.png" alt="" width={40} onClick={(e) => {handleDivClick(e, true)}}/>
             <input
+                id="characterSearch"
                 type="text"
                 placeholder="Search characters..."
                 value={query}

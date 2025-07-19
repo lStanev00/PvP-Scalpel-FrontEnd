@@ -1,15 +1,25 @@
 import { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../hooks/ContextVariables';
-import SearchBar from './SearchBar/SearchBar';
 import Style from "../Styles/modular/Header.module.css"
+import SearchBar from './SearchBar/SearchBar';
 
 export default function Navigation() {
     const { user } = useContext(UserContext);
     const location = (useLocation()).pathname;
+    const navigate = useNavigate();
+    
     return (
         <>
+        <div className={Style.header}>
+
+            <div onClick={(e) => {navigate(`/`)}} className={Style.logo}>
+                <img className={Style["logo-img"]} src="/logo/logo_resized.png" alt="logo pic" />
+                PvP Scalpel
+            </div>
+
             <nav className={Style.navbar}>
+                <SearchBar />
                 <ul className={Style["nav-links"]}>
                     {!user?._id && (
                         <>
@@ -26,8 +36,9 @@ export default function Navigation() {
                     <li><Link to="/roster">Members</Link></li>
                     <li><Link to="/leaderboard">Leaderboard</Link></li>
                 </ul>
+
             </nav>
-                    <div className={Style.searchBarDiv}><SearchBar /></div>
+        </div>
         </>
     )
 }
