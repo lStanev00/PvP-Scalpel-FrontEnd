@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Style from "../../Styles/modular/SearchBar.module.css";
+import DropDown from "./components/DropDown";
 
 export default function SearchBar({ onSearch }) {
     const [query, setQuery] = useState("");
@@ -14,6 +15,7 @@ export default function SearchBar({ onSearch }) {
         const target = isChild ? e.target.parentNode : e.target;
 
         const inputEl = target.querySelector("input");
+        if ( inputEl === null ) return
         return inputEl.focus();
     }
     return (
@@ -22,12 +24,12 @@ export default function SearchBar({ onSearch }) {
             <input
                 id="characterSearch"
                 type="text"
-                placeholder="Search characters..."
+                placeholder="Search characters... (Name - Realm - Server)"
                 value={query}
                 onChange={handleChange}
                 className={Style.input}
             /> 
-            
+            <DropDown inputString={query} />
         </div>
     );
 }
