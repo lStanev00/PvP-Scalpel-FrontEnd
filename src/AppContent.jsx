@@ -17,6 +17,7 @@ import { GuestRoute, UserRoute } from "./hooks/Guards.jsx";
 import Logout from "./pages/utility/Logout.jsx";
 import Posts from "./pages/Posts.jsx";
 import Loading from "./components/loading.jsx";
+import SearchBar from "./components/SearchBar/SearchBar.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"))
 

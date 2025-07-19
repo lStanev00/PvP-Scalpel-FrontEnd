@@ -85,6 +85,7 @@ body {
     display: flex;
     list-style: none;
     gap: 1.5rem;
+    position: relative;
 }
 
 .nav-links a {
@@ -584,4 +585,12 @@ td>b {
 
 .navbar {
     margin: 1rem;
+}
+
+.searchBarDiv {
+    margin: unset;
+    position: unset;
+    top: -110px;
+    right: -200px;
+    position: absolute;
 }
