@@ -42,7 +42,7 @@ export default function CharDetails() {
         }
     };
     
-    useEffect(() => {getCharacterData()}, []);
+    useEffect(() => {setData(null); getCharacterData()}, [server, realm, name]);
 
 if (data === null) return (<Loading />)
 if (data === undefined) return (<>Character not found.</>)
