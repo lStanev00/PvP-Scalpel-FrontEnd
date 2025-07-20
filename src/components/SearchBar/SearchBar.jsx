@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Style from "../../Styles/modular/SearchBar.module.css";
 import DropDown from "./components/DropDown";
 
 export default function SearchBar({ onSearch }) {
     const [query, setQuery] = useState("");
+    const inputRef = useRef();
 
     const handleChange = (e) => {
         setQuery(e.target.value);
@@ -22,6 +23,7 @@ export default function SearchBar({ onSearch }) {
         <div onClick={(e) => {handleDivClick(e)}} className={Style.searchBar}>
             <img src="/magnifierLupe.png" alt="" width={40} onClick={(e) => {handleDivClick(e, true)}}/>
             <input
+                ref = {(el) =>  inputRef.current = el}
                 id="characterSearch"
                 type="text"
                 placeholder="Search characters... (Name - Realm - Server)"
@@ -29,7 +31,7 @@ export default function SearchBar({ onSearch }) {
                 onChange={handleChange}
                 className={Style.input}
             /> 
-            <DropDown inputString={query} />
+            <DropDown inputString={query} inputRef={inputRef} />
         </div>
     );
 }

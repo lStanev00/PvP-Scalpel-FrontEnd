@@ -4,7 +4,7 @@ import { UserContext } from "../../../hooks/ContextVariables.jsx";
 import DropDownItem from "./DropDownItem.jsx";
 import Style from "../../../Styles/modular/DropDownSearch.module.css"
 
-export default function DropDown({inputString}) {
+export default function DropDown({inputString, inputRef}) {
     const [searchData, setSearchData] = useState(inputString);
     const { httpFetch } = useContext(UserContext);
 
@@ -28,12 +28,11 @@ export default function DropDown({inputString}) {
 
     if (inputString === "") return null
     if (inputString === undefined) return null;
-    // if (!(Array.isArray(inputString))) return null;
     if (searchData) {
 
         return (
             <ul className={Style.dropdown}>
-                {searchData.chars && (searchData.chars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style} />))}
+                {searchData.chars && (searchData.chars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style} inputRef={inputRef}/>))}
             </ul>
         )
 
