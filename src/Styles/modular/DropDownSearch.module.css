@@ -3,7 +3,7 @@
     top: 100%;
     left: 0;
     right: 0;
-    background-color: #fff;
+    background-color: #cdd1d0;
     border: 1px solid #ddd;
     border-radius: 6px;
     margin-top: 4px;
@@ -16,21 +16,50 @@
 .dropdownItem {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.5rem;
     padding: 10px 16px;
     cursor: pointer;
     font-size: 0.95rem;
+    font-weight: 500;
     color: #333;
     transition: background-color 0.2s ease;
 }
 
+.serverName {
+    font-weight: 600;
+    border: 1px solid #333;
+    border-radius: 5000px;
+    padding: 0.3rem;
+    background: linear-gradient(312deg, #0c7eb3, #10b99d);
+    box-shadow: #333 1px 1px;
+    scale: 0.9;
+}
 .dropdownItem:hover {
     background-color: #e0f2fe;
 }
 
 .classIcon {
-    width: 20px;
-    height: 20px;
+    height: 1.9rem;
     border-radius: 4px;
     object-fit: cover;
+    box-shadow: #333 1px 1px;
+    margin-left: -2rem;
+}
+
+.playerData {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.nameRealm {
+    margin-left: -2px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #0f172a;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
