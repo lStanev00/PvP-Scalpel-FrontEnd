@@ -41,8 +41,12 @@ export default function CharDetails() {
             setData(undefined);
         }
     };
-    
-    useEffect(() => {setData(null); getCharacterData()}, [server, realm, name]);
+    useEffect(() => {
+        setData(null); 
+        getCharacterData(); 
+        const el =  document.querySelector("characterSearch")
+        if (el && el !== null) el.value = "";
+    }, [server, realm, name]);
 
 if (data === null) return (<Loading />)
 if (data === undefined) return (<>Character not found.</>)

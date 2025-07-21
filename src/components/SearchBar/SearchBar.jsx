@@ -1,10 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Style from "../../Styles/modular/SearchBar.module.css";
 import DropDown from "./components/DropDown";
 
 export default function SearchBar({ onSearch }) {
     const [query, setQuery] = useState("");
     const inputRef = useRef();
+    const searchBarEl = useRef();
+    const [visible, setVisible] = useState(true);
 
     const handleChange = (e) => {
         setQuery(e.target.value);
@@ -19,8 +21,24 @@ export default function SearchBar({ onSearch }) {
         if ( inputEl === null ) return
         return inputEl.focus();
     }
+
+    useEffect(() => {
+        const clickListener = (e) => {
+            
+            const closestElement = e.target.closest('#searchBar');
+
+            setVisible(!closestElement ? false : true)
+        }
+        document.addEventListener("click", clickListener);
+        return () => document.removeEventListener("click", clickListener);
+    }, [])
     return (
-        <div onClick={(e) => {handleDivClick(e)}} className={Style.searchBar}>
+        <div 
+            onClick={(e) => {handleDivClick(e)}} 
+            className={Style.searchBar}
+            ref={(el) => searchBarEl.current = el}
+            id="searchBar"
+        >
             <img src="/magnifierLupe.png" alt="" width={40} onClick={(e) => {handleDivClick(e, true)}}/>
             <input
                 ref = {(el) =>  inputRef.current = el}
@@ -31,7 +49,7 @@ export default function SearchBar({ onSearch }) {
                 onChange={handleChange}
                 className={Style.input}
             /> 
-            <DropDown inputString={query} inputRef={inputRef} />
+            <DropDown inputString={query} inputRef={inputRef} visible={visible}/>
         </div>
     );
 }

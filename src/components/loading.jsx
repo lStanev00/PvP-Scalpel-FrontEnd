@@ -1,6 +1,6 @@
 import MagnifierSearchStyle from "../Styles/modular/MaginifierSearch.module.css"
 
-export default function Loading() {
+export default function Loading( {height = undefined}) {
     return (
             <div className={MagnifierSearchStyle.animationContainer}>
                     <video
@@ -10,7 +10,7 @@ export default function Loading() {
                         muted
                         playsInline
                         className={MagnifierSearchStyle.animation}
-                        height={"100%"}
+                        height={height ? `${height}px` :"100%"}
                     />
             </div>
 
