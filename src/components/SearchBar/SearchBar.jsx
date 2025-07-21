@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Style from "../../Styles/modular/SearchBar.module.css";
 import DropDown from "./components/DropDown";
+import { UserContext } from "../../hooks/ContextVariables";
 
 export default function SearchBar({ onSearch }) {
     const [query, setQuery] = useState("");
-    const inputRef = useRef();
     const searchBarEl = useRef();
     const [visible, setVisible] = useState(true);
+    const {inputRef} = useContext(UserContext);
 
     const handleChange = (e) => {
         setVisible(true)
@@ -54,7 +55,7 @@ export default function SearchBar({ onSearch }) {
                 spellCheck="false"
 
             /> 
-            <DropDown inputString={query} inputRef={inputRef} visible={visible}/>
+            <DropDown inputString={query} visible={visible}/>
         </div>
     );
 }

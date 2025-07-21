@@ -12,7 +12,7 @@ export const CharacterContext = createContext();
 export default function CharDetails() {
     const [data, setData] = useState(null);
     const { server, realm, name } = useParams();
-    const {  httpFetch } = useContext(UserContext)
+    const {  httpFetch, inputRef } = useContext(UserContext)
     const location = (useLocation()).pathname;
     const [hoverItem, setHoverItem] = useState(null);
     const [coursorPosition, setCoursorPosition] = useState({x : 0, y : 0});
@@ -42,10 +42,10 @@ export default function CharDetails() {
         }
     };
     useEffect(() => {
+        if (inputRef?.current) inputRef.current.value = "";
         setData(null); 
         getCharacterData(); 
-        const el =  document.querySelector("characterSearch")
-        if (el && el !== null) el.value = "";
+
     }, [server, realm, name]);
 
 if (data === null) return (<Loading />)

@@ -6,9 +6,9 @@ import Style from "../../../Styles/modular/DropDownSearch.module.css"
 import Loading from "../../loading.jsx";
 import fromResultFromSearch from "../../../helpers/fromResultFromSearch.js";
 
-export default function DropDown({inputString, inputRef, visible}) {
+export default function DropDown({inputString, visible}) {
     const [searchData, setSearchData] = useState(inputString);
-    const { httpFetch } = useContext(UserContext);
+    const { httpFetch, inputRef } = useContext(UserContext);
 
     useEffect(() => {
         if (inputString !== "" && inputString.length > 2) setSearchData("!!!LOADING!!!");
@@ -40,20 +40,20 @@ export default function DropDown({inputString, inputRef, visible}) {
                     searchData.addChars 
                     && Array.isArray(searchData.addChars)
                     && (
-                        searchData.addChars.map((entry, index) => <DropDownItem key={`${index}:${entry?.charName}:${entry?.realmSlug}`} Style={Style} inputRef={inputRef} guessChar={entry}/>)
+                        searchData.addChars.map((entry, index) => <DropDownItem key={`${index}:${entry?.charName}:${entry?.realmSlug}`} Style={Style} guessChar={entry}/>)
                     )
                 }
                 {
                     searchData.exactMatch
                     && Array.isArray(searchData.exactMatch)
                     && (
-                        searchData.exactMatch.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style} inputRef={inputRef} />) 
+                        searchData.exactMatch.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style}/>) 
                     )
                 }
                 {
                 searchData.chars 
                 && (
-                    searchData.chars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style} inputRef={inputRef}/>)
+                    searchData.chars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style}/>)
                 )
                 }
             </ul>

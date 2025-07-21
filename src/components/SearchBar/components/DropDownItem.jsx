@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom"
+import { UserContext } from "../../../hooks/ContextVariables";
 
-export default function DropDownItem ({entry, Style, inputRef, guessChar = undefined}) {
+export default function DropDownItem ({entry, Style, guessChar = undefined}) {
     const navigate = useNavigate();
     const char = entry?.char || undefined;
+    const {inputRef} = useContext(UserContext);
+    
 
     const handleClick = () => {
         inputRef.current.value = ""

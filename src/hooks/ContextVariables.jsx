@@ -1,9 +1,10 @@
-import { createContext, useState } from 'react';
+import { createContext, useRef, useState } from 'react';
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(undefined);
+    const [user, setUser] = useState(undefined);    
+    const inputRef = useRef();
     
     async function httpFetch(endpoint, options = {}) {
         const req = await httpFetchWithCredentials(endpoint, options);
@@ -25,7 +26,7 @@ export const UserProvider = ({ children }) => {
     }
 
     return (
-        <UserContext.Provider value={{user, setUser, httpFetch}} >
+        <UserContext.Provider value={{user, setUser, httpFetch, inputRef}} >
 
             {children}
 
