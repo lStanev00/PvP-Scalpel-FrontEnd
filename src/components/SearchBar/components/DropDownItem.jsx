@@ -9,8 +9,11 @@ export default function DropDownItem ({entry, Style, inputRef, guessChar = undef
         if (guessChar) {
             navigate(`/check/${guessChar?.server}/${guessChar?.realmSlug}/${guessChar?.charName}`)
 
+        } else {
+
+            navigate(`/check/${char.server}/${char.playerRealm.slug}/${char.name}`)
         }
-        navigate(`/check/${char.server}/${char.playerRealm.slug}/${char.name}`)
+
     }
 
     if (guessChar) return (

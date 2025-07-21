@@ -103,7 +103,14 @@ export function Details() {
                         <img src={data.media.avatar} alt="Character Avatar" />
                         <div className={Style["banner-content"]}>
                             <strong>{data.name} - {data.playerRealm.name}</strong>
-                            <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name})</span>
+                            <span>{data.race} | Level {data.level} | {data.class.name} ({data.activeSpec.name}) {
+                                data.guildName
+                                && (
+                                    <>
+                                     | Guild: {data.guildName}
+                                    </>
+                                )
+                                }</span>
                         </div>
                         <ReloadBTN isUpdating={isUpdating} setUpdating={setUpdating} />
                 </div>
