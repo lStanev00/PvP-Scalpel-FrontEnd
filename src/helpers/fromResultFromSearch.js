@@ -51,7 +51,7 @@ export default function fromResultFromSearch(req) {
             && Array.isArray(result.chars)
         ) {
             result.addChars = [];
-            const realmSearchSlugified = realm.toLowerCase().trim().replaceAll((" "), "-")
+            const realmSearchSlugified = realm.toLowerCase().trim().replaceAll((" "), "-");
             const exist = chars.find(entry => {
 
                     const entrySearch = entry?.char?.search || undefined;
@@ -65,6 +65,17 @@ export default function fromResultFromSearch(req) {
             if(!exist && Array.isArray(realms)) {
                 const realmsMatchArr = realms.filter(entry => {
                     const realmSlugEntry = entry?.slug || undefined;
+                    let realmNameSlugifiedEntry = undefined;
+
+                    if(typeof entry?.name === "string") {
+                        if(entry.name.includes("(")) {
+                            let checkModName = entry.name.split("(");
+                            checkModName = checkModName[0].trim().replaceAll(" ", "-").toLowerCase();
+                            realmNameSlugifiedEntry = checkModName;
+                            if(realmNameSlugifiedEntry.includes(realmSearchSlugified)) return true
+                        }
+                    }
+
                     if(!realmSlugEntry && typeof realmSlugEntry !== "string") return false;
                     
                     return realmSlugEntry.includes(realmSearchSlugified)
