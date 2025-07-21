@@ -4,6 +4,7 @@ import { UserContext } from "../../../hooks/ContextVariables.jsx";
 import DropDownItem from "./DropDownItem.jsx";
 import Style from "../../../Styles/modular/DropDownSearch.module.css"
 import Loading from "../../loading.jsx";
+import fromResultFromSearch from "../../../helpers/fromResultFromSearch.js";
 
 export default function DropDown({inputString, inputRef, visible}) {
     const [searchData, setSearchData] = useState(inputString);
@@ -16,9 +17,9 @@ export default function DropDown({inputString, inputRef, visible}) {
             if (checker === inputString && inputString !== "") {
                 const searchString = (exctractSearch(inputString));
                 const req = await httpFetch(`/searchCharacter?search=${searchString}`)
-                console.log(req)
+                console.log(req?.data)
                 if(req.ok && req.data) {
-                    setSearchData(req.data)
+                    setSearchData(fromResultFromSearch(req))
                 }
             }
         }, 400);
@@ -35,7 +36,26 @@ export default function DropDown({inputString, inputRef, visible}) {
 
         return (
             <ul className={Style.dropdown}>
-                {searchData.chars && (searchData.chars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style} inputRef={inputRef}/>))}
+                {
+                    searchData.addChars 
+                    && Array.isArray(searchData.addChars)
+                    && (
+                        searchData.addChars.map((entry, index) => <DropDownItem key={`${index}:${entry?.charName}:${entry?.realmSlug}`} Style={Style} inputRef={inputRef} guessChar={entry}/>)
+                    )
+                }
+                {
+                    searchData.exactMatch
+                    && Array.isArray(searchData.exactMatch)
+                    && (
+                        searchData.exactMatch.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style} inputRef={inputRef} />) 
+                    )
+                }
+                {
+                searchData.chars 
+                && (
+                    searchData.chars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style} inputRef={inputRef}/>)
+                )
+                }
             </ul>
         )
 
