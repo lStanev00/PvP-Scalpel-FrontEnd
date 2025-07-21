@@ -9,6 +9,7 @@ export default function SearchBar({ onSearch }) {
     const [visible, setVisible] = useState(true);
 
     const handleChange = (e) => {
+        setVisible(true)
         setQuery(e.target.value);
         onSearch?.(e.target.value);
     };
@@ -48,6 +49,10 @@ export default function SearchBar({ onSearch }) {
                 value={query}
                 onChange={handleChange}
                 className={Style.input}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+
             /> 
             <DropDown inputString={query} inputRef={inputRef} visible={visible}/>
         </div>
