@@ -34,13 +34,13 @@ export default function ArmoryItemHover() {
                         {item.sockets.map((socket, i) => (
                             <div key={i} className={Style.socketWrapper}>
                                 <img
-                                    src={socket.media}
-                                    alt={socket.gemName}
+                                    src={socket?.media}
+                                    alt={socket?.gemName}
                                     className={Style.socket}
                                 />
                                 <div className={Style.gemInfo}>
-                                    <p className={Style.gemName}>{socket.gemName}</p>
-                                    <p className={Style.gemBonus}>{socket.bonus}</p>
+                                    <p className={Style?.gemName}>{socket?.gemName}</p>
+                                    <p className={Style?.gemBonus}>{socket?.bonus}</p>
                                 </div>
                             </div>
                         ))}
