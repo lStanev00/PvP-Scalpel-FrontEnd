@@ -9,19 +9,22 @@ export default function StatsChart () {
 
     const stats = {
         main: {
-            [rawUserStats.Primary[0]]: rawUserStats.Primary[1],
-            Stamina: rawUserStats.Stamina,
-            Armor: rawUserStats.Armor
+            [rawUserStats?.Primary[0]]: rawUserStats?.Primary[1],
+            Stamina: rawUserStats?.Stamina,
+            Armor: rawUserStats?.Armor
         },
         secondary: [
-            ["Versatility", rawUserStats.Versatility],
-            ['Critical Strike', rawUserStats.CriticalStrike],
-            ["Haste", rawUserStats.Haste],
-            ['Mastery', rawUserStats.Mastery],
+            ["Versatility", rawUserStats?.Versatility],
+            ['Critical Strike', rawUserStats?.CriticalStrike],
+            ["Haste", rawUserStats?.Haste],
+            ['Mastery', rawUserStats?.Mastery],
         ],
     };
 
     stats.secondary = stats.secondary.sort((a, b) => {
+        if(!a[1] ) a[1] = "0%" 
+        if(!b[1] ) b[1] = "0%";
+        if(!a && !b) return;
         const valA = Number(a[1].replace(`%`, ``));
         const valB = Number(b[1].replace(`%`, ``));
         return valB - valA; 
@@ -51,7 +54,13 @@ export default function StatsChart () {
 }
 
 function DivStat({name, statValue}) { 
-    const statValueNumber = Number(statValue.replace(`%`, ``));
+    let statValueNumber = Number(statValue.replace(`%`, ``)) 
+
+    try {
+        statValueNumber = Number(statValue.replace(`%`, ``)) 
+    } catch (error) {
+        statValueNumber = 0;
+    }
     let divSize = statValueNumber * 10 / 2
 
     return (
