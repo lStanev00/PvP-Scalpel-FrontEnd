@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import Style from "../Styles/modular/logReg.module.css";
+import Style from "../Styles/modular/LogReg.module.css";
 import getFingerprint from "../helpers/getFingerprint.js";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../hooks/ContextVariables.jsx";

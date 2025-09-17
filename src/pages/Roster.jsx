@@ -1,6 +1,6 @@
 import {useState, useEffect} from  'react';
-import CharCard from '../components/Roster/charCard';
-import SearchBox from '../components/Roster/searchBox';
+import CharCard from '../components/Roster/charCard.jsx';
+import SearchBox from '../components/Roster/searchBox.jsx';
 import httpFetch from '../helpers/httpFetch.js';
 import Loading from '../components/loading.jsx';
 
