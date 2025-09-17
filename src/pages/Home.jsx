@@ -30,7 +30,7 @@ export default function Home() {
                 </div>
                 <div className={styles.card}>
                     <h3>Armory Integration</h3>
-                    <p> Search detailed PvP information for specific character with the search bar (on the top of the page)</p>
+                    <p>Use the search bar at the top of the page to look up detailed PvP information for a specific character.</p>
                 </div>
             </section>
 
