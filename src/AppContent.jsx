@@ -4,7 +4,6 @@ import Home from "./pages/Home.jsx";
 import LDB from "./pages/LDB.jsx";
 import RosterPage from "./pages/Roster.jsx";
 import GoToTopButton from "./components/topBtn.jsx";
-// import CharDetails from "./pages/CharDetails.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import GotoEmail from "./components/EmailSend.jsx";
@@ -32,7 +31,7 @@ export default function AppContent() {
         // <Router>
         <>
         <div
-        className="page-wrapper"
+        // className="page-wrapper"
         style={{
             backgroundImage:"url('/backgrounds/main_background.png')",
             backgroundSize: "100% auto",

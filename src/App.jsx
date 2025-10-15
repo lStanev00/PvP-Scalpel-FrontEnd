@@ -1,6 +1,6 @@
 import AppContent from "./AppContent";
 import { UserProvider } from "./hooks/ContextVariables";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
 
