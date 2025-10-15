@@ -11,15 +11,15 @@ export default function Navigation() {
     
     return (
         <>
-        <div className={Style.header}>
+        {/* <div className={Style.header}> */}
 
-            <div onClick={(e) => {navigate(`/`)}} className={Style.logo}>
+            {/* <div onClick={(e) => {navigate(`/`)}} className={Style.logo}>
                 <img className={Style["logo-img"]} src="/logo/logo_resized.png" alt="logo pic" />
                 PvP Scalpel
-            </div>
+            </div> */}
 
             <nav className={Style.navbar}>
-                <SearchBar />
+                {/* <SearchBar /> */}
                 <ul className={Style["nav-links"]}>
                     {!user?._id && (
                         <>
@@ -38,7 +38,7 @@ export default function Navigation() {
                 </ul>
 
             </nav>
-        </div>
+        {/* </div> */}
         </>
     )
 }

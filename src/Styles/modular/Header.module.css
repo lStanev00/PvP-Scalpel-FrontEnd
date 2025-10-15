@@ -1,17 +1,3 @@
-.header {
-    /* background: linear-gradient(50deg, #0f172a, #0ea5e9, #162342); */
-    background: linear-gradient(90deg, #0c7eb3, #10b99d);
-    border-radius: 10px;
-    padding: 1.5rem 1rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    border-bottom: 3px solid #f1c40f;
-    gap: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    padding-bottom: 2rem;
-}
-
 .navbar {
     position: relative;
     display: flex;
@@ -63,31 +49,6 @@
     }
 }
 
-.searchBarDiv {
-    width: 100%;
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 1rem;
-
-    /* font-family: 'Segoe UI', 'Ubuntu', 'Roboto', sans-serif; */
-    font-size: 3.8rem;
-    font-weight: 800;
-    color: #ecfdf5;
-
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.4s ease-in-out;
-    /* animation: logoGlowPulse 6s ease-in-out infinite; */
-}
-
 @keyframes logoGlowPulse {
     0%, 100% {
         text-shadow:
@@ -99,26 +60,6 @@
             0 0 6px #0ea5e9,
             0 0 12px rgba(14, 165, 233, 0.3);
     }
-}
-
-.logo:hover {
-    text-shadow: 2px 2px 12px rgba(241, 196, 15, 1), 
-                 0 0 15px rgba(241, 196, 15, 0.8);
-    transform: scale(1.1);
-}
-
-.logo-img {
-    width: 5rem;
-    height: 5rem;
-    margin-right: 0.5rem;
-    border-radius: 50%;
-    box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
-    transition: transform 0.3s ease;
-}
-
-.logo-img:hover {
-    transform: rotate(360deg) scale(1.1);
-    box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
 }
 
 @keyframes logoPulse {
@@ -133,11 +74,6 @@
             0 0 30px rgba(14, 165, 233, 0.5);
     }
 }
-
-/* .logo-img {
-    animation: logoPulse 6s infinite ease-in-out;
-} */
-
 
 @media (max-width: 900px) {
  .nav-links {
