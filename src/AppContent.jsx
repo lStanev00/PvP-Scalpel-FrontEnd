@@ -74,7 +74,7 @@ export default function AppContent() {
                 
             </main>
             <footer className="footer">
-                <p>&copy; 2025 Lachezar Stanev. ALL RIGHTS RESERVED.</p>
+                <p>&copy; 2024 - {new Date().getFullYear()} Lachezar Stanev. ALL RIGHTS RESERVED.</p>
             </footer>
         </div>
         <GoToTopButton />
