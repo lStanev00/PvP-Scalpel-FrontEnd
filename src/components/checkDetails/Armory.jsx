@@ -7,7 +7,6 @@ import fallback_img from "/item_fallback.png"
 export default function Armory () {
     const {Style: ParentStyle} = useContext(DetailsProvider);
     const {data, setCoursorPosition} = useContext(CharacterContext);
-    const ZOOM_SCALE = parseFloat(getComputedStyle(document.body).zoom) || 1;
 
     return (
         <section className={`${ParentStyle.section} ${Style.parentSection}`}>
@@ -16,7 +15,7 @@ export default function Armory () {
 
             <div 
                 className={`${ParentStyle["inner-section"]} ${Style.main}`}
-                onMouseMove={(e) => setCoursorPosition({x: (e.clientX / ZOOM_SCALE), y : (e.clientY / ZOOM_SCALE) })} 
+                onMouseMove={(e) => setCoursorPosition({x: e.clientX, y : e.clientY })} 
             >
                 <div className={Style.bgLayer}></div>
                 <div className={Style.container}>
