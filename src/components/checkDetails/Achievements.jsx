@@ -6,7 +6,7 @@ import SeasonalPagination from "./SeasonalPagination.jsx";
 
 export default function AchevementsSection() {
     const {data} = useContext(CharacterContext);
-    const [achievements, setAchievements] = useState(data.achieves);
+    const achievements = data?.achieves;
     const [seasonalAchives, setSeasonalAchives] = useState(undefined)
 
     useEffect(() => {
