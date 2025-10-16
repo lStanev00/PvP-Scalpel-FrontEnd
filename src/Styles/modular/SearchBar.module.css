@@ -6,8 +6,8 @@
     padding-right: 1rem;
     background: #cdd1d0;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 480px;
+    min-width: 30svw;
+    max-width: 580px;
     margin: 0;
     position: relative;
     border: 1px solid rgba(29, 14, 233, 0.3);
