@@ -49,7 +49,7 @@ function ItemsTab1() {
 }
 
 function ItemsTab2() {
-        return(
+    return(
         <div className={Style.items}>
             <ItemGenerator name={"hands"} />
             <ItemGenerator name={"waist"} />
@@ -65,7 +65,7 @@ function ItemsTab2() {
 }
 
 function ItemsTab3() {
-        return(
+    return(
         <div className={Style.handItems}>
             <ItemGenerator name={"wep"} />
             <ItemGenerator name={"offHand"} />
