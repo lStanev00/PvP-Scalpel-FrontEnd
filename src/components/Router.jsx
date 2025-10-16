@@ -13,13 +13,16 @@ export default function Navigation() {
         <>
         <div className={Style.header}>
 
-            <div onClick={(e) => {navigate(`/`)}} className={Style.logo}>
-                <img className={Style["logo-img"]} src="/logo/logo_resized.png" alt="logo pic" />
-                PvP Scalpel
+            <div className={Style.upperWrapper}>
+                <div onClick={(e) => {navigate(`/`)}} className={Style.logo}>
+                    <img className={Style["logo-img"]} src="/logo/logo_resized.png" alt="logo pic" />
+                    PvP Scalpel
+                </div>
+
+                <SearchBar />
             </div>
 
             <nav className={Style.navbar}>
-                <SearchBar />
                 <ul className={Style["nav-links"]}>
                     {!user?._id && (
                         <>

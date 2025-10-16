@@ -1,49 +1,43 @@
 .header {
-    /* background: linear-gradient(50deg, #0f172a, #0ea5e9, #162342); */
     background: linear-gradient(90deg, #0c7eb3, #10b99d);
     border-radius: 10px;
-    padding: 1.5rem 1rem;
+    padding: 0.8rem 1rem 1.2rem;
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     border-bottom: 3px solid #f1c40f;
-    gap: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    padding-bottom: 2rem;
+    gap: 0.6rem;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
 }
 
 .navbar {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 10;
     width: 100%;
-    align-items: center;
-    gap: 2rem;
-    /* background: linear-gradient(90deg, #0c7eb3, #10b99d); */
-
+    gap: 1rem; /* was 2rem */
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 0.9rem;
+    gap: 0.6rem; /* was 0.9rem */
     list-style: none;
-    height: 100%;
-    justify-content: flex-end;
-    
+    justify-content: center;
+    flex-wrap: wrap;
 }
+
 .nav-links a {
     background: #14b8a6;
-    padding: .75rem 1.5rem;
+    padding: 0.55rem 1.2rem;
     border-radius: 6px;
     text-decoration: none;
     color: #fff;
     font-weight: 700;
-    transition: background .3s ease;
-    box-shadow: 0 2px 6px #0003;
-    font-size: 1.1rem;
+    transition: background .3s ease, transform .2s ease;
+    box-shadow: 0 2px 5px #0003;
+    font-size: 1rem; /* was 1.1rem */
 }
 
 .nav-links li a:hover {
@@ -64,8 +58,8 @@
 }
 
 .searchBarDiv {
-    width: 100%;
-    margin-top: 2rem;
+    width: 80%;
+    margin-top: 0.5rem; /* was 2rem */
     display: flex;
     justify-content: center;
 }
@@ -74,18 +68,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    gap: 1rem;
-
-    /* font-family: 'Segoe UI', 'Ubuntu', 'Roboto', sans-serif; */
-    font-size: 3.8rem;
+    gap: 0.8rem;
+    font-size: 2.4rem; /* was 3.8rem */
     font-weight: 800;
     color: #ecfdf5;
-
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.4s ease-in-out;
-    /* animation: logoGlowPulse 6s ease-in-out infinite; */
+    transition: all 0.3s ease-in-out;
 }
 
 @keyframes logoGlowPulse {
@@ -108,11 +97,10 @@
 }
 
 .logo-img {
-    width: 5rem;
-    height: 5rem;
-    margin-right: 0.5rem;
+    width: 3.5rem; /* was 5rem */
+    height: 3.5rem;
     border-radius: 50%;
-    box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.7);
     transition: transform 0.3s ease;
 }
 
@@ -144,4 +132,12 @@
     scale: 0.8;
  }
 
+}
+
+.upperWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }
