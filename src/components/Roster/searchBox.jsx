@@ -1,47 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Style from "./SearchBox.module.css";
 
-export default function SearchBox({ data, setSearch }) {
-    const [query, setQuery] = useState(``);
+export default function SearchBox({ setQuery }) {
+    const [input, setInput] = useState("");
 
-    const onClick = () => {
-        document.getElementById(`searchInput`).value = ``;
-        setQuery(``)
-    }
+    const onChange = (e) => {
+        setInput(e.target.value);
+        setQuery(e.target.value);
+    };
 
-    useEffect(() => {
-        const onInput = (event) => {
-            const searchValue = event.target.value;
-            setQuery(searchValue.toLowerCase());
-        }
+    const clearSearch = () => {
+        setInput("");
+        setQuery("");
+    };
 
-        const inputEl = document.getElementById(`searchInput`);
-        inputEl.addEventListener(`input`, onInput);
-
-        return () => {
-            inputEl.removeEventListener(`input`, onInput);
-        }
-    }, []);
-
-    useEffect(() => {
-        setSearch(data.filter(char => {
-            return char.name.toLowerCase().includes(query)
-        }))
-    }, [query])
-
-  return (
-    <>
-      <div className="search-container">
-        <input
-          autoComplete="off"
-          type="text"
-          id="searchInput"
-          className="search-input"
-          placeholder="Search for a character..."
-        />
-        <button onClick={onClick} id="searchBtn" className="search-btn">
-          Clear
-        </button>
-      </div>
-    </>
-  );
+    return (
+        <div className={Style.container}>
+            <input
+                type="text"
+                placeholder="Search for a character..."
+                className={Style.input}
+                value={input}
+                onChange={onChange}
+                autoComplete="off"
+            />
+            <button onClick={clearSearch} className={Style.btn}>Clear</button>
+        </div>
+    );
 }

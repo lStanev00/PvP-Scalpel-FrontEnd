@@ -24,7 +24,7 @@
 }
 
 /* Soft vignette fade on edges */
-.mainGrid::before {
+.mainGrid::before { 
     content: "";
     position: absolute;
     inset: 0;
@@ -46,7 +46,6 @@
     pointer-events: none;
     z-index: -1;
 }
-
 
 /* Slow fog drifting */
 @keyframes fogMove {
