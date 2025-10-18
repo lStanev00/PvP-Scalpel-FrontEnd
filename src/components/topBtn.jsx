@@ -1,42 +1,41 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import { GiBroadsword } from "react-icons/gi";
 export default function GoToTopButton() {
-
     const [click, setClick] = useState(false);
     const [isVisible, setVisible] = useState(false);
 
-
     const toTop = () => {
         setClick(true);
-    }
+    };
 
-    useEffect(() =>{
+    useEffect(() => {
         const show = () => {
-            setVisible(window.scrollY > 200)
-        }
+            setVisible(window.scrollY > 200);
+        };
 
         window.addEventListener(`scroll`, show);
 
         return () => {
             window.removeEventListener(`scroll`, show);
-        }
-    },[])
-
+        };
+    }, []);
 
     useEffect(() => {
-        if(click && isVisible) {
+        if (click && isVisible) {
             window.scrollTo({
                 top: 0,
-                behavior: "smooth"
+                behavior: "smooth",
             });
             setClick(false);
             setVisible(false);
         }
-    }, [click, isVisible])
-
+    }, [click, isVisible]);
 
     return (
         <>
-            <button onClick={toTop} className={isVisible? "go-to-top-btn show" : "go-to-top-btn"} id="goToTopBtn">↑ Top</button>
+            <button onClick={toTop} className={isVisible ? "goTop show" : "goTop"} id="goToTopBtn">
+                <GiBroadsword className="goTopIcon" />
+            </button>
         </>
-    )
+    );
 }

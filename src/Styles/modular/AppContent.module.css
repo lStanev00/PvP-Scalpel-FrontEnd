@@ -1,0 +1,171 @@
+.pageWrapper {
+    position: relative;
+    width: 90%;
+    background-image: url("/backgrounds/main_background.png");
+    background-size: 100% auto;
+    background-position: center;
+    background-blend-mode: multiply;
+    background-color: transparent;
+
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.08);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.pageWrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0.5) 100%);
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 12px;
+}
+
+.pageWrapper::after {
+    border-radius: 12px;
+
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.12;
+    mix-blend-mode: screen;
+    background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)),
+        url("/backgrounds/cinematic_fog.webp") repeat;
+    background-size: 300%;
+    animation: fogDrift 90s linear infinite;
+}
+
+@keyframes fogScroll {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 100% 0;
+    }
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+    .pageWrapper {
+        padding: 1rem;
+        width: 95%;
+        gap: 1rem;
+    }
+}
+
+.footer {
+    position: relative;
+    width: 100%;
+    margin-top: 3rem;
+    padding: 2rem 1.5rem;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(20, 22, 35, 0.95) 0%, rgba(15, 15, 25, 0.9) 100%);
+    border-top: 1px solid rgba(255, 215, 0, 0.15);
+    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.05);
+    overflow: hidden;
+    z-index: 2;
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+    animation: glowline 5s ease-in-out infinite;
+}
+
+@keyframes glowline {
+    0%,
+    100% {
+        opacity: 0.3;
+        filter: blur(1px);
+    }
+    50% {
+        opacity: 1;
+        filter: blur(2px);
+    }
+}
+
+.footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1.4rem;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.footer-logo {
+    width: 52px;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.25);
+    margin-bottom: 0.3rem;
+}
+
+.footer-brand h3 {
+    color: #ffd84a;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.25);
+}
+
+.footer-brand p {
+    font-size: 0.9rem;
+    color: #b6b6c4;
+    letter-spacing: 0.3px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: #dcdcdc;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #ffd84a;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.footer-bottom {
+    margin-top: 1.2rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #9e9ea8;
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+    padding-top: 1rem;
+}
