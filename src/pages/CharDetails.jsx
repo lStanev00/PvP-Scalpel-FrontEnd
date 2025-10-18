@@ -8,16 +8,11 @@ import Loading from "../components/loading.jsx";
 
 export const CharacterContext = createContext();
 
-
 export default function CharDetails() {
     const [data, setData] = useState(null);
     const { server, realm, name } = useParams();
     const {  httpFetch, inputRef } = useContext(UserContext)
     const location = (useLocation()).pathname;
-    const [hoverItem, setHoverItem] = useState(null);
-    const [coursorPosition, setCoursorPosition] = useState({x : 0, y : 0});
-
-
 
     const getCharacterData = async () => {
         const apiEndpoint = `/checkCharacter/${server}/${realm}/${name}`;
@@ -25,6 +20,7 @@ export default function CharDetails() {
         try {
 
             let fetchData = response.data;
+            if (response.ok) return setData(fetchData);
             if (!response.ok) return setData(undefined);
 
             if (response.status == 404) return setData(undefined);
@@ -54,16 +50,8 @@ if (data?.errorMSG) return (<><h2>Error:</h2><p>{data.errorMSG}</p></>)
 
 
     if (data.rating) return (
-    <CharacterContext.Provider value={{data, setData, location, hoverItem, setHoverItem, coursorPosition, setCoursorPosition}}>
-
-
-        {data.rating && (
-            <>
-                <Details />
-                <ArmoryItemHover />
-            </>
-        )}
-
+    <CharacterContext.Provider value={{data, setData, location}}>
+        {data.rating && <Details />}
     </CharacterContext.Provider>
 )
 

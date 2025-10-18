@@ -1,38 +1,47 @@
-import { useContext } from "react"
-import { DetailsProvider } from "./Details"
-import Style from "../../Styles/modular/Armory.module.css"
+import { createContext, useContext , useState } from "react";
+import { DetailsProvider } from "./Details";
+import Style from "../../Styles/modular/Armory.module.css";
 import { CharacterContext } from "../../pages/CharDetails";
-import fallback_img from "/item_fallback.png"
+import fallback_img from "/item_fallback.png";
+import ArmoryItemHover from "./ArmoryItemHover";
 
-export default function Armory () {
-    const {Style: ParentStyle} = useContext(DetailsProvider);
-    const {data, setCoursorPosition} = useContext(CharacterContext);
+export const HoverContext = createContext();
+
+export default function Armory() {
+    const { Style: ParentStyle } = useContext(DetailsProvider);
+    const { data } = useContext(CharacterContext);
+    const [hoverItem, setHoverItem] = useState(null);
+    const [coursorPosition, setCoursorPosition] = useState({ x: 0, y: 0 });
 
     return (
-        <section className={`${ParentStyle.section} ${Style.parentSection}`}>
+        <HoverContext.Provider value={{ hoverItem, setHoverItem, coursorPosition }}>
+            <section className={`${ParentStyle.section} ${Style.parentSection}`}>
+                <h1 style={{ fontSize: "2.4rem", marginBottom: "1rem" }}>Armory</h1>
 
-            <h1 style={{fontSize: "2.4rem", marginBottom: "1rem"}}>Armory</h1>
-
-            <div 
-                className={`${ParentStyle["inner-section"]} ${Style.main}`}
-                onMouseMove={(e) => setCoursorPosition({x: e.clientX, y : e.clientY })} 
-            >
-                <div className={Style.bgLayer}></div>
-                <div className={Style.container}>
-                    <ItemsTab1 />
-                    <img className={Style.charImg} src={data.media.charImg} alt={`${data?.name}'s Character Image`} />
-                    <ItemsTab2 />
-
+                <div
+                    className={`${ParentStyle["inner-section"]} ${Style.main}`}
+                    onMouseMove={(e) => setCoursorPosition({ x: e.clientX, y: e.clientY })}>
+                    <div className={Style.bgLayer}></div>
+                    <div className={Style.container}>
+                        <ItemsTab1 />
+                        <img
+                            className={Style.charImg}
+                            src={data.media.charImg}
+                            alt={`${data?.name}'s Character Image`}
+                        />
+                        <ItemsTab2 />
+                    </div>
+                    <ItemsTab3 />
                 </div>
-                <ItemsTab3 />
-            </div>
 
-        </section>
-    )
+                <ArmoryItemHover />
+            </section>
+        </HoverContext.Provider>
+    );
 }
 
 function ItemsTab1() {
-    return(
+    return (
         <div className={Style.items}>
             <ItemGenerator name={"head"} />
             <ItemGenerator name={"neck"} />
@@ -42,13 +51,12 @@ function ItemsTab1() {
             <ItemGenerator name={"shirt"} />
             <ItemGenerator name={"tabard"} />
             <ItemGenerator name={"wrist"} />
-
         </div>
-    )
+    );
 }
 
 function ItemsTab2() {
-    return(
+    return (
         <div className={Style.items}>
             <ItemGenerator name={"hands"} />
             <ItemGenerator name={"waist"} />
@@ -59,34 +67,33 @@ function ItemsTab2() {
             <ItemGenerator name={"trinket1"} />
             <ItemGenerator name={"trinket2"} />
         </div>
-    )
-
+    );
 }
 
 function ItemsTab3() {
-    return(
+    return (
         <div className={Style.handItems}>
             <ItemGenerator name={"wep"} />
             <ItemGenerator name={"offHand"} />
         </div>
-    )
-
+    );
 }
 
-
 function ItemGenerator({ name }) {
-    const { data, setHoverItem } = useContext(CharacterContext);
+    const { data } = useContext(CharacterContext);
+    const { setHoverItem } = useContext(HoverContext);
     const { gear: items } = data;
-    const item = items?.[name]
+    const item = items?.[name];
 
-    if (!item) return (<img className={Style.itemImg} src={fallback_img} />);
-    if (name.length <= 2) return (<img className={Style.itemImg} src={fallback_img} />);
-    if(item) return (
-        <img 
-            className={Style.itemImg} 
-            src={item?.media ? item?.media : fallback_img } 
-            onMouseEnter={() => setHoverItem(item)}
-            onMouseLeave={() => setHoverItem(null)}
-        />
-    );
+    if (!item) return <img className={Style.itemImg} src={fallback_img} />;
+    if (name.length <= 2) return <img className={Style.itemImg} src={fallback_img} />;
+    if (item)
+        return (
+            <img
+                className={Style.itemImg}
+                src={item?.media ? item?.media : fallback_img}
+                onMouseEnter={() => setHoverItem(item)}
+                onMouseLeave={() => setHoverItem(null)}
+            />
+        );
 }
