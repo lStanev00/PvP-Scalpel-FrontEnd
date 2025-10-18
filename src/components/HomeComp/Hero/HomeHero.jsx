@@ -8,11 +8,7 @@ export default function HomeHero() {
             <div className={Style.overlay}></div>
 
             <div className={Style.content}>
-                <img
-                    className={Style.logo}
-                    src="/logo/logo_resized.png"
-                    alt="PvP Scalpel Logo"
-                />
+                <img className={Style.logo} src="/logo/logo_resized.png" alt="PvP Scalpel Logo" />
                 <h1>PvP Scalpel</h1>
                 <p>
                     Precision. Performance. Power.
@@ -21,13 +17,18 @@ export default function HomeHero() {
                 </p>
 
                 <div className={Style.actions}>
-                    <a href="https://discord.gg/yourInviteHere" className={`${Style.btn} ${Style.discord}`}>
+                    <a
+                        href="https://discord.gg/yourInviteHere"
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`${Style.btn} ${Style.discord}`}>
+                        <span>Join Discord</span>
                         <FaDiscord className={Style.icon} />
-                        Join Discord
                     </a>
+
                     <a href="/recruitment" className={`${Style.btn} ${Style.guild}`}>
+                        <span>Join the Guild</span>
                         <GiBroadsword className={Style.icon} />
-                        Join the Guild
                     </a>
                 </div>
             </div>

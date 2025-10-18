@@ -126,40 +126,66 @@ p {
 }
 
 .btn {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.7rem 1.4rem;
-    border-radius: 8px;
+    gap: 0.6rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 10px;
     font-weight: 600;
-    font-size: clamp(0.9rem, 1vw, 1rem);
+    font-size: 1rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     text-decoration: none;
-    transition: all 0.25s ease;
-    border: 1px solid transparent;
+    user-select: none;
 }
 
-.icon {
-    font-size: 1.1rem;
+.btn span {
+    position: relative;
+    z-index: 2;
 }
 
+.btn .icon {
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 1.2rem;
+    opacity: 0.5;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+
+/* Discord Button */
 .discord {
-    background: linear-gradient(145deg, #5865f2, #4752c4);
+    background: linear-gradient(135deg, #5865f2, #4048d6);
     color: #fff;
-    box-shadow: 0 0 10px rgba(88, 101, 242, 0.25);
+    box-shadow: 0 0 10px rgba(88,101,242,0.4);
 }
 
 .discord:hover {
-    box-shadow: 0 0 20px rgba(88, 101, 242, 0.7);
+    box-shadow: 0 0 25px rgba(88,101,242,0.8);
     transform: translateY(-2px);
 }
 
+.discord:hover .icon {
+    transform: rotate(-10deg) scale(1.2);
+    opacity: 0.9;
+}
+
+/* Guild Button */
 .guild {
-    background: linear-gradient(145deg, #e6b800, #cc9900);
-    color: #1c1c1c;
-    box-shadow: 0 0 10px rgba(255, 210, 70, 0.25);
+    background: linear-gradient(135deg, #ffb300, #ff8800);
+    color: #1a1a1a;
+    box-shadow: 0 0 10px rgba(255,180,0,0.35);
 }
 
 .guild:hover {
-    box-shadow: 0 0 20px rgba(255, 210, 70, 0.7);
+    box-shadow: 0 0 25px rgba(255,180,0,0.8);
     transform: translateY(-2px);
+}
+
+.guild:hover .icon {
+    transform: rotate(10deg) scale(1.2);
+    opacity: 0.9;
 }
