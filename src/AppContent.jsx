@@ -31,15 +31,7 @@ export default function AppContent() {
     return (
         // <Router>
         <>
-        <div
-        className="page-wrapper"
-        style={{
-            backgroundImage:"url('/backgrounds/main_background.png')",
-            backgroundSize: "100% auto",
-            backgroundPosition: "center",
-            backgroundBlendMode: "multiply"
-        }}
-        >
+        <div className="page-wrapper">
             <Navigation />
 
             <main>
