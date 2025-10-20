@@ -40,9 +40,9 @@ export default function AchevementsSection() {
     if (achievements && seasonalAchives) return(
     <>
             {seasonalAchives.size > 1 && (
-                <div className={Style["section"]}> 
+                // <div className={Style["section"]}> 
                     <SeasonalPagination seasonalAchievesMap={seasonalAchives} />
-                </div>
+                // </div>
 
                 )}
     </>

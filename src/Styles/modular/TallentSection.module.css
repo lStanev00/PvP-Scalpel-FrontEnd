@@ -1,51 +1,101 @@
-.main {
-    padding: 2rem 3rem;
-    background-color: rgba(30, 41, 59, 0.75);
-    border-radius: 12px;
-    padding-top: 1rem;
-}
-
-.main h3 {
-    font-size: 2.4rem;
-    text-align: center;
-    color: gold;
-    text-shadow: 0 0 10px #000, 0 0 2px #ffc400;
-    margin-bottom: 1rem;
-}
-
-.content {
-    background: linear-gradient(145deg, rgba(15, 23, 42, 0.85), rgba(20, 20, 40, 0.9));
-    border: 2px solid rgba(255, 204, 0, 0.6);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.2), 0 0 12px rgba(0, 0, 0, 0.5);
+.section {
     display: flex;
     flex-direction: column;
-
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 360px;
+    padding: 18px 20px 22px 20px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(15, 20, 35, 0.96), rgba(10, 14, 28, 0.92));
+    box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.12),
+                0 0 14px rgba(0, 0, 0, 0.7);
+    height: fit-content;
 }
 
-
-.content span {
+/* Header title */
+.section h2 {
+    position: relative;
     display: flex;
-    width: fit-content;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.45rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    margin-top: 0.4rem;
+
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 0 6px rgba(255, 225, 120, 0.25),
+        0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+.iconHeader {
+    color: #facc15;
+    font-size: 1.6rem;
+    filter: drop-shadow(0 0 6px rgba(255, 204, 0, 0.4));
+}
+
+.section h2::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+    box-shadow: 0 0 10px rgba(255, 200, 50, 0.3);
+}
+
+/* Inner card wrapper */
+.inner {
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 10px;
+    background: rgba(20, 25, 40, 0.85);
+    border: 1px solid rgba(255, 204, 0, 0.12);
+    box-shadow: inset 0 0 6px rgba(255, 204, 0, 0.05);
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #1abc9c;;
 }
 
-.content button {
-    font-size: 1.2rem;
-}
-
-.charInfo {
+/* Spec class + spec row */
+.specs {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
     gap: 1rem;
 }
-.charInfo img {
+
+.specCard {
+    flex: 1;
+    background: rgba(51, 65, 85, 0.75);
+    border-radius: 8px;
+    border: 2px solid rgba(255, 204, 0, 0.25);
+    text-align: center;
+    padding: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    color: #ffda6b;
+    font-weight: 600;
+    font-size: 1rem;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
+}
+
+.specCard img {
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
@@ -54,43 +104,41 @@
     background: #1e1e2e;
 }
 
-.charInfo span {
-    font-size: 1.2rem;
-    color: #ffda6b;
-    font-weight: bold;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-    background-color: rgba(51, 65, 85, 0.75);
-    width: 50%;
-    padding: 1rem;
-    border-radius: 6px;
-    text-align: center;
-}
-
-
+/* Spec name below */
 .talentSpec {
-    margin-top: 1rem;
-    font-size: 1.4rem;
+    margin-top: 0.4rem;
+    font-size: 1.5rem;
     color: #1abc9c;
     letter-spacing: 0.5px;
-    text-shadow: 0 0 3px #1a7237;
+    text-shadow: 0 0 4px #157b5d;
     text-align: center;
-    font-size: 1.7rem;
 }
 
-.content button {
-    margin-top: 1rem;
-    font-size: 1.2rem;
+/* Copy button */
+.copyBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     background: linear-gradient(to bottom, #00c3ff, #0066ff);
     border: none;
-    padding: 0.7rem 1.5rem;
+    padding: 0.8rem 1.6rem;
     color: white;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 195, 255, 0.3);
     transition: transform 0.15s ease, background 0.3s ease;
 }
 
-.content button:hover {
+.copyBtn:hover {
     transform: scale(1.05);
     background: linear-gradient(to bottom, #33d4ff, #0044cc);
+    box-shadow: 0 0 14px rgba(0, 195, 255, 0.4);
+}
+
+.copyIcon {
+    font-size: 1.2rem;
 }
