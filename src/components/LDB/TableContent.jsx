@@ -55,7 +55,7 @@ export default function TableContent({ page, content, refs }) {
                                         <td>
                                             <b>{char?.spec}</b> ({char?.class})
                                         </td>
-                                        <td>{rating}</td>
+                                        <td className="rating-box ">{rating}</td>
                                         <CharXP key={rank} XP={char?.XP} />
                                     </tr>
                                 );
@@ -113,7 +113,7 @@ export default function TableContent({ page, content, refs }) {
                                         <td>
                                             <b>{char?.spec}</b> ({char?.class})
                                         </td>
-                                        <td>{rating}</td>
+                                        <td className="rating-box">{rating}</td>
                                     </tr>
                                 );
                             })}
@@ -169,7 +169,7 @@ export default function TableContent({ page, content, refs }) {
                                         <td>
                                             <b>{char?.activeSpec?.name}</b> ({char?.class?.name})
                                         </td>
-                                        <td>{char?.rating?.["2v2"]?.currentSeason?.rating}</td>
+                                        <td className="rating-box">{char?.rating?.["2v2"]?.currentSeason?.rating}</td>
                                         <CharXP XP={char?.XP} />
                                     </tr>
                                 );
@@ -226,7 +226,7 @@ export default function TableContent({ page, content, refs }) {
                                         <td>
                                             <b>{char?.activeSpec?.name}</b> ({char?.class?.name})
                                         </td>
-                                        <td>{char?.rating?.["3v3"]?.currentSeason?.rating}</td>
+                                        <td className="rating-box">{char?.rating?.["3v3"]?.currentSeason?.rating}</td>
                                         <CharXP XP={char?.XP} />
                                     </tr>
                                 );
@@ -283,7 +283,7 @@ export default function TableContent({ page, content, refs }) {
                                         <td>
                                             <b>{char?.activeSpec?.name}</b> ({char?.class?.name})
                                         </td>
-                                        <td>{char?.rating?.rbg?.currentSeason?.rating ?? "—"}</td>
+                                        <td className="rating-box">{char?.rating?.rbg?.currentSeason?.rating ?? "—"}</td>
                                         <CharXP key={rank} XP={char?.XP} />
                                     </tr>
                                 );

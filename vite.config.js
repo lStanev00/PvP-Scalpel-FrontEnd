@@ -8,8 +8,8 @@ export default defineConfig({
   server: {
     proxy :{
       "/api" : {
-        // target: "https://api.pvpscalpel.com",
-        target: "http://localhost:59535",
+        target: "https://api.pvpscalpel.com",
+        // target: "http://localhost:59535",
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/api/, "")
