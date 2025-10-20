@@ -8,6 +8,10 @@ export default defineConfig({
   server: {
     proxy :{
       "/api" : {
+<<<<<<< HEAD
+=======
+        // target: "https://api.pvpscalpel.com",
+>>>>>>> 42af99c54e636fc19d3f4a9c00097f65532698a2
         target: "http://localhost:59535",
         changeOrigin: true,
         secure: true,

@@ -1,29 +1,24 @@
-export default function LDBHeaderContent({  content  }) {
+import Style from "../../Styles/modular/LDBHeader.module.css"
 
-    if (content == `blitzContent`){
-        return (<>
-            <h1 className="leaderboard-title">PvP Leaderboard</h1>
-            <h3 id="bracket-title">-\* Blitz BG */-</h3>
-            </>)
-} else if (content ===`shuffleContent`) {
-    return (<>
-        <h1 className="leaderboard-title">PvP Leaderboard</h1>
-        <h3 id="bracket-title">-\* Solo Shuffle */-</h3>
-        </>)
-} else if (content ===`2v2Content`) {
-    return (<>
-        <h1 className="leaderboard-title">PvP Leaderboard</h1>
-        <h3 id="bracket-title">-\* 2V2 */-</h3>
-        </>)
-} else if (content ===`3v3Content`) {
-    return (<>
-        <h1 className="leaderboard-title">PvP Leaderboard</h1>
-        <h3 id="bracket-title">-\* 3V3 */-</h3>
-        </>)
-} else if (content ===`BGContent`) {
-    return (<>
-        <h1 className="leaderboard-title">PvP Leaderboard</h1>
-        <h3 id="bracket-title">-\* Rated BG */-</h3>
-        </>)
-}
+export default function LDBHeaderContent({ content }) {
+    const bracketNames = {
+        blitzContent: "Blitz Battleground",
+        shuffleContent: "Solo Shuffle",
+        "2v2Content": "2v2 Arena",
+        "3v3Content": "3v3 Arena",
+        BGContent: "Rated Battleground",
+    }
+
+    const bracketTitle = bracketNames[content] || "Leaderboard"
+
+    return (
+        <div className={Style.headerWrapper}>
+            <h1 className={Style.mainTitle}>PvP Leaderboard</h1>
+            <div className={Style.subWrapper}>
+                <span className={Style.subLine}></span>
+                <h3 className={Style.subTitle}>{bracketTitle}</h3>
+                <span className={Style.subLine}></span>
+            </div>
+        </div>
+    )
 }

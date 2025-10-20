@@ -1,49 +1,47 @@
 import httpFetch from "../../../helpers/httpFetch.js";
-export default function TwosBTN({  setData, setPage, setContent  }){
+import { GiBattleAxe } from "react-icons/gi";
+import Style from "./BracketButton.module.css";
+
+export default function TwosBTN({ setData, setPage, setContent }) {
     const clickHandler = async () => {
         setData(() => undefined);
         const res = await httpFetch(`/LDB/2v2`);
         let reqData = await res.json();
         let rank = 1;
         const paginatedData = [];
-    
+
         for (let i = 0; i < reqData.length; i += 25) {
             const page = reqData.slice(i, i + 25);
-            let pageMap = []
-                for (const char of page) {
-                   
-                   const achieves = char?.achieves?.['2s'] ?? undefined;
+            let pageMap = [];
+            for (const char of page) {
+                const achieves = char?.achieves?.["2s"] ?? undefined;
 
+                if (achieves) {
+                    try {
+                        const description = achieves.description
+                            .replace("Earn a ", "")
+                            .replace(" personal rating in the 2v2 bracket of the arena.", "");
 
-                    if(achieves){
-
-                        try {
-                            const description = (achieves.description)
-                                .replace("Earn a ", "")
-                                .replace(" personal rating in the 2v2 bracket of the arena.", "");
-                            
-                            char.XP = {
-                                name: "Just the Two of Us:",
-                                description
-                            }
-                            
-                        } catch (error) {
-                        }
-
-                        
-                    };
-                    char.ladderRank = rank;
-                    pageMap.push(char)
-                    rank = rank + 1;
+                        char.XP = {
+                            name: "Just the Two of Us:",
+                            description,
+                        };
+                    } catch (error) {}
                 }
-                paginatedData.push(pageMap);
-            
+                char.ladderRank = rank;
+                pageMap.push(char);
+                rank = rank + 1;
             }
-            setData(paginatedData);
-            setPage(paginatedData[0]);
-            setContent(`2v2Content`);
-    }
-    return(
-        <button onClick={clickHandler} id="twos" className="bracket-btn">2v2 Arena</button>
-    )
+            paginatedData.push(pageMap);
+        }
+        setData(paginatedData);
+        setPage(paginatedData[0]);
+        setContent(`2v2Content`);
+    };
+    return (
+        <button onClick={clickHandler} id="twos" className={Style.button}>
+            <GiBattleAxe className={Style.icon} />
+            <span className={Style.label}>2v2 Arena</span>
+        </button>
+    );
 }

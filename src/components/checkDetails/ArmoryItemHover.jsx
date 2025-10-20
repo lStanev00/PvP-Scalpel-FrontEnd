@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import Style from '../../Styles/modular/ArmoryItemHover.module.css';
-import { CharacterContext } from '../../pages/CharDetails';
+import { HoverContext } from './Armory';
 
 export default function ArmoryItemHover() {
-    const {hoverItem: item, coursorPosition} = useContext(CharacterContext);
+    const {hoverItem: item, coursorPosition} = useContext(HoverContext);
 
     if (!item) return null;
 
