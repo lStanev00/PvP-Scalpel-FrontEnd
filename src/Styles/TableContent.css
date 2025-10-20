@@ -3,12 +3,17 @@
     --bg-row: rgba(25, 30, 50, 0.94);
     --bg-row-alt: rgba(32, 36, 60, 0.94);
     --bg-row-hover: rgba(40, 45, 70, 0.96);
-    --bg-header: linear-gradient(90deg, rgba(28,28,46,0.96), rgba(20,20,35,0.94));
-    --bg-podium-1: linear-gradient(90deg, rgba(255,215,0,0.20), rgba(255,255,255,0.05));
-    --bg-podium-2: linear-gradient(90deg, rgba(192,192,192,0.20), rgba(255,255,255,0.05));
-    --bg-podium-3: linear-gradient(90deg, rgba(205,127,50,0.20), rgba(255,255,255,0.05));
-    --border-color: rgba(255,255,255,0.08);
-    --divider-color: rgba(255,255,255,0.05);
+    --bg-header: linear-gradient(
+        90deg,
+        rgba(14, 18, 30, 0.96),
+        rgba(0, 245, 212, 0.12),
+        rgba(14, 18, 30, 0.96)
+    );
+    --bg-podium-1: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 255, 255, 0.05));
+    --bg-podium-2: linear-gradient(90deg, rgba(192, 192, 192, 0.2), rgba(255, 255, 255, 0.05));
+    --bg-podium-3: linear-gradient(90deg, rgba(205, 127, 50, 0.2), rgba(255, 255, 255, 0.05));
+    --border-color: rgba(255, 255, 255, 0.08);
+    --divider-color: rgba(255, 255, 255, 0.05);
     --radius: 10px;
     --color-text: #eaeef6;
     --color-muted: #98a3c7;
@@ -16,25 +21,17 @@
     --color-gold: #ffd700;
     --color-silver: #c0c0c0;
     --color-bronze: #cd7f32;
-    --font-base: 'Inter', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --font-base: "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
     --avatar: 42px;
     --spacer-y: 0.9rem;
     --spacer-x: 1rem;
     --gap-y: 12px;
 
     /* Additional accents */
-    --color-header-accent: #ffd540;
+    --color-header-accent: #d8ffe8;
+    --header-border: 0 2px 0 rgba(0, 245, 212, 0.25);
 }
-
-/*
- * Global leaderboard stylesheet for PvP Scalpel.
- * This file embraces the dark, polished aesthetic seen in your new site design.
- * Rows are separated into individual “cards” with subtle shadows and gradients,
- * top competitors are accented with gold/silver/bronze tones, and a sticky
- * header stays visible on scroll. The variables above allow quick
- * customisation of colours, spacing and sizes.
- */
 
 .leaderboard-table {
     width: 100%;
@@ -59,6 +56,7 @@
     border-bottom: 1px solid var(--divider-color);
     text-align: center;
     white-space: nowrap;
+    box-shadow: var(--header-border);
 }
 
 /* Body rows: each row becomes an individual card separated by gaps. */
@@ -112,16 +110,36 @@
     animation: leaderboard-fade-in 0.6s ease-out forwards;
 }
 
-.leaderboard-table tbody tr:nth-child(1) { animation-delay: 0.05s; }
-.leaderboard-table tbody tr:nth-child(2) { animation-delay: 0.10s; }
-.leaderboard-table tbody tr:nth-child(3) { animation-delay: 0.15s; }
-.leaderboard-table tbody tr:nth-child(4) { animation-delay: 0.20s; }
-.leaderboard-table tbody tr:nth-child(5) { animation-delay: 0.25s; }
-.leaderboard-table tbody tr:nth-child(6) { animation-delay: 0.30s; }
-.leaderboard-table tbody tr:nth-child(7) { animation-delay: 0.35s; }
-.leaderboard-table tbody tr:nth-child(8) { animation-delay: 0.40s; }
-.leaderboard-table tbody tr:nth-child(9) { animation-delay: 0.45s; }
-.leaderboard-table tbody tr:nth-child(10) { animation-delay: 0.50s; }
+.leaderboard-table tbody tr:nth-child(1) {
+    animation-delay: 0.05s;
+}
+.leaderboard-table tbody tr:nth-child(2) {
+    animation-delay: 0.1s;
+}
+.leaderboard-table tbody tr:nth-child(3) {
+    animation-delay: 0.15s;
+}
+.leaderboard-table tbody tr:nth-child(4) {
+    animation-delay: 0.2s;
+}
+.leaderboard-table tbody tr:nth-child(5) {
+    animation-delay: 0.25s;
+}
+.leaderboard-table tbody tr:nth-child(6) {
+    animation-delay: 0.3s;
+}
+.leaderboard-table tbody tr:nth-child(7) {
+    animation-delay: 0.35s;
+}
+.leaderboard-table tbody tr:nth-child(8) {
+    animation-delay: 0.4s;
+}
+.leaderboard-table tbody tr:nth-child(9) {
+    animation-delay: 0.45s;
+}
+.leaderboard-table tbody tr:nth-child(10) {
+    animation-delay: 0.5s;
+}
 
 /* Table cells: internal dividers provide definition between columns */
 .leaderboard-table tbody td {
@@ -174,7 +192,6 @@
     transform: scale(1.12);
 }
 
-
 /* Responsive layout adjustments */
 @media (max-width: 960px) {
     .leaderboard-table tbody td {
@@ -194,8 +211,10 @@
 }
 
 @media (max-width: 600px) {
-    .leaderboard-table thead th:nth-child(4), .leaderboard-table thead th:nth-child(5),
-    .leaderboard-table tbody td:nth-child(4), .leaderboard-table tbody td:nth-child(5) {
+    .leaderboard-table thead th:nth-child(4),
+    .leaderboard-table thead th:nth-child(5),
+    .leaderboard-table tbody td:nth-child(4),
+    .leaderboard-table tbody td:nth-child(5) {
         display: none;
     }
     .leaderboard-table tbody td:nth-child(2) {
@@ -224,19 +243,23 @@
 }
 
 .leaderboard-table tbody td:nth-child(4).visible::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -150%;
     width: 300%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
     animation: shimmer 2.8s linear infinite;
 }
 
 @keyframes shimmer {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(50%); }
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(50%);
+    }
 }
 
 /* Rank color inside podium rows */
@@ -251,18 +274,33 @@
 }
 
 @keyframes podium-glow {
-    0%, 100% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.3); }
-    50% { box-shadow: 0 0 18px rgba(255, 215, 0, 0.6); }
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 18px rgba(255, 215, 0, 0.6);
+    }
 }
 
 @keyframes silver-glow {
-    0%, 100% { box-shadow: 0 0 8px rgba(192, 192, 192, 0.25); }
-    50% { box-shadow: 0 0 18px rgba(192, 192, 192, 0.45); }
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(192, 192, 192, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 18px rgba(192, 192, 192, 0.45);
+    }
 }
 
 @keyframes bronze-glow {
-    0%, 100% { box-shadow: 0 0 8px rgba(205, 127, 50, 0.25); }
-    50% { box-shadow: 0 0 18px rgba(205, 127, 50, 0.45); }
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(205, 127, 50, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 18px rgba(205, 127, 50, 0.45);
+    }
 }
 
 .podium-1 {
@@ -277,18 +315,17 @@
     animation: bronze-glow 3s ease-in-out infinite;
 }
 
-
 /* Podium Backgrounds */
 .podium-1 {
-    background: linear-gradient(90deg, rgba(255,215,0,0.18), rgba(255,255,255,0.06));
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.18), rgba(255, 255, 255, 0.06));
     animation: podium-shine 6s linear infinite;
 }
 .podium-2 {
-    background: linear-gradient(90deg, rgba(192,192,192,0.18), rgba(255,255,255,0.06));
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.18), rgba(255, 255, 255, 0.06));
     animation: podium-shine 6s linear infinite;
 }
 .podium-3 {
-    background: linear-gradient(90deg, rgba(205,127,50,0.18), rgba(255,255,255,0.06));
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.18), rgba(255, 255, 255, 0.06));
     animation: podium-shine 6s linear infinite;
 }
 
@@ -302,18 +339,99 @@
     }
 }
 
-.podium-1, .podium-2, .podium-3 {
+.podium-1,
+.podium-2,
+.podium-3 {
     background-size: 300% 100%;
-    box-shadow: 0 0 10px rgba(255,255,255,0.15);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.podium-1:hover, .podium-2:hover, .podium-3:hover {
+.podium-1:hover,
+.podium-2:hover,
+.podium-3:hover {
     transform: translateY(-3px);
-    box-shadow: 0 0 22px rgba(255,255,255,0.25);
+    box-shadow: 0 0 22px rgba(255, 255, 255, 0.25);
 }
 
 /* Rank text color */
-.podium-1 td:nth-child(2) b { color: #FFD700; }
-.podium-2 td:nth-child(2) b { color: #C0C0C0; }
-.podium-3 td:nth-child(2) b { color: #CD7F32; }
+.podium-1 td:nth-child(2) b {
+    color: #ffd700;
+}
+.podium-2 td:nth-child(2) b {
+    color: #c0c0c0;
+}
+.podium-3 td:nth-child(2) b {
+    color: #cd7f32;
+}
+
+/* Rating shimmer effect (always active) */
+.podium-1 > .rating-box,
+.podium-2 > .rating-box,
+.podium-3 > .rating-box {
+    position: relative;
+    overflow: hidden;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 600;
+    color: #00f5d4;
+}
+
+.podium-1 > .rating-box::after,
+.podium-2 > .rating-box::after,
+.podium-3 > .rating-box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(60deg, transparent, rgba(0, 245, 212, 0.199), transparent);
+    animation: shimmer 9s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(23%);
+        opacity: 0.3;
+    }
+    10% {
+        transform: translateX(10%);
+        opacity: 0.65;
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(30%);
+        opacity: 0.7;
+    }
+    65% {
+        background: linear-gradient(45deg, transparent, rgba(0, 245, 212, 0.199), transparent);
+        transform: translateX(24%);
+        opacity: 0.6;
+    }
+    75% {
+        background: linear-gradient(55deg, transparent, rgba(0, 245, 212, 0.199), transparent);
+        transform: translateX(25%);
+        opacity: 0.53;
+    }
+    80% {
+        background: linear-gradient(57deg, transparent, rgba(0, 245, 212, 0.199), transparent);
+        transform: translateX(27%);
+        opacity: 0.4;
+    }
+    90% {
+        transform: translateX(27%);
+        opacity: 0.35;
+    }
+    95% {
+        background: linear-gradient(45deg, transparent, rgba(0, 245, 212, 0.199), transparent);
+        transform: translateX(25%);
+        opacity: 0.35;
+    }
+    100% {
+        background: linear-gradient(50deg, transparent, rgba(0, 245, 212, 0.199), transparent);
+        transform: translateX(23%);
+        opacity: 0.3;
+    }
+}
