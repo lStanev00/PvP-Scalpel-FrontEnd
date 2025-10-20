@@ -12,7 +12,7 @@ export default function TableContent({ page, content, refs }) {
         try {
             return (
                 <>
-                    <br />
+                    
 
                     <table className="leaderboard-table" id="leaderboard">
                         <thead>
@@ -71,7 +71,7 @@ export default function TableContent({ page, content, refs }) {
         try {
             return (
                 <>
-                    <br />
+                    
 
                     <table className="leaderboard-table" id="leaderboard">
                         <thead>
@@ -128,7 +128,7 @@ export default function TableContent({ page, content, refs }) {
         try {
             return (
                 <>
-                    <br />
+                    
 
                     <table className="leaderboard-table" id="leaderboard">
                         <thead>
@@ -185,7 +185,7 @@ export default function TableContent({ page, content, refs }) {
         try {
             return (
                 <>
-                    <br />
+                    
 
                     <table className="leaderboard-table" id="leaderboard">
                         <thead>
@@ -242,7 +242,7 @@ export default function TableContent({ page, content, refs }) {
         try {
             return (
                 <>
-                    <br />
+                    
 
                     <table className="leaderboard-table" id="leaderboard">
                         <thead>

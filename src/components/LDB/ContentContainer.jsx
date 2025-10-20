@@ -19,18 +19,28 @@ export default function ContentContainer({ data, content, page, setPage }) {
             }`}
             style={{ visibility: content ? "visible" : "hidden" }}
         >
-            {/* Main Table aStnd Search */}
-            <div className={Style.mainContent}>
+
+            <div className={Style.heroLDB}>
+
                 <LDBHeaderContent content={content} />
                 <LDBSearch data={data} setPage={setPage} refs={refs} />
-                <TableContent page={page} content={content} refs={refs} />
-                <PaginatioContainer data={data} page={page} setPage={setPage} />
+
+            </div>
+
+
+            {/* Main Table aStnd Search */}
+            <div className={Style.mainContent}>
+                <div className={Style.MainLDB}>
+
+                    <TableContent page={page} content={content} refs={refs} />
+                    <PaginatioContainer data={data} page={page} setPage={setPage} />
+                </div>
+                <aside className={Style.sidePanel}>
+                    <WeeklyTop content={content} />
+                </aside>
             </div>
 
             {/* Sticky Weekly Top Sidebar */}
-            <aside className={Style.sidePanel}>
-                <WeeklyTop content={content} />
-            </aside>
         </section>
     );
 }

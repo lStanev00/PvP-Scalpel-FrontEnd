@@ -60,6 +60,7 @@
   background: rgba(255, 255, 255, 0.06);
   transform: translateY(-1px);
   box-shadow: 0 0 10px rgba(0, 245, 212, 0.2);
+  cursor: pointer;
 }
 
 /* Gold highlights for top 3 */

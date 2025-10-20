@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import Style from "../../Styles/modular/WeeklyTop.module.css";
 import { UserContext } from "../../hooks/ContextVariables.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function WeeklyTop({ content }) {
     const { httpFetch } = useContext(UserContext);
     const bracket = content.replace("Content", "");
+    const navigate = useNavigate();
 
     const [top, setTop] = useState([]);
     const [updated, setUpdated] = useState(null);
@@ -52,8 +54,10 @@ export default function WeeklyTop({ content }) {
                 <p className={Style.empty}>No weekly data.</p>
             ) : (
                 <ul className={Style.list}>
-                    {top.map((p, idx) => (
-                        <li
+                    {top.map((p, idx) => {
+                        const parts = p?.playerSearch.split(":");
+                        return <li
+                            onClick={() => navigate(`/check/${parts[2]}/${parts[1]}/${parts[0]}`)}
                             key={`${p._id || p.name}-${idx}`}
                             className={`${Style.item} ${idx < 3 ? Style.podium : ""}`}>
                             <div className={Style.rank}>#{idx + 1}</div>
@@ -67,9 +71,6 @@ export default function WeeklyTop({ content }) {
                             />
                             <div className={Style.meta}>
                                 <div className={Style.name}>{p.name}</div>
-                                {/* <div className={Style.realm}>
-                  {p.playerRealm?.name} • {p.server?.toUpperCase?.()}
-                </div> */}
                             </div>
                             <div className={Style.rating}>
                                 <span className={Style.startRating}>{p?.startRating || 0}</span>
@@ -80,8 +81,8 @@ export default function WeeklyTop({ content }) {
                                     {p?.result > 0 ? `+${p?.result}` : p?.result}
                                 </span>
                             </div>
-                        </li>
-                    ))}
+                        </li>;
+                    })}
                 </ul>
             )}
 

@@ -10,8 +10,8 @@ export default function TwosBTN({ setData, setPage, setContent }) {
         let rank = 1;
         const paginatedData = [];
 
-        for (let i = 0; i < reqData.length; i += 25) {
-            const page = reqData.slice(i, i + 25);
+        for (let i = 0; i < reqData.length; i += 15) {
+            const page = reqData.slice(i, i + 15);
             let pageMap = [];
             for (const char of page) {
                 const achieves = char?.achieves?.["2s"] ?? undefined;

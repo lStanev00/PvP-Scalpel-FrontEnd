@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import paginationStyles from '../../Styles/modular/pagination.module.css';
+import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight, FaAngleDoubleRight } from "react-icons/fa";
 
 export default function PaginatioContainer ({ data, page ,setPage }) {
     const [pageCounter, setCounter] = useState(1); 
@@ -53,13 +54,47 @@ export default function PaginatioContainer ({ data, page ,setPage }) {
 
     if (!data) return (<></>);
 
-    return (
-                <div className={paginationStyles["pagination-container"]}>
-                    <button onClick={firstPage} className={paginationStyles["pagination-btn"]} disabled = {pageCounter === 1}>« First</button>
-                    <button onClick={prevPage} className={paginationStyles["pagination-btn"]} disabled = {pageCounter === 1}>‹ Prev</button>
-                    <span className={paginationStyles["pagination-info"]}>Page {pageCounter} of {data.length}</span>
-                    <button onClick={nextPage} disabled = {pageCounter === (data.length)} className={paginationStyles["pagination-btn"] }>Next ›</button>
-                    <button onClick={lastPage} disabled = {pageCounter === (data.length)} className={paginationStyles["pagination-btn"]}>Last »</button>
-                </div>
-    )
+   return (
+        <div className={paginationStyles.container}>
+            <button
+                onClick={firstPage}
+                className={paginationStyles.btn}
+                disabled={pageCounter === 1}
+            >
+                <FaAngleDoubleLeft className={paginationStyles.icon} />
+                <span>First</span>
+            </button>
+
+            <button
+                onClick={prevPage}
+                className={paginationStyles.btn}
+                disabled={pageCounter === 1}
+            >
+                <FaAngleLeft className={paginationStyles.icon} />
+                <span>Prev</span>
+            </button>
+
+            <span className={paginationStyles.info}>
+                Page <strong>{pageCounter}</strong> of <strong>{data.length}</strong>
+            </span>
+
+            <button
+                onClick={nextPage}
+                className={paginationStyles.btn}
+                disabled={pageCounter === data.length}
+            >
+                <span>Next</span>
+                <FaAngleRight className={paginationStyles.icon} />
+            </button>
+
+            <button
+                onClick={lastPage}
+                className={paginationStyles.btn}
+                disabled={pageCounter === data.length}
+            >
+                <span>Last</span>
+                <FaAngleDoubleRight className={paginationStyles.icon} />
+            </button>
+        </div>
+    );
 }
