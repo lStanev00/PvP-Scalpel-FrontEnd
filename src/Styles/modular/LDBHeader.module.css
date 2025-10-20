@@ -1,0 +1,110 @@
+.headerWrapper {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+/* Main golden title, same as home page */
+.mainTitle {
+    position: relative;
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #fff8d4 0%, #ffd700 35%, #caa400 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 14px rgba(255, 215, 0, 0.25);
+    transition: all 0.25s ease;
+    margin-bottom: 1.2rem;
+    font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+    font-weight: 700;
+    background: linear-gradient(180deg, #fff 0%, #ffd84a 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.25);
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.mainTitle:hover {
+    filter: brightness(1.15);
+    transform: scale(1.02);
+}
+
+/* Decorative sub header with centered lines */
+.subWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.subTitle {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    color: rgba(230, 230, 255, 0.9);
+    text-shadow: 0 0 8px rgba(0, 245, 212, 0.25);
+}
+
+.subLine {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+    box-shadow: 0 0 10px rgba(255, 200, 50, 0.3);
+    border-radius: 4px;
+}
+
+/* cleaner underglow */
+.headerWrapper::before {
+    content: "";
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 50%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 215, 0, 0.04),
+        transparent 70%
+    );
+    z-index: -1;
+}
+
+@media (max-width: 768px) {
+    .mainTitle {
+        font-size: 2rem;
+    }
+    .subTitle {
+        font-size: 1.1rem;
+    }
+    .subLine {
+        width: 50px;
+    }
+}
+
+/* smooth reveal for bracket switch */
+@keyframes fadeRise {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+.headerWrapper {
+    animation: fadeRise 0.7s ease-out;
+}
+
+.mainTitle {
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.15); /* was 0.25 */
+}

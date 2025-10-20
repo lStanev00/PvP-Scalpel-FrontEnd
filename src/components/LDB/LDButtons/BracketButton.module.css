@@ -1,0 +1,57 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.92rem;
+  color: #eaeaea;
+  background: linear-gradient(180deg, rgba(25, 25, 40, 0.9), rgba(15, 15, 30, 0.95));
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 8px;
+  padding: 0.55rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(3px);
+}
+
+.button:hover {
+  border-color: rgba(255, 215, 0, 0.55);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.active {
+  color: #00f5d4;
+  background: linear-gradient(180deg, rgba(0, 245, 212, 0.15), rgba(0, 245, 212, 0.1));
+  border-color: rgba(0, 245, 212, 0.55);
+  box-shadow: 0 0 14px rgba(0, 245, 212, 0.25), inset 0 0 6px rgba(0, 245, 212, 0.2);
+  transform: scale(1.04);
+  animation: activePulse 3s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(0, 245, 212, 0.25), inset 0 0 6px rgba(0, 245, 212, 0.2); }
+  50% { box-shadow: 0 0 18px rgba(0, 245, 212, 0.45), inset 0 0 10px rgba(0, 245, 212, 0.3); }
+}
+
+.icon {
+  font-size: 1rem;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.4));
+}
+
+.button:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 768px) {
+  .button {
+    font-size: 0.85rem;
+    padding: 0.45rem 1rem;
+  }
+}

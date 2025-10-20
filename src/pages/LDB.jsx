@@ -5,6 +5,7 @@ import ShuffleBTN from "../components/LDB/LDButtons/shuffleButton";
 import TwosBTN from "../components/LDB/LDButtons/twosButton";
 import ThreesBTN from "../components/LDB/LDButtons/threesButton";
 import BGBtn from "../components/LDB/LDButtons/BGButton";
+import Style from "../Styles/modular/LDBMain.module.css";
 
 export default function LDB() {
     const [data, setData] = useState(undefined);
@@ -12,23 +13,22 @@ export default function LDB() {
     const [content, setContent] = useState(undefined);
 
     useEffect(() => {
-        
         const blitzBtn = document.querySelector("#blitz");
 
-        if(blitzBtn) blitzBtn.click();
-    }, [])
+        if (blitzBtn) blitzBtn.click();
+    }, []);
 
     return (
         <>
-        <div className="bracket-buttons">
-            <ShuffleBTN setData={setData} setPage={setPage} setContent={setContent} />
-            <TwosBTN setData={setData} setPage={setPage} setContent={setContent} />
-            <ThreesBTN setData={setData} setPage={setPage} setContent={setContent} />
-            <BlitzBtn setData={setData} setPage={setPage} setContent={setContent} />
-            <BGBtn setData={setData} setPage={setPage} setContent={setContent} />
-        </div>
+            <div className={Style.buttonsWrapper}>
+                <ShuffleBTN setData={setData} setPage={setPage} setContent={setContent} />
+                <TwosBTN setData={setData} setPage={setPage} setContent={setContent} />
+                <ThreesBTN setData={setData} setPage={setPage} setContent={setContent} />
+                <BlitzBtn setData={setData} setPage={setPage} setContent={setContent} />
+                <BGBtn setData={setData} setPage={setPage} setContent={setContent} />
+            </div>
 
-        <ContentContainer data={data} content={content} page={page} setPage={setPage} />
+            <ContentContainer data={data} content={content} page={page} setPage={setPage} />
         </>
     );
-};
+}
