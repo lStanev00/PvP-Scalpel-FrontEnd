@@ -13,7 +13,7 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
         if (!seasonalAchievesMap || seasonalAchievesMap.size <= 1) return;
         const shadowResult = [];
 
-        if (seasonalAchievesMap.size <= 3) {
+        if (seasonalAchievesMap.size <= 2) {
             shadowResult.push([]);
             for (const entry of seasonalAchievesMap.entries()) {
                 shadowResult[0].push(entry);
@@ -24,7 +24,7 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
 
             for (const entry of seasonalAchievesMap.entries()) {
                 if (entry[0] === "noSeason") continue;
-                if (pageAdded >= 2) {
+                if (pageAdded >= 1) {
                     shadowResult.push(pageShadow);
                     pageShadow = [];
                     pageAdded = 0;
