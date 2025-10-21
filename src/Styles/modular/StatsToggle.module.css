@@ -1,0 +1,107 @@
+/****************************************************
+ * PvP Scalpel — Stats Toggle Module
+ * Clean, minimal, cinematic integration
+ ****************************************************/
+
+/* --- CONTAINER --- */
+.statsToggleArea {
+    width: 100%;
+    margin-top: 0.8rem;
+    text-align: center;
+}
+
+/* --- HEADER (Clickable Bar) --- */
+.statsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    padding: 8px 0;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    color: #e8d690;
+    background: rgba(25, 30, 45, 0.45);
+    border-top: 1px solid rgba(255, 215, 0, 0.08);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.05);
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.statsHeader:hover {
+    background: rgba(35, 40, 55, 0.55);
+    color: #ffec96;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.statsHeader.open {
+    background: rgba(30, 35, 50, 0.6);
+    color: #ffd86a;
+}
+
+/* --- COLLAPSIBLE CONTENT --- */
+.statsContent {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: all 0.4s ease;
+}
+
+.statsContent.open {
+    max-height: 300px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 0.6rem;
+}
+
+/* --- TABLE STYLING --- */
+.pvp-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(18, 24, 36, 0.75);
+    backdrop-filter: blur(6px);
+    box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.04);
+}
+
+.pvp-table thead {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.08), rgba(255, 255, 255, 0.04));
+}
+
+.pvp-table th {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffd86a;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.08);
+}
+
+.pvp-table td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    color: #c9d2ff;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pvp-table tr:last-child td {
+    border-bottom: none;
+}
+
+.pvp-table tr:hover td {
+    background: rgba(255, 215, 0, 0.05);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+    .pvp-table th, .pvp-table td {
+        font-size: 0.85rem;
+        padding: 0.4rem;
+    }
+}

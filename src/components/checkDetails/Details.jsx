@@ -1,7 +1,6 @@
 import { useContext, useState, useOptimistic, useRef, useEffect, createContext } from "react";
 import Style from "../../Styles/modular/charDetails.module.css";
 import ReloadBTN from "./reloadBTN.jsx";
-import PvPCards from "./PvPCards.jsx";
 import NewPostForm from "./NewPostForm.jsx";
 import { useSearchParams } from "react-router-dom";
 import { CharacterContext } from "../../pages/CharDetails.jsx";
@@ -11,6 +10,7 @@ import AchevementsSection from "./Achievements.jsx";
 import TalentsSection from "./TallentsSection.jsx";
 import Armory from "./Armory.jsx";
 import CommentsSection from "./CommentsSection.jsx";
+import PvPRatingsSection from "./PvPRatingsSection.jsx";
 
 export const DetailsProvider = createContext();
 
@@ -65,6 +65,26 @@ export function Details() {
             shuffleRatings[bracketKey] = bracketData;
         } else if (bracketKey.includes("blitz")) {
             blitzRatings[bracketKey] = bracketData;
+            const { listAchievements } = data;
+
+            if (
+                listAchievements &&
+                Array.isArray(listAchievements) &&
+                listAchievements.length > 0
+            ) {
+                const strategistExist = listAchievements.find((entry) =>
+                    entry.name.includes("Strategist")
+                );
+                if (strategistExist) {
+                    console.info(strategistExist)
+                    if (blitzRatings[bracketKey]) {
+                        blitzRatings[bracketKey].achieves = {
+                            name: "Strategist",
+                            media: strategistExist?.media,
+                        };
+                    }
+                }
+            }
         } else if (bracketKey == `2v2` || bracketKey == `3v3` || bracketKey == `rbg`) {
             if (
                 (!bracketData?.achieves && bracketData?.currentSeason?.rating === 0) ||
@@ -114,113 +134,13 @@ export function Details() {
                 <UserDataContainer />
 
                 <section className={Style.statsGrid}>
-                    {/* General PvP Ratings Section (2v2, 3v3, RBG) */}
-                    {Object.keys(otherRatings).length > 0 && (
-                        <div className={Style["section"]}>
-                            <h1>PvP Ratings</h1>
-                            <div className={Style["pvp-container"]}>
-                                {Object.entries(otherRatings).map(([key, bracket]) => {
-                                    let title = undefined;
-                                    if (key == `rbg`) {
-                                        title = `Rated Battleground`;
-                                        bracket.achieves = data.achieves?.RBG?.XP;
-                                    } else if (key == `2v2` && data?.achieves?.["2s"]) {
-                                        title = `Arena 2v2`;
-                                        bracket.achieves = data?.achieves["2s"];
-                                    } else if (key == `3v3` && data?.achieves["3s"]) {
-                                        title = `Arena 3v3`;
-                                        bracket.achieves = data?.achieves["3s"];
-                                    }
-                                    if (
-                                        (!bracket?.currentSeason?.title?.media &&
-                                            bracket?.achieves) ||
-                                        title === undefined
-                                    )
-                                        return <></>;
-                                    return (
-                                        <PvPCards
-                                            key={bracket._id}
-                                            title={title}
-                                            bracketData={bracket}
-                                            Style={Style}
-                                        />
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Blitz Section */}
-                    {Object.keys(blitzRatings).length > 0 && (
-                        <div className={Style["section"]}>
-                            <h1>Blitz Ratings</h1>
-                            <div className={Style["pvp-container"]}>
-                                {Object.entries(blitzRatings).map(([key, bracket]) => {
-                                    let [bracketName, charClass, spec] = key.split(`-`);
-                                    const title = spec.replace(/^./, (match) =>
-                                        match.toUpperCase()
-                                    );
-                                    bracket.achieves = data?.achieves.Blitz?.XP;
-                                    return (
-                                        <PvPCards
-                                            key={bracket._id}
-                                            title={title}
-                                            bracketData={bracket}
-                                            Style={Style}
-                                        />
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Solo Shuffle Section */}
-                    {Object.keys(shuffleRatings).length > 0 && (
-                        <div className={Style["section"]}>
-                            <h1>Solo Shuffle Ratings</h1>
-                            <div className={Style["pvp-container"]}>
-                                {Object.entries(shuffleRatings).map(([key, bracket]) => {
-                                    let [bracketName, charClass, spec] = key.split(`-`);
-                                    const title = spec.replace(/^./, (match) =>
-                                        match.toUpperCase()
-                                    );
-                                    return (
-                                        <PvPCards
-                                            key={bracket._id}
-                                            title={title}
-                                            bracketData={bracket}
-                                            Style={Style}
-                                        />
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    )}
-
-                    {Object.keys(otherRatings).length === 0 &&
-                        Object.keys(shuffleRatings).length === 0 &&
-                        Object.keys(otherRatings).length === 0 && (
-                            <div
-                                style={{
-                                    alignItems: "center",
-                                    height: "fit-content",
-                                    background: "rgba(18, 27, 39, 0.75)",
-                                    border: "10px solid rgba(30, 41, 59, 0.75)",
-                                    padding: "5px",
-                                }}
-                                className={Style["section"]}>
-                                <h1
-                                    style={{
-                                        fontSize: "2rem",
-                                        textShadow: "2px 2px rgba(0, 0, 0, 0.25)",
-                                        color: "#1abc9c",
-                                        margin: "0",
-                                    }}>
-                                    There's no PvP Information for that character
-                                </h1>
-                            </div>
-                        )}
-
+                    <PvPRatingsSection
+                        otherRatings={otherRatings}
+                        blitzRatings={blitzRatings}
+                        shuffleRatings={shuffleRatings}
+                        data={data}
+                        Style={Style}
+                    />
                     <StatsChart />
                     <TalentsSection />
                     <Armory />
