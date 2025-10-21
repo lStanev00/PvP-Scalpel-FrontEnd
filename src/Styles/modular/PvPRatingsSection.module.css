@@ -1,37 +1,87 @@
 /****************************************************
- * PvP Scalpel — PvP Ratings Section (Final Polished)
- * Cleaned, unified, responsive & aesthetic
+ * PvP Scalpel — PvP Ratings Section (Organized & Polished)
+ * Structure: General → Layout → Groups → Cards → Stats Toggle → Responsive
  ****************************************************/
 
-/* ========== MAIN TITLE ========== */
+/* ==================================================
+   ===============  GENERAL STRUCTURE  ===============
+   ================================================== */
+
 .mainTitle {
-    text-align: center;
-    text-transform: uppercase;
+    position: relative;
+    font-size: 2rem;
     font-weight: 700;
-    font-size: 1.6rem;
-    margin-bottom: 1.8rem;
-    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: center;
+    margin-bottom: 0.8rem;
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 30%, #caa400 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 215, 0, 0.25);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 6px rgba(255, 225, 120, 0.25),
+        0 0 12px rgba(255, 255, 255, 0.1);
+    transition: filter 0.3s ease, transform 0.3s ease;
 }
 
-/* ========== WRAPPER SECTION ========== */
 .section {
     position: relative;
-    background: linear-gradient(145deg, rgba(14, 18, 30, 0.95), rgba(8, 10, 20, 0.9));
-    border: 1px solid rgba(255, 215, 0, 0.08);
-    border-radius: 16px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(255, 215, 0, 0.05);
-    padding: 2rem 2.5rem;
-    width: 90%;
-    max-width: 1400px;
-    margin: 2rem auto;
-    backdrop-filter: blur(10px);
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.1), 0 0 12px rgba(0, 0, 0, 0.6);
+    padding: 1rem 0;
 }
 
-/* ========== GRID CONTAINER ========== */
+/* ==================================================
+   ================  GROUP CONTAINERS  ===============
+   ================================================== */
+
+.ratingGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: fit-content;
+    max-width: 1400px;
+    /* margin: 2rem auto; */
+    /* padding: 1rem 1rem; */
+    border-radius: 14px;
+    background: radial-gradient(
+        circle at top center,
+        rgba(25, 30, 50, 0.25),
+        rgba(10, 12, 20, 0.85)
+    );
+    border: 1px solid rgba(255, 215, 0, 0.05);
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255, 215, 0, 0.02);
+    backdrop-filter: blur(8px);
+}
+
+.groupTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #e8d690;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), 0 0 8px rgba(255, 215, 0, 0.25);
+    /* margin-bottom: 1.2rem; */
+    position: relative;
+}
+
+.groupTitle::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 2px;
+    margin: 0.5rem auto 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    border-radius: 1px;
+}
+
+/* ==================================================
+   =================  GRID CONTAINERS  ===============
+   ================================================== */
+
 .pvp-container {
     display: flex;
     flex-direction: row;
@@ -44,7 +94,21 @@
     margin: 0 auto;
 }
 
-/* ========== CARD WRAPPER ========== */
+.pvpContainer {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    justify-content: center;
+    overflow-x: auto;
+    width: 100%;
+    gap: 1rem;
+    padding: 0 1rem 0.5rem;
+}
+
+/* ==================================================
+   ====================  CARDS  =====================
+   ================================================== */
+
 .cardWrapper {
     display: flex;
     flex-direction: column;
@@ -61,7 +125,6 @@
     filter: brightness(1.1);
 }
 
-/* ========== CARD TITLE ========== */
 .cardTitle {
     font-size: 1.05rem;
     font-weight: 600;
@@ -78,10 +141,13 @@
     filter: brightness(1.15);
 }
 
-/* ========== FALLBACK ========== */
+/* ==================================================
+   ====================  FALLBACK  ==================
+   ================================================== */
+
 .noRatings {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
     background: rgba(18, 27, 39, 0.75);
     border: 1px solid rgba(255, 215, 0, 0.1);
@@ -100,34 +166,10 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
-/* ========== BRACKET & SPEC LABELS ========== */
-.bracketLabel {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #ffd86a;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    text-shadow: 0 0 6px rgba(255, 215, 0, 0.35), 0 0 10px rgba(255, 215, 0, 0.15);
-}
+/* ==================================================
+   ===================  RESPONSIVE  =================
+   ================================================== */
 
-.specLabel {
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: capitalize;
-    color: #9bc2ff;
-    letter-spacing: 0.4px;
-    margin-bottom: 0.4rem;
-    margin-top: 0;
-    text-shadow: 0 0 6px rgba(100, 180, 255, 0.35), 0 0 10px rgba(100, 180, 255, 0.15);
-    transition: filter 0.25s ease;
-    align-self: center;
-}
-
-.cardWrapper:hover .specLabel {
-    filter: brightness(1.2);
-}
-
-/* ========== RESPONSIVE FIXES ========== */
 @media (max-width: 900px) {
     .mainTitle {
         font-size: 1.35rem;
@@ -150,110 +192,4 @@
         font-size: 1rem;
         letter-spacing: 0.4px;
     }
-}
-
-.statsToggleArea {
-    width: 100%;
-    margin-top: 0.8rem;
-}
-
-/* clickable "Stats" bar */
-.statsHeader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #e8d690;
-    background: rgba(25, 30, 45, 0.45);
-    border-top: 1px solid rgba(255, 215, 0, 0.08);
-    border-radius: 6px;
-    padding: 6px 0;
-    cursor: pointer;
-    transition: background 0.25s ease, color 0.25s ease;
-}
-
-.statsHeader:hover {
-    background: rgba(35, 40, 55, 0.55);
-    color: #ffec96;
-}
-
-.statsHeader.open {
-    color: #ffd86a;
-    background: rgba(30, 35, 50, 0.55);
-}
-
-/* collapsible section */
-.statsContent {
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transition: all 0.4s ease;
-}
-
-.statsContent.open {
-    max-height: 200px;
-    opacity: 1;
-    margin-top: 0.4rem;
-}
-
-.ratingGroup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    width: fit-content;
-    max-width: 1400px;
-    margin: 2rem auto;
-    padding: 1.8rem 2rem;
-    border-radius: 14px;
-
-    background: radial-gradient(
-        circle at top center,
-        rgba(25, 30, 50, 0.25),
-        rgba(10, 12, 20, 0.85)
-    );
-    border: 1px solid rgba(255, 215, 0, 0.05);
-    box-shadow: 0 0 18px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255, 215, 0, 0.02);
-    backdrop-filter: blur(8px);
-}
-
-/* Group heading */
-.groupTitle {
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    text-align: center;
-    color: #e8d690;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), 0 0 8px rgba(255, 215, 0, 0.25);
-    margin-bottom: 1.2rem;
-    position: relative;
-}
-
-.groupTitle::after {
-    content: "";
-    display: block;
-    width: 100px;
-    height: 2px;
-    margin: 0.5rem auto 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
-    border-radius: 1px;
-}
-
-/* Layout for PvP cards inside groups */
-.pvpContainer {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    justify-content: center;
-    gap: 1.8rem;
-    overflow-x: auto;
-    width: 100%;
-}
-
-/* Slight separation between rating groups */
-.section .ratingGroup:not(:last-child) {
-    margin-bottom: 2.5rem;
 }

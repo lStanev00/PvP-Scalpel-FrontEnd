@@ -97,22 +97,25 @@ export function Details() {
     });
 
     return (
-        <div
-            style={
-                data.media === null
-                    ? {
-                          filter: isUpdating ? "blur(5px)" : "none",
-                      }
-                    : {
-                          backgroundImage: `url('${data.media.charImg}')`,
-                          backgroundPosition: "center -100px",
-                          backgroundSize: "cover",
-                          backgroundRepeat: "no-repeat",
-                          backgroundAttachment: "fixed",
-                          overflow: "hidden",
-                          filter: isUpdating ? "blur(5px)" : "none",
-                      }
-            }>
+<div
+    style={
+        data.media === null
+            ? {
+                  filter: isUpdating ? "blur(5px)" : "none",
+              }
+            : {
+                  backgroundImage: `url('${data.media.charImg}')`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  backgroundAttachment: "fixed",
+                  overflow: "hidden",
+                  filter: isUpdating ? "blur(5px)" : "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+              }
+    }>
             <DetailsProvider.Provider
                 value={{ commentsRef, optimisticPosts, addOptimisticPost, setPosts, posts, Style }}>
                 {/* Character Banner */}
@@ -141,10 +144,13 @@ export function Details() {
                         data={data}
                         Style={Style}
                     />
-                    <StatsChart />
-                    <TalentsSection />
-                    <Armory />
-                    <AchevementsSection />
+                    <section>
+
+                        <AchevementsSection />
+                        <StatsChart />
+                        <TalentsSection />
+                        <Armory />
+                    </section>
                 </section>
 
                 {/* Posts Section */}

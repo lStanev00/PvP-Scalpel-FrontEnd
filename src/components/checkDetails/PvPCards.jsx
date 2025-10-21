@@ -1,7 +1,7 @@
 import StatsToggle from "./StatsToggle";
 import Style from "../../Styles/modular/PvPCards.module.css"
 
-export default function PvPCards({ bracketData }) {
+export default function PvPCards({ bracketData, bracketLabel = undefined, specLabel = undefined }) {
     if (!bracketData?.currentSeason?.title?.media) return null;
     if (bracketData?.currentSeason?.rating === 0) bracketData.currentSeason.rating = null;
 
@@ -18,6 +18,7 @@ export default function PvPCards({ bracketData }) {
 
     return (
         <div className={Style["pvp-card"]}>
+            <div className={ bracketLabel ? Style.bracketLabel : Style.specLabel}>{bracketLabel ? bracketLabel : specLabel}</div>
             <div className={Style["pvp-spec"]}>
                 {/* Rating Box */}
                 {hasRating && ratingMedia && (
@@ -36,7 +37,7 @@ export default function PvPCards({ bracketData }) {
                     <div className={Style["pvp-details"]}>
                         <p>Record</p>
                         <img src={bracketData.achieves.media} alt="Achievement Icon" />
-                        <div>
+                        <div className={Style.recordWrapper}>
                             <strong>{bracketData.achieves.name}</strong>
                             {bracketData.record && (
                                 <span className={Style["pvp-rating"]}>{bracketData.record}</span>

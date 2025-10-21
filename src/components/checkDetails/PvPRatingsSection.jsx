@@ -44,13 +44,10 @@ export default function PvPRatingsSection({ otherRatings, blitzRatings, shuffleR
                                 if (!bracketType) return null;
 
                                 return (
-                                    <div key={bracket._id} className={Style.cardWrapper}>
-                                        <div className={Style.bracketLabel}>{bracketType}</div>
-                                        <PvPCards
-                                            title={bracketType}
-                                            bracketData={bracket}
-                                        />
-                                    </div>
+                                    // <div className={Style.bracketLabel}>{bracketType}</div>
+                                    <PvPCards bracketLabel={bracketType} bracketData={bracket} />
+                                    // <div key={bracket._id} className={Style.cardWrapper}>
+                                    // </div>
                                 );
                             })}
                         </div>
@@ -65,7 +62,6 @@ export default function PvPRatingsSection({ otherRatings, blitzRatings, shuffleR
                             {Object.entries(blitzRatings).map(([key, bracket]) => {
                                 const [, , spec] = key.split("-");
                                 const specName = spec.charAt(0).toUpperCase() + spec.slice(1);
-                                const bracketType = "Blitz";
 
                                 const strategistExist = data.listAchievements?.find((a) =>
                                     a.name.includes("Strategist")
@@ -75,15 +71,7 @@ export default function PvPRatingsSection({ otherRatings, blitzRatings, shuffleR
                                     ? { name: "Strategist", media: strategistExist.media }
                                     : data?.achieves?.Blitz?.XP;
 
-                                return (
-                                    <div key={bracket._id} className={Style.cardWrapper}>
-                                        <div className={Style.specLabel}>{specName}</div>
-                                        <PvPCards
-                                            title={`${bracketType} ${specName}`}
-                                            bracketData={bracket}
-                                        />
-                                    </div>
-                                );
+                                return <PvPCards specLabel={specName} bracketData={bracket} />;
                             })}
                         </div>
                     </div>
@@ -97,17 +85,8 @@ export default function PvPRatingsSection({ otherRatings, blitzRatings, shuffleR
                             {Object.entries(shuffleRatings).map(([key, bracket]) => {
                                 const [, , spec] = key.split("-");
                                 const specName = spec.charAt(0).toUpperCase() + spec.slice(1);
-                                const bracketType = "Solo Shuffle";
 
-                                return (
-                                    <div key={bracket._id} className={Style.cardWrapper}>
-                                        <div className={Style.specLabel}>{specName}</div>
-                                        <PvPCards
-                                            title={`${bracketType} ${specName}`}
-                                            bracketData={bracket}
-                                        />
-                                    </div>
-                                );
+                                return <PvPCards specLabel={specName} bracketData={bracket} />;
                             })}
                         </div>
                     </div>

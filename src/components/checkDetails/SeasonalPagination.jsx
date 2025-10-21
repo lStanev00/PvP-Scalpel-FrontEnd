@@ -53,7 +53,7 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
         <>
             {seasonalAchievesMap.size !== 0 && (
                 <div className={Style.seasonalContainer}>
-                    <h1>Seasonal Achievements</h1>
+                    <h1>Achievements</h1>
                     <div className={Style.pageContent}>
                         {Array.from(currentPage).map(([key, value]) => {
                             if (key === "noSeason") return null;
