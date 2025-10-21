@@ -43,12 +43,7 @@ export default function PvPRatingsSection({ otherRatings, blitzRatings, shuffleR
 
                                 if (!bracketType) return null;
 
-                                return (
-                                    // <div className={Style.bracketLabel}>{bracketType}</div>
-                                    <PvPCards bracketLabel={bracketType} bracketData={bracket} />
-                                    // <div key={bracket._id} className={Style.cardWrapper}>
-                                    // </div>
-                                );
+                                return <PvPCards specLabel={bracketType} bracketData={bracket} />;
                             })}
                         </div>
                     </div>
