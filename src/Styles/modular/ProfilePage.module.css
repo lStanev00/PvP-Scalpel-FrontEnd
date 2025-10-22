@@ -1,102 +1,166 @@
-.container {
-    display: flex;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background: rgba(18, 27, 39, 0.75);
-    color: #c7d5e0;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    padding: 15px;
-    background: rgba(30, 41, 59, 0.75);
-    border-radius: 8px;
-    flex-direction: row;
-}
-
-.container h2 {
-    color: #1abc9c;
-}
+/****************************************************
+ * Profile Page Layout — Glass Aesthetic & Clean UI
+ ****************************************************/
 
 .banner {
-    display: block;
-    align-items: center;
-    background: rgba(30, 41, 59, 0.75);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
     text-align: center;
-    font-size: 40px;
-    color: #facc15;
+    margin: 1.4rem auto;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    min-width: 100%;
 }
 
-.inner-section {
+.banner h1 {
+    position: relative;
     display: flex;
-    background-color: #1c2533;
-    padding: 1.5rem;
-    border-radius: 12px;
-    width: fit-content;
-    margin: 15px;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    flex-direction: column;
-    gap: 20px;
-    align-items: start;
-}
-
-.button-div {
-    display: grid;
-    width:max-content;
-    gap: 10px;
-    grid-template-rows: 1fr 1fr 1fr;
+    align-items: center;
     justify-content: center;
+    gap: 0.6rem;
+
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: center;
+
+    margin: 0.4rem 0 1.4rem 0;
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 0 6px rgba(255, 225, 120, 0.25),
+        0 0 12px rgba(255, 255, 255, 0.1);
 }
 
+.banner h1::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+    box-shadow: 0 0 10px rgba(255, 200, 50, 0.3);
+}
+
+/* ===== MAIN CONTAINER ===== */
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: auto;
+    padding: 1.5rem;
+    color: var(--color-text);
+    font-family: var(--font-base);
+}
+
+/* ===== SHARED PANEL ===== */
+.panel {
+    background: var(--bg-char-details-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow:
+        inset 0 0 8px rgba(255, 255, 255, 0.03),
+        0 0 16px rgba(0, 0, 0, 0.5);
+    padding: 1.4rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+}
+
+/* ===== LEFT MENU ===== */
+.menu {
+    position: sticky;
+    top: 1rem;
+    align-self: flex-start;
+    width: 240px;
+    gap: 1rem;
+    height: fit-content;
+}
+
+.menu h2 {
+    text-align: center;
+    color: var(--color-accent);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 6px rgba(0, 245, 212, 0.25);
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+/* ===== MENU BUTTONS ===== */
 button {
-    background: #0ea5e9;
-    color: #ffffff;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
+    background: linear-gradient(90deg, rgba(0, 245, 212, 0.25), rgba(0, 245, 212, 0.1));
+    color: var(--color-text);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: bold;
+    transition: all 0.25s ease;
+    text-align: left;
 }
 
 button:hover {
-    background: #0284c7;
+    background: linear-gradient(90deg, rgba(0, 245, 212, 0.35), rgba(0, 245, 212, 0.15));
+    transform: translateX(3px);
+    color: var(--color-accent);
+    box-shadow: 0 0 8px rgba(0, 245, 212, 0.25);
 }
 
 button:active {
-    background: #0284c7;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transform: scale(0.95);
+    transform: scale(0.98);
 }
 
-.inner-nav-menu {
-    position: sticky;
-    top: 20px;
-    align-self: flex-start; /* Prevents stretch inside flex parent */
-    z-index: 2; /* Keeps it above other elements just in case */
-    align-items: center;
+.active {
+    background: linear-gradient(90deg, rgba(0, 245, 212, 0.45), rgba(0, 245, 212, 0.25));
+    color: var(--color-accent);
+    box-shadow: 0 0 12px rgba(0, 245, 212, 0.4);
 }
 
+/* ===== CONTENT SECTION ===== */
+.content {
+    flex: 1;
+    gap: 1rem;
+    color: var(--color-text);
+    align-items: flex-start;
+    min-width: 500px;
+    max-width: 720px;
+}
 
-.content-section { 
-    display: flex;
-    background-color: #1c253386;
-    padding: 1.5rem;
-    border-radius: 12px;
-    width: 700px;
-    margin: 15px;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
+.content h2 {
     font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
 }
 
-.content-section h2 {
-    font-size: 3rem;
+/* ===== RESPONSIVE ===== */
+@media (max-width: 850px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu {
+        position: static;
+        width: 100%;
+        text-align: center;
+    }
+
+    .content {
+        width: 100%;
+    }
 }

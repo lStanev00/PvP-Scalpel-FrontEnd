@@ -1,17 +1,26 @@
-import Style from '../Styles/modular/validateEmail.module.css'
+import Style from "../Styles/modular/validateEmail.module.css";
 
-export default function GotoEmail({  email  }) {
+export default function GotoEmail({ email }) {
+    return (
+        <>
+            <div className={Style.banner}>
+                <h4>Check your Email</h4>
+                <FiMail className={Style.iconPulse} />
+            </div>
 
-    return (<>
-            <div className={Style["banner"]}>
-                <h4>Check your email</h4>
-                <h4 className={Style["emojiPulse"]}>📨</h4>
+            <div className={Style.container}>
+                <div className={Style.messageBox}>
+                    <p>
+                        We've sent a verification email to{" "}
+                        <span className={Style.emailHighlight}>
+                            {email ? email : "your email."}
+                        </span>
+                    </p>
+                    <p className={Style.subText}>
+                        Please check your inbox (and spam folder) to complete your registration.
+                    </p>
+                </div>
             </div>
-        <div className={Style["container"]}>
-            <div style={{fontSize: "25px"}}>
-                <p>We've sent you an verification email at {email ? email : "your email."}.</p>
-            </div>
-        </div>
-    </>
-      );
+        </>
+    );
 }
