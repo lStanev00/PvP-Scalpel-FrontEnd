@@ -51,7 +51,7 @@ export default function AppContent() {
 
                         <Route path="/" element={<Home />}></Route>
                         <Route path="/roster" element={<RosterPage />}></Route>
-                        <Route path="/leaderboard" element={<LDB />}></Route>
+                        <Route path="/leaderboard/*" element={<LDB />} />
                         {/* <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route> */}
                         <Route
                             path="/check/:server/:realm/:name"
