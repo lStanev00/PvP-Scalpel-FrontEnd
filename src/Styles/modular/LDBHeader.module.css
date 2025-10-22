@@ -7,31 +7,27 @@
 /* Main golden title, same as home page */
 .mainTitle {
     position: relative;
-    font-size: 2.8rem;
-    font-weight: 800;
-    letter-spacing: 1.1px;
-    text-transform: uppercase;
-    background: linear-gradient(180deg, #fff8d4 0%, #ffd700 35%, #caa400 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 14px rgba(255, 215, 0, 0.25);
-    transition: all 0.25s ease;
-    margin-bottom: 1.2rem;
-    font-size: clamp(1.9rem, 3.2vw, 2.8rem);
-    font-weight: 700;
-    background: linear-gradient(180deg, #fff 0%, #ffd84a 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.25);
-    letter-spacing: 0.5px;
-    margin-bottom: 0.5rem;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
 
-.mainTitle:hover {
-    filter: brightness(1.15);
-    transform: scale(1.02);
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: center;
+
+    margin-bottom: 0.5rem;
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 0 6px rgba(255, 225, 120, 0.25),
+        0 0 12px rgba(255, 255, 255, 0.1);
 }
 
 /* Decorative sub header with centered lines */
@@ -103,8 +99,4 @@
 
 .headerWrapper {
     animation: fadeRise 0.7s ease-out;
-}
-
-.mainTitle {
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.15); /* was 0.25 */
 }

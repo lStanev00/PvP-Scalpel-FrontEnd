@@ -13,7 +13,7 @@ export default function LDBHeaderContent({ content }) {
 
     return (
         <div className={Style.headerWrapper}>
-            <h1 className={Style.mainTitle}>PvP Leaderboard</h1>
+            <h2 className={Style.mainTitle}>PvP Leaderboard</h2>
             <div className={Style.subWrapper}>
                 <span className={Style.subLine}></span>
                 <h3 className={Style.subTitle}>{bracketTitle}</h3>
