@@ -14,9 +14,9 @@ export default function timeAgo(updatedAt) {
     return `${seconds} second(s) ago`;
 }
 
-export function isOlderThan30Minutes(updatedAt) {
+export function isOlderThan5Minutes(updatedAt) {
     const updatedTime = new Date(updatedAt).getTime();
     const now = Date.now();
     const diff = now - updatedTime;
-    return diff >= 30 * 60 * 1000;
+    return diff >= 5 * 60 * 1000;
 }
