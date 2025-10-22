@@ -2,6 +2,7 @@
     pointer-events: none;
 }
 
+/* ========== Tooltip Wrapper Animation ========== */
 .wrapper {
     position: fixed;
     display: flex;
@@ -19,18 +20,27 @@
     z-index: 1000;
     backdrop-filter: blur(8px);
     font-family: var(--font-base);
-    animation: fadeIn 0.15s ease-out;
+    animation: tooltipAppear 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform-origin: top left;
+    opacity: 0;
 }
 
-/* ========== Fade effect ========== */
-@keyframes fadeIn {
-    from {
+/* ========== Smooth Materialize Animation ========== */
+@keyframes tooltipAppear {
+    0% {
         opacity: 0;
-        transform: translateY(4px);
+        transform: translateY(8px) scale(0.95);
+        filter: brightness(0.8) blur(2px);
     }
-    to {
+    50% {
+        opacity: 0.8;
+        transform: translateY(2px) scale(1.02);
+        filter: brightness(1.1);
+    }
+    100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        filter: brightness(1);
     }
 }
 
