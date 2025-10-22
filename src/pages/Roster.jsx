@@ -6,6 +6,7 @@ import Loading from "../components/loading.jsx";
 import Style from "../Styles/modular/Roster.module.css";
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import { groupedRanks } from "../components/Roster/helpers/guildRanks.js";
+import SEORoster from "../SEO/SEORoster.jsx";
 
 export default function RosterPage() {
     const { httpFetch } = useContext(UserContext);
@@ -54,13 +55,16 @@ export default function RosterPage() {
     if (!data.length) return <Loading />;
 
     return (
-        <section className={Style.page}>
-            <h1 className={Style.title}>Guild Roster</h1>
-            <div className={Style.divider}></div>
+        <>
+            <SEORoster />
+            <section className={Style.page}>
+                <h1 className={Style.title}>Guild Roster</h1>
+                <div className={Style.divider}></div>
 
-            <SearchBox setQuery={setQuery} />
-            <GuildRanks setSelectedGroup={setSelectedGroup} selectedGroup={selectedGroup} />
-            <CharCard charArr={filtered} />
-        </section>
+                <SearchBox setQuery={setQuery} />
+                <GuildRanks setSelectedGroup={setSelectedGroup} selectedGroup={selectedGroup} />
+                <CharCard charArr={filtered} />
+            </section>
+        </>
     );
 }
