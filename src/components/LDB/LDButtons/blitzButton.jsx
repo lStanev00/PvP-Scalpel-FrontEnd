@@ -1,5 +1,8 @@
 import httpFetch from "../../../helpers/httpFetch.js";
-export default function BlitzBtn({  setData, setPage, setContent  }){
+import { GiLightningTrio } from "react-icons/gi";
+import Style from "./BracketButton.module.css";
+
+export default function BlitzBtn({ setData, setPage, setContent }) {
     const clickHandler = async () => {
         const res = await httpFetch(`/LDB/blitz`);
         setData(() => undefined);
@@ -7,68 +10,73 @@ export default function BlitzBtn({  setData, setPage, setContent  }){
         let reqData = await res.json();
         let rank = 1;
         const paginatedData = [];
-    
-        for (let i = 0; i < reqData.length; i += 25) {
-            const page = reqData.slice(i, i + 25);
-            let pageMap = []
-                for (const char of page) {
-                    let XP = undefined;
-                    
-                    const blitzAchieves = char?.achieves?.Blitz;
-                    let [ bracket, bracketClass, bracketSpec] = ((Object.keys(char.rating))[0]).split(`-`);
-                    char["class"] = bracketClass.replace(/^./, c => c.toUpperCase());
-                    char["spec"] = bracketSpec.replace(/^./, c => c.toUpperCase());
 
+        for (let i = 0; i < reqData.length; i += 15) {
+            const page = reqData.slice(i, i + 15);
+            let pageMap = [];
+            for (const char of page) {
+                let XP = undefined;
 
-                    if (blitzAchieves){
+                const blitzAchieves = char?.achieves?.Blitz;
+                let [bracket, bracketClass, bracketSpec] = Object.keys(char.rating)[0].split(`-`);
+                char["class"] = bracketClass.replace(/^./, (c) => c.toUpperCase());
+                char["spec"] = bracketSpec.replace(/^./, (c) => c.toUpperCase());
 
-                        let name = blitzAchieves?.XP?.name;
-                        let description = blitzAchieves.XP?.description;
-                        let strategistCheckup = blitzAchieves?.WINS?.name;
+                if (blitzAchieves) {
+                    let name = blitzAchieves?.XP?.name;
+                    let description = blitzAchieves.XP?.description;
+                    let strategistCheckup = blitzAchieves?.WINS?.name;
 
-                        if (strategistCheckup == undefined) strategistCheckup = "";
-                        if (name == undefined) name = "";
-                        if (description == undefined) description = "";
+                    if (strategistCheckup == undefined) strategistCheckup = "";
+                    if (name == undefined) name = "";
+                    if (description == undefined) description = "";
 
-                        
-                        if ((strategistCheckup).includes(`Strategist`) || (name).includes(`Hero of the Horde`) || (name).includes(`Hero of the Alliance`)) {
-                            XP = {};
+                    if (
+                        strategistCheckup.includes(`Strategist`) ||
+                        name.includes(`Hero of the Horde`) ||
+                        name.includes(`Hero of the Alliance`)
+                    ) {
+                        XP = {};
 
-                            if((strategistCheckup).includes(`Strategist`)) XP.name = "Strategist"
-                            else if ((name).includes(`Hero of the Horde`)) XP.name = "Hero of the Horde"
-                            else if ((name).includes(`Hero of the Alliance`)) XP.name = "Hero of the Alliance"
+                        if (strategistCheckup.includes(`Strategist`)) XP.name = "Strategist";
+                        else if (name.includes(`Hero of the Horde`)) XP.name = "Hero of the Horde";
+                        else if (name.includes(`Hero of the Alliance`))
+                            XP.name = "Hero of the Alliance";
 
-                            // break;
+                        // break;
+                    } else if (description.includes(`Earn a rating of`)) {
+                        XP = { name: name };
 
-                        } else if(description.includes(`Earn a rating of`)) {
+                        const numXP = description
+                            .replace(`Earn a rating of `, ``)
+                            .replace(
+                                ` in either Rated Battlegrounds or Rated Battleground Blitz.`,
+                                ``
+                            );
 
-                            XP = {name: name};
+                        XP.description = numXP;
 
-                            const numXP = description.replace(`Earn a rating of `, ``)
-                            .replace(` in either Rated Battlegrounds or Rated Battleground Blitz.`, ``);
-
-                            XP.description = numXP;
-
-                            // break;
-                        }
+                        // break;
                     }
-
-
-                    char.XP = XP
-                    char.ladderRank = rank;
-                        
-                    pageMap.push(char)
-                    rank = rank + 1;
                 }
-                paginatedData.push(pageMap);
-            
-            }
 
-            setData(paginatedData);
-            setPage(paginatedData[0]);
-            setContent(`blitzContent`);
-    }
-    return(
-        <button onClick={clickHandler} id="blitz" className="bracket-btn">Blitz BG</button>
-    )
+                char.XP = XP;
+                char.ladderRank = rank;
+
+                pageMap.push(char);
+                rank = rank + 1;
+            }
+            paginatedData.push(pageMap);
+        }
+
+        setData(paginatedData);
+        setPage(paginatedData[0]);
+        setContent(`blitzContent`);
+    };
+    return (
+        <button onClick={clickHandler} id="blitz" className={Style.button}>
+            <GiLightningTrio className={Style.icon} />
+            <span className={Style.label}>Blitz BG</span>
+        </button>
+    );
 }

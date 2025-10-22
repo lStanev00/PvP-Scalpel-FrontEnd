@@ -1,51 +1,164 @@
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    color: #c7d5e0;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    background: rgba(30, 41, 59, 0.45);
+/****************************************************
+ * Verify Email Code Input — PvP Scalpel Theme
+ ****************************************************/
+
+/* ===== Banner ===== */
+.banner {
+    position: relative;
     display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 0.6rem;
+
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: center;
+
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 0 6px rgba(255, 225, 120, 0.25),
+        0 0 12px rgba(255, 255, 255, 0.1);
+
+    margin-bottom: 2rem;
+}
+
+.banner::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+    box-shadow: 0 0 10px rgba(255, 200, 50, 0.3);
+}
+/* ===== Container ===== */
+.container {
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    padding: 2rem;
+    background: var(--bg-main-card-char-details);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow:
+        inset 0 0 8px rgba(255, 255, 255, 0.03),
+        0 0 25px rgba(0, 0, 0, 0.6);
+    color: var(--color-text);
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-
-}
-
-.banner {
-    /* display: flex; */
-    align-items: center;
-    background: rgba(30, 41, 59, 0.45);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    gap: 1.4rem;
+    backdrop-filter: blur(8px);
+    font-family: var(--font-base);
     text-align: center;
-    font-size: 35px;
-    color: #facc15;
-    justify-content: center;
-
+    animation: fadeIn 0.3s ease-out;
 }
 
-.codeBox {
-    
-    background-color: #1c2533;
-    border-radius: 15px ;
-    max-width: 50px;
-    height: 50px;
-    margin: 8px;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    align-items: center;
-    text-align: center;
-    font-size: 40px;
-
-}
-
+/* ===== Code Container ===== */
 .codeContainer {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
 
+/* ===== Code Box ===== */
+.codeBox {
+    width: 52px;
+    height: 60px;
+    border-radius: 10px;
+    background: rgba(20, 25, 40, 0.95);
+    border: 1px solid var(--border-color);
+    box-shadow:
+        inset 0 0 6px rgba(255, 255, 255, 0.05),
+        0 0 12px rgba(0, 0, 0, 0.4);
+    color: var(--color-text);
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    transition: all 0.25s ease;
+    font-family: var(--font-mono);
+}
+
+.codeBox:focus {
+    border-color: var(--color-accent);
+    box-shadow:
+        0 0 12px rgba(0, 245, 212, 0.3),
+        inset 0 0 6px rgba(0, 245, 212, 0.2);
+    transform: scale(1.05);
+}
+
+/* ===== Error Text ===== */
+.error {
+    color: #ff6b6b;
+    font-weight: 600;
+    font-size: 1rem;
+    background: rgba(255, 80, 80, 0.08);
+    border: 1px solid rgba(255, 80, 80, 0.2);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+}
+
+/* ===== Button ===== */
+button {
+    background: linear-gradient(90deg, rgba(0, 245, 212, 0.25), rgba(0, 245, 212, 0.15));
+    color: var(--color-text);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.8rem 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg, rgba(0, 245, 212, 0.4), rgba(0, 245, 212, 0.2));
+    color: var(--color-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* ===== Fade-in Animation ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+    .banner {
+        font-size: 1.3rem;
+        padding: 1.2rem;
+    }
+
+    .container {
+        padding: 1.2rem;
+    }
+
+    .codeBox {
+        width: 42px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
 }

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"; // Dont
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"; // Dont clear imports
 import Navigation from "./components/Router.jsx";
 import Home from "./pages/Home.jsx";
 import LDB from "./pages/LDB.jsx";
@@ -17,43 +17,37 @@ import { GuestRoute, UserRoute } from "./hooks/Guards.jsx";
 import Logout from "./pages/utility/Logout.jsx";
 import Posts from "./pages/Posts.jsx";
 import Loading from "./components/loading.jsx";
+import Style from "./Styles/modular/AppContent.module.css";
 
-const CharDetails = lazy(() => import("./pages/CharDetails.jsx"))
-
+const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
 
 export default function AppContent() {
     const { httpFetch } = useContext(UserContext);
 
-    useEffect(() => { 
-        const fetcData = (async () => {const req = await httpFetch("/verify/me")})();
-    }, [])
+    useEffect(() => {
+        const fetcData = (async () => {
+            const req = await httpFetch("/verify/me");
+        })();
+    }, []);
 
     return (
         // <Router>
         <>
-        <div
-        className="page-wrapper"
-        style={{
-            backgroundImage:"url('/backgrounds/main_background.png')",
-            backgroundSize: "100% auto",
-            backgroundPosition: "center",
-            backgroundBlendMode: "multiply"
-        }}
-        >
-            <Navigation />
+            <div className={Style.pageWrapper}>
+                <Navigation />
 
-            <main>
-                <Routes>
-                    <Route element={<UserRoute />}>
-                        <Route path="/profile" element={<ProfilePage />} />
-                        <Route path="/logout" element={<Logout />} />
-                    </Route>
+                <main>
+                    <Routes>
+                        <Route element={<UserRoute />}>
+                            <Route path="/profile" element={<ProfilePage />} />
+                            <Route path="/logout" element={<Logout />} />
+                        </Route>
 
-                    <Route element={<GuestRoute />}>
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/reset/password" element={<ResetPassword />} />
-                    </Route>
+                        <Route element={<GuestRoute />}>
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/reset/password" element={<ResetPassword />} />
+                        </Route>
 
                     <Route path='/' element={<Home />}></Route>
                     <Route path='/roster' element={<RosterPage />}></Route>
@@ -79,7 +73,8 @@ export default function AppContent() {
         </div>
         <GoToTopButton />
         
+
         </>
         // </Router>
-    )
+    );
 }

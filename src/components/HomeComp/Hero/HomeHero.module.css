@@ -1,0 +1,191 @@
+.hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 60vh;
+    width: 100%;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.9) 75%);
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0%,
+        rgba(25,25,40,0.4) 40%,
+        rgba(26,26,44,0.8) 70%,
+        #151623 100%
+    );
+    z-index: 2;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    background: url("/backgrounds/fluid_fog.webp") repeat-x;
+    background-size: 250%;
+    opacity: 0.06;
+    mix-blend-mode: lighten;
+    animation: fogDrift 120s linear infinite;
+    pointer-events: none;
+    z-index: 3;
+}
+
+@keyframes fogDrift {
+    from { background-position: 0 0; }
+    to { background-position: 100% 0; }
+}
+
+h1 {
+    font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+    font-weight: 700;
+    background: linear-gradient(180deg, #fff 0%, #ffd84a 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.25);
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    animation: fadeInText 1.3s ease forwards;
+}
+
+p {
+    font-size: clamp(1rem, 1.2vw, 1.1rem);
+    font-weight: 400;
+    color: #d4e0ff;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.3px;
+    margin-top: 0.3rem;
+    opacity: 0.95;
+    animation: fadeInText 1.5s ease forwards;
+    animation-delay: 0.3s;
+}
+
+
+@keyframes fadeInText {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.content {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    animation: fadeInUp 1.2s ease forwards;
+    padding: 0 1rem;
+}
+
+.logo {
+    width: clamp(140px, 25vh, 280px); /* responsive scaling: min 140px, grows with viewport */
+    max-width: 40vw; /* never exceed 40% of width */
+    height: auto;
+    margin-bottom: 1.2rem;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.04);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+
+/* Buttons */
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+    user-select: none;
+}
+
+.btn span {
+    position: relative;
+    z-index: 2;
+}
+
+.btn .icon {
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 1.2rem;
+    opacity: 0.5;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+
+/* Discord Button */
+.discord {
+    background: linear-gradient(135deg, #5865f2, #4048d6);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(88,101,242,0.4);
+}
+
+.discord:hover {
+    box-shadow: 0 0 25px rgba(88,101,242,0.8);
+    transform: translateY(-2px);
+}
+
+.discord:hover .icon {
+    transform: rotate(-10deg) scale(1.2);
+    opacity: 0.9;
+}
+
+/* Guild Button */
+.guild {
+    background: linear-gradient(135deg, #ffb300, #ff8800);
+    color: #1a1a1a;
+    box-shadow: 0 0 10px rgba(255,180,0,0.35);
+}
+
+.guild:hover {
+    box-shadow: 0 0 25px rgba(255,180,0,0.8);
+    transform: translateY(-2px);
+}
+
+.guild:hover .icon {
+    transform: rotate(10deg) scale(1.2);
+    opacity: 0.9;
+}

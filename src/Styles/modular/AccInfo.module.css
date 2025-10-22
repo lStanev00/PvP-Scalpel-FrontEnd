@@ -1,59 +1,124 @@
+.headerTitle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: center;
+
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 0 6px rgba(255, 225, 120, 0.25),
+        0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+.headerTitle::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+    box-shadow: 0 0 10px rgba(255, 200, 50, 0.3);
+}
 .main {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .card {
+    gap: 1.2rem;
+    padding: 1.6rem;
+    background: var(--bg-char-details-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow:
+        inset 0 0 10px rgba(0, 245, 212, 0.05),
+        0 0 25px rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    height: 100%;
+}
+
+/* ===== CARD ===== */
+.card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(51, 65, 85, 0.75);
-    border-radius: 10px;
-    padding: 16px 20px;
-    gap: 10px;
-    transition: background 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card:hover {
-    background: rgba(71, 85, 105, 0.9);
+    background: rgba(20, 25, 45, 0.85);
+    border-radius: var(--radius);
+    padding: 1rem 1.4rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.03);
+    color: var(--color-text);
+}
+
+.card:hover {
     transform: translateY(-2px);
-  }
-  
-  .card strong {
-    color: #0ea5e9;
+    background: rgba(28, 34, 54, 0.92);
+    box-shadow:
+        0 0 10px rgba(0, 245, 212, 0.1),
+        0 0 25px rgba(0, 0, 0, 0.6);
+}
+
+.card strong {
+    color: var(--color-accent);
     min-width: 100px;
-    font-size: 1rem;
     font-weight: 600;
-  }
-  
-  .card div,
-  .card p {
+    font-size: 1rem;
+}
+
+/* ===== TEXT AREA ===== */
+.card div,
+.card p {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: #f1f5f9;
+    gap: 0.6rem;
+    color: var(--color-text);
     font-size: 1rem;
-  }
-  
-  .card span[title="Edit"] {
-    font-size: 0.9rem;
-    color: #facc15;
-    transition: transform 0.2s ease;
-  }
-  
-  .card span[title="Edit"]:hover {
+}
+
+/* ===== EDIT ICON ===== */
+.editIcon {
+    color: var(--color-gold);
+    font-size: 1rem;
+    margin-left: 0.4rem;
+    transition: transform 0.2s ease, text-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.editIcon:hover {
     transform: scale(1.2);
-  }
-  
-  .card p {
-    background-color: #10b981;
-    color: white;
-    padding: 4px 10px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+/* ===== STATUS TAGS ===== */
+.verified {
+    background: rgba(0, 245, 212, 0.15);
+    border: 1px solid rgba(0, 245, 212, 0.3);
+    color: var(--color-accent);
+    padding: 4px 12px;
     border-radius: 20px;
-    font-weight: 500;
-    font-size: 0.9rem;
-  }
-  
+    font-weight: 600;
+    text-shadow: 0 0 6px rgba(0, 245, 212, 0.25);
+}
+
+.notVerified {
+    background: rgba(255, 70, 70, 0.12);
+    border: 1px solid rgba(255, 70, 70, 0.35);
+    color: #ff7070;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-shadow: 0 0 6px rgba(255, 70, 70, 0.25);
+}

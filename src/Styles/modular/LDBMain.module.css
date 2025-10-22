@@ -1,0 +1,29 @@
+.buttonsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem auto;
+    width: fit-content;
+    background: rgba(15, 15, 30, 0.45);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonGroup:not(:last-child)::after {
+    content: "";
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 0 0.5rem;
+}

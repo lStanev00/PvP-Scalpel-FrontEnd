@@ -1,161 +1,158 @@
-import postStyle from '../../Styles/modular/PostTemplate.module.css'
-import { useContext, useState, useEffect } from "react";
-import { UserContext } from "./../../hooks/ContextVariables";
-import editStyle from '../../Styles/modular/NewPostForm.module.css'
-import { DetailsProvider } from './Details';
+import { useContext, useState, useEffect, forwardRef } from "react";
+import { UserContext } from "../../hooks/ContextVariables";
+import { DetailsProvider } from "./Details";
+import { FiUser, FiCalendar, FiEdit2, FiTrash2, FiClock } from "react-icons/fi";
+import Style from "../../Styles/modular/PostTemplate.module.css";
 
-export default function PostTemplate({ postValue, optimistic }) {
-  const { user, httpFetch } = useContext(UserContext);
-  const [ edit, setEdit ] = useState(undefined);
-  const [ editTitle, setEditTitle ] = useState(undefined);
-  const [ editContent, setEditContent ] = useState(undefined);
-  const [post, setPost] = useState(postValue);
-  const {setPosts} = useContext(DetailsProvider);
+const PostTemplate = forwardRef(function PostTemplate({ postValue, optimistic, innerRef }, ref) {
+    const { user, httpFetch } = useContext(UserContext);
+    const { setPosts } = useContext(DetailsProvider);
 
-  const isOwner = user?._id === post?.author?._id;
+    const [editMode, setEditMode] = useState(false);
+    const [editTitle, setEditTitle] = useState("");
+    const [editContent, setEditContent] = useState("");
+    const [post, setPost] = useState(postValue);
 
-  const onDelete = async (e) => {
-    e.preventDefault();
+    const isOwner = user?._id === post?.author?._id;
 
-    try {
-        const url = `/delete/post`;
-
-        const req = await httpFetch(url, {
-            method: "DELETE",
-            body: JSON.stringify({
-                postID: post._id
-            })
-        });
-
-        if (req.status === 200) {
-            setPosts(prev => prev.filter(p => p._id !== post._id));
+    useEffect(() => {
+        if (editMode) {
+            setEditTitle(post.title || "");
+            setEditContent(post.content || "");
         }
+    }, [editMode]);
 
+    const onDelete = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await httpFetch("/delete/post", {
+                method: "DELETE",
+                body: JSON.stringify({ postID: post._id }),
+            });
+            if (res.status === 200) {
+                setPosts((prev) => prev.filter((p) => p._id !== post._id));
+            }
+        } catch (err) {
+            console.warn("Delete failed:", err);
+        }
+    };
 
-    } catch (error) {
-        console.log(error)
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        if (!editTitle.trim() || !editContent.trim()) return;
+
+        try {
+            const res = await httpFetch("/edit/post", {
+                method: "PATCH",
+                body: JSON.stringify({
+                    postID: post._id,
+                    title: editTitle.trim(),
+                    content: editContent.trim(),
+                }),
+            });
+            if (res.status === 200) {
+                setPost(res.data);
+                setEditMode(false);
+            }
+        } catch (err) {
+            console.warn("Edit failed:", err);
+        }
+    };
+
+    /* ---------- VIEW MODE ---------- */
+    if (!editMode) {
+        return (
+            <article
+                ref={innerRef}
+                className={`${Style.commentItem} ${optimistic ? Style.optimistic : ""}`}
+            >
+                <header className={Style.commentHeader}>
+                    <div className={Style.metaLeft}>
+                        <FiUser className={Style.icon} />
+                        <span className={Style.author}>
+                            {post?.author?.username || "Anonymous"}
+                        </span>
+                    </div>
+
+                    <div className={Style.metaRight}>
+                        {optimistic && (
+                            <span className={Style.optimisticTag}>
+                                <FiClock className={Style.clockIcon} />
+                                Pending...
+                            </span>
+                        )}
+                        <FiCalendar className={Style.icon} />
+                        <span className={Style.date}>
+                            {new Date(post?.createdAt).toLocaleDateString()}
+                        </span>
+                    </div>
+                </header>
+
+                <div className={Style.commentBody}>
+                    <h3 className={Style.commentTitle}>{post.title || "Untitled Post"}</h3>
+                    <p className={Style.commentText}>
+                        {post.content || "No content provided."}
+                    </p>
+                </div>
+
+                {isOwner && (
+                    <footer className={Style.commentFooter}>
+                        <button
+                            className={`${Style.actionBtn} ${Style.editBtn}`}
+                            onClick={() => setEditMode(true)}
+                        >
+                            <FiEdit2 /> Edit
+                        </button>
+                        <button
+                            className={`${Style.actionBtn} ${Style.deleteBtn}`}
+                            onClick={onDelete}
+                        >
+                            <FiTrash2 /> Delete
+                        </button>
+                    </footer>
+                )}
+            </article>
+        );
     }
-  }
 
-  useEffect(() => {
-    if (edit) {
-      setEditTitle(post.title);
-      setEditContent(post.content);
-    }
-  }, [edit]);
+    /* ---------- EDIT MODE ---------- */
+    return (
+        <article ref={innerRef} className={`${Style.commentItem} ${Style.editing}`}>
+            <form onSubmit={onSubmit} className={Style.editForm}>
+                <h3 className={Style.editHeading}>Edit Comment</h3>
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-  
-    if (!editTitle?.trim() || !editContent?.trim()) return;
-  
-    try {
-      const url = `/edit/post`;
-      const res = await httpFetch(url, {
-        method: "PATCH",
-        body: JSON.stringify({
-          postID: post._id,
-          title: editTitle.trim(),
-          content: editContent.trim()
-        })
-      });
-  
-      if (res.status === 200) {
-        setPost(res.data);
-        setEdit(undefined);
-      }
-    } catch (error) {
-      console.warn(error);
-    }
-  };
-  
+                <input
+                    type="text"
+                    className={Style.editInput}
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    placeholder="Post title"
+                    required
+                />
 
-if (edit == undefined) return (<>
+                <textarea
+                    className={Style.editTextarea}
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                    placeholder="Write your content..."
+                    required
+                />
 
-<div 
-className={postStyle["post-warp"]}
-style={optimistic ? {
-    filter: "blur(1px)",
-    opacity: 0.6,
-    pointerEvents: "none",
-  } : {}} 
-  >
+                <div className={Style.editActions}>
+                    <button type="submit" className={Style.confirmBtn}>
+                        Confirm
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setEditMode(false)}
+                        className={Style.cancelBtn}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </article>
+    );
+});
 
-        <div className={postStyle["post-meta"]}>
-          <span>🧑 <strong>{post?.author?.username || "Anonymous"}</strong></span>
-          <span>📅 {new Date(post?.createdAt).toLocaleDateString()}</span>
-        </div>
-  
-        <div className={postStyle["post-content"]}>
-          <strong>{post?.title || "Untitled Post"}</strong>
-          <span>{post?.content || "No content provided."}</span>
-        </div>
-        
-        {isOwner && (
-          <div className={postStyle["post-actions"]}>
-            <button onClick={(e) => {e.preventDefault(); setEdit(true)}}>📝 Edit</button>
-            <button onClick={ async (e) => await onDelete(e)}>🗑️ Delete</button>
-          </div>
-        )}
-</div>
-
-
-
-
-</>)
-else return (<>
-<div 
-className={postStyle["post-warp"]}
-style={optimistic ? {
-    filter: "blur(1px)",
-    opacity: 0.6,
-    pointerEvents: "none",
-  } : {}} 
-  >
-
-<form onSubmit={async (e) => await onSubmit(e)} style={{maxWidth:"350px"}} className={editStyle.form}>
-            <h3 className={editStyle.heading}>Edit Comment</h3>
-      
-            <input
-              type="text"
-              placeholder="Post title"
-              className={editStyle.input}
-              required
-              defaultValue={post.title}
-              onLoad={(e)=>setEditTitle(e.target.value)}
-              onChange={(e)=>setEditTitle(e.target.value)}
-              name='title'
-            />
-      
-            <textarea
-              style={{maxWidth:"320px"}}
-              placeholder="Write your content..."
-              className={editStyle.textarea}
-              required
-              defaultValue={post.content}
-              onLoad={(e)=>setEditContent(e.target.value)}
-              onChange={(e)=>setEditContent(e.target.value)}
-              name='content'
-            />
-      
-          {/* {error && (
-              <>
-              <p style={{color:"red"}}>{error}</p>
-              </>
-          )} */}
-
-            <div style={{display:"flex", gap:`1rem`}}>
-            <button type="submit" className={editStyle.button}>
-             Confirm Edit
-            </button>
-            <button onClick={(e) => {e.preventDefault();setEdit(undefined)}}  className={editStyle.button}>
-              Cancel
-            </button>
-            </div>
-    </form>
-
-
-  </div>
-
-</>)
-}
+export default PostTemplate;

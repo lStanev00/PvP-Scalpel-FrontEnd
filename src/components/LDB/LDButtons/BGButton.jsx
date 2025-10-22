@@ -1,5 +1,8 @@
 import httpFetch from "../../../helpers/httpFetch.js";
-export default function BGBtn({  setData, setPage, setContent  }){
+import { FaFlag } from "react-icons/fa";
+import Style from "./BracketButton.module.css";
+
+export default function BGBtn({ setData, setPage, setContent }) {
     const clickHandler = async () => {
         setData(() => undefined);
         let reqData;
@@ -7,45 +10,46 @@ export default function BGBtn({  setData, setPage, setContent  }){
         reqData = await res.json();
         let rank = 1;
         const paginatedData = [];
-    
-        for (let i = 0; i < reqData.length; i += 25) {
-            const page = reqData.slice(i, i + 25);
-            let pageMap = []
-                for (const char of page) {
-                    let XP = undefined;
-                    
-                    const achieves = char?.achieves?.RBG?.XP;
-                    if(achieves){
 
-                        let name = achieves?.name;
-                        let description = achieves.description;
+        for (let i = 0; i < reqData.length; i += 15) {
+            const page = reqData.slice(i, i + 15);
+            let pageMap = [];
+            for (const char of page) {
+                let XP = undefined;
 
-                        if (name == undefined) name = "";
-                        if (description == undefined) description = "";
+                const achieves = char?.achieves?.RBG?.XP;
+                if (achieves) {
+                    let name = achieves?.name;
+                    let description = achieves.description;
 
-                        XP = {name: name};
+                    if (name == undefined) name = "";
+                    if (description == undefined) description = "";
 
-                        const numXP = description
-                            .replace(`Earn a rating of `, ``)
-                            .replace(` in either Rated Battlegrounds or Rated Battleground Blitz.`, ``);
+                    XP = { name: name };
 
-                        XP.description = numXP;
+                    const numXP = description
+                        .replace(`Earn a rating of `, ``)
+                        .replace(` in either Rated Battlegrounds or Rated Battleground Blitz.`, ``);
 
-                        char.XP = XP
-                    };
+                    XP.description = numXP;
 
-                    char.ladderRank = rank;
-                    pageMap.push(char)
-                    rank = rank + 1;
+                    char.XP = XP;
                 }
-                paginatedData.push(pageMap);
-            
+
+                char.ladderRank = rank;
+                pageMap.push(char);
+                rank = rank + 1;
             }
-            setData(paginatedData);
-            setPage(paginatedData[0]);
-            setContent(`BGContent`);
-    }
-    return(
-        <button onClick={clickHandler} id="rbg" className="bracket-btn">RATED BG</button>
-    )
+            paginatedData.push(pageMap);
+        }
+        setData(paginatedData);
+        setPage(paginatedData[0]);
+        setContent(`BGContent`);
+    };
+    return (
+        <button onClick={clickHandler} id="rbg" className={Style.button}>
+            <FaFlag className={Style.icon} />
+            <span className={Style.label}>Rated BG</span>
+        </button>
+    );
 }

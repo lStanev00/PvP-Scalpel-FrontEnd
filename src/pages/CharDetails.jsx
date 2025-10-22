@@ -3,7 +3,6 @@ import { useLocation, useParams } from "react-router-dom"
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import { Details } from "../components/checkDetails/Details.jsx";
 import delay from "../helpers/delay.js";
-import ArmoryItemHover from "../components/checkDetails/ArmoryItemHover.jsx";
 import Loading from "../components/loading.jsx";
 
 export const CharacterContext = createContext();

@@ -1,4 +1,7 @@
 import httpFetch from "../../../helpers/httpFetch.js";
+import { GiTripleScratches } from "react-icons/gi";
+import Style from "./BracketButton.module.css";
+
 export default function ThreesBTN({  setData, setPage, setContent  }){
     const clickHandler = async (event) => {
         const res = await httpFetch(`/LDB/3v3`);
@@ -8,8 +11,8 @@ export default function ThreesBTN({  setData, setPage, setContent  }){
         let rank = 1;
         const paginatedData = [];
     
-        for (let i = 0; i < reqData.length; i += 25) {
-            const page = reqData.slice(i, i + 25);
+        for (let i = 0; i < reqData.length; i += 15) {
+            const page = reqData.slice(i, i + 15);
             let pageMap = []
                 for (const char of page) {
                    
@@ -41,7 +44,10 @@ export default function ThreesBTN({  setData, setPage, setContent  }){
             setPage(paginatedData[0]);
             setContent(`3v3Content`);
     }
-    return(
-        <button onClick={clickHandler} id="threes" className="bracket-btn">3v3 Arena</button>
-    )
+return (
+  <button onClick={clickHandler} id="threes" className={Style.button}>
+    <GiTripleScratches className={Style.icon} />
+    <span className={Style.label}>3v3 Arena</span>
+  </button>
+);
 }

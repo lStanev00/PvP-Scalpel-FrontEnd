@@ -1,61 +1,116 @@
+/****************************************************
+ * Email Sent Confirmation — PvP Scalpel UI Theme
+ ****************************************************/
+
+/* ===== Banner ===== */
+.banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-char-details-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow:
+        inset 0 0 8px rgba(255, 255, 255, 0.05),
+        0 0 25px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 1.6rem;
+    margin: 1.4rem auto;
+    width: fit-content;
+    min-width: 300px;
+}
+
+.banner h4 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin: 0.4rem 0;
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 0 6px rgba(255, 225, 120, 0.25),
+        0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+/* ===== Icon Pulse ===== */
+.iconPulse {
+    font-size: 2.8rem;
+    color: var(--color-accent);
+    margin-top: 0.5rem;
+    animation: pulse 1.8s infinite ease-in-out;
+    text-shadow: 0 0 12px rgba(0, 245, 212, 0.4);
+}
+
 @keyframes pulse {
     0%, 100% {
-      transform: scale(1);
+        transform: scale(1);
+        opacity: 0.9;
     }
     50% {
-      transform: scale(1.1);
+        transform: scale(1.15);
+        opacity: 1;
     }
 }
-  
-.emojiPulse {
-    display: flexbox;
-    animation: pulse 1.5s infinite;
-    transform-origin: center center;
-}
 
-.inner-section {
-    
-    background-color: #1c2533;
-    padding: 2rem;
-    border-radius: 12px;
-    width: 800px;
-    margin: 15px;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-}
-
+/* ===== Container ===== */
 .container {
     display: flex;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background: rgba(18, 27, 39, 0.75);
-    color: #c7d5e0;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    padding: 15px;
-    background: rgba(30, 41, 59, 0.75);
-    border-radius: 8px;
-    justify-content: center;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    background: var(--bg-char-details-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow:
+        inset 0 0 8px rgba(255, 255, 255, 0.03),
+        0 0 25px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 2rem;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    color: var(--color-text);
+    font-family: var(--font-base);
 }
 
-.banner {
-    /* display: flex; */
-    align-items: center;
-    background: rgba(30, 41, 59, 0.75);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+/* ===== Text Content ===== */
+.messageBox {
     text-align: center;
-    font-size: 40px;
-    color: #facc15;
-    justify-content: center;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
 
+.emailHighlight {
+    color: var(--color-accent);
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(0, 245, 212, 0.3);
+}
+
+.subText {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    margin-top: 0.8rem;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+    .banner h4 {
+        font-size: 1.3rem;
+    }
+
+    .iconPulse {
+        font-size: 2.2rem;
+    }
+
+    .container {
+        padding: 1.2rem;
+    }
+
+    .messageBox {
+        font-size: 1rem;
+    }
 }

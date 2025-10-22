@@ -1,62 +1,241 @@
-  .post-warp {
+.commentItem {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    background: rgba(30, 41, 59, 0.85);
-    border: 1px solid rgba(100, 100, 100, 0.2);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    height: max-content;
-    color: #cbd5e1;
-  }
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
 
-  .post-content {
+    background: var(--bg-main-card-char-details);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow:
+        inset 0 0 6px var(--divider-color),
+        0 0 12px rgba(0, 0, 0, 0.6);
+    color: var(--color-text);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.commentItem:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 14px rgba(255, 215, 0, 0.08),
+        0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+/* ===== OPTIMISTIC STATE ===== */
+.optimistic {
+    opacity: 0.85;
+    border: 1px dashed var(--color-accent);
+    animation: pulseGlow 1.3s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from {
+        box-shadow: 0 0 6px rgba(0, 245, 212, 0.2);
+    }
+    to {
+        box-shadow: 0 0 16px rgba(0, 245, 212, 0.45);
+    }
+}
+
+.optimisticTag {
     display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
-  
-  .post-content strong {
-    color: #facc15;
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-  
-  .post-content span {
-    font-size: 14px;
-    line-height: 1.6;
-    color: #e2e8f0;
-    white-space: pre-wrap;
-  }
-  
-  .post-meta {
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    text-shadow: 0 0 6px rgba(0, 245, 212, 0.3);
+}
+
+.clockIcon {
+    font-size: 1rem;
+    animation: spin 1.4s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0); }
+    to { transform: rotate(360deg); }
+}
+
+/* ===== HEADER ===== */
+.commentHeader {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    color: #94a3b8;
-    margin-bottom: 8px;
-    font-style: italic;
-  }
-  .post-actions {
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.metaLeft,
+.metaRight {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  
-  .post-actions button {
-    padding: 5px 10px;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.icon {
+    color: var(--color-gold);
+    font-size: 1.1rem;
+    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.25));
+}
+
+.author {
+    font-weight: 600;
+    color: var(--color-gold);
+}
+
+.date {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+/* ===== BODY ===== */
+.commentBody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.commentTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    text-shadow: 0 0 6px rgba(0, 245, 212, 0.25);
+}
+
+.commentText {
+    color: var(--color-text);
+    font-size: 0.95rem;
+    line-height: 1.4rem;
+    white-space: pre-line;
+}
+
+/* ===== FOOTER ===== */
+.commentFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.actionBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
     border: none;
-    border-radius: 4px;
-    background: #0ea5e9;
-    color: #fff;
-    font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s ease;
-  }
-    
-  
-  .post-actions button:hover {
-    background: #0284c7;
-  }
-  
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+/* EDIT BUTTON */
+.editBtn {
+    background: linear-gradient(180deg, var(--color-accent), #0077ff);
+    color: #fff;
+    box-shadow: 0 0 8px rgba(0, 245, 212, 0.3);
+}
+.editBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 14px rgba(0, 245, 212, 0.45);
+}
+
+/* DELETE BUTTON */
+.deleteBtn {
+    background: linear-gradient(180deg, #ff5e5e, #8b0000);
+    color: #fff;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+}
+.deleteBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(255, 0, 0, 0.45);
+}
+
+/* ===== EDIT MODE ===== */
+.editing {
+    background: rgba(18, 24, 42, 0.92);
+    border: 1px solid rgba(0, 245, 212, 0.2);
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.editHeading {
+    text-align: center;
+    color: var(--color-gold);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.editInput,
+.editTextarea {
+    width: 100%;
+    background: var(--bg-row);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--color-text);
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    outline: none;
+    box-shadow: inset 0 0 6px var(--divider-color);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.editInput:focus,
+.editTextarea:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
+}
+
+.editTextarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.editActions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.6rem;
+}
+
+/* Confirm / Cancel */
+.confirmBtn,
+.cancelBtn {
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.25s ease;
+}
+
+.confirmBtn {
+    background: linear-gradient(180deg, var(--color-accent), #0077ff);
+    color: #fff;
+    box-shadow: 0 0 8px rgba(0, 245, 212, 0.3);
+}
+.confirmBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 14px rgba(0, 245, 212, 0.45);
+}
+
+.cancelBtn {
+    background: linear-gradient(145deg, var(--bg-row), rgba(35, 40, 60, 0.9));
+    color: var(--color-muted);
+    border: 1px solid var(--border-color);
+}
+.cancelBtn:hover {
+    transform: scale(1.05);
+    color: var(--color-text);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+}

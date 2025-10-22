@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import Style from '../../Styles/modular/charDetails.module.css';
-import timeAgo, { isOlderThan30Minutes } from "../../helpers/timeAgo.js";
+import timeAgo, { isOlderThan5Minutes } from "../../helpers/timeAgo.js";
 import httpFetch from "../../helpers/httpFetch.js";
 import { useContext, useEffect, useState } from "react";
 import { CharacterContext } from "../../pages/CharDetails.jsx";
@@ -40,7 +40,7 @@ export default function ReloadBTN({isUpdating, setUpdating}) {
     }
 
     const [ lastUpdatedAt, setLastUpdatedAt ] = useState(timeAgo( data.updatedAt ));
-    const [ isDataOld, setIsDataOld ] = useState ( isOlderThan30Minutes( data.updatedAt ) );
+    const [ isDataOld, setIsDataOld ] = useState ( isOlderThan5Minutes( data.updatedAt ) );
     
     useEffect(() => {
         const updateDataIfNeeded = async () => {
