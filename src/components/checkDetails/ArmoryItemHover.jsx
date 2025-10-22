@@ -1,20 +1,20 @@
-import { useContext } from 'react';
-import Style from '../../Styles/modular/ArmoryItemHover.module.css';
-import { HoverContext } from './Armory';
+import { useContext } from "react";
+import Style from "../../Styles/modular/ArmoryItemHover.module.css";
+import { HoverContext } from "./Armory";
 
 export default function ArmoryItemHover() {
-    const {hoverItem: item, coursorPosition} = useContext(HoverContext);
+    const { hoverItem: item, coursorPosition } = useContext(HoverContext);
 
     if (!item) return null;
+    const zoom = getCurrentZoom();
 
     return (
-        <div 
+        <div
             className={Style.wrapper}
             style={{
-                top: `calc(${(coursorPosition.y)}px + 0.5rem)`,
-                left: `calc(${(coursorPosition.x)}px + 1.5rem)`
-            }}
-        >
+                top: `calc(${coursorPosition.y / zoom}px + 0.5rem)`,
+                left: `calc(${coursorPosition.x / zoom}px + 1.5rem)`,
+            }}>
             <img src={item.media} alt={item.name} className={Style.icon} />
 
             <div className={Style.details}>
@@ -53,30 +53,29 @@ export default function ArmoryItemHover() {
                         <ul className={Style.spellList}>
                             {item.spells.map((spellObj, i) => (
                                 <li key={i} className={Style.spell}>
-                                    <span className={Style.spellName}>{spellObj.spell.name}</span>: {spellObj.description}
+                                    <span className={Style.spellName}>{spellObj.spell.name}</span>:{" "}
+                                    {spellObj.description}
                                 </li>
                             ))}
                         </ul>
                     </div>
                 )}
 
-
-
                 {item.enchantments?.length > 0 && (
                     <div className={Style.enchants}>
                         {item.enchantments.map((ench, i) => {
-                            const cleanedDesc = ench.description.replace(/\|A:.*?\|a/g, '');
-                            const [_, name, detail] = cleanedDesc.match(/^Enchanted: (.*?)(?: - )?(.*)?$/) || [];
+                            const cleanedDesc = ench.description.replace(/\|A:.*?\|a/g, "");
+                            const [_, name, detail] =
+                                cleanedDesc.match(/^Enchanted: (.*?)(?: - )?(.*)?$/) || [];
                             return (
                                 <p key={i} className={Style.enchantLine}>
-                                    <span className={Style.enchantName}>{name || 'Enchant'}</span>
-                                    {detail ? `: ${detail}` : ''}
+                                    <span className={Style.enchantName}>{name || "Enchant"}</span>
+                                    {detail ? `: ${detail}` : ""}
                                 </p>
                             );
                         })}
                     </div>
                 )}
-
 
                 {item.transmog && (
                     <p className={Style.transmog}>
@@ -86,4 +85,11 @@ export default function ArmoryItemHover() {
             </div>
         </div>
     );
+}
+
+export function getCurrentZoom() {
+    const w = window.innerWidth;
+    if (w <= 1150) return 0.65;
+    if (w <= 1550) return 0.8;
+    return 1; // default
 }
