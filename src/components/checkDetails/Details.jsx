@@ -1,7 +1,6 @@
 import { useContext, useState, useOptimistic, useRef, useEffect, createContext } from "react";
 import Style from "../../Styles/modular/charDetails.module.css";
 import ReloadBTN from "./reloadBTN.jsx";
-import NewPostForm from "./NewPostForm.jsx";
 import { useSearchParams } from "react-router-dom";
 import { CharacterContext } from "../../pages/CharDetails.jsx";
 import UserDataContainer from "./UserDataContainer.jsx";
@@ -9,7 +8,6 @@ import StatsChart from "./StatsChart.jsx";
 import AchevementsSection from "./Achievements.jsx";
 import TalentsSection from "./TallentsSection.jsx";
 import Armory from "./Armory.jsx";
-import CommentsSection from "./CommentsSection.jsx";
 import PvPRatingsSection from "./PvPRatingsSection.jsx";
 import Comments from "./Comments.jsx";
 
@@ -134,7 +132,7 @@ export function Details() {
                     </div>
                     <ReloadBTN isUpdating={isUpdating} setUpdating={setUpdating} />
                 </div>
-{/* 
+
                 <UserDataContainer />
 
                 <section className={Style.statsGrid}>
@@ -153,7 +151,7 @@ export function Details() {
                         <StatsChart />
                     </div>
                     <Armory />
-                </section> */}
+                </section>
 
                 {/* Comments Section */}
                 <Comments />
