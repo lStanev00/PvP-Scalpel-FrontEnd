@@ -14,7 +14,7 @@ export default function PvPCards({ bracketData, bracketLabel = undefined, specLa
     const rating = currentSeason?.rating ?? null;
     const ratingMedia = currentSeason?.title?.media;
     const ratingName = currentSeason?.title?.name;
-
+    if(specLabel == "Rated Battleground") specLabel = "RBG 10v10"
 
     return (
         <div className={Style["pvp-card"]}>

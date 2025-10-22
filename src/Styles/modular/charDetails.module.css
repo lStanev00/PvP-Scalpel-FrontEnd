@@ -25,13 +25,6 @@
     gap: 1rem;
 }
 
-/* 
-.statsGrid > *:nth-child(2) {
-    width: fit-content;
-    justify-self: center;
-}
- */
-
 .statsGrid > section {
     background: none;
     border: none;
@@ -44,11 +37,22 @@
     justify-content: center;
 }
 
-/* @media (max-width: 1100px) {
-    .statsGrid {
-        grid-template-columns: 1fr;
-    }
-} */
+.armoryLayout {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.armoryRight {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 
 /* Section divider */
 .section-divider {

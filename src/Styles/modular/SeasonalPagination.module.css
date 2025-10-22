@@ -14,26 +14,39 @@ h2 {
 
 h1 {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+
     font-size: 2rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.6px;
     text-align: center;
-    margin-bottom: 0.8rem;
 
-    background: linear-gradient(180deg, #fff9c4 0%, var(--color-gold) 35%, #caa400 100%);
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
     text-shadow:
         0 2px 4px rgba(0, 0, 0, 0.6),
-        0 0 6px rgba(255, 215, 0, 0.25),
+        0 0 6px rgba(255, 225, 120, 0.25),
         0 0 12px rgba(255, 255, 255, 0.1);
-
-    transition: filter 0.3s ease, transform 0.3s ease;
 }
 
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
+    box-shadow: 0 0 10px rgba(255, 200, 50, 0.3);
+}
 
 
 /* ========== CONTENT WRAPPER ========== */

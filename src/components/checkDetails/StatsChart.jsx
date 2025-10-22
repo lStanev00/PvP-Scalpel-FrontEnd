@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CharacterContext } from "../../pages/CharDetails";
-import { GiSwordman, GiSpeedometer, GiShieldReflect, GiCrystalBars, GiCrossedSwords } from "react-icons/gi";
+import { GiSwordman, GiSpeedometer, GiCrystalBars, GiCrossedSwords } from "react-icons/gi";
 import Style from "../../Styles/modular/StatsChart.module.css";
 
 export default function StatsChart() {

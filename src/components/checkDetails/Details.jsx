@@ -76,7 +76,7 @@ export function Details() {
                     entry.name.includes("Strategist")
                 );
                 if (strategistExist) {
-                    console.info(strategistExist)
+                    console.info(strategistExist);
                     if (blitzRatings[bracketKey]) {
                         blitzRatings[bracketKey].achieves = {
                             name: "Strategist",
@@ -97,25 +97,25 @@ export function Details() {
     });
 
     return (
-<div
-    style={
-        data.media === null
-            ? {
-                  filter: isUpdating ? "blur(5px)" : "none",
-              }
-            : {
-                  backgroundImage: `url('${data.media.charImg}')`,
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  backgroundAttachment: "fixed",
-                  overflow: "hidden",
-                  filter: isUpdating ? "blur(5px)" : "none",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-              }
-    }>
+        <div
+            style={
+                data.media === null
+                    ? {
+                          filter: isUpdating ? "blur(5px)" : "none",
+                      }
+                    : {
+                          backgroundImage: `url('${data.media.charImg}')`,
+                          backgroundPosition: "center",
+                          backgroundSize: "cover",
+                          backgroundRepeat: "no-repeat",
+                          backgroundAttachment: "fixed",
+                          overflow: "hidden",
+                          filter: isUpdating ? "blur(5px)" : "none",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                      }
+            }>
             <DetailsProvider.Provider
                 value={{ commentsRef, optimisticPosts, addOptimisticPost, setPosts, posts, Style }}>
                 {/* Character Banner */}
@@ -145,11 +145,13 @@ export function Details() {
                         Style={Style}
                     />
                     <AchevementsSection />
-                    <section>
-                        <StatsChart />
+                </section>
+                <section class={Style["armoryLayout"]}>
+                    <div class={Style["armoryRight"]}>
                         <TalentsSection />
-                        <Armory />
-                    </section>
+                        <StatsChart />
+                    </div>
+                    <Armory />
                 </section>
 
                 {/* Posts Section */}

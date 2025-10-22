@@ -13,15 +13,6 @@
     box-sizing: border-box;
 }
 
-/* Header */
-.headerDiv h1 {
-    color: #facc15;
-    text-align: center;
-    font-size: 2rem;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px #000, 0 0 2px #ffc400;
-    margin-bottom: 0.6rem;
-}
 
 .headerDiv p {
     color: #2cb5f2;
