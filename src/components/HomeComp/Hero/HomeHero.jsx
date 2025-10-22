@@ -18,7 +18,7 @@ export default function HomeHero() {
 
                 <div className={Style.actions}>
                     <a
-                        href="https://discord.gg/yourInviteHere"
+                        href="https://discord.gg/2h45zpyJdb"
                         target="_blank"
                         rel="noreferrer"
                         className={`${Style.btn} ${Style.discord}`}>
@@ -26,7 +26,7 @@ export default function HomeHero() {
                         <FaDiscord className={Style.icon} />
                     </a>
 
-                    <a href="/recruitment" className={`${Style.btn} ${Style.guild}`}>
+                    <a href="/joinGuild" className={`${Style.btn} ${Style.guild}`}>
                         <span>Join the Guild</span>
                         <GiBroadsword className={Style.icon} />
                     </a>

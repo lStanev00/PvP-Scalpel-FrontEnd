@@ -20,6 +20,7 @@ import Style from "./Styles/modular/AppContent.module.css";
 import Footer from "./components/Footer.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
+const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
 
 export default function AppContent() {
     const { httpFetch } = useContext(UserContext);
@@ -58,6 +59,14 @@ export default function AppContent() {
                             element={
                                 <Suspense fallback={<Loading />}>
                                     <CharDetails />
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path="joinGuild"
+                            element={
+                                <Suspense fallback={<Loading />}>
+                                    <JoinGuild />
                                 </Suspense>
                             }
                         />
