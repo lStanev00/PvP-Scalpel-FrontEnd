@@ -145,8 +145,8 @@ export function Details() {
                     />
                     <AchevementsSection />
                 </section>
-                <section class={Style["armoryLayout"]}>
-                    <div class={Style["armoryRight"]}>
+                <section className={Style["armoryLayout"]}>
+                    <div className={Style["armoryRight"]}>
                         <TalentsSection />
                         <StatsChart />
                     </div>
