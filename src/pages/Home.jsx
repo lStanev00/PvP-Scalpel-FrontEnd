@@ -4,6 +4,7 @@ import WeeklyRender from "../components/HomeComp/WeeklyRender/WeeklyRender";
 import HomeHero from "../components/HomeComp/Hero/HomeHero";
 import Style from "../Styles/modular/Home.module.css";
 import TopRatedRender from "../components/HomeComp/TopRatedRender/TopRatedRender";
+import SEOHome from "../SEO/SEOHome";
 
 export default function Home() {
     const { httpFetch } = useContext(UserContext);
@@ -29,6 +30,7 @@ export default function Home() {
 
     return (
         <main className={Style.mainGrid}>
+            <SEOHome />
             <div className={Style.lightSweep}></div>
             <HomeHero />
             <div className={Style["section-separator"]}></div>
