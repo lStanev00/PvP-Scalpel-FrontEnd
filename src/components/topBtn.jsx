@@ -32,10 +32,8 @@ export default function GoToTopButton() {
     }, [click, isVisible]);
 
     return (
-        <>
-            <button onClick={toTop} className={isVisible ? "goTop show" : "goTop"} id="goToTopBtn">
-                <GiBroadsword className="goTopIcon" />
-            </button>
-        </>
+        <button onClick={toTop} className={isVisible ? "goTop show" : "goTop"} id="goToTopBtn">
+            <GiBroadsword className="goTopIcon" />
+        </button>
     );
 }
