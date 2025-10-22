@@ -1,27 +1,26 @@
 import { useContext, useState, useEffect, forwardRef } from "react";
 import { UserContext } from "../../hooks/ContextVariables";
 import { DetailsProvider } from "./Details";
-import { FiUser, FiCalendar, FiEdit2, FiTrash2 } from "react-icons/fi";
-import postStyle from "../../Styles/modular/PostTemplate.module.css";
-import editStyle from "../../Styles/modular/NewPostForm.module.css";
+import { FiUser, FiCalendar, FiEdit2, FiTrash2, FiClock } from "react-icons/fi";
+import Style from "../../Styles/modular/PostTemplate.module.css";
 
 const PostTemplate = forwardRef(function PostTemplate({ postValue, optimistic, innerRef }, ref) {
     const { user, httpFetch } = useContext(UserContext);
     const { setPosts } = useContext(DetailsProvider);
 
-    const [edit, setEdit] = useState(undefined);
-    const [editTitle, setEditTitle] = useState(undefined);
-    const [editContent, setEditContent] = useState(undefined);
+    const [editMode, setEditMode] = useState(false);
+    const [editTitle, setEditTitle] = useState("");
+    const [editContent, setEditContent] = useState("");
     const [post, setPost] = useState(postValue);
 
     const isOwner = user?._id === post?.author?._id;
 
     useEffect(() => {
-        if (edit) {
-            setEditTitle(post.title);
-            setEditContent(post.content);
+        if (editMode) {
+            setEditTitle(post.title || "");
+            setEditContent(post.content || "");
         }
-    }, [edit]);
+    }, [editMode]);
 
     const onDelete = async (e) => {
         e.preventDefault();
@@ -33,14 +32,14 @@ const PostTemplate = forwardRef(function PostTemplate({ postValue, optimistic, i
             if (res.status === 200) {
                 setPosts((prev) => prev.filter((p) => p._id !== post._id));
             }
-        } catch (error) {
-            console.warn(error);
+        } catch (err) {
+            console.warn("Delete failed:", err);
         }
     };
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        if (!editTitle?.trim() || !editContent?.trim()) return;
+        if (!editTitle.trim() || !editContent.trim()) return;
 
         try {
             const res = await httpFetch("/edit/post", {
@@ -53,53 +52,59 @@ const PostTemplate = forwardRef(function PostTemplate({ postValue, optimistic, i
             });
             if (res.status === 200) {
                 setPost(res.data);
-                setEdit(undefined);
+                setEditMode(false);
             }
-        } catch (error) {
-            console.warn(error);
+        } catch (err) {
+            console.warn("Edit failed:", err);
         }
     };
 
-    // Read-only comment view
-    if (!edit) {
+    /* ---------- VIEW MODE ---------- */
+    if (!editMode) {
         return (
             <article
                 ref={innerRef}
-                className={`${postStyle.commentItem} ${optimistic ? postStyle.optimistic : ""}`}
+                className={`${Style.commentItem} ${optimistic ? Style.optimistic : ""}`}
             >
-                <header className={postStyle.commentHeader}>
-                    <div className={postStyle.metaLeft}>
-                        <FiUser className={postStyle.icon} />
-                        <span className={postStyle.author}>{post?.author?.username || "Anonymous"}</span>
+                <header className={Style.commentHeader}>
+                    <div className={Style.metaLeft}>
+                        <FiUser className={Style.icon} />
+                        <span className={Style.author}>
+                            {post?.author?.username || "Anonymous"}
+                        </span>
                     </div>
-                    <div className={postStyle.metaRight}>
-                        <FiCalendar className={postStyle.icon} />
-                        <span className={postStyle.date}>
+
+                    <div className={Style.metaRight}>
+                        {optimistic && (
+                            <span className={Style.optimisticTag}>
+                                <FiClock className={Style.clockIcon} />
+                                Pending...
+                            </span>
+                        )}
+                        <FiCalendar className={Style.icon} />
+                        <span className={Style.date}>
                             {new Date(post?.createdAt).toLocaleDateString()}
                         </span>
                     </div>
                 </header>
 
-                <div className={postStyle.commentBody}>
-                    <h3 className={postStyle.commentTitle}>{post?.title || "Untitled Post"}</h3>
-                    <p className={postStyle.commentText}>
-                        {post?.content || "No content provided."}
+                <div className={Style.commentBody}>
+                    <h3 className={Style.commentTitle}>{post.title || "Untitled Post"}</h3>
+                    <p className={Style.commentText}>
+                        {post.content || "No content provided."}
                     </p>
                 </div>
 
                 {isOwner && (
-                    <footer className={postStyle.commentFooter}>
+                    <footer className={Style.commentFooter}>
                         <button
-                            className={`${postStyle.actionBtn} ${postStyle.editBtn}`}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setEdit(true);
-                            }}
+                            className={`${Style.actionBtn} ${Style.editBtn}`}
+                            onClick={() => setEditMode(true)}
                         >
                             <FiEdit2 /> Edit
                         </button>
                         <button
-                            className={`${postStyle.actionBtn} ${postStyle.deleteBtn}`}
+                            className={`${Style.actionBtn} ${Style.deleteBtn}`}
                             onClick={onDelete}
                         >
                             <FiTrash2 /> Delete
@@ -110,37 +115,37 @@ const PostTemplate = forwardRef(function PostTemplate({ postValue, optimistic, i
         );
     }
 
-    // Edit form view
+    /* ---------- EDIT MODE ---------- */
     return (
-        <article ref={innerRef} className={postStyle.commentItem}>
-            <form onSubmit={onSubmit} className={editStyle.form}>
-                <h3 className={editStyle.heading}>Edit Comment</h3>
+        <article ref={innerRef} className={`${Style.commentItem} ${Style.editing}`}>
+            <form onSubmit={onSubmit} className={Style.editForm}>
+                <h3 className={Style.editHeading}>Edit Comment</h3>
 
                 <input
                     type="text"
-                    placeholder="Post title"
-                    className={editStyle.input}
-                    defaultValue={post.title}
+                    className={Style.editInput}
+                    value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
+                    placeholder="Post title"
                     required
                 />
 
                 <textarea
-                    placeholder="Write your content..."
-                    className={editStyle.textarea}
-                    defaultValue={post.content}
+                    className={Style.editTextarea}
+                    value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}
+                    placeholder="Write your content..."
                     required
                 />
 
-                <div className={postStyle.formActions}>
-                    <button type="submit" className={editStyle.button}>
+                <div className={Style.editActions}>
+                    <button type="submit" className={Style.confirmBtn}>
                         Confirm
                     </button>
                     <button
                         type="button"
-                        onClick={() => setEdit(undefined)}
-                        className={editStyle.button}
+                        onClick={() => setEditMode(false)}
+                        className={Style.cancelBtn}
                     >
                         Cancel
                     </button>

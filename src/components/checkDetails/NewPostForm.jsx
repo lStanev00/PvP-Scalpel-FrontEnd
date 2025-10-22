@@ -1,119 +1,125 @@
 import { startTransition, useContext, useState } from "react";
-import styles from '../../Styles/modular/NewPostForm.module.css'; 
+import styles from "../../Styles/modular/NewPostForm.module.css";
 import { UserContext } from "../../hooks/ContextVariables";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DetailsProvider } from "./Details";
-
+import {  FaPaperPlane  } from "react-icons/fa";
+import { CharacterContext } from "../../pages/CharDetails";
+ 
 export default function NewPostForm() {
+    const { data } = useContext(CharacterContext);
+    const characterID = data?._id;
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const { user, httpFetch } = useContext(UserContext);
+    const [error, setError] = useState();
+    const location = useLocation().pathname;
+    const { addOptimisticPost, setPosts } = useContext(DetailsProvider);
+    const navigate = useNavigate();
 
-  const { data } = useContext(DetailsProvider); 
-  const characterID = data?._id;
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const {user, httpFetch} = useContext(UserContext);
-  const [error, setError] = useState();
-  const location = (useLocation()).pathname;
-  const {addOptimisticPost, setPosts} = useContext(DetailsProvider)
-  
-  const navigate = useNavigate();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(undefined);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(undefined);
 
-    if (!title.trim() || !content.trim()) return;
-    if (!user._id || user._id == undefined) return navigate(`/login`);
+        if (!title.trim() || !content.trim()) return;
+        if (!user?._id) return navigate(`/login`);
 
-    const fakePost = {
-        isOptimistic: true,
-        _id: `FAKE` + String(Math.random()),
-        title,
-        content,
-        author: {
-            _id: user._id,
-            id: user._id,
-            username: user.username,
-        },
-        createdAt: new Date().toISOString(),
-    }
-    startTransition(() => addOptimisticPost(fakePost))
+        const fakePost = {
+            isOptimistic: true,
+            _id: `FAKE-${Math.random().toString(36).slice(2)}`,
+            title,
+            content,
+            author: {
+                _id: user._id,
+                username: user.username,
+            },
+            createdAt: new Date().toISOString(),
+        };
 
-    try {
-        const req = await httpFetch(`/new/post`, {
-            method: "POST",
-            body: JSON.stringify({
-                title: title.trim(),
-                content: content.trim(),
-                authorID: user._id,
-                characterID: characterID
-            })
-        });
-        const status = req.status;
-        if (status == 201 ) {
-            const data = req.data;
+        startTransition(() => addOptimisticPost(fakePost));
 
-            setTitle("");
-            setContent("");
+        try {
+            
+            // const {  title, content, authorID, characterID  } = req.body;
+            const req = await httpFetch(`/new/post`, {
+                method: "POST",
+                body: JSON.stringify({
+                    title: title.trim(),
+                    content: content.trim(),
+                    authorID: user._id,
+                    characterID,
+                }),
+            });
 
-            return setPosts(prev => [...prev.filter(post => post._id !== fakePost._id), data]);
+            if (req.status === 201) {
+                const data = req.data;
+                setPosts((prev) => [...prev.filter((p) => p._id !== fakePost._id), data]);
+                setTitle("");
+                setContent("");
+            } else {
+                setError(req.data?.msg || `Request failed: ${req.status}`);
+                setPosts((prev) => prev.filter((p) => p._id !== fakePost._id));
+            }
+        } catch (err) {
+            console.error("Post failed:", err);
+            setPosts((prev) => prev.filter((p) => p._id !== fakePost._id));
+            setError("Failed to create post. Try again!");
+        }
+    };
 
-        } else if (status === 400) setError(req.data.msg)
-        else setError(`Failed to create post. Request status: ${req?.status}`)
-        setPosts(prev => prev.filter(p => p._id !== fakePost._id));
-    } catch (error) {
-        console.error('Post failed:', err);
+    return (
+        <form className={styles.commentForm} onSubmit={handleSubmit}>
+            <div className={styles.headerLine}>
+                <h1>Add a Comment</h1>
+                {error && <p className={styles.errorMsg}>{error}</p>}
+            </div>
 
-        setPosts(prev => prev.filter(p => p._id !== fakePost._id));
-        
-        setError('Failed to create post. Try again!');
-        
-    }
+            <div className={styles.inputs}>
+                <input
+                    type="text"
+                    placeholder="Title your thought..."
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    name="title"
+                    required
+                />
 
-    setTitle("");
-    setContent("");
-  };
+                <textarea
+                    placeholder="Share your opinion..."
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    name="description"
+                    required
+                />
+            </div>
 
-  return (
-    <form className={styles.form} onSubmit={async(e)=>await handleSubmit(e)}>
-      <h3 className={styles.heading}>Add new Comment</h3>
+            <div className={styles.actions}>
+                <button disabled={!user?._id} type="submit" className={styles.submitBtn}>
+                    <FaPaperPlane size={16} />
+                    <span>  Submit Comment</span>
+                </button>
 
-      <input
-        type="text"
-        placeholder="Post title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className={styles.input}
-        required
-      />
-
-      <textarea
-        placeholder="Write your content..."
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        className={styles.textarea}
-        required
-      />
-
-    {error && (
-        <>
-        <p style={{color:"red"}}>{error}</p>
-        </>
-    )}
-
-      <button disabled={!user?._id} type="submit" className={styles.button}>
-        📝 Submit Post
-      </button>
-
-      {!user?._id && (
-        <div style={{display:"flex" ,gap: "10px"}}>
-            <button onClick={(e) => navigate(`/login?target=${location}`)} type="submit" className={styles.button}>
-              Login
-            </button>
-
-            <button onClick={(e) => navigate('/register')} type="submit" className={styles.button}>
-              Register
-            </button>
-        </div>
-      )}
-    </form>
-  );
+                {!user?._id && (
+                    <div className={styles.authButtons}>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate(`/login?target=${location}`);
+                            }}
+                            className={styles.altBtn}>
+                            Login
+                        </button>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate("/register");
+                            }}
+                            className={styles.altBtn}>
+                            Register
+                        </button>
+                    </div>
+                )}
+            </div>
+        </form>
+    );
 }

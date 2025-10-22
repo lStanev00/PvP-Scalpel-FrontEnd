@@ -11,6 +11,7 @@ import TalentsSection from "./TallentsSection.jsx";
 import Armory from "./Armory.jsx";
 import CommentsSection from "./CommentsSection.jsx";
 import PvPRatingsSection from "./PvPRatingsSection.jsx";
+import Comments from "./Comments.jsx";
 
 export const DetailsProvider = createContext();
 
@@ -133,7 +134,7 @@ export function Details() {
                     </div>
                     <ReloadBTN isUpdating={isUpdating} setUpdating={setUpdating} />
                 </div>
-
+{/* 
                 <UserDataContainer />
 
                 <section className={Style.statsGrid}>
@@ -152,14 +153,10 @@ export function Details() {
                         <StatsChart />
                     </div>
                     <Armory />
-                </section>
+                </section> */}
 
-                {/* Posts Section */}
-
-                <section className={Style.commentsZone}>
-                    <CommentsSection />
-                    <NewPostForm />
-                </section>
+                {/* Comments Section */}
+                <Comments />
             </DetailsProvider.Provider>
         </div>
     );
