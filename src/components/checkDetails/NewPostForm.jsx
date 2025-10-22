@@ -3,9 +3,9 @@ import styles from "../../Styles/modular/NewPostForm.module.css";
 import { UserContext } from "../../hooks/ContextVariables";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DetailsProvider } from "./Details";
-import {  FaPaperPlane  } from "react-icons/fa";
+import { FaPaperPlane } from "react-icons/fa";
 import { CharacterContext } from "../../pages/CharDetails";
- 
+
 export default function NewPostForm() {
     const { data } = useContext(CharacterContext);
     const characterID = data?._id;
@@ -39,7 +39,6 @@ export default function NewPostForm() {
         startTransition(() => addOptimisticPost(fakePost));
 
         try {
-            
             // const {  title, content, authorID, characterID  } = req.body;
             const req = await httpFetch(`/new/post`, {
                 method: "POST",
@@ -94,10 +93,12 @@ export default function NewPostForm() {
             </div>
 
             <div className={styles.actions}>
-                <button disabled={!user?._id} type="submit" className={styles.submitBtn}>
-                    <FaPaperPlane size={16} />
-                    <span>  Submit Comment</span>
-                </button>
+                {user?._id && (
+                    <button disabled={!user?._id} type="submit" className={styles.submitBtn}>
+                        <FaPaperPlane size={16} />
+                        <span> Submit Comment</span>
+                    </button>
+                )}
 
                 {!user?._id && (
                     <div className={styles.authButtons}>

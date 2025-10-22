@@ -121,9 +121,9 @@ export function Details() {
                 <div className={Style["banner"]}>
                     <img src={data.media.avatar} alt="Character Avatar" />
                     <div className={Style["banner-content"]}>
-                        <strong>
+                        <h3 className={Style.bannerCharName}>
                             {data.name} - {data.playerRealm.name}
-                        </strong>
+                        </h3>
                         <span>
                             {data.race} | Level {data.level} | {data.class.name} (
                             {data.activeSpec.name}){" "}

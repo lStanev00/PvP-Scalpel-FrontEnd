@@ -2,6 +2,8 @@ import { useContext, useState } from 'react'
 import Style from '../../Styles/modular/AccInfo.module.css'
 import { EmailForm, UsernameForm } from './AccInfoModifyForm';
 import { UserContext } from '../../hooks/ContextVariables';
+import { FiEdit2 } from "react-icons/fi";
+
 export default function AccInfo() {
     const [editUsername, setEditUsername] = useState(false);
     const [editEmail, setEditEmail] = useState(false);
@@ -19,11 +21,11 @@ export default function AccInfo() {
                 {!editUsername && (
                 <div>
                     {user.username}
-                    <span style={{cursor: "pointer"}} onClick={() => setEditUsername(true)} title="Edit"> ✏️ </span>
+                    <span style={{cursor: "pointer"}} onClick={() => setEditUsername(true)} title="Edit"> <FiEdit2 /> </span>
                 </div>
                 )}
                 {editUsername && (
-                <UsernameForm setEditUsername={setEditUsername} currentUsername={user.username} />
+                <UsernameForm setEditUsername={setEditvUsername} currentUsername={user.username} />
                 )}
             </div>
 
@@ -34,7 +36,7 @@ export default function AccInfo() {
                 {!editEmail && (
                 <div>
                     {user.email}
-                    <span style={{cursor: "pointer"}} onClick={() => setEditEmail(true)} title="Edit"> ✏️ </span>
+                    <span style={{cursor: "pointer"}} onClick={() => setEditEmail(true)} title="Edit"> <FiEdit2 /> </span>
                 </div>
 
                 )}

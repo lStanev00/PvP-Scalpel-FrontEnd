@@ -68,7 +68,7 @@
     width: 100%;
     padding: 1.2rem 1rem 1.4rem;
     border-radius: var(--radius);
-    background: var(--bg-row);
+    background: var(--bg-main-card-char-details);
     border: 1px solid rgba(255, 204, 0, 0.15);
     box-shadow: inset 0 0 6px var(--divider-color);
     display: flex;
