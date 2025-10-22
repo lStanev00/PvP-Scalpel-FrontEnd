@@ -49,31 +49,54 @@ export default function AppContent() {
                             <Route path="/reset/password" element={<ResetPassword />} />
                         </Route>
 
-                    <Route path='/' element={<Home />}></Route>
-                    <Route path='/roster' element={<RosterPage />}></Route>
-                    <Route path='/leaderboard' element={<LDB />}></Route>
-                    {/* <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route> */}
-                    <Route 
-                        path="/check/:server/:realm/:name"
-                        element={
-                            <Suspense fallback={<Loading />}>
-                                <CharDetails />
-                            </Suspense>
-                        }
-                    />
-                    <Route path="/goto/:email" element={<GotoEmail />} />
-                    <Route path="/validate/:scenario" element={<VlidateToken />} />
-                    <Route path="/posts" element={<Posts />} />
-                </Routes>
-                
-            </main>
-            <footer className="footer">
-                <p>&copy; 2024 - {new Date().getFullYear()} Lachezar Stanev. ALL RIGHTS RESERVED.</p>
-            </footer>
-        </div>
-        <GoToTopButton />
-        
+                        <Route path="/" element={<Home />}></Route>
+                        <Route path="/roster" element={<RosterPage />}></Route>
+                        <Route path="/leaderboard" element={<LDB />}></Route>
+                        {/* <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route> */}
+                        <Route
+                            path="/check/:server/:realm/:name"
+                            element={
+                                <Suspense fallback={<Loading />}>
+                                    <CharDetails />
+                                </Suspense>
+                            }
+                        />
+                        <Route path="/goto/:email" element={<GotoEmail />} />
+                        <Route path="/validate/:scenario" element={<VlidateToken />} />
+                        <Route path="/posts" element={<Posts />} />
+                    </Routes>
+                </main>
+                <footer className={Style.footer}>
+                    <div className={Style["footer-inner"]}>
+                        <div className={Style["footer-brand"]}>
+                            <img
+                                src="/logo/logo_resized.png"
+                                alt="PvP Scalpel Logo"
+                                className={Style["footer-logo"]}
+                            />
+                            <h3>PvP Scalpel</h3>
+                            <p>Precision • Performance • Power</p>
+                        </div>
 
+                        <div className={Style["footer-links"]}>
+                            <a href="/leaderboard">Leaderboard</a>
+                            <a href="/roster">Members</a>
+                            <a href="/posts">Community</a>
+                            <a
+                                href="https://discord.gg/devdT4nVgb"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                Discord
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className={Style["footer-bottom"]}>
+                        <p>© 2024 - {new Date().getFullYear()} Lachezar Stanev — All Rights Reserved.</p>
+                    </div>
+                </footer>
+            </div>
+            <GoToTopButton />
         </>
         // </Router>
     );
