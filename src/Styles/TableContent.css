@@ -1,38 +1,3 @@
-:root {
-    --bg-table: rgba(10, 14, 30, 0.95);
-    --bg-row: rgba(25, 30, 50, 0.94);
-    --bg-row-alt: rgba(32, 36, 60, 0.94);
-    --bg-row-hover: rgba(40, 45, 70, 0.96);
-    --bg-header: linear-gradient(
-        90deg,
-        rgba(14, 18, 30, 0.96),
-        rgba(0, 245, 212, 0.12),
-        rgba(14, 18, 30, 0.96)
-    );
-    --bg-podium-1: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 255, 255, 0.05));
-    --bg-podium-2: linear-gradient(90deg, rgba(192, 192, 192, 0.2), rgba(255, 255, 255, 0.05));
-    --bg-podium-3: linear-gradient(90deg, rgba(205, 127, 50, 0.2), rgba(255, 255, 255, 0.05));
-    --border-color: rgba(255, 255, 255, 0.08);
-    --divider-color: rgba(255, 255, 255, 0.05);
-    --radius: 10px;
-    --color-text: #eaeef6;
-    --color-muted: #98a3c7;
-    --color-accent: #00f5d4;
-    --color-gold: #ffd700;
-    --color-silver: #c0c0c0;
-    --color-bronze: #cd7f32;
-    --font-base: "Inter", sans-serif;
-    --font-mono: "JetBrains Mono", monospace;
-    --avatar: 42px;
-    --spacer-y: 0.9rem;
-    --spacer-x: 1rem;
-    --gap-y: 12px;
-
-    /* Additional accents */
-    --color-header-accent: #d8ffe8;
-    --header-border: 0 2px 0 rgba(0, 245, 212, 0.25);
-}
-
 .leaderboard-table {
     width: 100%;
     border-collapse: separate;

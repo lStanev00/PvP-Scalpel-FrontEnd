@@ -144,9 +144,8 @@ export function Details() {
                         data={data}
                         Style={Style}
                     />
+                    <AchevementsSection />
                     <section>
-
-                        <AchevementsSection />
                         <StatsChart />
                         <TalentsSection />
                         <Armory />

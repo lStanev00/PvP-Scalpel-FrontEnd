@@ -169,3 +169,10 @@
     border-top: 1px solid rgba(255, 215, 0, 0.1);
     padding-top: 1rem;
 }
+
+@media (max-width: 1200px) {
+    .pageWrapper {
+        width: 100%;
+        padding: 1rem;
+    }
+}

@@ -101,45 +101,43 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                         })}
                     </div>
                     {paginatedData.length > 1 && (
-                        <div className={Style.paginationWrap}>
-                            <div className={Style.paginationContainer}>
-                                <button
-                                    disabled={currentPageIndex === 0}
-                                    onClick={() => setCurrentPageIndex(0)}
-                                    className={Style.navBtn}>
-                                    <FaAngleDoubleLeft />
-                                    <span>First</span>
-                                </button>
+                        <div className={Style.paginationContainer}>
+                            <button
+                                disabled={currentPageIndex === 0}
+                                onClick={() => setCurrentPageIndex(0)}
+                                className={Style.navBtn}>
+                                <FaAngleDoubleLeft />
+                                <span>First</span>
+                            </button>
 
-                                <button
-                                    disabled={currentPageIndex === 0}
-                                    onClick={() => setCurrentPageIndex((now) => now - 1)}
-                                    className={Style.navBtn}>
-                                    <FaAngleLeft />
-                                    <span>Prev</span>
-                                </button>
+                            <button
+                                disabled={currentPageIndex === 0}
+                                onClick={() => setCurrentPageIndex((now) => now - 1)}
+                                className={Style.navBtn}>
+                                <FaAngleLeft />
+                                <span>Prev</span>
+                            </button>
 
-                                <p className={Style.pageInfo}>
-                                    Page <span>{currentPageIndex + 1}</span> /{" "}
-                                    <span>{paginatedData.length}</span>
-                                </p>
+                            <p className={Style.pageInfo}>
+                                Page <span>{currentPageIndex + 1}</span> /{" "}
+                                <span>{paginatedData.length}</span>
+                            </p>
 
-                                <button
-                                    disabled={currentPageIndex === paginatedData.length - 1}
-                                    onClick={() => setCurrentPageIndex((now) => now + 1)}
-                                    className={Style.navBtn}>
-                                    <span>Next</span>
-                                    <FaAngleRight />
-                                </button>
+                            <button
+                                disabled={currentPageIndex === paginatedData.length - 1}
+                                onClick={() => setCurrentPageIndex((now) => now + 1)}
+                                className={Style.navBtn}>
+                                <span>Next</span>
+                                <FaAngleRight />
+                            </button>
 
-                                <button
-                                    disabled={currentPageIndex === paginatedData.length - 1}
-                                    onClick={() => setCurrentPageIndex(paginatedData.length - 1)}
-                                    className={Style.navBtn}>
-                                    <span>Last</span>
-                                    <FaAngleDoubleRight />
-                                </button>
-                            </div>
+                            <button
+                                disabled={currentPageIndex === paginatedData.length - 1}
+                                onClick={() => setCurrentPageIndex(paginatedData.length - 1)}
+                                className={Style.navBtn}>
+                                <span>Last</span>
+                                <FaAngleDoubleRight />
+                            </button>
                         </div>
                     )}
                 </div>

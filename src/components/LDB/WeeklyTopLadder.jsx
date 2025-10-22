@@ -18,7 +18,7 @@ export default function WeeklyTop({ content }) {
         async function load() {
             setLoading(true);
             try {
-                const req = await httpFetch(`/weekly/${bracket}`);
+                const req = await httpFetch(`/weekly/${bracket ===  "BG" ? `RBG` : bracket}`);
                 if (!cancelled && req?.ok && req?.data) {
                     const data = req.data?.data || []; // { data: [...], lastUpdated }
                     console.info(data);

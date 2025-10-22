@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CharacterContext } from "../../pages/CharDetails";
-import { GiSwordman, GiSpeedometer, GiShieldReflect, GiCrystalBars } from "react-icons/gi";
+import { GiSwordman, GiSpeedometer, GiShieldReflect, GiCrystalBars, GiCrossedSwords } from "react-icons/gi";
 import Style from "../../Styles/modular/StatsChart.module.css";
 
 export default function StatsChart() {
@@ -31,17 +31,17 @@ export default function StatsChart() {
     Mastery: <GiCrystalBars />,
     Versatility: <GiSwordman />,
     Haste: <GiSpeedometer />,
-    "Critical Strike": <GiShieldReflect />,
+    "Critical Strike": <GiCrossedSwords />, 
   };
 
   return (
     <section className={Style.section}>
-      <h2>Stats Priority</h2>
+      <h1>Stats Priority</h1>
       <div className={Style.chartContainer}>
         {stats.secondary.map(([name, value]) => (
           <div className={Style.statBox} key={name}>
             <div className={Style.icon}>{icons[name]}</div>
-            <span className={Style.name}>{name}</span>
+            <span className={Style.name}>{name === "Critical Strike" ? "Critical" : name}</span>
             <div className={Style.barContainer}>
               <div
                 className={Style.bar}
