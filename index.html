@@ -1,14 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo/logo_resized.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PvP Scalpel</title>
-  </head>
-  <body>
-    <noscript>You will need javaScript to run the app</noscript>
-    <script type="module" src="/src/main.jsx" defer></script>
-    <!-- <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "61bddc4956404df496790330b8dce720"}'></script> -->
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- ========== BASIC INFO ========== -->
+        <title>PvP Scalpel — World of Warcraft PvP Analytics & Guild Leaderboards</title>
+        <meta name="description" content="PvP Scalpel delivers real-time World of Warcraft PvP leaderboards, member insights, and guild analytics. Precision • Performance • Power." />
+        <meta name="keywords" content="World of Warcraft, WoW PvP, PvP Leaderboard, Arena Rankings, Rated Battlegrounds, Solo Shuffle, Blitz BG, PvP Scalpel, WoW Guild" />
+        <meta name="author" content="Lachezar Stanev" />
+
+        <!-- ========== FAVICON ========== -->
+        <link rel="icon" type="image/png" href="/logo/logo_resized.png" />
+        <link rel="apple-touch-icon" href="/logo/logo_resized.png" />
+
+        <!-- ========== OPEN GRAPH / FACEBOOK ========== -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="PvP Scalpel — WoW PvP Analytics" />
+        <meta property="og:description" content="Analyze your World of Warcraft PvP performance and compete with precision using PvP Scalpel." />
+        <meta property="og:image" content="https://pvpscalpel.com/logo/logo_resized.png" />
+        <meta property="og:url" content="https://pvpscalpel.com/" />
+        <meta property="og:site_name" content="PvP Scalpel" />
+
+        <!-- ========== TWITTER CARD ========== -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="PvP Scalpel — WoW PvP Analytics" />
+        <meta name="twitter:description" content="Track and compare your WoW PvP rankings across all brackets. Precision • Performance • Power." />
+        <meta name="twitter:image" content="https://pvpscalpel.com/logo/logo_resized.png" />
+
+        <!-- ========== ROBOTS & CANONICAL ========== -->
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://pvpscalpel.com/" />
+
+        <!-- ========== STRUCTURED DATA ========== -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "PvP Scalpel",
+                "url": "https://pvpscalpel.com",
+                "logo": "https://pvpscalpel.com/logo/logo_resized.png",
+                "sameAs": ["https://discord.gg/devdT4nVgb"],
+                "founder": {
+                    "@type": "Person",
+                    "name": "Lachezar Stanev"
+                },
+                "description": "PvP Scalpel provides World of Warcraft PvP analytics, leaderboards, and guild community features."
+            }
+        </script>
+
+        <!-- ========== PREFETCH & PERFORMANCE ========== -->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    </head>
+
+    <body>
+        <noscript>You need JavaScript enabled to run PvP Scalpel.</noscript>
+        <script type="module" src="/src/main.jsx" defer></script>
+        <!-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"61bddc4956404df496790330b8dce720"}'></script> -->
+    </body>
 </html>
