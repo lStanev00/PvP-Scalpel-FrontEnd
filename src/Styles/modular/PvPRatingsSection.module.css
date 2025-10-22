@@ -65,8 +65,6 @@
     position: relative;
     width: fit-content;
     max-width: 1400px;
-    /* margin: 2rem auto; */
-    /* padding: 1rem 1rem; */
     border-radius: 14px;
     background: radial-gradient(
         circle at top center,

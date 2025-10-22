@@ -14,7 +14,7 @@
     width: 700px;
     position: relative;
     height: 785px;
-    padding: 1rem 2rem;
+    padding: 1rem;
 }
 
 .container {
@@ -30,11 +30,11 @@
 .charImg {
     position: absolute;
     width: 600px;
-    scale: 2.6;
+    scale: 2.2;
     object-fit: cover;
     transform-origin: center;
-    top: 1rem;
-    left: 1rem;
+    top: 5rem;
+    left: 3rem;
     z-index: 1;
 }
 
@@ -61,8 +61,8 @@
 }
 
 .itemImg {
-    width: 4rem;
-    height: 4rem;
+    width: 4.5rem;
+    /* height: 4rem; */
     border-radius: 50%;
     border: 2px solid gold;
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
