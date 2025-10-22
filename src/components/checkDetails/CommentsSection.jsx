@@ -1,7 +1,11 @@
 import PostTemplate from "./PostTemplate";
 import Style from "../../Styles/modular/CommentsSection.module.css";
+import { useContext } from "react";
+import { DetailsProvider } from "./Details";
 
-export default function CommentsSection({ optimisticPosts, commentsRef }) {
+export default function CommentsSection() {
+    const { optimisticPosts, commentsRef } = useContext(DetailsProvider);
+    
     if (!optimisticPosts) return null;
 
     return (

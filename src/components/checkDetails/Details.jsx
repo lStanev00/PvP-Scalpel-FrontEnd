@@ -157,8 +157,8 @@ export function Details() {
                 {/* Posts Section */}
 
                 <section className={Style.commentsZone}>
-                    <CommentsSection optimisticPosts={optimisticPosts} commentsRef={commentsRef} />
-                    <NewPostForm characterID={data._id} />
+                    <CommentsSection />
+                    <NewPostForm />
                 </section>
             </DetailsProvider.Provider>
         </div>

@@ -4,7 +4,10 @@ import { UserContext } from "../../hooks/ContextVariables";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DetailsProvider } from "./Details";
 
-export default function NewPostForm({characterID}) {
+export default function NewPostForm() {
+
+  const { data } = useContext(DetailsProvider); 
+  const characterID = data?._id;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const {user, httpFetch} = useContext(UserContext);
