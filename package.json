@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "start": "node server.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preinstall": "npm config set legacy-peer-deps true",
   },
   "engines": {
     "node": ">=20.11.0",
