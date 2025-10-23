@@ -1,0 +1,13 @@
+name = "pvp-scalpel-frontend"
+compatibility_date = "2025-10-23"
+
+[build]
+command = "npm install --legacy-peer-deps && npm run build"
+cwd = "."
+
+[site]
+bucket = "./dist"
+entry-point = "."
+
+[env.production]
+build.command = "npm install --legacy-peer-deps && npm run build"
