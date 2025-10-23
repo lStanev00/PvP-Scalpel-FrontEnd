@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "start": "node server.mjs",
     "preview": "vite preview",
-    "preinstall": "npm config set legacy-peer-deps true",
+    "preinstall": "npm config set legacy-peer-deps true"
   },
   "engines": {
     "node": ">=20.11.0",
