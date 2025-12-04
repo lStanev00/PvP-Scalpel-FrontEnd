@@ -21,7 +21,6 @@ export default function WeeklyTop({ content }) {
                 const req = await httpFetch(`/weekly/${bracket ===  "BG" ? `RBG` : bracket}`);
                 if (!cancelled && req?.ok && req?.data) {
                     const data = req.data?.data || []; // { data: [...], lastUpdated }
-                    console.info(data);
                     setTop((data || []).slice(0, 5));
                     setUpdated(req.data?.lastUpdated || null);
                 }
