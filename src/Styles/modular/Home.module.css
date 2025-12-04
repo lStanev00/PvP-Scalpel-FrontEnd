@@ -7,15 +7,6 @@
     min-height: 100vh;
     overflow: hidden;
     padding-bottom: 4rem;
-
-    /* Deep gradient background */
-    background: linear-gradient(180deg, #07090e 0%, #0b0f17 100%);
-    background-image:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 35%),
-        url("/assets/bg_symbols_dark.png");
-    background-repeat: repeat;
-    background-size: 180px;
-    background-blend-mode: multiply;
 }
 
 .section-separator {
@@ -23,43 +14,11 @@
   background: linear-gradient(to bottom, #151623, #181828);
 }
 
-/* Soft vignette fade on edges */
-.mainGrid::before { 
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.65) 100%);
-    pointer-events: none;
-    z-index: -2;
-}
-
-/* Fog layers (animated opacity + slow horizontal motion) */
-.mainGrid::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("/backgrounds/cinematic_fog.webp") repeat;
-    background-size: 300%;
-    opacity: 0.09;
-    animation: fogDrift 90s linear infinite;
-    mix-blend-mode: lighten;
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* Slow fog drifting */
-@keyframes fogMove {
-    0% { background-position: 0 0; opacity: 0.08; }
-    50% { background-position: 50% 0; opacity: 0.12; }
-    100% { background-position: 100% 0; opacity: 0.08; }
-}
-
 /* Moving light gradient sweeping left to right */
 .lightSweep {
     content: "";
     position: absolute;
     top: 0;
-    left: -50%;
     width: 200%;
     height: 100%;
     background: radial-gradient(
@@ -67,13 +26,7 @@
         rgba(255, 215, 0, 0.06),
         transparent 60%
     );
-    animation: sweep 40s ease-in-out infinite alternate;
     pointer-events: none;
     z-index: 2;
-}
-
-@keyframes sweep {
-    0% { transform: translateX(-10%) scale(1); }
-    50% { transform: translateX(10%) scale(1.1); }
-    100% { transform: translateX(-10%) scale(1); }
+    border-bottom-left-radius: 1vh;
 }
