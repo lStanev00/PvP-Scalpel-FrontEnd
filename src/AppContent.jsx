@@ -1,13 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"; // Dont clear imports
 import Navigation from "./components/Router.jsx";
 import Home from "./pages/Home.jsx";
-import LDB from "./pages/LDB.jsx";
-import RosterPage from "./pages/Roster.jsx";
 import GoToTopButton from "./components/topBtn.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import GotoEmail from "./components/EmailSend.jsx";
-import ProfilePage from "./pages/ProfilePage.jsx";
 import { lazy, Suspense, useContext, useEffect } from "react";
 import { UserContext } from "./hooks/ContextVariables.jsx";
 import ResetPassword from "./pages/utility/ResetPassword.jsx";
@@ -21,6 +18,9 @@ import Footer from "./components/Footer.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
 const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
+const LDB = lazy(() => import("./pages/LDB.jsx"));
+const RosterPage = lazy(() => import("./pages/Roster.jsx"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage.jsx"))
 
 export default function AppContent() {
     const { httpFetch } = useContext(UserContext);
@@ -35,12 +35,19 @@ export default function AppContent() {
         // <Router>
         <>
             <div className={Style.pageWrapper}>
-                <Navigation />
+                {/* <Navigation /> */}
 
                 <main>
                     <Routes>
                         <Route element={<UserRoute />}>
-                            <Route path="/profile" element={<ProfilePage />} />
+                            <Route 
+                                path="/profile"
+                                element={
+                                    <Suspense fallback={<Loading />}>
+                                        <ProfilePage />
+                                    </Suspense>
+                                }
+                            ></Route>
                             <Route path="/logout" element={<Logout />} />
                         </Route>
 
@@ -51,8 +58,24 @@ export default function AppContent() {
                         </Route>
 
                         <Route path="/" element={<Home />}></Route>
-                        <Route path="/roster" element={<RosterPage />}></Route>
-                        <Route path="/leaderboard/*" element={<LDB />} />
+                        <Route
+                            path="/roster"
+                            element={
+                                <Suspense fallback={<Loading />}>
+                                    <RosterPage />
+                                </Suspense>
+                            }
+                        >
+
+                        </Route>
+                        <Route 
+                            path="/leaderboard/*"
+                            element={
+                                <Suspense fallback={<Loading />}>
+                                    <LDB />
+                                </Suspense>
+                            }
+                        />
                         {/* <Route path="/check/:server/:realm/:name" element={<CharDetails />}></Route> */}
                         <Route
                             path="/check/:server/:realm/:name"
