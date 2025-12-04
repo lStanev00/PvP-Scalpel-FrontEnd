@@ -1,14 +1,12 @@
-import { Helmet } from "react-helmet-async";
+import { useSEO } from "../hooks/useSEO";
 
 export default function SEORoster() {
-    return (
-        <Helmet>
-            <title>PvP Scalpel — Guild Members</title>
-            <meta
-                name="description"
-                content="Meet the PvP Scalpel guild — elite WoW PvP players united by precision, performance, and power."
-            />
-            <link rel="canonical" href="https://pvpscalpel.com/roster" />
-        </Helmet>
-    );
+    useSEO({
+        title: "PvP Scalpel — Guild Members",
+        description:
+            "Meet the PvP Scalpel guild — elite WoW PvP players united by precision, performance, and power.",
+        canonical: "https://pvpscalpel.com/roster",
+    });
+
+    return null;
 }

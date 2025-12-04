@@ -35,7 +35,7 @@ export default function AppContent() {
         // <Router>
         <>
             <div className={Style.pageWrapper}>
-                {/* <Navigation /> */}
+                <Navigation />
 
                 <main>
                     <Routes>

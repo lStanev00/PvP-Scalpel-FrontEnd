@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { useSEO } from "../hooks/useSEO";
 
 export default function SEOChars({ char }) {
     if (!char) return null;
@@ -11,7 +11,7 @@ export default function SEOChars({ char }) {
     const guild = char.guildName || "Independent";
     const faction = char.faction || "";
 
-    // Find the highest rating dynamically
+    // Highest rating detection
     let bestBracket = null;
     let bestRating = 0;
 
@@ -25,7 +25,8 @@ export default function SEOChars({ char }) {
         }
     }
 
-    const displayBracket = bestBracket ? bestBracket.replace(/[-_]/g, " ").toUpperCase() : "PvP";
+    const displayBracket =
+        bestBracket ? bestBracket.replace(/[-_]/g, " ").toUpperCase() : "PvP";
     const rating = bestRating || 0;
 
     const title = `${name} — ${spec} ${charClass} (${rating} ${displayBracket}) | PvP Scalpel`;
@@ -35,7 +36,9 @@ Currently rated ${rating} in ${displayBracket}, member of ${guild}.
 View detailed gear, talents, achievements, and performance history on PvP Scalpel.`;
 
     const image =
-        char.media?.charImg || char.media?.avatar || "https://pvpscalpel.com/logo/logo_resized.png";
+        char.media?.charImg ||
+        char.media?.avatar ||
+        "https://pvpscalpel.com/logo/logo_resized.png";
 
     const canonical = `https://pvpscalpel.com/check/${region.toLowerCase()}/${
         char.playerRealm?.slug
@@ -67,29 +70,21 @@ View detailed gear, talents, achievements, and performance history on PvP Scalpe
         ],
     };
 
-    return (
-        <Helmet>
-            {/* ======= Core SEO ======= */}
-            <title>{title}</title>
-            <meta name="description" content={description} />
-            <link rel="canonical" href={canonical} />
+    useSEO({
+        title,
+        description,
+        canonical,
+        ogTitle: title,
+        ogDescription: description,
+        ogType: "profile",
+        ogUrl: canonical,
+        ogImage: image,
+        twitterCard: "summary_large_image",
+        twitterTitle: title,
+        twitterDescription: description,
+        twitterImage: image,
+        jsonLD: structuredData,
+    });
 
-            {/* ======= Open Graph ======= */}
-            <meta property="og:type" content="profile" />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta property="og:image" content={image} />
-            <meta property="og:url" content={canonical} />
-            <meta property="og:site_name" content="PvP Scalpel" />
-
-            {/* ======= Twitter Card ======= */}
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={title} />
-            <meta name="twitter:description" content={description} />
-            <meta name="twitter:image" content={image} />
-
-            {/* ======= Structured Data ======= */}
-            <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
-        </Helmet>
-    );
+    return null;
 }

@@ -1,7 +1,6 @@
-import { Helmet } from "react-helmet-async";
+import { useSEO } from "../hooks/useSEO";
 
 export default function SEOLeaderboard({ content }) {
-
     const titles = {
         shuffleContent: "PvP Scalpel — Solo Shuffle Rankings",
         "2v2Content": "PvP Scalpel — 2v2 Arena Rankings",
@@ -37,15 +36,17 @@ export default function SEOLeaderboard({ content }) {
         "Explore real-time World of Warcraft PvP leaderboards — view rankings, class stats, and guild progress across all rated brackets.";
     const slug = slugs[content] || "leaderboard";
 
-    return (
-        <Helmet>
-            <title>{title}</title>
-            <meta name="description" content={description} />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content={`https://pvpscalpel.com/leaderboard/${slug}`} />
-            <link rel="canonical" href={`https://pvpscalpel.com/leaderboard/${slug}`} />
-        </Helmet>
-    );
+    const url = `https://pvpscalpel.com/leaderboard/${slug}`;
+
+    useSEO({
+        title,
+        description,
+        canonical: url,
+        ogTitle: title,
+        ogDescription: description,
+        ogType: "website",
+        ogUrl: url,
+    });
+
+    return null;
 }

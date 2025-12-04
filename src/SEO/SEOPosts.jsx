@@ -1,14 +1,12 @@
-import { Helmet } from "react-helmet-async";
+import { useSEO } from "../hooks/useSEO";
 
 export default function SEOPosts() {
-    return (
-        <Helmet>
-            <title>PvP Scalpel — Community Posts</title>
-            <meta
-                name="description"
-                content="Read PvP guides, strategies, and announcements from the PvP Scalpel community."
-            />
-            <link rel="canonical" href="https://pvpscalpel.com/posts" />
-        </Helmet>
-    );
+    useSEO({
+        title: "PvP Scalpel — Community Posts",
+        description:
+            "Read PvP guides, strategies, and announcements from the PvP Scalpel community.",
+        canonical: "https://pvpscalpel.com/posts",
+    });
+
+    return null;
 }
