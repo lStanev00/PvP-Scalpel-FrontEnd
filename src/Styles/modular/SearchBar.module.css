@@ -32,7 +32,7 @@
 }
 
 /* Magnifier icon */
-.searchBar img {
+/* .searchBar img {
     margin: 0 0.6rem;
     width: 23px;
     height: 23px;
@@ -47,7 +47,7 @@
     filter:
         brightness(1.2)
         drop-shadow(0 0 6px rgba(255, 215, 0, 0.45));
-}
+} */
 
 /* Input field */
 .input {

@@ -18,42 +18,13 @@
     z-index: 0;
 }
 
-.pageWrapper::before { 
+.pageWrapper::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.65) 100%);
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.65) 100%);
     pointer-events: none;
     z-index: -2;
-}
-
-.pageWrapper::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("/backgrounds/cinematic_fog.webp") repeat;
-    background-size: 300%;
-    opacity: 0.09;
-    animation: fogDrift 90s linear infinite;
-    mix-blend-mode: lighten;
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* Slow fog drifting */
-@keyframes fogDrift {
-    0% { background-position: 0 0; opacity: 0.08; }
-    50% { background-position: 50% 0; opacity: 0.12; }
-    100% { background-position: 100% 0; opacity: 0.08; }
-}
-
-@keyframes fogScroll {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 100% 0;
-    }
 }
 
 /* For smaller screens */

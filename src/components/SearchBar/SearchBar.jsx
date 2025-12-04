@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import Style from "../../Styles/modular/SearchBar.module.css";
 import DropDown from "./components/DropDown";
 import { UserContext } from "../../hooks/ContextVariables";
+import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 
 export default function SearchBar({ onSearch }) {
     const [query, setQuery] = useState("");
@@ -41,7 +42,8 @@ export default function SearchBar({ onSearch }) {
             ref={(el) => searchBarEl.current = el}
             id="searchBar"
         >
-            <img src="/magnifierLupe.png" alt="" width={40} onClick={(e) => {handleDivClick(e, true)}}/>
+            {/* <img src="/magnifierLupe.png" alt="" width={40} onClick={(e) => {handleDivClick(e, true)}}/> */}
+            <HiOutlineMagnifyingGlass width={40} onClick={(e) => {handleDivClick(e, true)}}/>
             <input
                 ref = {(el) =>  inputRef.current = el}
                 id="characterSearch"
