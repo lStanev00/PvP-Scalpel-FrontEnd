@@ -4,7 +4,7 @@
  ****************************************************/
 
 /* ========== HEADINGS ========== */
-h2 {
+.seasonalMain > h2 {
     color: var(--color-accent);
     text-align: center;
     font-size: 1.4rem;
@@ -12,7 +12,7 @@ h2 {
     text-shadow: 0 0 6px rgba(0, 245, 212, 0.25);
 }
 
-h1 {
+.seasonalContainer > h1 {
     position: relative;
     display: flex;
     align-items: center;

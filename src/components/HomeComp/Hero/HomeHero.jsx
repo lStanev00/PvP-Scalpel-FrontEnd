@@ -9,8 +9,8 @@ export default function HomeHero() {
 
             <div className={Style.content}>
                 <img className={Style.logo} src="/logo/logo_resized.png" alt="PvP Scalpel Logo" />
-                <h1>PvP Scalpel</h1>
-                <p>
+                <h1 >PvP Scalpel</h1>
+                <p className={Style.p}>
                     Precision. Performance. Power.
                     <br />
                     Built by players — evolving into the ultimate PvP companion.

@@ -82,10 +82,14 @@
     letter-spacing: 0.6px;
     text-transform: uppercase;
     text-align: center;
-    color: #e8d690;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), 0 0 8px rgba(255, 215, 0, 0.25);
-    /* margin-bottom: 1.2rem; */
-    position: relative;
+    color: var(--color-accent);
+    margin: 12px 0 10px 0;
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 6px rgba(255, 225, 120, 0.25),
+        0 0 12px rgba(255, 255, 255, 0.1);
 }
 
 .groupTitle::after {
