@@ -47,7 +47,7 @@ export default function DropDown({inputString, visible}) {
                     searchData.exactMatch
                     && Array.isArray(searchData.exactMatch)
                     && (
-                        searchData.exactMatch.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style}/>) 
+                        searchData.exactMatch.map(entry => <DropDownItem key={entry.char?._id} entry={entry} Style={Style}/>) //TODO Bug that throw the whole page undefined cases appear i really edge situations
                     )
                 }
                 {
