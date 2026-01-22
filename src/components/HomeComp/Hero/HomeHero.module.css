@@ -138,6 +138,24 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+/* Download Button */
+.download {
+    background: linear-gradient(135deg, #1f3a2e, #0f2a22);
+    color: #e7f9f4;
+    box-shadow: 0 0 10px rgba(0, 245, 212, 0.25);
+    border: 1px solid rgba(0, 245, 212, 0.25);
+}
+
+.download:hover {
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.5);
+    transform: translateY(-2px);
+}
+
+.download:hover .icon {
+    transform: translateY(-2px) scale(1.08);
+    opacity: 0.9;
+}
+
 /* Discord Button */
 .discord {
     background: linear-gradient(135deg, #5865f2, #4048d6);

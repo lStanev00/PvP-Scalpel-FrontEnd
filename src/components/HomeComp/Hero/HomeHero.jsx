@@ -1,4 +1,4 @@
-import { FaDiscord } from "react-icons/fa";
+import { FaDiscord, FaDownload } from "react-icons/fa";
 import { GiBroadsword } from "react-icons/gi";
 import Style from "./HomeHero.module.css";
 
@@ -17,6 +17,11 @@ export default function HomeHero() {
                 </p>
 
                 <div className={Style.actions}>
+                    <a href="/download" className={`${Style.btn} ${Style.download}`}>
+                        <span>Download</span>
+                        <FaDownload className={Style.icon} />
+                    </a>
+
                     <a
                         href="https://discord.gg/2h45zpyJdb"
                         target="_blank"

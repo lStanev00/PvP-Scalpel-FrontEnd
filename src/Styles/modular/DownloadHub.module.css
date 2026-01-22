@@ -1,0 +1,149 @@
+.hub {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1.4rem 1.6rem 2.5rem;
+    position: relative;
+    isolation: isolate;
+    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(12, 14, 20, 0.98) 0%, rgba(7, 9, 14, 0.98) 100%);
+    border: 1px solid rgba(0, 245, 212, 0.12);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.hub::before,
+.hub::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.hub::before {
+    background-image: url("/backgrounds/main_background.png");
+    background-position: center;
+    background-size: cover;
+    opacity: 0.03;
+    z-index: 0;
+}
+
+.hub::after {
+    background: linear-gradient(180deg, rgba(6, 8, 12, 0.7) 0%, rgba(6, 8, 12, 0.88) 100%);
+    z-index: 1;
+}
+
+.hub > * {
+    position: relative;
+    z-index: 2;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: #e8f6ff;
+}
+
+.header p {
+    color: #9fb5c7;
+    max-width: 640px;
+    font-size: 0.98rem;
+}
+
+.platformList {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.platformRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.platformInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.platformTitle {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #dff2ff;
+}
+
+.platformMeta {
+    font-size: 0.95rem;
+    color: #8ea4b7;
+}
+
+.actionArea {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.linkButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 245, 212, 0.4);
+    background: linear-gradient(180deg, rgba(2, 35, 32, 0.98) 0%, rgba(2, 20, 20, 0.98) 100%);
+    color: #e7fffb;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, filter 0.16s ease;
+}
+
+.linkButton:hover {
+    border-color: rgba(0, 245, 212, 0.45);
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: 0 16px 28px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.disabledButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, rgba(12, 14, 20, 0.9) 0%, rgba(8, 10, 16, 0.95) 100%);
+    color: #7f93a6;
+    font-weight: 600;
+    cursor: not-allowed;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 768px) {
+    .platformRow {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actionArea {
+        width: 100%;
+    }
+
+    .linkButton,
+    .disabledButton {
+        width: 100%;
+    }
+}
