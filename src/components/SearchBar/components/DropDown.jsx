@@ -47,7 +47,12 @@ export default function DropDown({inputString, visible}) {
                     searchData.exactMatch
                     && Array.isArray(searchData.exactMatch)
                     && (
-                        searchData.exactMatch.map(entry => <DropDownItem key={entry.char?._id} entry={entry} Style={Style}/>) //TODO Bug that throw the whole page undefined cases appear i really edge situations
+                        searchData.exactMatch
+                            .filter(Boolean)
+                            .map((entry, index) => {
+                                const key = entry?.char?._id ?? entry?._id ?? `${index}:${entry?.charName ?? "unknown"}`;
+                                return <DropDownItem key={key} entry={entry} Style={Style}/>
+                            })
                     )
                 }
                 {
