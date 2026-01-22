@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { FiDownload, FiRefreshCw, FiTarget, FiCpu, FiHardDrive, FiMonitor, FiGlobe } from "react-icons/fi";
 import { UserContext } from "../hooks/ContextVariables.jsx";
+import SEODownload from "../SEO/SEODownload.jsx";
 import Style from "../Styles/modular/Download.module.css";
 
 export default function Download() {
@@ -42,6 +43,7 @@ export default function Download() {
 
     return (
         <section className={Style.page}>
+            <SEODownload />
             <div className={Style.backgroundEffects} aria-hidden="true">
                 <div className={Style.orbPrimary} />
                 <div className={Style.orbSecondary} />
