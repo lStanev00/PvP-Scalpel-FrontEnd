@@ -15,15 +15,7 @@ const rootDir = __dirname;
 const seoDir = path.join(rootDir, "SEO");
 const distDir = path.join(rootDir, "dist");
 
-const apiBase =
-    (process.env.API_URL ||
-        process.env.VITE_API_URL ||
-        process.env.BACKEND_URL ||
-        "")
-        .trim()
-        .replace(/\/+$/, "");
-
-const devServerUrl = (process.env.VITE_DEV_SERVER_URL || "").trim();
+const apiBase = (process.env.API_URL || "").trim().replace(/\/+$/, "");
 const manifestPath = path.join(distDir, "manifest.json");
 const indexPath = path.join(distDir, "index.html");
 
@@ -117,14 +109,6 @@ function extractBuildAssets() {
 const buildAssets = extractBuildAssets();
 
 function resolveScriptSrc() {
-    if (devServerUrl) {
-        try {
-            return new URL("/src/main.jsx", devServerUrl).toString();
-        } catch {
-            return `${devServerUrl.replace(/\/+$/, "")}/src/main.jsx`;
-        }
-    }
-
     if (fs.existsSync(manifestPath)) {
         try {
             const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
@@ -233,6 +217,7 @@ if (fs.existsSync(distDir)) {
         })
     );
 }
+
 
 function renderPage(res, view, data = {}) {
     res.render(view, {
@@ -471,7 +456,6 @@ app.listen(port, () => {
     log("info", "server.start", {
         port,
         apiBase: apiBase || "missing",
-        devServerUrl: devServerUrl || "none",
         node: process.version,
     });
 });
