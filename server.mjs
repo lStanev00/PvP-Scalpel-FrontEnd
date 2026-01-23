@@ -60,6 +60,12 @@ app.use((req, res, next) => {
         "Permissions-Policy",
         "camera=(), microphone=(), geolocation=(), payment=()"
     );
+    res.setHeader(
+        "Cache-Control",
+        "no-store, no-cache, must-revalidate, proxy-revalidate"
+    );
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
     next();
 });
 
@@ -76,10 +82,35 @@ app.set("view engine", "hbs");
 app.set("views", seoDir);
 
 if (fs.existsSync(publicDir)) {
-    app.use(express.static(publicDir, { maxAge: "1d" }));
+    app.use(
+        express.static(publicDir, {
+            etag: false,
+            lastModified: false,
+            maxAge: 0,
+            setHeaders(res) {
+                res.setHeader(
+                    "Cache-Control",
+                    "no-store, no-cache, must-revalidate, proxy-revalidate"
+                );
+            },
+        })
+    );
 }
 if (fs.existsSync(distDir)) {
-    app.use(express.static(distDir, { maxAge: "1y", index: false }));
+    app.use(
+        express.static(distDir, {
+            etag: false,
+            lastModified: false,
+            index: false,
+            maxAge: 0,
+            setHeaders(res) {
+                res.setHeader(
+                    "Cache-Control",
+                    "no-store, no-cache, must-revalidate, proxy-revalidate"
+                );
+            },
+        })
+    );
 }
 
 function renderPage(res, view, data = {}) {
