@@ -15,12 +15,14 @@ const rootDir = __dirname;
 const seoDir = path.join(rootDir, "SEO");
 const distDir = path.join(rootDir, "dist");
 
-const apiBase = (process.env.API_URL || "").trim().replace(/\/+$/, "");
+const apiBase = ("http://" + process.env.API_URL || "").trim().replace(/\/+$/, "");
 const manifestPath = path.join(distDir, "manifest.json");
 const indexPath = path.join(distDir, "index.html");
 
-const LOG_LEVEL = (process.env.LOG_LEVEL || "info").toLowerCase();
+const LOG_LEVEL = (process.env.LOG_LEVEL || "warn").toLowerCase();
 const LOG_REQUEST_HEADERS = process.env.LOG_REQUEST_HEADERS === "true";
+const LOG_REQUESTS = (process.env.LOG_REQUESTS || "errors").toLowerCase();
+const SLOW_REQUEST_MS = Number(process.env.SLOW_REQUEST_MS) || 1500;
 const levelRank = {
     error: 0,
     warn: 1,
@@ -174,16 +176,43 @@ app.use((req, res, next) => {
         meta.headers = req.headers;
     }
 
-    log("info", "request.start", meta);
+    if (LOG_REQUESTS === "all" && shouldLog("info")) {
+        log("info", "request.start", meta);
+    }
 
     res.on("finish", () => {
         const durationMs = Number(process.hrtime.bigint() - start) / 1e6;
-        log("info", "request.end", {
+        const payload = {
             id: requestId,
             status: res.statusCode,
             durationMs: Math.round(durationMs),
             length: res.getHeader("content-length") || undefined,
-        });
+            method: req.method,
+            path: req.originalUrl,
+        };
+
+        if (LOG_REQUESTS === "none") {
+            return;
+        }
+
+        if (res.statusCode >= 500) {
+            log("error", "request.end", payload);
+            return;
+        }
+
+        if (res.statusCode >= 400) {
+            log("warn", "request.end", payload);
+            return;
+        }
+
+        if (durationMs >= SLOW_REQUEST_MS) {
+            log("warn", "request.slow", payload);
+            return;
+        }
+
+        if (LOG_REQUESTS === "all" && shouldLog("info")) {
+            log("info", "request.end", payload);
+        }
     });
 
     next();
