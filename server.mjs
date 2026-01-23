@@ -13,7 +13,6 @@ app.disable("x-powered-by");
 const rootDir = __dirname;
 const seoDir = path.join(rootDir, "SEO");
 const distDir = path.join(rootDir, "dist");
-const publicDir = path.join(rootDir, "public");
 
 const apiBase =
     (process.env.API_URL ||
@@ -25,6 +24,51 @@ const apiBase =
 
 const devServerUrl = (process.env.VITE_DEV_SERVER_URL || "").trim();
 const manifestPath = path.join(distDir, "manifest.json");
+const indexPath = path.join(distDir, "index.html");
+
+function extractBuildAssets() {
+    if (!fs.existsSync(indexPath)) {
+        return {
+            headTags: "",
+            scriptTag: "",
+            scriptSrc: "",
+        };
+    }
+
+    try {
+        const html = fs.readFileSync(indexPath, "utf-8");
+        const headTags = [];
+
+        const preloadMatches =
+            html.match(/<link[^>]+rel="modulepreload"[^>]*>/gi) || [];
+        const styleMatches =
+            html.match(/<link[^>]+rel="stylesheet"[^>]*>/gi) || [];
+
+        headTags.push(...preloadMatches, ...styleMatches);
+
+        const scriptMatch = html.match(
+            /<script[^>]*type="module"[^>]*src="[^"]+"[^>]*>\s*<\/script>/i
+        );
+        const scriptTag = scriptMatch?.[0] || "";
+
+        const srcMatch = scriptTag.match(/src="([^"]+)"/i);
+        const scriptSrc = srcMatch?.[1] || "";
+
+        return {
+            headTags: headTags.join("\n"),
+            scriptTag,
+            scriptSrc,
+        };
+    } catch {
+        return {
+            headTags: "",
+            scriptTag: "",
+            scriptSrc: "",
+        };
+    }
+}
+
+const buildAssets = extractBuildAssets();
 
 function resolveScriptSrc() {
     if (devServerUrl) {
@@ -47,7 +91,11 @@ function resolveScriptSrc() {
         }
     }
 
-    return "/src/main.jsx";
+    if (buildAssets.scriptSrc) {
+        return buildAssets.scriptSrc;
+    }
+
+    return "";
 }
 
 const scriptSrc = resolveScriptSrc();
@@ -81,21 +129,6 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", seoDir);
 
-if (fs.existsSync(publicDir)) {
-    app.use(
-        express.static(publicDir, {
-            etag: false,
-            lastModified: false,
-            maxAge: 0,
-            setHeaders(res) {
-                res.setHeader(
-                    "Cache-Control",
-                    "no-store, no-cache, must-revalidate, proxy-revalidate"
-                );
-            },
-        })
-    );
-}
 if (fs.existsSync(distDir)) {
     app.use(
         express.static(distDir, {
@@ -116,6 +149,8 @@ if (fs.existsSync(distDir)) {
 function renderPage(res, view, data = {}) {
     res.render(view, {
         appHtml: "",
+        headExtra: buildAssets.headTags,
+        bodyScripts: buildAssets.scriptTag,
         scriptSrc,
         ...data,
     });

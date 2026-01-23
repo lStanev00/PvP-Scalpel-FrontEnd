@@ -71,13 +71,10 @@
     <body>
         <noscript>You need JavaScript enabled to run PvP Scalpel.</noscript>
         <div id="root">{{{appHtml}}}</div>
-        {{#if scriptSrc}}
-        <script type="module" src="{{scriptSrc}}" defer></script>
-        {{else}}
-        <script type="module" src="/src/main.jsx" defer></script>
-        {{/if}}
         {{#if bodyScripts}}
         {{{bodyScripts}}}
+        {{else if scriptSrc}}
+        <script type="module" src="{{scriptSrc}}" defer></script>
         {{/if}}
     </body>
 </html>
