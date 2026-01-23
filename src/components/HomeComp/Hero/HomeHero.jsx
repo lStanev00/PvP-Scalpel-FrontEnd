@@ -17,10 +17,10 @@ export default function HomeHero() {
                 </p>
 
                 <div className={Style.actions}>
-                    <a href="/download" className={`${Style.btn} ${Style.download}`}>
+                    {/* <a href="/download" className={`${Style.btn} ${Style.download}`}>
                         <span>Download</span>
                         <FaDownload className={Style.icon} />
-                    </a>
+                    </a> */}
 
                     <a
                         href="https://discord.gg/2h45zpyJdb"
