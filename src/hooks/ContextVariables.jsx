@@ -35,7 +35,7 @@ export const UserProvider = ({ children }) => {
 }
 
 async function httpFetchWithCredentials(endpoint, options = {}) {
-    const apiDomain = import.meta.env.VITE_API_URL || "https://api.pvpscalpel.com/";
+    const apiDomain = import.meta.env.VITE_API_URL || "https://api.pvpscalpel.com";
     if (!apiDomain) {
         return {
             status: 0,
