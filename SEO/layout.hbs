@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>{{#if title}}{{title}}{{else}}PvP Scalpel{{/if}}</title>
+        <meta
+            name="description"
+            content="{{#if description}}{{description}}{{else}}PvP Scalpel delivers real-time World of Warcraft PvP leaderboards, member insights, and guild analytics. Precision - Performance - Power.{{/if}}"
+        />
+        <meta name="author" content="Lachezar Stanev" />
+
+        <link rel="icon" type="image/png" href="/logo/logo_resized.png" />
+        <link rel="apple-touch-icon" href="/logo/logo_resized.png" />
+
+        <meta
+            property="og:type"
+            content="{{#if ogType}}{{ogType}}{{else}}website{{/if}}"
+        />
+        <meta
+            property="og:title"
+            content="{{#if ogTitle}}{{ogTitle}}{{else}}{{#if title}}{{title}}{{else}}PvP Scalpel - WoW PvP Analytics{{/if}}{{/if}}"
+        />
+        <meta
+            property="og:description"
+            content="{{#if ogDescription}}{{ogDescription}}{{else}}{{#if description}}{{description}}{{else}}Analyze your World of Warcraft PvP performance and compete with precision using PvP Scalpel.{{/if}}{{/if}}"
+        />
+        <meta
+            property="og:image"
+            content="{{#if ogImage}}{{ogImage}}{{else}}https://pvpscalpel.com/logo/logo_resized.png{{/if}}"
+        />
+        <meta
+            property="og:url"
+            content="{{#if ogUrl}}{{ogUrl}}{{else}}{{#if canonical}}{{canonical}}{{else}}https://pvpscalpel.com/{{/if}}{{/if}}"
+        />
+        <meta property="og:site_name" content="PvP Scalpel" />
+
+        <meta
+            name="twitter:card"
+            content="{{#if twitterCard}}{{twitterCard}}{{else}}summary_large_image{{/if}}"
+        />
+        <meta
+            name="twitter:title"
+            content="{{#if twitterTitle}}{{twitterTitle}}{{else}}{{#if ogTitle}}{{ogTitle}}{{else}}{{#if title}}{{title}}{{else}}PvP Scalpel - WoW PvP Analytics{{/if}}{{/if}}{{/if}}"
+        />
+        <meta
+            name="twitter:description"
+            content="{{#if twitterDescription}}{{twitterDescription}}{{else}}{{#if ogDescription}}{{ogDescription}}{{else}}{{#if description}}{{description}}{{else}}Track and compare your WoW PvP rankings across all brackets. Precision - Performance - Power.{{/if}}{{/if}}{{/if}}"
+        />
+        <meta
+            name="twitter:image"
+            content="{{#if twitterImage}}{{twitterImage}}{{else}}{{#if ogImage}}{{ogImage}}{{else}}https://pvpscalpel.com/logo/logo_resized.png{{/if}}{{/if}}"
+        />
+
+        <meta name="robots" content="index, follow" />
+        {{#if canonical}}
+        <link rel="canonical" href="{{canonical}}" />
+        {{/if}}
+
+        {{#if jsonLD}}
+        <script type="application/ld+json">{{{jsonLD}}}</script>
+        {{/if}}
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        {{#if headExtra}}
+        {{{headExtra}}}
+        {{/if}}
+    </head>
+    <body>
+        <noscript>You need JavaScript enabled to run PvP Scalpel.</noscript>
+        <div id="root">{{{appHtml}}}</div>
+        {{#if scriptSrc}}
+        <script type="module" src="{{scriptSrc}}" defer></script>
+        {{else}}
+        <script type="module" src="/src/main.jsx" defer></script>
+        {{/if}}
+        {{#if bodyScripts}}
+        {{{bodyScripts}}}
+        {{/if}}
+    </body>
+</html>
