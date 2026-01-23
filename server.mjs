@@ -309,7 +309,7 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
     }
 });
 
-app.get("*", (req, res) => {
+app.use((req, res) => {
     const indexPath = path.join(distDir, "index.html");
     if (fs.existsSync(indexPath)) {
         return res.sendFile(indexPath);
