@@ -1,90 +1,117 @@
-# PvP Scalpel – Frontend
+# PvP Scalpel - Frontend
 
-Fan-made World of Warcraft PvP statistics dashboard built using React.
+Fan-made World of Warcraft PvP analytics and community dashboard built with React and Vite.
 
-🔗 [Live Preview](https://www.pvpscalpel.com)
+Live preview: https://www.pvpscalpel.com
 
-## About
+## Overview
 
-PvP Scalpel is a frontend React application that displays real-time PvP statistics and rankings for WoW players. It connects to a custom backend that fetches and stores data from the official Blizzard WoW API. Users can view profiles, top player rankings, and more in a sleek, responsive UI.
-
-> **Note:** The application is still under development. Bug reports and feedback are welcome.
-
----
+PvP Scalpel is a frontend application that consumes a custom backend to display PvP rankings, character profiles, and guild data. It also ships a small Express server that renders Handlebars templates for SEO-friendly pages and then hydrates the React app on the client.
 
 ## Features
 
-- 🧙 WoW PvP leaderboard with role/class-based filtering
-- 🔐 User authentication (JWT-based)
-- 🌐 Connected to Blizzard's WoW API via backend service
-- ⚛️ Built with React + Vite
-- 🌙 Dark mode UI
-
----
+- PvP leaderboards for multiple brackets
+- Character profile lookup with detailed stats
+- Guild roster and recruitment pages
+- Community posts and user profiles
+- SEO-friendly server-rendered meta tags (Handlebars) + client hydration
 
 ## Tech Stack
 
-- **Frontend:** React, Vite, JavaScript (ES6+)
-- **Routing:** React Router
-- **State Management:** Context API (Redux coming soon)
-- **Styling:** CSS modules / global styles
-- **Backend (connected to):** Node.js + Express + MongoDB
+- React 19 + React Router
+- Vite 6
+- CSS Modules
+- Express + Handlebars (SEO rendering)
 
----
+## Routes
+
+- `/` Home
+- `/leaderboard/:slug?` Leaderboards (`solo-shuffle`, `2v2`, `3v3`, `blitz`, `rated-bg`)
+- `/check/:server/:realm/:name` Character details
+- `/roster` Guild roster
+- `/joinGuild` Recruitment
+- `/posts` Community posts
+- `/download` Launcher download
+- `/login`, `/register`, `/profile` Auth + profile pages
+
+## Project Structure
+
+```
+SEO/                    # Handlebars SEO templates (server-rendered)
+src/
+  components/           # Reusable UI components
+  helpers/              # Small utilities
+  hooks/                # React hooks + app context
+  pages/                # Route pages
+  SEO/                  # React SEO components (useSEO hook)
+  Styles/               # CSS modules + global styles
+  App.jsx               # App shell + router
+  AppContent.jsx        # Route definitions
+  main.jsx              # Entry point
+server.mjs              # Express server for SEO + static hosting
+```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v16+ recommended)
-- npm or yarn
+- Node.js >= 20.11
+- npm >= 10.2
 
-### Installation
+### Install
 
-git clone https://github.com/lStanev00/PvP-Scalpel-FrontEnd
-
-cd PvP-Scalpel-FrontEnd
-
+```
 npm install
+```
 
+### Run (Vite dev server)
 
-### Run the Application
-
+```
 npm run dev
-
-### 📁 Folder Structure
-
-```
-src/
-├── assets/       # Images & static assets
-├── components/   # Reusable UI components
-├── pages/        # Route pages (Home, Login, Leaderboard, etc.)
-├── services/     # API requests
-├── App.jsx       # Main app layout & routing
-└── main.jsx      # Root entry
 ```
 
+### Build
 
+```
+npm run build
+```
 
+### Run production server (Express + SEO templates)
 
-## Made with love for the WoW PvP community.
+```
+npm run start
+```
 
+## Environment Variables
 
-### 🔐 Privacy & Session Tracking Disclaimer
+Client (Vite):
 
-This application tracks user sessions for authentication, security, and account protection purposes.
+- `VITE_API_URL` - base URL for the backend API (default in `.env.development` is `/api`)
 
-I (the author) collect basic device and browser information during login, including:
-- Browser type and version
-- Operating system platform
-- Language and timezone
-- Device memory and CPU information
+Server (Express):
 
-This information may be stored temporarily and used to:
-- Detect suspicious login attempts
-- Help users manage active sessions across devices
-- Improve security through browser fingerprinting
+- `API_URL` or `VITE_API_URL` - base URL for fetching dynamic SEO data (character profiles)
+- `VITE_DEV_SERVER_URL` - optional; points the Handlebars layout to the Vite dev server for hydration
 
-I (the author) do **not** use this data for advertising or tracking users outside of this platform. Data is handled securely and is not shared with third parties.
+## SEO Notes
 
-By using this application, you consent to this usage for session and security management.
+- Handlebars templates live in `SEO/` and mirror the React SEO components in `src/SEO/`.
+- Dynamic character SEO is pre-rendered by the Express server using data from the backend API.
+- When a character is not found, the server returns a clean "Character Not Found" SEO response.
+
+## Docker
+
+Build and run:
+
+```
+docker build -t pvpscalpel-frontend .
+docker run -p 4173:4173 --env API_URL=https://your-backend.example.com pvpscalpel-frontend
+```
+
+## Contributing
+
+Issues and PRs are welcome. Please keep changes focused and include clear notes or screenshots for UI updates.
+
+## License
+
+See `LICENSE.md`.
