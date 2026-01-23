@@ -1,0 +1,57 @@
+name: Merge main to production on version bump
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - package.json
+
+permissions:
+  contents: write
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect version bump
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.sha }}"
+
+          if ! git cat-file -e "$BEFORE:package.json" 2>/dev/null; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          OLD_VERSION=$(git show "$BEFORE:package.json" | node -p "JSON.parse(require('fs').readFileSync(0,'utf8')).version")
+          NEW_VERSION=$(git show "$AFTER:package.json" | node -p "JSON.parse(require('fs').readFileSync(0,'utf8')).version")
+
+          if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "old=$OLD_VERSION" >> "$GITHUB_OUTPUT"
+            echo "new=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Merge main into production
+        if: steps.version.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin production
+          git checkout production
+          git merge --no-ff origin/main -m "Merge main into production (v${{ steps.version.outputs.new }})"
+          git push origin production
