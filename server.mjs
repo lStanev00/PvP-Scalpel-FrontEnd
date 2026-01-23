@@ -134,7 +134,11 @@ app.get("/download", (req, res) => renderPage(res, "download"));
 app.get("/joinGuild", (req, res) => renderPage(res, "joinGuild"));
 app.get("/posts", (req, res) => renderPage(res, "posts"));
 app.get("/roster", (req, res) => renderPage(res, "roster"));
-app.get("/leaderboard/:slug?", (req, res) => {
+app.get("/leaderboard", (req, res) => {
+    renderPage(res, "leaderboard");
+});
+
+app.get("/leaderboard/:slug", (req, res) => {
     const view = leaderboardViews.get(req.params.slug || "") || "leaderboard";
     renderPage(res, view);
 });
