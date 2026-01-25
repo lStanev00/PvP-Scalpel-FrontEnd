@@ -97,7 +97,7 @@ export default function AppContent() {
                         <Route path="/goto/:email" element={<GotoEmail />} />
                         <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/posts" element={<Posts />} />
-                        {/* <Route path="/download" element={<Download />} /> */}
+                        <Route path="/download" element={<Download />} />
                     </Routes>
                 </main>
                 <Footer Style={Style} />

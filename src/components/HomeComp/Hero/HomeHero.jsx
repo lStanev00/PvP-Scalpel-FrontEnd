@@ -1,8 +1,13 @@
+import { useContext } from "react";
 import { FaDiscord, FaDownload } from "react-icons/fa";
 import { GiBroadsword } from "react-icons/gi";
+import { UserContext } from "../../../hooks/ContextVariables.jsx";
 import Style from "./HomeHero.module.css";
 
 export default function HomeHero() {
+    const { user } = useContext(UserContext);
+    const canSeeDownload = Boolean(user?._id) && user?.role !== "user";
+
     return (
         <section className={Style.hero}>
             <div className={Style.overlay}></div>
@@ -17,10 +22,12 @@ export default function HomeHero() {
                 </p>
 
                 <div className={Style.actions}>
-                    {/* <a href="/download" className={`${Style.btn} ${Style.download}`}>
-                        <span>Download</span>
-                        <FaDownload className={Style.icon} />
-                    </a> */}
+                    {canSeeDownload ? (
+                        <a href="/download" className={`${Style.btn} ${Style.download}`}>
+                            <span>Download</span>
+                            <FaDownload className={Style.icon} />
+                        </a>
+                    ) : null}
 
                     <a
                         href="https://discord.gg/2h45zpyJdb"

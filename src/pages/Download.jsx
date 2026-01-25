@@ -1,16 +1,29 @@
 import { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { FiDownload, FiRefreshCw, FiTarget, FiCpu, FiHardDrive, FiMonitor, FiGlobe } from "react-icons/fi";
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import SEODownload from "../SEO/SEODownload.jsx";
 import Style from "../Styles/modular/Download.module.css";
 
 export default function Download() {
-    const { httpFetch } = useContext(UserContext);
+    const { user, httpFetch } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+    const hasDownloadAccess = Boolean(user?.role && user.role !== "user");
+    const downloadDisabled = isLoading || !hasDownloadAccess;
+    const accessHint = user?._id
+        ? "Downloads are limited to testers while we're production-oriented."
+        : "Log in with a tester account to download.";
+    const downloadWrapperProps = !hasDownloadAccess
+        ? { className: Style.actionWrapper, "data-tooltip": accessHint }
+        : { className: Style.actionWrapper };
+
+    if (!user?._id || user?.role === "user") {
+        return <Navigate to="/" replace />;
+    }
 
     const handleDownload = async () => {
-        if (isLoading) return;
+        if (isLoading || !hasDownloadAccess) return;
         setError("");
         setIsLoading(true);
 
@@ -66,15 +79,17 @@ export default function Download() {
                             performance tracking and analytics.
                         </p>
                         <div className={Style.heroActions}>
-                            <button
-                                type="button"
-                                className={`${Style.primaryButton} ${Style.heroPrimaryButton}`}
-                                onClick={handleDownload}
-                                disabled={isLoading}
-                                aria-busy={isLoading}
-                            >
-                                {isLoading ? "Preparing download..." : "Download for Windows"}
-                            </button>
+                            <div {...downloadWrapperProps}>
+                                <button
+                                    type="button"
+                                    className={`${Style.primaryButton} ${Style.heroPrimaryButton}`}
+                                    onClick={handleDownload}
+                                    disabled={downloadDisabled}
+                                    aria-busy={isLoading}
+                                >
+                                    {isLoading ? "Preparing download..." : "Download for Windows"}
+                                </button>
+                            </div>
                             <button type="button" className={Style.secondaryButton} disabled>
                                 View Requirements
                             </button>
@@ -107,15 +122,17 @@ export default function Download() {
                                         <span>Windows x64</span>
                                     </div>
                                 </div>
-                                <button
-                                    type="button"
-                                    className={Style.primaryButton}
-                                    onClick={handleDownload}
-                                    disabled={isLoading}
-                                    aria-busy={isLoading}
-                                >
-                                    {isLoading ? "Preparing download..." : "Download"}
-                                </button>
+                                <div {...downloadWrapperProps}>
+                                    <button
+                                        type="button"
+                                        className={Style.primaryButton}
+                                        onClick={handleDownload}
+                                        disabled={downloadDisabled}
+                                        aria-busy={isLoading}
+                                    >
+                                        {isLoading ? "Preparing download..." : "Download"}
+                                    </button>
+                                </div>
                             </div>
                             <div className={Style.platformCard}>
                                 <div className={Style.platformInfo}>
