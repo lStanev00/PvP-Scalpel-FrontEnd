@@ -9,6 +9,7 @@ export default function Download() {
     const { user, httpFetch } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+    const isAuthResolved = user !== undefined;
     const hasDownloadAccess = Boolean(user?.role && user.role !== "user");
     const downloadDisabled = isLoading || !hasDownloadAccess;
     const accessHint = user?._id
@@ -17,6 +18,10 @@ export default function Download() {
     const downloadWrapperProps = !hasDownloadAccess
         ? { className: Style.actionWrapper, "data-tooltip": accessHint }
         : { className: Style.actionWrapper };
+
+    if (!isAuthResolved) {
+        return null;
+    }
 
     if (!user?._id || user?.role === "user") {
         return <Navigate to="/" replace />;
