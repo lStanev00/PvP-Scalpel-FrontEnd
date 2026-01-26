@@ -16,6 +16,7 @@ import Loading from "./components/loading.jsx";
 import Style from "./Styles/modular/AppContent.module.css";
 import Footer from "./components/Footer.jsx";
 import Download from "./pages/Download.jsx";
+import DesktopBeta from "./pages/DesktopBeta.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
 const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
@@ -98,6 +99,7 @@ export default function AppContent() {
                         <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/posts" element={<Posts />} />
                         <Route path="/download" element={<Download />} />
+                        <Route path="/desktopBeta" element={<DesktopBeta />} />
                     </Routes>
                 </main>
                 <Footer Style={Style} />

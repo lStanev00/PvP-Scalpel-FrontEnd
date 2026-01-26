@@ -275,6 +275,16 @@ app.get("/download", (req, res) => renderPage(res, "download"));
 app.get("/joinGuild", (req, res) => renderPage(res, "joinGuild"));
 app.get("/posts", (req, res) => renderPage(res, "posts"));
 app.get("/roster", (req, res) => renderPage(res, "roster"));
+app.get("/desktop-beta", (req, res) => {
+    res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
+    renderPage(res, "desktop-beta", {
+        title: "PvP Scalpel Desktop — Closed Beta",
+        description:
+            "Private closed beta information for the PvP Scalpel Desktop companion application.",
+        canonical: "https://pvpscalpel.com/desktop-beta",
+        robots: "noindex, nofollow, noarchive",
+    });
+});
 app.get("/leaderboard", (req, res) => {
     renderPage(res, "leaderboard");
 });
