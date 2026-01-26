@@ -23,7 +23,7 @@ export default function DesktopBeta() {
                             Total beta spots: <strong>5</strong>
                         </div>
                         <div>
-                            Spots remaining: <strong>2</strong>
+                            Spots remaining: <strong>1</strong>
                         </div>
                         <div>Guild members are prioritized</div>
                     </div>
