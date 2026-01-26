@@ -295,17 +295,12 @@ app.get("/leaderboard/:slug", (req, res) => {
 });
 
 app.get("/sitemap.xml", (req, res) => {
-    const lastmod = new Date().toISOString();
+    const lastmod = new Date().toISOString().slice(0, 10);
     const urls = [
         {
             loc: "https://www.pvpscalpel.com/",
             changefreq: "daily",
             priority: "1.0",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/leaderboards",
-            changefreq: "daily",
-            priority: "0.9",
         },
         {
             loc: "https://www.pvpscalpel.com/leaderboard",
@@ -357,11 +352,6 @@ app.get("/sitemap.xml", (req, res) => {
             changefreq: "monthly",
             priority: "0.6",
         },
-        {
-            loc: "https://www.pvpscalpel.com/about",
-            changefreq: "yearly",
-            priority: "0.4",
-        },
     ];
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>\n` +
@@ -379,6 +369,7 @@ app.get("/sitemap.xml", (req, res) => {
             .join("\n") +
         `\n</urlset>\n`;
 
+    res.setHeader("Cache-Control", "public, max-age=3600");
     res.status(200).type("application/xml").send(xml);
 });
 
