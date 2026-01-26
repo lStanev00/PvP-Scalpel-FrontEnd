@@ -1,8 +1,8 @@
-import { useContext, useState } from 'react';
-import Style from '../../Styles/modular/utils.module.css';
-import getFingerprint from '../../helpers/getFingerprint';
-import { Link } from 'react-router-dom';
-import { UserContext } from '../../hooks/ContextVariables';
+import { useContext, useState } from "react";
+import Style from "../../Styles/modular/LogReg.module.css";
+import getFingerprint from "../../helpers/getFingerprint";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../hooks/ContextVariables";
 
 export default function HandlePasswordReset ({token}) {
     const [ error, setError ] = useState();
@@ -28,60 +28,76 @@ export default function HandlePasswordReset ({token}) {
             return setError("Passwords do not match.");
         }
 
-        const req = await httpFetch('/reset/password', {
-            method: "PATCH",
-            body: JSON.stringify({
-                JWT: token,
-                newPassword: newPassword,
-                fingerprint: getFingerprint(),
-            })
-        });
+        try {
+            const req = await httpFetch("/reset/password", {
+                method: "PATCH",
+                body: JSON.stringify({
+                    JWT: token,
+                    newPassword: newPassword,
+                    fingerprint: getFingerprint(),
+                }),
+            });
 
-        if(req.status == 500) return setError("Internal server Error. Please report to an admin.")
+            if (req.status == 500)
+                return setError("Internal server Error. Please report to an admin.");
 
-        else if (req.status === 400) return setError(`Verification email already sent! Please check your inbox.`)
+            if (req.status === 400)
+                return setError(`Verification email already sent! Please check your inbox.`);
 
-        else if (req.status == 201) return setSuccess(true);
+            if (req.status == 201) return setSuccess(true);
+        } catch (err) {
+            setError("Something went wrong. Please try again.");
+        }
     }
 
     if (success) {
-        return (<>
-            <h1 className={Style["header"]}>Done!</h1>
-
-            <div className={Style["info-header"]}>
-                <p>You can now <Link style={{fontWeight: "bolder", color:'#1abc9c'}} to="/login" >Login</Link> with your new password!</p>
-            </div>
-        </>)
+        return (
+            <section className={Style.container}>
+                <section className={Style["inner-section"]}>
+                    <h4>Done!</h4>
+                </section>
+                <div className={Style["inner-section"]}>
+                    <p className={Style.infoText}>
+                        You can now <Link to="/login">Login</Link> with your new password!
+                    </p>
+                </div>
+            </section>
+        );
     }
 
     return (
-        <>
-            <h1 className={Style["header"]}>Password Reset</h1>
-
-            <div className={Style["info-header"]}>
-                <p>Enter a new <b>Password</b> and submit.</p>
-            </div>
-            <section >
-                
-
-                <form onSubmit={handleSubmit} className={Style["form-el"]}>
-                    <div className={Style.container} style={{display:'grid', gap: '15px'}}>
-                    <div className={`${Style["email-input"]}`}>
-                        <label htmlFor="password">New Password:</label>
-                        <input id="password" autoComplete="password" type="password" name="password" placeholder="new Password..."/>
-                    </div>
-                    <div className={`${Style["email-input"]}`}>
-                        <label htmlFor="rePassword">Reapeat Password:</label>
-                        <input id="rePassword" autoComplete="password" type="password" name="rePassword" placeholder="repeat Password..."/>
-                    </div>
-                    </div>
-                    {error && <p className={Style["error-msg"]}><b>{error}</b></p>}
-                    
-                        <button type="submit">Reset</button>
-                </form>
-            
+        <section className={Style.container}>
+            <section className={Style["inner-section"]}>
+                <h4>Password Reset</h4>
             </section>
-        </>
-    )
+            <form onSubmit={handleSubmit}>
+                <div className={Style["inner-section"]}>
+                    <p>Enter a new password and submit.</p>
+                    <label htmlFor="password">New Password</label>
+                    <input
+                        id="password"
+                        autoComplete="new-password"
+                        type="password"
+                        name="password"
+                        placeholder="New password..."
+                    />
+                    <label htmlFor="rePassword">Repeat Password</label>
+                    <input
+                        id="rePassword"
+                        autoComplete="new-password"
+                        type="password"
+                        name="rePassword"
+                        placeholder="Repeat password..."
+                    />
+                    {error && (
+                        <p className={Style["error-msg"]}>
+                            <b>{error}</b>
+                        </p>
+                    )}
+                    <button type="submit">Reset</button>
+                </div>
+            </form>
+        </section>
+    );
     
 }
