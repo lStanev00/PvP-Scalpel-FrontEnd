@@ -9,6 +9,26 @@ import BGBtn from "../components/LDB/LDButtons/BGButton";
 import Style from "../Styles/modular/LDBMain.module.css";
 import SEOLeaderboard from "../SEO/SEOLeaderboard";
 
+const CONTENT_TO_SLUG = {
+    shuffleContent: "solo-shuffle",
+    "2v2Content": "2v2",
+    "3v3Content": "3v3",
+    blitzContent: "blitz",
+    BGContent: "rated-bg",
+};
+
+const SLUG_TO_CONTENT = Object.fromEntries(
+    Object.entries(CONTENT_TO_SLUG).map(([key, value]) => [value, key])
+);
+
+const CONTENT_TO_BUTTON_SELECTOR = {
+    shuffleContent: "#shuffle",
+    "2v2Content": "#twos",
+    "3v3Content": "#threes",
+    blitzContent: "#blitz",
+    BGContent: "#rbg",
+};
+
 export default function LDB() {
     const [data, setData] = useState(undefined);
     const [page, setPage] = useState([]);
@@ -19,44 +39,39 @@ export default function LDB() {
     const location = useLocation();
 
     // map content ↔ slug
-    const map = {
-        shuffleContent: "solo-shuffle",
-        "2v2Content": "2v2",
-        "3v3Content": "3v3",
-        blitzContent: "blitz",
-        BGContent: "rated-bg",
-    };
-
-    const reverseMap = Object.fromEntries(
-        Object.entries(map).map(([key, value]) => [value, key])
-    );
+    // (mappings defined above)
 
     // Update slug + browser URL when content changes
     useEffect(() => {
         if (!content) return;
-        const newSlug = map[content] || "leaderboard";
+        const newSlug = CONTENT_TO_SLUG[content] || "leaderboard";
         setSlug(newSlug);
         navigate(`/leaderboard/${newSlug}`, { replace: true });
-    }, [content]);
+    }, [content, navigate]);
 
-    // Detect URL on page load or direct access
+    // Detect URL on page load or direct access, then trigger the correct bracket fetch.
     useEffect(() => {
-        const path = location.pathname.split("/leaderboard/")[1];
-        if (!path) return;
+        const rawPath = location.pathname.split("/leaderboard/")[1];
+        if (!rawPath) return;
 
-        const matchedContent = reverseMap[path];
-        if (matchedContent) {
-            setContent(matchedContent);
-        }
-    }, [location.pathname]);
+        const path = rawPath.replace(/\/+$/, "");
+
+        const matchedContent = SLUG_TO_CONTENT[path];
+        if (!matchedContent) return;
+        if (matchedContent === content) return;
+
+        const selector = CONTENT_TO_BUTTON_SELECTOR[matchedContent];
+        const btn = selector ? document.querySelector(selector) : null;
+        if (btn) btn.click();
+    }, [content, location.pathname]);
 
     // Default open Blitz if no slug
     useEffect(() => {
-        if (!location.pathname.includes("/leaderboard/")) {
+        if (location.pathname === "/leaderboard" || location.pathname === "/leaderboard/") {
             const blitzBtn = document.querySelector("#blitz");
             if (blitzBtn) blitzBtn.click();
         }
-    }, []);
+    }, [location.pathname]);
 
     return (
         <>
