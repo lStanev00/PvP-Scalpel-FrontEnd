@@ -16,13 +16,18 @@ export const DetailsProvider = createContext();
 export function Details() {
     const { data } = useContext(CharacterContext);
     const [isUpdating, setUpdating] = useState(false);
-    const [posts, setPosts] = useState(data?.posts);
+    const [posts, setPosts] = useState(() => (Array.isArray(data?.posts) ? data.posts : []));
+
+    useEffect(() => {
+        setPosts(Array.isArray(data?.posts) ? data.posts : []);
+    }, [data?.posts]);
+
     const [optimisticPosts, addOptimisticPost] = useOptimistic(posts, (currentPosts, newPost) => [
         ...currentPosts,
         newPost,
     ]);
     const commentsRef = useRef([]);
-    const [lookingForComment, setLFCom] = useSearchParams();
+    const [lookingForComment] = useSearchParams();
 
     useEffect(() => {
         try {
@@ -43,7 +48,7 @@ export function Details() {
             setTimeout(() => {
                 div.style.border = originalBorder;
             }, 3000);
-        } catch (error) {
+        } catch {
             return;
         }
     }, [lookingForComment]);
@@ -85,11 +90,11 @@ export function Details() {
                 }
             }
         } else if (bracketKey == `2v2` || bracketKey == `3v3` || bracketKey == `rbg`) {
-            if (
-                (!bracketData?.achieves && bracketData?.currentSeason?.rating === 0) ||
-                bracketData?.currentSeason?.rating === undefined
-            ) {
-            } else {
+            const rating = bracketData?.currentSeason?.rating;
+            const shouldSkip =
+                (!bracketData?.achieves && rating === 0) || rating === undefined;
+
+            if (!shouldSkip) {
                 otherRatings[bracketKey] = bracketData;
             }
         }

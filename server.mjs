@@ -15,7 +15,24 @@ const rootDir = __dirname;
 const seoDir = path.join(rootDir, "SEO");
 const distDir = path.join(rootDir, "dist");
 
-const apiBase = ("http://" + process.env.API_URL || "").trim().replace(/\/+$/, "");
+function resolveApiBase() {
+    const raw =
+        process.env.API_URL ||
+        process.env.VITE_API_URL ||
+        "https://api.pvpscalpel.com";
+
+    const trimmed = String(raw || "").trim();
+    if (!trimmed) return "";
+
+    if (/^https?:\/\//i.test(trimmed)) {
+        return trimmed.replace(/\/+$/, "");
+    }
+
+    // Back-compat: when API_URL is provided without a scheme, assume http:// (typical for internal networks).
+    return `http://${trimmed}`.replace(/\/+$/, "");
+}
+
+const apiBase = resolveApiBase();
 const manifestPath = path.join(distDir, "manifest.json");
 const indexPath = path.join(distDir, "index.html");
 

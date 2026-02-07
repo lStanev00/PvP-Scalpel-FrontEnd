@@ -6,6 +6,34 @@
     justify-content: center;
 }
 
+
+.feedMeta {
+    padding: 0 2rem;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+}
+
+.loadMoreWrap {
+    display: flex;
+    justify-content: center;
+    padding: 0 2rem 2rem;
+}
+
+.loadMoreBtn {
+    background: rgba(0, 245, 212, 0.12);
+    border: 1px solid rgba(0, 245, 212, 0.35);
+    color: var(--color-text);
+    border-radius: 999px;
+    padding: 0.7rem 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.loadMoreBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 14px rgba(0, 245, 212, 0.18);
+}
+
 .post-card {
     background: var(--bg-char-details-card);
     border: 1px solid var(--border-color);
