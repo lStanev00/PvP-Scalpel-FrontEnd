@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { UserContext } from "../hooks/ContextVariables";
 import style from "../Styles/modular/Posts.module.css";
 import { useNavigate } from "react-router-dom";
@@ -7,11 +7,14 @@ import { FaGlobeEurope } from "react-icons/fa";
 import SEOPosts from "../SEO/SEOPosts";
 import Loading from "../components/loading.jsx";
 
+const PAGE_SIZE = 12;
+
 export default function Posts() {
     const navigate = useNavigate();
     const { httpFetch } = useContext(UserContext);
     const [posts, setPosts] = useState(null);
     const [error, setError] = useState(null);
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
     useEffect(() => {
         let cancelled = false;
@@ -41,6 +44,18 @@ export default function Posts() {
         };
     }, [httpFetch]);
 
+    const sortedPosts = useMemo(() => {
+        const copy = Array.isArray(posts) ? [...posts] : [];
+        copy.sort((a, b) => {
+            const aTime = a?.createdAt ? Date.parse(a.createdAt) : 0;
+            const bTime = b?.createdAt ? Date.parse(b.createdAt) : 0;
+            return bTime - aTime;
+        });
+        return copy;
+    }, [posts]);
+
+    const visiblePosts = sortedPosts.slice(0, visibleCount);
+
     if (posts === null) return <Loading height={260} />;
 
     return (
@@ -48,11 +63,15 @@ export default function Posts() {
             <SEOPosts />
             {error && <p style={{ padding: "0 2rem" }}>{error}</p>}
 
-            {posts.length === 0 ? (
+            <p className={style.feedMeta}>
+                Showing {Math.min(visiblePosts.length, sortedPosts.length)} of {sortedPosts.length}
+            </p>
+
+            {sortedPosts.length === 0 ? (
                 <p style={{ padding: "0 2rem" }}>No posts yet.</p>
             ) : (
                 <div className={style["post-grid"]}>
-                    {posts.map((post) => (
+                    {visiblePosts.map((post) => (
                         <div
                             key={post._id}
                             onClick={() =>
@@ -92,6 +111,20 @@ export default function Posts() {
                             </div>
                         </div>
                     ))}
+                </div>
+            )}
+
+            {sortedPosts.length > 0 && visibleCount < sortedPosts.length && (
+                <div className={style.loadMoreWrap}>
+                    <button
+                        type="button"
+                        className={style.loadMoreBtn}
+                        onClick={() =>
+                            setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, sortedPosts.length))
+                        }
+                    >
+                        Load more
+                    </button>
                 </div>
             )}
         </>

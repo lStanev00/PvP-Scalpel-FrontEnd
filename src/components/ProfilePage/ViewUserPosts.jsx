@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { UserContext } from "../../hooks/ContextVariables";
 import style from "../../Styles/modular/Posts.module.css";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,26 @@ import { FiUser, FiClock } from "react-icons/fi";
 import { FaGlobeEurope } from "react-icons/fa";
 import Loading from "../loading.jsx";
 
+const PAGE_SIZE = 12;
+
 export default function ViewUserPosts() {
     const { httpFetch } = useContext(UserContext);
     const [posts, setPosts] = useState(null);
     const [error, setError] = useState(null);
+    const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
     const navigate = useNavigate();
+
+    const sortedPosts = useMemo(() => {
+        const copy = Array.isArray(posts) ? [...posts] : [];
+        copy.sort((a, b) => {
+            const aTime = a?.createdAt ? Date.parse(a.createdAt) : 0;
+            const bTime = b?.createdAt ? Date.parse(b.createdAt) : 0;
+            return bTime - aTime;
+        });
+        return copy;
+    }, [posts]);
+
+    const visiblePosts = sortedPosts.slice(0, visibleCount);
 
     useEffect(() => {
         let cancelled = false;
@@ -62,8 +77,11 @@ export default function ViewUserPosts() {
 
     return (
         <>
+            <p className={style.feedMeta}>
+                Showing {Math.min(visiblePosts.length, sortedPosts.length)} of {sortedPosts.length}
+            </p>
             <div className={style["post-grid"]}>
-                {posts.map((post) => (
+                {visiblePosts.map((post) => (
                     <div
                         onClick={() =>
                             navigate(
@@ -122,6 +140,20 @@ export default function ViewUserPosts() {
                     </div>
                 ))}
             </div>
+
+            {visibleCount < sortedPosts.length && (
+                <div className={style.loadMoreWrap}>
+                    <button
+                        type="button"
+                        className={style.loadMoreBtn}
+                        onClick={() =>
+                            setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, sortedPosts.length))
+                        }
+                    >
+                        Load more
+                    </button>
+                </div>
+            )}
         </>
     );
 }
