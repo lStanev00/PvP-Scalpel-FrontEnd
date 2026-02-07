@@ -16,6 +16,7 @@
     "npm": ">=10.2.0"
   },
   "dependencies": {
+    "baseline-browser-mapping": "^2.9.19",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.1",
     "react": "^19.1.0",
