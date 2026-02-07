@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"; // Dont clear imports
+import { Routes, Route } from "react-router-dom"; // Dont clear imports
 import Navigation from "./components/Router.jsx";
 import Home from "./pages/Home.jsx";
 import GoToTopButton from "./components/topBtn.jsx";
@@ -17,6 +17,7 @@ import Style from "./Styles/modular/AppContent.module.css";
 import Footer from "./components/Footer.jsx";
 import Download from "./pages/Download.jsx";
 import DesktopBeta from "./pages/DesktopBeta.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
 const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
@@ -28,10 +29,8 @@ export default function AppContent() {
     const { httpFetch } = useContext(UserContext);
 
     useEffect(() => {
-        const fetcData = (async () => {
-            const req = await httpFetch("/verify/me");
-        })();
-    }, []);
+        httpFetch("/verify/me");
+    }, [httpFetch]);
 
     return (
         // <Router>
@@ -100,6 +99,8 @@ export default function AppContent() {
                         <Route path="/posts" element={<Posts />} />
                         <Route path="/download" element={<Download />} />
                         <Route path="/desktopBeta" element={<DesktopBeta />} />
+                        <Route path="/404" element={<NotFound />} />
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
                 <Footer Style={Style} />
