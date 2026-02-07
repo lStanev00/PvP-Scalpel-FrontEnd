@@ -1,0 +1,293 @@
+.wrap {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    padding: clamp(2.8rem, 5vw, 4.2rem) 1.6rem;
+    display: grid;
+    place-items: center;
+    min-height: clamp(560px, 74vh, 840px);
+    color: var(--color-text);
+    overflow: hidden;
+}
+
+.wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    background-image:
+        radial-gradient(circle at 50% 25%, rgba(0, 245, 212, 0.14), rgba(0, 0, 0, 0) 55%),
+        radial-gradient(circle at 50% 55%, rgba(255, 215, 0, 0.08), rgba(0, 0, 0, 0) 62%),
+        linear-gradient(180deg, rgba(7, 10, 20, 0.25), rgba(7, 10, 20, 0.7)),
+        repeating-linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.03) 0px,
+            rgba(255, 255, 255, 0.03) 1px,
+            rgba(0, 0, 0, 0) 3px,
+            rgba(0, 0, 0, 0) 7px
+        ),
+        url("/backgrounds/404-bg.png"),
+        url("/backgrounds/main_background.png");
+    background-size: cover, cover, cover, auto, cover, cover;
+    background-position: center, center, center, 0 0, center, center;
+    filter: saturate(1.05) contrast(1.05);
+    opacity: 1;
+    animation: scanShift 18s linear infinite;
+    pointer-events: none;
+}
+
+.wrap::after {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    z-index: -2;
+    background-image: url("/backgrounds/cinematic_fog.webp");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+    mix-blend-mode: screen;
+    filter: blur(2px);
+    transform: translate3d(0, 0, 0);
+    animation: fogDrift 26s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.panel {
+    position: relative;
+    width: min(860px, 100%);
+    padding: clamp(2rem, 4vw, 2.8rem) clamp(1.4rem, 3.5vw, 2.4rem);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 215, 0, 0.16);
+    background: linear-gradient(145deg, rgba(18, 22, 40, 0.92), rgba(10, 12, 25, 0.75));
+    box-shadow:
+        inset 0 0 18px rgba(255, 255, 255, 0.03),
+        0 0 40px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    text-align: center;
+    backdrop-filter: blur(12px);
+}
+
+.panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.12), rgba(0, 0, 0, 0) 55%),
+        radial-gradient(circle at 50% 45%, rgba(0, 245, 212, 0.10), rgba(0, 0, 0, 0) 62%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0));
+    opacity: 1;
+    pointer-events: none;
+}
+
+.panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.62) 100%);
+    pointer-events: none;
+}
+
+.crestRow {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+}
+
+.crest {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    box-shadow:
+        0 0 10px rgba(255, 215, 0, 0.22),
+        0 0 26px rgba(0, 245, 212, 0.1);
+}
+
+.kicker {
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.22em;
+    font-size: 0.78rem;
+    color: rgba(234, 238, 246, 0.75);
+    margin-bottom: 0.4rem;
+}
+
+.code {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(4rem, 8.5vw, 6.1rem);
+    margin: 0 0 0.65rem;
+    color: var(--color-gold);
+    text-shadow:
+        0 0 10px rgba(255, 215, 0, 0.18),
+        0 0 22px rgba(0, 245, 212, 0.08);
+}
+
+.message {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 1.1rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+}
+
+.pill {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: min(680px, 100%);
+    padding: 0.55rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.22);
+    color: rgba(234, 238, 246, 0.9);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    word-break: break-all;
+}
+
+.hint {
+    position: relative;
+    z-index: 1;
+    margin: 1.1rem auto 0;
+    max-width: 62ch;
+    color: rgba(152, 163, 199, 0.95);
+    line-height: 1.55;
+}
+
+.path {
+    color: var(--color-text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+    word-break: break-all;
+}
+
+.actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.8rem;
+}
+
+.primary,
+.secondary,
+.ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0.85rem 1.2rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary {
+    background: radial-gradient(circle at 30% 30%, rgba(0, 245, 212, 0.2), rgba(0, 245, 212, 0.08));
+    border: 1px solid rgba(0, 245, 212, 0.42);
+    color: var(--color-text);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    min-width: min(420px, 100%);
+}
+
+.secondary {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
+    color: var(--color-text);
+}
+
+.ghost {
+    background: rgba(255, 215, 0, 0.06);
+    border: 1px solid rgba(255, 215, 0, 0.22);
+    color: var(--color-text);
+}
+
+.backLink {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: rgba(234, 238, 246, 0.86);
+    cursor: pointer;
+    padding: 0.25rem 0.35rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: rgba(255, 215, 0, 0.45);
+    border-radius: 8px;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease, background 0.15s ease;
+}
+
+.backLink:hover {
+    color: rgba(234, 238, 246, 1);
+    text-decoration-color: rgba(0, 245, 212, 0.55);
+}
+
+.primary:hover,
+.secondary:hover,
+.ghost:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 18px rgba(0, 245, 212, 0.16);
+}
+
+.primary:focus-visible,
+.secondary:focus-visible,
+.ghost:focus-visible,
+.backLink:focus-visible {
+    outline: 2px solid rgba(0, 245, 212, 0.65);
+    outline-offset: 3px;
+}
+
+@keyframes scanShift {
+    0% {
+        background-position: center, center, center, 0 0, center, center;
+    }
+    100% {
+        background-position: center, center, center, 0 140px, center, center;
+    }
+}
+
+@keyframes fogDrift {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1.05);
+        opacity: 0.16;
+    }
+    50% {
+        transform: translate3d(-1.5%, 0.8%, 0) scale(1.1);
+        opacity: 0.22;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wrap::before,
+    .wrap::after {
+        animation: none;
+    }
+
+    .primary,
+    .secondary,
+    .ghost {
+        transition: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .panel {
+        border-radius: 14px;
+        padding: 2rem 1.2rem;
+    }
+
+    .primary {
+        min-width: 100%;
+    }
+}

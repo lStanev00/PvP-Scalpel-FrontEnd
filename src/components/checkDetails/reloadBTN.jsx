@@ -1,60 +1,72 @@
-import { useParams } from "react-router-dom"
-import Style from '../../Styles/modular/charDetails.module.css';
+/* eslint-disable react/prop-types */
+
+import { useParams } from "react-router-dom";
+import Style from "../../Styles/modular/charDetails.module.css";
 import timeAgo, { isOlderThan5Minutes } from "../../helpers/timeAgo.js";
 import httpFetch from "../../helpers/httpFetch.js";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { CharacterContext } from "../../pages/CharDetails.jsx";
-export default function ReloadBTN({isUpdating, setUpdating}) {
-    const { server, realm, name } = useParams();
-    const {setData, data} = useContext(CharacterContext);
 
-    const patchCharacterData = async () => {
-        const apiEndpoint = `/patchCharacter/${server}/${realm}/${name}`;
-        setUpdating(state => {return true}); // No waiting set
+export default function ReloadBTN({ isUpdating, setUpdating }) {
+    const { server, realm, name } = useParams();
+    const { setData, data } = useContext(CharacterContext);
+
+    const [lastUpdatedAt, setLastUpdatedAt] = useState(() => {
+        if (!data?.updatedAt) return null;
+        return timeAgo(data.updatedAt);
+    });
+
+    const [isDataOld, setIsDataOld] = useState(() => {
+        if (!data?.updatedAt) return false;
+        return isOlderThan5Minutes(data.updatedAt);
+    });
+
+    const patchCharacterData = useCallback(async () => {
+        const apiEndpoint = `/patchCharacter/${encodeURIComponent(
+            server || ""
+        )}/${encodeURIComponent(realm || "")}/${encodeURIComponent(name || "")}`;
+        setUpdating(true);
         try {
             const request = await httpFetch(apiEndpoint, {
-                method: "PATCH"
+                method: "PATCH",
             });
 
             if (!request.ok) return;
             const requestData = await request.json();
 
-            if (request.status !== 200) return setData({errorMSG : requestData.messege});
+            if (request.status !== 200) return setData({ errorMSG: requestData.messege });
 
             setData(requestData);
-            setUpdating(false)
         } catch (error) {
             console.error("Fetch error:", error);
+        } finally {
+            setUpdating(false);
         }
-    }
+    }, [name, realm, server, setData, setUpdating]);
 
-    if (!data || !data.updatedAt) return null;
+    useEffect(() => {
+        if (!data?.updatedAt) return;
+        setLastUpdatedAt(timeAgo(data.updatedAt));
+        setIsDataOld(isOlderThan5Minutes(data.updatedAt));
+    }, [data?.updatedAt]);
+
+    useEffect(() => {
+        if (!data?.updatedAt) return;
+        if (lastUpdatedAt === false) patchCharacterData();
+    }, [data?.updatedAt, lastUpdatedAt, patchCharacterData]);
+
+    if (!data?.updatedAt) return null;
 
     if (isUpdating) {
         return (
             <>
                 <span className={Style["last-updated"]}></span>
-                <button disabled className={Style["button"]}>Updating now . . .</button>
+                <button disabled className={Style["button"]}>
+                    Updating now . . .
+                </button>
             </>
-        )
+        );
     }
-
-    const [ lastUpdatedAt, setLastUpdatedAt ] = useState(timeAgo( data.updatedAt ));
-    const [ isDataOld, setIsDataOld ] = useState ( isOlderThan5Minutes( data.updatedAt ) );
-    
-    useEffect(() => {
-        const updateDataIfNeeded = async () => {
-            if (lastUpdatedAt === false) {
-                await patchCharacterData();
-            }
-        };
-    
-        updateDataIfNeeded();
-    }, [ lastUpdatedAt ]);
-
-    useEffect(() => {
-        setLastUpdatedAt(timeAgo( data.updatedAt ))
-    }, [ data ])
     
     return (<>
         <span 

@@ -1,4 +1,6 @@
-import { createContext, useRef, useState } from 'react';
+/* eslint-disable react/prop-types */
+
+import { createContext, useCallback, useMemo, useRef, useState } from "react";
 
 export const UserContext = createContext();
 
@@ -6,7 +8,7 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(undefined);    
     const inputRef = useRef();
     
-    async function httpFetch(endpoint, options = {}) {
+    const httpFetch = useCallback(async (endpoint, options = {}) => {
         const req = await httpFetchWithCredentials(endpoint, options);
     
         if (req.status === 403) {
@@ -18,15 +20,19 @@ export const UserProvider = ({ children }) => {
         }
 
         if(endpoint === `/verify/me`) {
-            setUser(req.data)
+            if (req.status === 200) setUser(req.data);
         }
         
         return req
         
-    }
+    }, []);
+
+    const value = useMemo(() => {
+        return { user, setUser, httpFetch, inputRef };
+    }, [user, httpFetch]);
 
     return (
-        <UserContext.Provider value={{user, setUser, httpFetch, inputRef}} >
+        <UserContext.Provider value={value} >
 
             {children}
 
