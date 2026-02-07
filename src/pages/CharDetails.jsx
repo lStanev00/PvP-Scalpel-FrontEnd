@@ -15,20 +15,25 @@ export default function CharDetails() {
     const location = useLocation().pathname;
 
     const getCharacterData = async () => {
-        const apiEndpoint = `/checkCharacter/${server}/${realm}/${name}`;
-        let response = await httpFetch(apiEndpoint);
         try {
-            let fetchData = response.data;
-            if (response.ok) return setData(fetchData);
-            if (!response.ok) return setData(undefined);
+            const apiEndpoint = `/checkCharacter/${encodeURIComponent(
+                server || ""
+            )}/${encodeURIComponent(realm || "")}/${encodeURIComponent(name || "")}`;
 
-            if (response.status == 404) return setData(undefined);
-            if (fetchData === null || !fetchData || !response?.data) {
+            let response = await httpFetch(apiEndpoint);
+            let fetchData = response?.data;
+
+            if (response?.ok && !fetchData) {
                 await delay(1500);
                 response = await httpFetch(apiEndpoint);
-                fetchData = response.data;
+                fetchData = response?.data;
             }
-            setData(undefined);
+
+            if (!response?.ok || !fetchData || fetchData?.errorMSG) {
+                setData(undefined);
+                return;
+            }
+
             setData(fetchData);
         } catch (error) {
             console.error("Fetch error:", error);
@@ -51,13 +56,21 @@ export default function CharDetails() {
             </>
         );
 
-    if (data.rating)
+    if (!data?.rating) {
         return (
             <>
                 <SEOChars char={data} />
-                <CharacterContext.Provider value={{ data, setData, location }}>
-                    {data.rating && <Details />}
-                </CharacterContext.Provider>
+                <p>Character data is missing PvP rating.</p>
             </>
         );
+    }
+
+    return (
+        <>
+            <SEOChars char={data} />
+            <CharacterContext.Provider value={{ data, setData, location }}>
+                <Details />
+            </CharacterContext.Provider>
+        </>
+    );
 }
