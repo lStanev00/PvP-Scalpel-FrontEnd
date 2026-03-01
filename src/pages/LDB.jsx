@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import BlitzBtn from "../components/LDB/LDButtons/blitzButton";
 import ContentContainer from "../components/LDB/ContentContainer";
@@ -34,6 +34,7 @@ export default function LDB() {
     const [page, setPage] = useState([]);
     const [content, setContent] = useState(undefined);
     const [slug, setSlug] = useState("leaderboard");
+    const contentRef = useRef(content);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -41,13 +42,20 @@ export default function LDB() {
     // map content ↔ slug
     // (mappings defined above)
 
+    useEffect(() => {
+        contentRef.current = content;
+    }, [content]);
+
     // Update slug + browser URL when content changes
     useEffect(() => {
         if (!content) return;
         const newSlug = CONTENT_TO_SLUG[content] || "leaderboard";
         setSlug(newSlug);
-        navigate(`/leaderboard/${newSlug}`, { replace: true });
-    }, [content, navigate]);
+        const targetPath = `/leaderboard/${newSlug}`;
+        if (location.pathname !== targetPath) {
+            navigate(targetPath, { replace: true });
+        }
+    }, [content, location.pathname, navigate]);
 
     // Detect URL on page load or direct access, then trigger the correct bracket fetch.
     useEffect(() => {
@@ -58,12 +66,12 @@ export default function LDB() {
 
         const matchedContent = SLUG_TO_CONTENT[path];
         if (!matchedContent) return;
-        if (matchedContent === content) return;
+        if (matchedContent === contentRef.current) return;
 
         const selector = CONTENT_TO_BUTTON_SELECTOR[matchedContent];
         const btn = selector ? document.querySelector(selector) : null;
         if (btn) btn.click();
-    }, [content, location.pathname]);
+    }, [location.pathname]);
 
     // Default open Blitz if no slug
     useEffect(() => {
