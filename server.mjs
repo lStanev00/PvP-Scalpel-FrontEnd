@@ -534,8 +534,31 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
             headers: {
                 "600": "BasicPass",
                 "Content-Type": "application/json",
+                "fe-ping": "front-end"
             },
         });
+
+        if (response.status === 404) {
+            const title = "Analyze Any Character | PvP Scalpel";
+            const description =
+                "Analyze any World of Warcraft character on PvP Scalpel. Check ratings, specs, guild data, and PvP performance insights.";
+
+            res.status(404);
+            return renderPage(res, "char", {
+                title,
+                description,
+                canonical,
+                ogTitle: title,
+                ogDescription: description,
+                ogType: "website",
+                ogUrl: canonical,
+                ogImage: "https://pvpscalpel.com/logo/logo_resized.png",
+                twitterCard: "summary_large_image",
+                twitterTitle: title,
+                twitterDescription: description,
+                twitterImage: "https://pvpscalpel.com/logo/logo_resized.png",
+            });
+        }
 
         if (!response.ok) {
             log("warn", "character.fetch_failed", {
