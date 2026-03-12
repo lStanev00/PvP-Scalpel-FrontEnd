@@ -5,6 +5,11 @@
     font-family: var(--font-base);
     color: var(--color-text);
     z-index: 2;
+    background: rgb(16, 18, 28);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
+    border-start-start-radius: 1rem;
+    border-start-end-radius: 1rem;
+    /* border-radius: 1rem; */
 }
 
 /* Header cells: dark gradient with fine borders and uppercase text */

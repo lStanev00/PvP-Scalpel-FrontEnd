@@ -1,5 +1,4 @@
 import Loading from "../loading";
-import LDBHeaderContent from "./LDBHeader";
 import LDBSearch from "./LDBSearch";
 import TableContent from "./TableContent";
 import WeeklyTop from "./WeeklyTopLadder";
@@ -14,24 +13,12 @@ export default function ContentContainer({ data, content, page, setPage }) {
 
     return (
         <section
-            className={`${Style.leaderboardContainer} ${
-                content ? Style.fadeIn : Style.fadeOut
-            }`}
-            style={{ visibility: content ? "visible" : "hidden" }}
-        >
-
-            <div className={Style.heroLDB}>
-
-                <LDBHeaderContent content={content} />
-                <LDBSearch data={data} setPage={setPage} refs={refs} />
-
-            </div>
-
-
+            className={`${Style.leaderboardContainer} ${content ? Style.fadeIn : Style.fadeOut}`}
+            style={{ visibility: content ? "visible" : "hidden" }}>
             {/* Main Table aStnd Search */}
             <div className={Style.mainContent}>
                 <div className={Style.MainLDB}>
-
+                    <LDBSearch data={data} setPage={setPage} refs={refs} />
                     <TableContent page={page} content={content} refs={refs} />
                     <PaginatioContainer data={data} page={page} setPage={setPage} />
                 </div>

@@ -1,20 +1,59 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Style from "../../Styles/modular/StatsToggle.module.css";
 
-
-
 export default function StatsToggle({ currentSeason }) {
     const [showStats, setShowStats] = useState(false);
+    const toggleRef = useRef(null);
+
+    useEffect(() => {
+        if (!showStats) return;
+
+        const onPointerDown = (event) => {
+            if (!toggleRef.current?.contains(event.target)) {
+                setShowStats(false);
+            }
+        };
+
+        const onKeyDown = (event) => {
+            if (event.key === "Escape") {
+                setShowStats(false);
+            }
+        };
+
+        document.addEventListener("pointerdown", onPointerDown);
+        document.addEventListener("keydown", onKeyDown);
+
+        return () => {
+            document.removeEventListener("pointerdown", onPointerDown);
+            document.removeEventListener("keydown", onKeyDown);
+        };
+    }, [showStats]);
+
+    const supportsHover =
+        typeof window !== "undefined" &&
+        window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
     return (
-        <div className={Style.statsToggleArea}>
-            <div
+        <div
+            ref={toggleRef}
+            className={Style.statsToggleArea}
+            onMouseEnter={() => {
+                if (supportsHover) setShowStats(true);
+            }}
+            onMouseLeave={() => {
+                if (supportsHover) setShowStats(false);
+            }}
+        >
+            <button
+                type="button"
                 className={`${Style.statsHeader} ${showStats ? Style.open : ""}`}
                 onClick={() => setShowStats(!showStats)}
+                aria-expanded={showStats}
             >
                 <span>Stats</span>
                 {showStats ? <FaChevronUp size={11} /> : <FaChevronDown size={11} />}
-            </div>
+            </button>
 
             <div className={`${Style.statsContent} ${showStats ? Style.open : ""}`}>
                 <table className={Style["pvp-table"]}>

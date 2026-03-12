@@ -79,7 +79,7 @@ export default function TableContent({ page, content, refs }) {
                                 <th></th>
                                 <th>Name</th>
                                 <th>Spec</th>
-                                <th>Solo Shuffle Rateing</th>
+                                <th>Solo Shuffle Rating</th>
                             </tr>
                         </thead>
 

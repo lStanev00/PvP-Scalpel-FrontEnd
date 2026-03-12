@@ -66,7 +66,14 @@ export default function PvPRatingsSection({ otherRatings, blitzRatings, shuffleR
                                     ? { name: "Strategist", media: strategistExist.media }
                                     : data?.achieves?.Blitz?.XP;
 
-                                return <PvPCards key={`Blitz::${specName}`} specLabel={specName} bracketData={bracket} />;
+                                return (
+                                    <PvPCards
+                                        key={`Blitz::${specName}`}
+                                        bracketLabel="BG Blitz"
+                                        specLabel={specName}
+                                        bracketData={bracket}
+                                    />
+                                );
                             })}
                         </div>
                     </div>
@@ -81,7 +88,14 @@ export default function PvPRatingsSection({ otherRatings, blitzRatings, shuffleR
                                 const [, , spec] = key.split("-");
                                 const specName = spec.charAt(0).toUpperCase() + spec.slice(1);
 
-                                return <PvPCards key={`SS::${specName}`} specLabel={specName} bracketData={bracket} />;
+                                return (
+                                    <PvPCards
+                                        key={`SS::${specName}`}
+                                        bracketLabel="Solo Shuffle"
+                                        specLabel={specName}
+                                        bracketData={bracket}
+                                    />
+                                );
                             })}
                         </div>
                     </div>

@@ -2,30 +2,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(180deg, rgba(16, 20, 40, 0.9), rgba(10, 10, 25, 0.95));
-    border: 1px solid rgba(255, 215, 0, 0.15);
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
-    padding: 2rem 1rem;
-    margin: 2rem 0;
-    width: 100%;
 }
 
 .title {
-    color: #ffd700;
-    font-size: 1.7rem;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    text-align: center;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-    margin-bottom: 0.4rem;
-}
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
 
-.divider {
-    width: 85%;
-    height: 2px;
-    margin-bottom: 1.6rem;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.45), transparent);
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: center;
+
+    margin-bottom: 0.5rem;
+    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 0 6px rgba(255, 225, 120, 0.25),
+        0 0 12px rgba(255, 255, 255, 0.1);
 }
 
 .wrapper {
@@ -52,7 +53,7 @@
 
 .card:hover {
     transform: translateY(-3px);
-    background: linear-gradient(160deg, rgba(255, 215, 0, 0.08), rgba(10, 15, 25, 0.9));
+    background: linear-gradient(160deg, rgb(109, 93, 6), rgba(10, 15, 25, 0.9));
     border-color: rgba(255, 215, 0, 0.3);
     box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
 }
