@@ -6,6 +6,26 @@ import Style from "../../../Styles/modular/DropDownSearch.module.css"
 import Loading from "../../loading.jsx";
 import fromResultFromSearch from "../../../helpers/fromResultFromSearch.js";
 
+function getServerPriority(entry) {
+    const normalizedEntry = Array.isArray(entry) ? entry[0] : entry;
+    const server = (
+        normalizedEntry?.server
+        || normalizedEntry?.char?.server
+        || normalizedEntry?.char?.playerRealm?.server
+        || ""
+    ).toLowerCase();
+
+    if (server === "eu") return 0;
+    if (server === "us") return 1;
+    return 2;
+}
+
+function sortByServerPriority(entries) {
+    if (!Array.isArray(entries)) return entries;
+
+    return [...entries].sort((a, b) => getServerPriority(a) - getServerPriority(b));
+}
+
 export default function DropDown({inputString, visible}) {
     const [searchData, setSearchData] = useState(inputString);
     const { httpFetch, inputRef } = useContext(UserContext);
@@ -33,21 +53,24 @@ export default function DropDown({inputString, visible}) {
     if (inputString === "") return null
     if (inputString === undefined) return null;
     if (searchData && inputString !== "" && inputRef?.current?.value !== "" && visible) {
+        const sortedAddChars = sortByServerPriority(searchData?.addChars);
+        const sortedExactMatch = sortByServerPriority(searchData?.exactMatch);
+        const sortedChars = sortByServerPriority(searchData?.chars);
 
         return (
             <ul className={Style.dropdown}>
                 {
-                    searchData.addChars 
-                    && Array.isArray(searchData.addChars)
+                    sortedAddChars
+                    && Array.isArray(sortedAddChars)
                     && (
-                        searchData.addChars.map((entry, index) => <DropDownItem key={`${index}:${entry?.charName}:${entry?.realmSlug}`} Style={Style} guessChar={entry}/>)
+                        sortedAddChars.map((entry, index) => <DropDownItem key={`${index}:${entry?.charName}:${entry?.realmSlug}`} Style={Style} guessChar={entry}/>)
                     )
                 }
                 {
-                    searchData.exactMatch
-                    && Array.isArray(searchData.exactMatch)
+                    sortedExactMatch
+                    && Array.isArray(sortedExactMatch)
                     && (
-                        searchData.exactMatch
+                        sortedExactMatch
                             .filter(Boolean)
                             .map((entry, index) => {
                                 const key = entry?.char?._id ?? entry?._id ?? `${index}:${entry?.charName ?? "unknown"}`;
@@ -56,9 +79,9 @@ export default function DropDown({inputString, visible}) {
                     )
                 }
                 {
-                searchData.chars 
+                sortedChars
                 && (
-                    searchData.chars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style}/>)
+                    sortedChars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style}/>)
                 )
                 }
             </ul>
