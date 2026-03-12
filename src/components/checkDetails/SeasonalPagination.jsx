@@ -8,10 +8,9 @@ function cleanTooltipDescription(description) {
     if (!description) return "";
 
     const cleaned = description
-        .replace(
-            /\s+(?:during|in)\s+[A-Za-z][A-Za-z' -]+ Season \d+\.?$/i,
-            " in a PvP season."
-        )
+        .replace(/\s*\([^)]*\)/g, "")
+        .replace(/\s+(?:during|in)\s+[A-Za-z][A-Za-z' -]+ Season \d+\.?$/i, " in a PvP season.")
+        .replace(/\s{2,}/g, " ")
         .replace(/\s+\.$/, ".")
         .trim();
 
@@ -52,7 +51,7 @@ function buildPrefixSummary(seasonalAchievesMap) {
 
                     const seasonValue = String(ach?.expansion?.season ?? "").trim();
                     const existingExpansion = currentGroup.expansions.find(
-                        (expansion) => expansion.name === expansionName
+                        (expansion) => expansion.name === expansionName,
                     );
 
                     if (!existingExpansion) {
@@ -60,10 +59,7 @@ function buildPrefixSummary(seasonalAchievesMap) {
                             name: expansionName,
                             seasons: seasonValue ? [seasonValue] : [],
                         });
-                    } else if (
-                        seasonValue &&
-                        !existingExpansion.seasons.includes(seasonValue)
-                    ) {
+                    } else if (seasonValue && !existingExpansion.seasons.includes(seasonValue)) {
                         existingExpansion.seasons.push(seasonValue);
                     }
                 }
@@ -80,8 +76,9 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
             seasonalAchievesMap
                 ? Array.from(seasonalAchievesMap).filter(([key]) => key !== "noSeason")
                 : [],
-        [seasonalAchievesMap]
+        [seasonalAchievesMap],
     );
+    const [showAllAchievements, setShowAllAchievements] = useState(false);
     const [expandedSections, setExpandedSections] = useState(() => {
         const defaultOpen = new Set(renderedSections.slice(0, 2).map(([key]) => key));
         return defaultOpen;
@@ -104,9 +101,9 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
     };
 
     return (
-        <>
+        <section className={Style.seasonalAchContainer}>
             {seasonalAchievesMap.size !== 0 && (
-                <section className={Style.seasonalContainer}>
+                <div className={Style.seasonalCompactAches}>
                     <div className={Style.headerRow}>
                         <div className={Style.titleBlock}>
                             <h1>Achievements</h1>
@@ -120,23 +117,31 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                                 <article
                                     key={item.label}
                                     className={Style.summaryBadge}
-                                    tabIndex={0}
-                                >
-                                    <img src={item.media} alt={`${item.label} achievement icon`} />
-                                    <strong>{item.label}</strong>
-                                    <span>{`x${item.count}`}</span>
+                                    tabIndex={0}>
+                                    <div className={Style.summaryDivider} aria-hidden="true" />
+                                    <div className={Style.summaryRow}>
+                                        <div className={Style.summaryIconColumn}>
+                                            <img
+                                                src={item.media}
+                                                alt={`${item.label} achievement icon`}
+                                            />
+                                            <span>{`x${item.count}`}</span>
+                                        </div>
+                                        <div className={Style.summaryTextColumn}>
+                                            <strong>{item.label}</strong>
+                                            {item.description && (
+                                                <p className={Style.summaryDescription}>
+                                                    {item.description}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
                                     <div className={Style.summaryTooltip}>
-                                        {item.description && (
-                                            <p className={Style.tooltipDescription}>
-                                                {item.description}
-                                            </p>
-                                        )}
                                         <div className={Style.tooltipRows}>
                                             {item.expansions.map((expansion) => (
                                                 <div
                                                     key={`${item.label}-${expansion.name}`}
-                                                    className={Style.tooltipRow}
-                                                >
+                                                    className={Style.tooltipRow}>
                                                     <strong>{expansion.name}</strong>
                                                     <span>
                                                         {expansion.seasons.length > 0
@@ -156,64 +161,80 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                         </div>
                     )}
 
-                    <div className={Style.pageContent}>
-                        {renderedSections.map(([key, value]) => {
-                            const isExpanded = expandedSections.has(key);
-                            return (
-                                <section key={uuidv4()} className={Style.seasonalMain}>
-                                    <button
-                                        type="button"
-                                        className={Style.seasonHeader}
-                                        onClick={() => toggleSection(key)}
-                                        aria-expanded={isExpanded}
-                                    >
-                                        <h2>{key}</h2>
-                                        {isExpanded ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
-                                    </button>
-                                    <div
-                                        className={`${Style.seasonalAchieves} ${isExpanded ? Style.expanded : Style.collapsed}`}
-                                    >
-                                        {value &&
-                                            Object.entries(value).map(([, achList]) =>
-                                                achList.map((ach) => {
-                                                    if (!ach.criteria) {
-                                                        <AchievementDiv
-                                                            key={uuidv4()}
-                                                            seasonal={true}
-                                                            achData={ach}
-                                                        />;
-                                                    }
-
-                                                    try {
-                                                        return (
-                                                            <AchievementDiv
-                                                                key={(
-                                                                    ach._id ||
-                                                                    ach.criteria ||
-                                                                    ach.name
-                                                                ).replace(/\s+/g, "-")}
-                                                                seasonal={true}
-                                                                achData={ach}
-                                                            />
-                                                        );
-                                                    } catch {
-                                                        return (
-                                                            <AchievementDiv
-                                                                key={ach._id || ach.criteria}
-                                                                seasonal={true}
-                                                                achData={ach}
-                                                            />
-                                                        );
-                                                    }
-                                                })
+                    {showAllAchievements && (
+                        <div className={Style.pageContent}>
+                            {renderedSections.map(([key, value]) => {
+                                const isExpanded = expandedSections.has(key);
+                                return (
+                                    <section key={uuidv4()} className={Style.seasonalMain}>
+                                        <button
+                                            type="button"
+                                            className={Style.seasonHeader}
+                                            onClick={() => toggleSection(key)}
+                                            aria-expanded={isExpanded}>
+                                            <h2>{key}</h2>
+                                            {isExpanded ? (
+                                                <FaChevronUp size={12} />
+                                            ) : (
+                                                <FaChevronDown size={12} />
                                             )}
-                                    </div>
-                                </section>
-                            );
-                        })}
-                    </div>
-                </section>
+                                        </button>
+                                        <div
+                                            className={`${Style.seasonalAchieves} ${
+                                                isExpanded ? Style.expanded : Style.collapsed
+                                            }`}>
+                                            {value &&
+                                                Object.entries(value).map(([, achList]) =>
+                                                    achList.map((ach) => {
+                                                        if (!ach.criteria) {
+                                                            <AchievementDiv
+                                                                key={uuidv4()}
+                                                                seasonal={true}
+                                                                achData={ach}
+                                                            />;
+                                                        }
+
+                                                        try {
+                                                            return (
+                                                                <AchievementDiv
+                                                                    key={(
+                                                                        ach._id ||
+                                                                        ach.criteria ||
+                                                                        ach.name
+                                                                    ).replace(/\s+/g, "-")}
+                                                                    seasonal={true}
+                                                                    achData={ach}
+                                                                />
+                                                            );
+                                                        } catch {
+                                                            return (
+                                                                <AchievementDiv
+                                                                    key={ach._id || ach.criteria}
+                                                                    seasonal={true}
+                                                                    achData={ach}
+                                                                />
+                                                            );
+                                                        }
+                                                    }),
+                                                )}
+                                        </div>
+                                    </section>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
             )}
-        </>
+            <button
+                type="button"
+                className={Style.moduleToggle}
+                onClick={() => setShowAllAchievements((current) => !current)}
+                aria-expanded={showAllAchievements}>
+                <span>
+                    {showAllAchievements ? "Hide PvP Achievements" : "Show all PvP Achievements"}
+                </span>
+                {showAllAchievements ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
+            </button>
+        </section>
     );
 }

@@ -1,55 +1,114 @@
-.seasonalContainer {
-    width: min(1120px, calc(100% - 2rem));
+.seasonalAchContainer { 
+    display: flex;
+    flex-direction: column;
+}
+
+.seasonalCompactAches {
+    width: min(calc(100% - 2rem), 1040px);
+    width: fit-content;
+    max-width: 1040px;
     margin: 1rem auto 0;
-    padding: 1rem;
-    border-radius: 12px;
-    background: linear-gradient(180deg, rgba(12, 18, 33, 0.94), rgba(8, 12, 24, 0.96));
-    border: 1px solid rgba(255, 204, 0, 0.12);
+    padding: 1.05rem 1rem 0.95rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at top center, rgba(255, 255, 255, 0.05), transparent 38%),
+        linear-gradient(180deg, rgba(18, 24, 46, 0.95), rgba(6, 10, 22, 0.98));
+    border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
-        inset 0 0 10px rgba(255, 204, 0, 0.05),
-        0 0 14px rgba(0, 0, 0, 0.45);
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 0 18px rgba(255, 255, 255, 0.02),
+        0 0 22px rgba(0, 0, 0, 0.45),
+        0 0 22px rgba(86, 182, 255, 0.08);
     box-sizing: border-box;
+    position: relative;
+    overflow: visible;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
 }
 
 .headerRow {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.85rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.seasonalCompactAches::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.08);
+    pointer-events: none;
 }
 
 .summaryBadges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+    row-gap: 0;
+    width: fit-content;
     margin-bottom: 0.95rem;
+    position: relative;
 }
 
 .summaryBadge {
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.22rem;
-    min-width: 86px;
-    padding: 0.7rem 0.72rem 0.6rem;
-    border-radius: 12px;
-    background: linear-gradient(180deg, rgba(18, 24, 42, 0.92), rgba(10, 14, 26, 0.96));
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.04),
-        inset 0 0 10px rgba(255, 255, 255, 0.02),
-        0 8px 18px rgba(0, 0, 0, 0.26);
+    width: 100%;
+    min-width: 0;
+    padding: 0.3rem 0;
     box-sizing: border-box;
     cursor: default;
     outline: none;
+    border-top: 1px solid transparent;
+    transition: background 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
-.summaryBadge img {
-    width: 2.2rem;
-    height: 2.2rem;
+.summaryBadge:hover,
+.summaryBadge:focus-visible,
+.summaryBadge:focus-within {
+    background:
+        radial-gradient(circle at bottom center, rgba(255, 255, 255, 0.05), transparent 38%),
+        linear-gradient(180deg, rgba(18, 24, 46, 0.95), rgba(6, 10, 22, 0.98));
+    border-radius: 14px;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 0 18px rgba(255, 255, 255, 0.02),
+        0 0 22px rgba(0, 0, 0, 0.45),
+        0 0 22px rgba(86, 182, 255, 0.08);
+}
+
+.summaryBadge:nth-child(n + 3) {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.summaryRow {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    align-items: start;
+    column-gap: 0.7rem;
+    padding-left: 1rem;
+    width: 300px;
+}
+
+.summaryIconColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.35rem;
+}
+
+.summaryIconColumn img {
+    width: 2.7rem;
+    height: 2.7rem;
     border-radius: 6px;
     object-fit: cover;
     box-shadow:
@@ -57,53 +116,97 @@
         0 2px 8px rgba(0, 0, 0, 0.38);
 }
 
-.summaryBadge strong {
-    color: var(--color-gold);
-    font-size: 0.8rem;
-    font-weight: 700;
-    line-height: 1rem;
-    text-align: center;
-}
-
-.summaryBadge span {
+.summaryIconColumn span {
     color: rgba(226, 232, 240, 0.82);
-    font-size: 0.78rem;
+    font-size: 0.88rem;
     font-weight: 700;
     line-height: 1;
 }
 
+.summaryTextColumn {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.22rem;
+    justify-self: center;
+    align-self: flex-start;
+    height: 100%;
+    width: 100%;
+}
+
+.summaryTextColumn strong {
+    color: var(--color-gold);
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.1rem;
+    text-align: left;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.summaryDescription {
+    margin: 0;
+    color: rgba(226, 232, 240, 0.82);
+    font-size: 0.7rem;
+    line-height: 1rem;
+    text-align: left;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.summaryDivider {
+    position: absolute;
+    top: 0.38rem;
+    bottom: 0.38rem;
+    left: 0.5rem;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(121, 184, 255, 0.46), transparent);
+    box-shadow: 0 0 8px rgba(121, 184, 255, 0.14);
+    border-radius: 999px;
+    pointer-events: none;
+}
+
 .summaryTooltip {
     position: absolute;
-    left: 50%;
-    bottom: calc(100% + 0.7rem);
+    left: 4.75rem;
+    right: 0.82rem;
+    top: calc(100% + 0.6rem);
     z-index: 20;
-    width: min(320px, 76vw);
     padding: 0.72rem 0.8rem;
-    border-radius: 12px;
-    background: linear-gradient(180deg, rgba(16, 23, 40, 0.98), rgba(8, 12, 22, 0.98));
-    border: 1px solid rgba(255, 204, 0, 0.14);
+    border-radius: 14px;
+    background:
+        linear-gradient(180deg, rgba(13, 19, 34, 1), rgba(7, 11, 21, 1)),
+        radial-gradient(circle at top left, rgba(0, 255, 213, 0.08), transparent 42%);
+    border: 1px solid rgba(255, 204, 0, 0.18);
     box-shadow:
-        0 12px 28px rgba(0, 0, 0, 0.42),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    transform: translateX(-50%) translateY(6px);
+        0 14px 32px rgba(0, 0, 0, 0.52),
+        0 0 0 1px rgba(6, 10, 20, 0.85),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        inset 0 0 18px rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    transform: translateY(-4px);
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease,
+        visibility 0.18s ease;
     box-sizing: border-box;
 }
 
-.summaryTooltip::after {
+.summaryTooltip::before {
     content: "";
     position: absolute;
-    left: 50%;
-    top: 100%;
+    left: 1.1rem;
+    bottom: 100%;
     width: 12px;
     height: 12px;
-    background: rgba(8, 12, 22, 0.98);
-    border-right: 1px solid rgba(255, 204, 0, 0.14);
-    border-bottom: 1px solid rgba(255, 204, 0, 0.14);
-    transform: translateX(-50%) rotate(45deg);
+    background: rgb(13, 19, 34);
+    border-top: 1px solid rgba(255, 204, 0, 0.18);
+    border-left: 1px solid rgba(255, 204, 0, 0.18);
+    transform: rotate(45deg);
 }
 
 .summaryBadge:hover .summaryTooltip,
@@ -111,65 +214,94 @@
 .summaryBadge:focus-within .summaryTooltip {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
-
-.tooltipDescription {
-    margin: 0 0 0.55rem;
-    color: rgba(226, 232, 240, 0.86);
-    font-size: 0.78rem;
-    line-height: 1.35;
-    text-align: left;
+    transform: translateY(0);
 }
 
 .tooltipRows {
     display: flex;
     flex-direction: column;
-    gap: 0.28rem;
+    gap: 0.38rem;
 }
 
 .tooltipRow {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.28rem;
+    gap: 0.34rem;
     align-items: baseline;
     text-align: left;
     font-size: 0.75rem;
     line-height: 1.3;
+    padding-top: 0.08rem;
+}
+
+.tooltipRow + .tooltipRow {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 0.4rem;
 }
 
 .tooltipRow strong {
     color: var(--color-accent);
-    font-size: 0.76rem;
+    font-size: 0.8rem;
     font-weight: 700;
+    width: auto;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    text-align: left;
+    flex-shrink: 0;
 }
 
 .tooltipRow span {
     color: rgba(226, 232, 240, 0.72);
-    font-size: 0.75rem;
+    font-size: 0.77rem;
     font-weight: 600;
 }
 
 .titleBlock {
     display: flex;
     flex-direction: column;
-    gap: 0.24rem;
+    align-items: center;
+    gap: 0.28rem;
     min-width: 0;
+    text-align: center;
+    width: 100%;
 }
 
 .titleBlock h1 {
     margin: 0;
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #e8d690;
+    color: #8cc6ff;
+    text-shadow:
+        0 0 10px rgba(121, 184, 255, 0.28),
+        0 0 18px rgba(121, 184, 255, 0.12);
+}
+
+
+.titleBlock h1::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin-top: 0.18rem;
+    background: linear-gradient(90deg, transparent, rgba(121, 184, 255, 0.78), transparent);
+    box-shadow: 0 0 10px rgba(121, 184, 255, 0.28);
+    border-radius: 999px;
+    align-self: center;
+    justify-self: center;
 }
 
 .titleBlock p {
     margin: 0;
-    color: rgba(214, 224, 235, 0.7);
+    color: rgba(230, 237, 247, 0.78);
     font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
 }
 
 .pageContent {
@@ -177,6 +309,7 @@
     flex-direction: column;
     gap: 0.75rem;
     width: 100%;
+    margin-top: 0.1rem;
 }
 
 .seasonalMain {
@@ -189,6 +322,9 @@
     background: rgba(15, 20, 34, 0.82);
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-sizing: border-box;
+    max-width: none;
+    justify-self: stretch;
+    align-self: stretch;
 }
 
 .seasonHeader {
@@ -220,7 +356,10 @@
     gap: 0.55rem;
     width: 100%;
     overflow: hidden;
-    transition: max-height 0.24s ease, opacity 0.24s ease, margin-top 0.24s ease;
+    transition:
+        max-height 0.24s ease,
+        opacity 0.24s ease,
+        margin-top 0.24s ease;
 }
 
 .seasonalAchieves.expanded {
@@ -233,6 +372,42 @@
     max-height: 0;
     opacity: 0;
     margin-top: 0;
+}
+
+.moduleToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: inherit;
+    margin-top: 0.95rem;
+    padding: 0.8rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 204, 0, 0.14);
+    background: linear-gradient(180deg, rgba(16, 23, 40, 0.92), rgba(9, 13, 24, 0.98));
+    color: #e8d690;
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.moduleToggle:hover {
+    background: linear-gradient(180deg, rgba(20, 28, 48, 0.96), rgba(11, 16, 28, 1));
+    border-color: rgba(255, 204, 0, 0.24);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.04),
+        0 0 14px rgba(255, 204, 0, 0.08);
+}
+
+.moduleToggle:focus-visible {
+    outline: 1px solid rgba(255, 204, 0, 0.45);
+    outline-offset: 2px;
 }
 
 .paginationContainer {
@@ -257,7 +432,10 @@
     font-weight: 700;
     letter-spacing: 0.04em;
     cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease;
 }
 
 .navBtn:hover:not(:disabled) {
@@ -283,8 +461,9 @@
 }
 
 @media (max-width: 900px) {
-    .seasonalContainer {
-        width: min(100%, calc(100% - 1rem));
+    .seasonalCompactAches {
+        width: calc(100% - 1rem);
+        max-width: 1040px;
         padding: 0.9rem;
     }
 
@@ -299,22 +478,64 @@
 }
 
 @media (max-width: 600px) {
+    .seasonalCompactAches {
+        border-radius: 18px;
+    }
+
     .titleBlock p {
         display: none;
     }
 
     .summaryBadges {
-        gap: 0.55rem;
+        grid-template-columns: 1fr;
+        gap: 0;
     }
 
     .summaryBadge {
-        min-width: 76px;
-        padding: 0.6rem 0.58rem 0.52rem;
+        padding: 0.72rem 0;
+        border-top: 1px solid transparent;
     }
 
-    .summaryBadge img {
-        width: 2rem;
-        height: 2rem;
+    .summaryBadge:nth-child(n + 3) {
+        border-top: none;
+    }
+
+    .summaryBadge + .summaryBadge {
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .summaryRow {
+        grid-template-columns: 2.35rem minmax(0, 1fr);
+        column-gap: 0.6rem;
+        padding-left: 0.9rem;
+    }
+
+    .summaryIconColumn img {
+        width: 2.35rem;
+        height: 2.35rem;
+    }
+
+    .summaryTextColumn strong {
+        font-size: 0.84rem;
+        line-height: 1rem;
+    }
+
+    .summaryIconColumn span {
+        font-size: 0.82rem;
+    }
+
+    .summaryDescription {
+        font-size: 0.76rem;
+        line-height: 1.1rem;
+    }
+
+    .titleBlock h1 {
+        font-size: 1.18rem;
+    }
+
+    .titleBlock p {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
     }
 
     .seasonalMain {
@@ -322,7 +543,20 @@
     }
 
     .summaryTooltip {
-        width: min(280px, 82vw);
+        left: 3.95rem;
+        right: 0.64rem;
+        top: calc(100% + 0.52rem);
+        padding: 0.66rem 0.72rem;
+    }
+
+    .summaryDivider {
+        left: 0.42rem;
+    }
+
+    .moduleToggle {
+        margin-top: 0.8rem;
+        padding: 0.74rem 0.8rem;
+        font-size: 0.8rem;
     }
 
     .navBtn span {

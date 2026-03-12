@@ -29,8 +29,6 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    width: fit-content;
-    max-width: 100%;
     border-radius: 0;
     background: none;
     border: none;
@@ -43,7 +41,7 @@
 }
 
 /* ==================================================
-   =================  GRID CONTAINERS  ===============
+   =================  Flex CONTAINERS  ===============
    ================================================== */
 
 .pvp-container {
@@ -51,9 +49,8 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     gap: 1.35rem;
-    width: 100%;
     max-width: 100%;
     margin: 0 auto;
 }
@@ -64,7 +61,6 @@
     justify-content: center;
     overflow: visible;
     width: fit-content;
-    max-width: 100%;
     gap: 1.35rem;
     padding: 0;
 }
