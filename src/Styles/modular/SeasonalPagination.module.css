@@ -1,219 +1,331 @@
-/****************************************************
- * PvP Scalpel — Achievements & Pagination (Refined)
- * Unified with global palette and cinematic tone
- ****************************************************/
-
-/* ========== HEADINGS ========== */
-.seasonalMain > h2 {
-    color: var(--color-accent);
-    text-align: center;
-    font-size: 1.4rem;
-    margin: 12px 0 10px 0;
-    text-shadow: 0 0 6px rgba(0, 245, 212, 0.25);
+.seasonalContainer {
+    width: min(1120px, calc(100% - 2rem));
+    margin: 1rem auto 0;
+    padding: 1rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(12, 18, 33, 0.94), rgba(8, 12, 24, 0.96));
+    border: 1px solid rgba(255, 204, 0, 0.12);
+    box-shadow:
+        inset 0 0 10px rgba(255, 204, 0, 0.05),
+        0 0 14px rgba(0, 0, 0, 0.45);
+    box-sizing: border-box;
 }
 
-.seasonalContainer > h1 {
-    position: relative;
+.headerRow {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    text-align: center;
-
-    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 6px rgba(255, 225, 120, 0.25),
-        0 0 12px rgba(255, 255, 255, 0.1);
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
 }
 
-h1::after {
-    content: "";
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 130px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
-    box-shadow: 0 0 10px rgba(255, 200, 50, 0.3);
-}
-
-/* ========== CONTENT WRAPPER ========== */
-.pageContent {
+.summaryBadges {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    gap: 0.7rem;
+    margin-bottom: 0.95rem;
+}
+
+.summaryBadge {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.22rem;
+    min-width: 86px;
+    padding: 0.7rem 0.72rem 0.6rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(18, 24, 42, 0.92), rgba(10, 14, 26, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.04),
+        inset 0 0 10px rgba(255, 255, 255, 0.02),
+        0 8px 18px rgba(0, 0, 0, 0.26);
+    box-sizing: border-box;
+    cursor: default;
+    outline: none;
+}
+
+.summaryBadge img {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 6px;
+    object-fit: cover;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.38);
+}
+
+.summaryBadge strong {
+    color: var(--color-gold);
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1rem;
+    text-align: center;
+}
+
+.summaryBadge span {
+    color: rgba(226, 232, 240, 0.82);
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.summaryTooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.7rem);
+    z-index: 20;
+    width: min(320px, 76vw);
+    padding: 0.72rem 0.8rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(16, 23, 40, 0.98), rgba(8, 12, 22, 0.98));
+    border: 1px solid rgba(255, 204, 0, 0.14);
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transform: translateX(-50%) translateY(6px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    box-sizing: border-box;
+}
+
+.summaryTooltip::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 12px;
+    height: 12px;
+    background: rgba(8, 12, 22, 0.98);
+    border-right: 1px solid rgba(255, 204, 0, 0.14);
+    border-bottom: 1px solid rgba(255, 204, 0, 0.14);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.summaryBadge:hover .summaryTooltip,
+.summaryBadge:focus-visible .summaryTooltip,
+.summaryBadge:focus-within .summaryTooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.tooltipDescription {
+    margin: 0 0 0.55rem;
+    color: rgba(226, 232, 240, 0.86);
+    font-size: 0.78rem;
+    line-height: 1.35;
+    text-align: left;
+}
+
+.tooltipRows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+}
+
+.tooltipRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.28rem;
+    align-items: baseline;
+    text-align: left;
+    font-size: 0.75rem;
+    line-height: 1.3;
+}
+
+.tooltipRow strong {
+    color: var(--color-accent);
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.tooltipRow span {
+    color: rgba(226, 232, 240, 0.72);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.titleBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 0.24rem;
+    min-width: 0;
+}
+
+.titleBlock h1 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #e8d690;
+}
+
+.titleBlock p {
+    margin: 0;
+    color: rgba(214, 224, 235, 0.7);
+    font-size: 0.82rem;
+}
+
+.pageContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
     width: 100%;
-    gap: 1.5rem;
-    border-radius: var(--radius);
-    padding: 15px 25px;
 }
 
-/* container around all expansions */
-.seasonalContainer {
-    min-width: 550px;
-    min-height: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: fit-content;
-    padding: 1rem 0;
-    border-radius: var(--radius);
-    box-shadow: inset 0 0 10px var(--divider-color), 0 0 12px rgba(0, 0, 0, 0.6);
-    margin-bottom: 1rem;
-    height: fit-content;
-    background: var(--bg-main-card-char-details);
-    justify-content: space-around;
-}
-
-/* expansion block (ex: Shadowlands / The War Within) */
 .seasonalMain {
-    flex: 1 1 45%;
-    max-width: 500px;
     display: flex;
     flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.85rem;
+    border-radius: 10px;
+    background: rgba(15, 20, 34, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-sizing: border-box;
+}
+
+.seasonHeader {
+    display: flex;
     align-items: center;
-    background: var(--bg-main-card-char-details);
-    border: 1px solid rgba(255, 204, 0, 0.25);
-    border-radius: var(--radius);
-    padding: 1.2rem;
-    transition: transform 0.2s ease, box-shadow 0.25s ease;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: inherit;
 }
 
-.seasonalMain:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+.seasonalMain h2 {
+    margin: 0;
+    color: var(--color-accent);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
 }
 
-/* list of achievements inside expansion */
 .seasonalAchieves {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 0.55rem;
     width: 100%;
-    align-items: flex-start;
+    overflow: hidden;
+    transition: max-height 0.24s ease, opacity 0.24s ease, margin-top 0.24s ease;
 }
 
-/* individual achievement card */
-.seasonal-card {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background: var(--bg-row-alt);
-    padding: 8px 12px;
-    border-radius: 8px;
-    border-left: 3px solid var(--color-gold);
-    box-shadow: inset 0 0 6px rgba(255, 204, 0, 0.1);
-    transition: background 0.25s ease;
+.seasonalAchieves.expanded {
+    max-height: 4000px;
+    opacity: 1;
+    margin-top: 0.2rem;
 }
 
-.seasonal-card:hover {
-    background: rgba(32, 38, 60, 0.92);
+.seasonalAchieves.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
 }
 
-.seasonal-card img {
-    width: 38px;
-    height: 38px;
-    margin-right: 10px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.seasonal-card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.seasonal-card-content strong {
-    color: var(--color-gold);
-    font-size: 0.95rem;
-    line-height: 1.1rem;
-}
-
-.seasonal-card-content span {
-    color: var(--color-text);
-    font-size: 0.8rem;
-    line-height: 1rem;
-}
-
-/* ========== PAGINATION CONTAINER ========== */
 .paginationContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    background: linear-gradient(160deg, var(--bg-row), rgba(18, 22, 38, 0.96));
-    border: 1px solid rgba(255, 204, 0, 0.25);
-    border-radius: var(--radius);
-    padding: 0.6rem 1rem;
-    box-shadow: inset 0 0 6px rgba(255, 204, 0, 0.08), 0 0 10px rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(6px);
-    transition: all 0.25s ease;
-    width: 91%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.45rem;
 }
 
-.paginationContainer:hover {
-    border-color: rgba(255, 215, 0, 0.35);
-    box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.1), 0 0 14px rgba(0, 0, 0, 0.6),
-        0 0 8px rgba(255, 215, 0, 0.05);
-}
-
-/* ========== BUTTONS ========== */
 .navBtn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.3rem;
+    gap: 0.25rem;
+    padding: 0.38rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 204, 0, 0.16);
+    background: rgba(20, 25, 40, 0.72);
+    color: #e8d690;
+    font-size: 0.72rem;
     font-weight: 700;
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    padding: 5px 12px;
-    color: var(--color-gold);
-    background: rgba(20, 25, 40, 0.85);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 5px;
+    letter-spacing: 0.04em;
     cursor: pointer;
-    transition: all 0.25s ease;
-    letter-spacing: 0.5px;
-    box-shadow: inset 0 0 4px rgba(255, 204, 0, 0.05), 0 0 6px rgba(0, 0, 0, 0.4);
+    transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 
 .navBtn:hover:not(:disabled) {
-    background: linear-gradient(145deg, rgba(35, 40, 65, 0.95), rgba(18, 22, 40, 0.95));
-    color: #ffe57f;
-    transform: translateY(-1px);
-    border-color: rgba(255, 215, 0, 0.6);
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.25), inset 0 0 8px rgba(255, 204, 0, 0.08);
+    background: rgba(28, 35, 56, 0.9);
+    border-color: rgba(255, 204, 0, 0.28);
 }
 
 .navBtn:disabled {
     opacity: 0.45;
     cursor: not-allowed;
-    color: #777;
-    border-color: rgba(255, 255, 255, 0.05);
-    background: rgba(18, 22, 35, 0.7);
-    box-shadow: none;
 }
 
-/* ========== PAGE INFO ========== */
 .pageInfo {
-    color: var(--color-gold);
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-shadow: 0 0 6px rgba(255, 204, 0, 0.25);
-    letter-spacing: 0.6px;
+    margin: 0;
+    padding: 0 0.15rem;
+    color: rgba(226, 232, 240, 0.86);
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .pageInfo span {
-    color: var(--color-text);
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.25);
+    color: var(--color-gold);
+}
+
+@media (max-width: 900px) {
+    .seasonalContainer {
+        width: min(100%, calc(100% - 1rem));
+        padding: 0.9rem;
+    }
+
+    .headerRow {
+        flex-direction: column;
+    }
+
+    .paginationContainer {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+    .titleBlock p {
+        display: none;
+    }
+
+    .summaryBadges {
+        gap: 0.55rem;
+    }
+
+    .summaryBadge {
+        min-width: 76px;
+        padding: 0.6rem 0.58rem 0.52rem;
+    }
+
+    .summaryBadge img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .seasonalMain {
+        padding: 0.72rem;
+    }
+
+    .summaryTooltip {
+        width: min(280px, 82vw);
+    }
+
+    .navBtn span {
+        display: none;
+    }
 }

@@ -15,8 +15,6 @@ export default function GuildRanks({ setSelectedGroup, selectedGroup }) {
 
     return (
         <section className={Style.guildRanks}>
-            <h2 className={Style.title}>Guild Structure</h2>
-            <div className={Style.divider}></div>
 
             <div className={Style.wrapper}>
                 {sections.map((sec) => (

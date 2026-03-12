@@ -2,51 +2,75 @@ import StatsToggle from "./StatsToggle";
 import Style from "../../Styles/modular/PvPCards.module.css"
 
 export default function PvPCards({ bracketData, bracketLabel = undefined, specLabel = undefined }) {
-    if (!bracketData?.currentSeason?.title?.media) return null;
-    if (bracketData?.currentSeason?.rating === 0) bracketData.currentSeason.rating = null;
-
-    const isSolo = bracketData._id.includes("solo");
     const hasRecord = bracketData?.achieves?.media;
-    const hasRating = bracketData?.currentSeason?.rating;
-    if (!isSolo && !hasRecord) return null;
-
     const { currentSeason } = bracketData;
-    const rating = currentSeason?.rating ?? null;
+    const seasonPlayed = currentSeason?.seasonMatchStatistics?.played ?? 0;
+    const weeklyPlayed = currentSeason?.weeklyMatchStatistics?.played ?? 0;
+    const hasPlayedGames = seasonPlayed > 0 || weeklyPlayed > 0;
+    const rawRating = currentSeason?.rating;
+    const hasRating =
+        rawRating != null && (rawRating > 0 || (rawRating === 0 && hasPlayedGames));
+
+    if (!hasRating && !hasRecord) return null;
+
+    const rating = hasRating ? rawRating : null;
     const ratingMedia = currentSeason?.title?.media;
     const ratingName = currentSeason?.title?.name;
+    const hasHeroMedia = Boolean(ratingMedia || ratingName);
     if(specLabel == "Rated Battleground") specLabel = "RBG 10v10"
 
     return (
-        <div className={Style["pvp-card"]}>
-            <div className={ bracketLabel ? Style.bracketLabel : Style.specLabel}>{bracketLabel ? bracketLabel : specLabel}</div>
-            <div className={Style["pvp-spec"]}>
+        <article
+            className={`${Style["pvp-card"]} ${!hasRecord ? Style.ratingOnlyCard : ""}`}
+        >
+            <header
+                className={`${Style.cardHeader} ${bracketLabel ? Style.cardHeaderSplit : ""}`}
+            >
+                {bracketLabel && <div className={Style.bracketLabel}>{bracketLabel}</div>}
+                <div className={Style.specLabel}>{specLabel}</div>
+            </header>
+
+            <div className={Style.cardMain}>
                 {/* Rating Box */}
-                {hasRating && ratingMedia && (
-                    <div className={Style["pvp-details"]}>
-                        <p>Rating</p>
-                        <img src={ratingMedia} alt="PvP Rank Icon" />
-                        <div>
-                            <strong>{ratingName}</strong>
-                            {rating && <span className={Style["pvp-rating"]}>{rating}</span>}
+                {hasRating && (
+                    <section
+                        className={`${Style.cardSection} ${Style.heroSection} ${!hasHeroMedia ? Style.compactHeroSection : ""}`}
+                    >
+                        {ratingMedia && (
+                            <img className={Style.mediaIcon} src={ratingMedia} alt="PvP Rank Icon" />
+                        )}
+                        <div className={Style.heroMeta}>
+                            {rating !== null && (
+                                <span className={Style["pvp-rating"]}>{rating}</span>
+                            )}
+                            {ratingName && <strong className={Style.heroTitle}>{ratingName}</strong>}
                         </div>
-                    </div>
+                        <p className={Style.sectionLabel}>Rating</p>
+                    </section>
                 )}
 
                 {/* Record / Achievement */}
                 {hasRecord && (
-                    <div className={Style["pvp-details"]}>
-                        <p>Record</p>
-                        <img src={bracketData.achieves.media} alt="Achievement Icon" />
-                        <div className={Style.recordWrapper}>
-                            <strong>{bracketData.achieves.name}</strong>
-                            {bracketData.record && (
-                                <span className={Style["pvp-rating"]}>{bracketData.record}</span>
-                            )}
+                    <section className={`${Style.cardSection} ${Style.recordSection}`}>
+                        <img
+                            className={`${Style.mediaIcon} ${Style.recordIcon}`}
+                            src={bracketData.achieves.media}
+                            alt="Achievement Icon"
+                        />
+                        <div className={Style.recordCopy}>
+                            <p className={Style.sectionLabel}>Record</p>
+                            <strong className={Style.recordTitle}>{bracketData.achieves.name}</strong>
                         </div>
-                    </div>
+                        {bracketData.record && (
+                            <span className={Style.recordValue}>{bracketData.record}</span>
+                        )}
+                    </section>
                 )}
             </div>
-            <StatsToggle currentSeason={currentSeason} />
-        </div>
+
+            <div className={Style.statsFooter}>
+                <StatsToggle currentSeason={currentSeason} />
+            </div>
+        </article>
     );
 }

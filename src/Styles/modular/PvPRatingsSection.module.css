@@ -8,50 +8,16 @@
    ================================================== */
 
 .mainTitle {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    text-align: center;
-
-    margin: 0.4rem 0 1.4rem 0;
-    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    text-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.6),
-        0 0 6px rgba(255, 225, 120, 0.25),
-        0 0 12px rgba(255, 255, 255, 0.1);
-}
-
-.mainTitle::after {
-    content: "";
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 130px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.6), transparent);
-    box-shadow: 0 0 10px rgba(255, 200, 50, 0.3);
+    display: none;
 }
 
 .section {
     position: relative;
-    /* width: 100%; */
-    width: fit-content;
-    border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(255, 204, 0, 0.1), 0 0 12px rgba(0, 0, 0, 0.6);
-    padding: 1rem 2rem;
-    background: var(--bg-main-card-char-details);
+    width: 100%;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
 }
 
 /* ==================================================
@@ -64,42 +30,16 @@
     align-items: center;
     position: relative;
     width: fit-content;
-    max-width: 1400px;
-    border-radius: 14px;
-    background: radial-gradient(
-        circle at top center,
-        rgba(25, 30, 50, 0.25),
-        rgba(10, 12, 20, 0.85)
-    );
-    border: 1px solid rgba(255, 215, 0, 0.05);
-    box-shadow: 0 0 18px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255, 215, 0, 0.02);
-    backdrop-filter: blur(8px);
+    max-width: 100%;
+    border-radius: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
 }
 
 .groupTitle {
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    text-align: center;
-    color: var(--color-accent);
-    margin: 12px 0 10px 0;
-    background: linear-gradient(180deg, #fff9c4 0%, #ffd700 35%, #caa400 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 6px rgba(255, 225, 120, 0.25),
-        0 0 12px rgba(255, 255, 255, 0.1);
-}
-
-.groupTitle::after {
-    content: "";
-    display: block;
-    width: 100px;
-    height: 2px;
-    margin: 0.5rem auto 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
-    border-radius: 1px;
+    display: none;
 }
 
 /* ==================================================
@@ -112,21 +52,21 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 1.35rem;
     width: 100%;
-    max-width: 1300px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
 .pvpContainer {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    overflow-x: auto;
-    width: 100%;
-    gap: 1rem;
-    padding: 0 1rem 0.5rem;
+    overflow: visible;
+    width: fit-content;
+    max-width: 100%;
+    gap: 1.35rem;
+    padding: 0;
 }
 
 /* ==================================================
@@ -207,9 +147,13 @@
 
 @media (max-width: 600px) {
     .pvp-container {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         gap: 1.2rem;
-        padding: 0 0.5rem;
+        padding: 0;
+    }
+
+    .pvpContainer {
+        width: 100%;
     }
 
     .cardTitle {

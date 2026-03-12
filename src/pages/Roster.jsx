@@ -58,11 +58,11 @@ export default function RosterPage() {
         <>
             <SEORoster />
             <section className={Style.page}>
-                <h1 className={Style.title}>Guild Roster</h1>
+                <h2 className={Style.title}>Guild Roster</h2>
                 <div className={Style.divider}></div>
 
-                <SearchBox setQuery={setQuery} />
                 <GuildRanks setSelectedGroup={setSelectedGroup} selectedGroup={selectedGroup} />
+                <SearchBox setQuery={setQuery} />
                 <CharCard charArr={filtered} />
             </section>
         </>

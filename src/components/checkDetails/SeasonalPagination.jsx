@@ -1,68 +1,180 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import Style from "../../Styles/modular/SeasonalPagination.module.css";
 import { AchievementDiv } from "./Achievements.jsx";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
-import { FaAngleLeft, FaAngleRight, FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
+
+function cleanTooltipDescription(description) {
+    if (!description) return "";
+
+    const cleaned = description
+        .replace(
+            /\s+(?:during|in)\s+[A-Za-z][A-Za-z' -]+ Season \d+\.?$/i,
+            " in a PvP season."
+        )
+        .replace(/\s+\.$/, ".")
+        .trim();
+
+    return cleaned;
+}
+
+function buildPrefixSummary(seasonalAchievesMap) {
+    const grouped = new Map();
+
+    for (const [expansionName, seasonMap] of seasonalAchievesMap) {
+        if (expansionName === "noSeason" || !seasonMap) continue;
+
+        for (const achList of Object.values(seasonMap)) {
+            if (!Array.isArray(achList)) continue;
+
+            for (const ach of achList) {
+                if (!ach?.name || !ach.name.includes(":")) continue;
+
+                const [rawPrefix] = ach.name.split(":");
+                const prefix = rawPrefix?.trim();
+                if (!prefix) continue;
+
+                if (!grouped.has(prefix)) {
+                    grouped.set(prefix, {
+                        label: prefix,
+                        count: 1,
+                        media: ach.media,
+                        description: cleanTooltipDescription(ach.description),
+                        expansions: [],
+                    });
+                    grouped.get(prefix).expansions.push({
+                        name: expansionName,
+                        seasons: [String(ach?.expansion?.season ?? "").trim()].filter(Boolean),
+                    });
+                } else {
+                    const currentGroup = grouped.get(prefix);
+                    currentGroup.count += 1;
+
+                    const seasonValue = String(ach?.expansion?.season ?? "").trim();
+                    const existingExpansion = currentGroup.expansions.find(
+                        (expansion) => expansion.name === expansionName
+                    );
+
+                    if (!existingExpansion) {
+                        currentGroup.expansions.push({
+                            name: expansionName,
+                            seasons: seasonValue ? [seasonValue] : [],
+                        });
+                    } else if (
+                        seasonValue &&
+                        !existingExpansion.seasons.includes(seasonValue)
+                    ) {
+                        existingExpansion.seasons.push(seasonValue);
+                    }
+                }
+            }
+        }
+    }
+
+    return Array.from(grouped.values());
+}
 
 export default function SeasonalPagination({ seasonalAchievesMap }) {
-    const [currentPageIndex, setCurrentPageIndex] = useState(0);
-    const [currentPage, setCurrentPage] = useState(undefined);
-    const [paginatedData, setPaginatedData] = useState([]);
+    const renderedSections = useMemo(
+        () =>
+            seasonalAchievesMap
+                ? Array.from(seasonalAchievesMap).filter(([key]) => key !== "noSeason")
+                : [],
+        [seasonalAchievesMap]
+    );
+    const [expandedSections, setExpandedSections] = useState(() => {
+        const defaultOpen = new Set(renderedSections.slice(0, 2).map(([key]) => key));
+        return defaultOpen;
+    });
 
-    useEffect(() => {
-        if (!seasonalAchievesMap || seasonalAchievesMap.size <= 1) return;
-        const shadowResult = [];
+    if (!seasonalAchievesMap || seasonalAchievesMap.size === 0) return null;
 
-        if (seasonalAchievesMap.size <= 2) {
-            shadowResult.push([]);
-            for (const entry of seasonalAchievesMap.entries()) {
-                shadowResult[0].push(entry);
+    const prefixSummary = buildPrefixSummary(seasonalAchievesMap);
+
+    const toggleSection = (sectionName) => {
+        setExpandedSections((current) => {
+            const next = new Set(current);
+            if (next.has(sectionName)) {
+                next.delete(sectionName);
+            } else {
+                next.add(sectionName);
             }
-        } else {
-            let pageAdded = 0;
-            let pageShadow = [];
-
-            for (const entry of seasonalAchievesMap.entries()) {
-                if (entry[0] === "noSeason") continue;
-                if (pageAdded >= 1) {
-                    shadowResult.push(pageShadow);
-                    pageShadow = [];
-                    pageAdded = 0;
-                }
-
-                pageShadow.push(entry);
-                pageAdded += 1;
-            }
-            if (pageShadow.length > 0) shadowResult.push(pageShadow);
-        }
-
-        setPaginatedData(() => shadowResult);
-        setCurrentPage(() => 0);
-        setCurrentPage(() => shadowResult[currentPageIndex]);
-    }, [seasonalAchievesMap]);
-
-    useEffect(() => {
-        if (paginatedData.length != 0) {
-            setCurrentPage(paginatedData[currentPageIndex]);
-        }
-    }, [currentPageIndex, seasonalAchievesMap]);
-
-    if (!seasonalAchievesMap || !currentPage) return null;
+            return next;
+        });
+    };
 
     return (
         <>
             {seasonalAchievesMap.size !== 0 && (
-                <div className={Style.seasonalContainer}>
-                    <h1>Achievements</h1>
+                <section className={Style.seasonalContainer}>
+                    <div className={Style.headerRow}>
+                        <div className={Style.titleBlock}>
+                            <h1>Achievements</h1>
+                            <p>Compact seasonal PvP history</p>
+                        </div>
+                    </div>
+
+                    {prefixSummary.length > 0 && (
+                        <div className={Style.summaryBadges}>
+                            {prefixSummary.map((item) => (
+                                <article
+                                    key={item.label}
+                                    className={Style.summaryBadge}
+                                    tabIndex={0}
+                                >
+                                    <img src={item.media} alt={`${item.label} achievement icon`} />
+                                    <strong>{item.label}</strong>
+                                    <span>{`x${item.count}`}</span>
+                                    <div className={Style.summaryTooltip}>
+                                        {item.description && (
+                                            <p className={Style.tooltipDescription}>
+                                                {item.description}
+                                            </p>
+                                        )}
+                                        <div className={Style.tooltipRows}>
+                                            {item.expansions.map((expansion) => (
+                                                <div
+                                                    key={`${item.label}-${expansion.name}`}
+                                                    className={Style.tooltipRow}
+                                                >
+                                                    <strong>{expansion.name}</strong>
+                                                    <span>
+                                                        {expansion.seasons.length > 0
+                                                            ? `Season${
+                                                                  expansion.seasons.length > 1
+                                                                      ? "s"
+                                                                      : ""
+                                                              } ${expansion.seasons.join(", ")}`
+                                                            : "PvP season"}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    )}
+
                     <div className={Style.pageContent}>
-                        {Array.from(currentPage).map(([key, value]) => {
-                            if (key === "noSeason") return null;
+                        {renderedSections.map(([key, value]) => {
+                            const isExpanded = expandedSections.has(key);
                             return (
-                                <div key={uuidv4()} className={Style.seasonalMain}>
-                                    <h2>{key}</h2>
-                                    <div className={Style.seasonalAchieves}>
+                                <section key={uuidv4()} className={Style.seasonalMain}>
+                                    <button
+                                        type="button"
+                                        className={Style.seasonHeader}
+                                        onClick={() => toggleSection(key)}
+                                        aria-expanded={isExpanded}
+                                    >
+                                        <h2>{key}</h2>
+                                        {isExpanded ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
+                                    </button>
+                                    <div
+                                        className={`${Style.seasonalAchieves} ${isExpanded ? Style.expanded : Style.collapsed}`}
+                                    >
                                         {value &&
-                                            Object.entries(value).map(([seasonIndex, achList]) =>
+                                            Object.entries(value).map(([, achList]) =>
                                                 achList.map((ach) => {
                                                     if (!ach.criteria) {
                                                         <AchievementDiv
@@ -84,7 +196,7 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                                                                 achData={ach}
                                                             />
                                                         );
-                                                    } catch (error) {
+                                                    } catch {
                                                         return (
                                                             <AchievementDiv
                                                                 key={ach._id || ach.criteria}
@@ -96,51 +208,11 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                                                 })
                                             )}
                                     </div>
-                                </div>
+                                </section>
                             );
                         })}
                     </div>
-                    {paginatedData.length > 1 && (
-                        <div className={Style.paginationContainer}>
-                            <button
-                                disabled={currentPageIndex === 0}
-                                onClick={() => setCurrentPageIndex(0)}
-                                className={Style.navBtn}>
-                                <FaAngleDoubleLeft />
-                                <span>First</span>
-                            </button>
-
-                            <button
-                                disabled={currentPageIndex === 0}
-                                onClick={() => setCurrentPageIndex((now) => now - 1)}
-                                className={Style.navBtn}>
-                                <FaAngleLeft />
-                                <span>Prev</span>
-                            </button>
-
-                            <p className={Style.pageInfo}>
-                                Page <span>{currentPageIndex + 1}</span> /{" "}
-                                <span>{paginatedData.length}</span>
-                            </p>
-
-                            <button
-                                disabled={currentPageIndex === paginatedData.length - 1}
-                                onClick={() => setCurrentPageIndex((now) => now + 1)}
-                                className={Style.navBtn}>
-                                <span>Next</span>
-                                <FaAngleRight />
-                            </button>
-
-                            <button
-                                disabled={currentPageIndex === paginatedData.length - 1}
-                                onClick={() => setCurrentPageIndex(paginatedData.length - 1)}
-                                className={Style.navBtn}>
-                                <span>Last</span>
-                                <FaAngleDoubleRight />
-                            </button>
-                        </div>
-                    )}
-                </div>
+                </section>
             )}
         </>
     );

@@ -8,6 +8,8 @@ import ThreesBTN from "../components/LDB/LDButtons/threesButton";
 import BGBtn from "../components/LDB/LDButtons/BGButton";
 import Style from "../Styles/modular/LDBMain.module.css";
 import SEOLeaderboard from "../SEO/SEOLeaderboard";
+import LDBHeaderContent from "../components/LDB/LDBHeader.jsx"
+
 
 const CONTENT_TO_SLUG = {
     shuffleContent: "solo-shuffle",
@@ -82,9 +84,14 @@ export default function LDB() {
     }, [location.pathname]);
 
     return (
-        <>
+        <div style={{
+            backdropFilter: "blur(5px)",
+            paddingTop: "3rem",
+            borderRadius: "100px"
+        }}>
             <SEOLeaderboard content={content} slug={slug} />
 
+            <LDBHeaderContent content={content} />
             <div className={Style.buttonsWrapper}>
                 <ShuffleBTN setData={setData} setPage={setPage} setContent={setContent} />
                 <TwosBTN setData={setData} setPage={setPage} setContent={setContent} />
@@ -94,6 +101,6 @@ export default function LDB() {
             </div>
 
             <ContentContainer data={data} content={content} page={page} setPage={setPage} />
-        </>
+        </div>
     );
 }

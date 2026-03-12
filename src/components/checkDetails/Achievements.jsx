@@ -47,7 +47,7 @@ export default function AchevementsSection() {
 export function AchievementDiv({ achData, seasonal = undefined }) {
     if (achData)
         return (
-            <div className={Style[seasonal == undefined ? "card" : `seasonal-card`]}>
+            <article className={Style[seasonal == undefined ? "card" : `seasonal-card`]}>
                 <img src={achData.media} alt="Achievement Image" />
                 <div
                     className={
@@ -56,6 +56,6 @@ export function AchievementDiv({ achData, seasonal = undefined }) {
                     <strong>{achData.name}</strong>
                     <span>{achData.description}</span>
                 </div>
-            </div>
+            </article>
         );
 }

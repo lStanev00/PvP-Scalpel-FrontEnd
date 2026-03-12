@@ -140,7 +140,7 @@ export function Details() {
 
                 <UserDataContainer />
 
-                <section className={Style.statsGrid}>
+                <section className={Style.statsFeed}>
                     <PvPRatingsSection
                         otherRatings={otherRatings}
                         blitzRatings={blitzRatings}

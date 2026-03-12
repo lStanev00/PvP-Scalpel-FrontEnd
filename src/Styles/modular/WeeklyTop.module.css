@@ -12,8 +12,9 @@
         0 6px 16px rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
     color: var(--color-text);
-    width: 100%;
-    max-width: 360px;
+    min-width: 30rem;
+    /* max-width: 560px; */
+    position: sticky;
 }
 
 /* Header */

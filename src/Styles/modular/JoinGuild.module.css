@@ -252,10 +252,10 @@
     background: linear-gradient(145deg, #00f5d4, #00d4b3);
 }
 
-.staffCard[data-rank="2"],
-.staffCard[data-rank="3"] .staffAvatar {
+/* .staffCard[data-rank="2"],
+.staffCard[data-rank="3"]  .staffAvatar {
     background: linear-gradient(145deg, #0099ff, #66e0ff);
-}
+} */
 
 .realm {
     display: block;
