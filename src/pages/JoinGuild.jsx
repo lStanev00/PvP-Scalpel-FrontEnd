@@ -1,13 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+    FaChevronRight,
+    FaCrown,
+    FaDiscord,
+    FaLock,
+    FaShieldAlt,
+    FaStar,
+    FaUserFriends,
+} from "react-icons/fa";
+import { GiCrossedSwords } from "react-icons/gi";
 import Style from "../Styles/modular/JoinGuild.module.css";
 import { groupedRanks, guildRanks } from "../components/Roster/helpers/guildRanks.js";
-import { useContext } from "react";
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import SEOJoinGuild from "../SEO/SEOJoinGuild.jsx";
-import { useNavigate } from "react-router-dom";
+
 export default function JoinGuild() {
     const navigate = useNavigate();
     const [staff, setStaff] = useState([]);
+    const [hoveredPerk, setHoveredPerk] = useState(null);
+    const staffContainerRef = useRef(null);
+    const staffGridRef = useRef(null);
     const { httpFetch } = useContext(UserContext);
 
     useEffect(() => {
@@ -18,7 +31,7 @@ export default function JoinGuild() {
                 const data = res?.data;
 
                 const members = data
-                    .filter((m) => groupedRanks.staff.includes(m.guildInsight.rankNumber))
+                    .filter((member) => groupedRanks.staff.includes(member.guildInsight.rankNumber))
                     .sort((a, b) => a.guildInsight.rankNumber - b.guildInsight.rankNumber);
 
                 setStaff(members);
@@ -30,131 +43,284 @@ export default function JoinGuild() {
         loadStaff();
     }, []);
 
+    const perks = [
+        {
+            icon: GiCrossedSwords,
+            title: "Competitive PvP",
+            desc: "Arenas, Battlegrounds, Blitz and world PvP with players who queue to win.",
+        },
+        {
+            icon: FaUserFriends,
+            title: "Active Community",
+            desc: "Daily sessions, strategy talks, and respectful teammates who push you to improve.",
+        },
+        {
+            icon: FaCrown,
+            title: "Rank Progression",
+            desc: "Climb our internal ranks and earn recognition among the best.",
+        },
+        {
+            icon: FaShieldAlt,
+            title: "Guild Support",
+            desc: "Gear advice, comp theory, and veteran mentorship on demand.",
+        },
+    ];
+
+    const requirements = [
+        "Level 80+",
+        "1500+ PvP rating preferred",
+        "Active Discord participation",
+        "Respectful and team-oriented attitude",
+        "Basic English communication skills",
+    ];
+
+    const steps = [
+        { num: "01", text: "Join our Discord server using the button below." },
+        {
+            num: "02",
+            text: "Search for the character you want to join with on the PvP Scalpel app and copy the link.",
+        },
+        {
+            num: "03",
+            text: "Post the character link in #recruitment together with a short introduction.",
+        },
+        {
+            num: "04",
+            text: "A staff member will review the post and invite you in-game if approved.",
+        },
+    ];
+
+    const scrollToCharacterSearch = () => {
+        const el = document.querySelector("#characterSearch");
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+            setTimeout(() => el.focus(), 300);
+        }
+    };
+
+    const handleStaffWheel = (event) => {
+        const grid = staffGridRef.current;
+        if (!grid) return;
+
+        const isDesktopScroller = grid.scrollWidth > grid.clientWidth;
+        if (!isDesktopScroller) return;
+
+        if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        grid.scrollBy({
+            left: event.deltaY,
+            behavior: "auto",
+        });
+    };
+
+    useEffect(() => {
+        const container = staffContainerRef.current;
+        if (!container) return undefined;
+
+        const onWheel = (event) => {
+            handleStaffWheel(event);
+        };
+
+        container.addEventListener("wheel", onWheel, { passive: false });
+
+        return () => {
+            container.removeEventListener("wheel", onWheel);
+        };
+    }, []);
+
     return (
         <>
             <SEOJoinGuild />
 
-            <section className={Style.container}>
-                <div className={Style.header}>
-                    <img
-                        src="/logo/logo_resized.png"
-                        alt="PvP Scalpel Logo"
-                        className={Style.logo}
-                    />
-                    <h1 className={Style.title}>Join PvP Scalpel</h1>
-                    <p className={Style.subtitle}>Precision. Performance. Power.</p>
+            <section className={Style.page}>
+                <div className={Style.backdrop} aria-hidden="true">
+                    <div className={`${Style.glow} ${Style.glowTop}`} />
+                    <div className={`${Style.glow} ${Style.glowBottom}`} />
+                    <div className={`${Style.gridGlow} ${Style.gridGlowLeft}`} />
+                    <div className={`${Style.gridGlow} ${Style.gridGlowRight}`} />
                 </div>
 
-                <div className={Style.content}>
-                    <div className={Style.card}>
-                        <h2>About the Guild</h2>
-                        <p className={Style.intro}>
-                            Welcome to <strong>PvP Scalpel</strong> — one of the most respected and
-                            performance-driven PvP guilds in the world.
+                <div className={Style.hero}>
+                    <div className={Style.heroInner}>
+                        <img
+                            src="/logo/logo_resized.png"
+                            alt="PvP Scalpel Logo"
+                            className={Style.logo}
+                        />
+
+                        <div className={Style.badge}>
+                            <FaLock className={Style.badgeIcon} />
+                            <span style={{ whiteSpace: "nowrap" }}>Private Guild - Invite Only</span>
+                        </div>
+
+                        <h1 className={Style.title}>
+                            Join PvP Scalpel
+                            <span className={Style.titleUnderline} />
+                        </h1>
+
+                        <p className={Style.heroText}>
+                            We don&apos;t recruit numbers - we recruit{" "}
+                            <span className={Style.heroTextStrong}>competitors</span>. An exclusive
+                            Alliance PvP guild where precision meets performance.
                         </p>
 
-                        <p>
-                            We unite <strong>Alliance players from multiple realms</strong> who
-                            share a passion for competitive Arenas, Battlegrounds, Blitz, and World
-                            PvP. Our members are active daily, working together to climb rankings,
-                            refine strategies, and enjoy every challenge Azeroth offers.
-                        </p>
-
-                        <p>
-                            Whether you’re chasing Gladiator titles or simply love clean,
-                            coordinated fights — you’ll find partners, guidance, and friendship
-                            here. Join us and become part of a thriving PvP community that blends{" "}
-                            <strong>precision, performance, and power</strong> — the true spirit of{" "}
-                            <strong>PvP Scalpel</strong>.
-                        </p>
-                    </div>
-
-                    <div className={Style.card}>
-                        <h2>Requirements</h2>
-                        <ul>
-                            <li>Level 80+</li>
-                            <li>1500+ PvP rating preferred</li>
-                            <li>Active Discord participation</li>
-                            <li>Respectful and team-oriented attitude</li>
-                            <li>Basic English communication skills</li>
-                        </ul>
-                    </div>
-
-                    <div className={Style.card}>
-                        <h2>How to Join</h2>
-                        <ol>
-                            <li>Join our Discord using the button below.</li>
-                            <li>
-                                Search for the character you want to join with on our{" "}
-                                <strong>PvP Scalpel</strong> web app and copy your character’s link.
-                            </li>
-                            <li>
-                                Go to the <strong>#recruitment</strong> channel in Discord and paste
-                                your character link there, along with a short message about
-                                yourself.
-                            </li>
-                            <li>
-                                One of our staff members will review it and invite you in-game once
-                                approved.
-                            </li>
-                        </ol>
-
-                        <div className={Style.btnRow}>
+                        <div className={Style.heroActions}>
                             <a
                                 href="https://discord.gg/4E83N87DmM"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`${Style.button} ${Style.discord}`}>
-                                Join Discord
+                                className={`${Style.button} ${Style.discordButton}`}>
+                                <FaDiscord />
+                                <span>Apply via Discord</span>
                             </a>
 
                             <button
-                                onClick={() => {
-                                    const el = document.querySelector("#characterSearch");
-                                    if (el) {
-                                        el.scrollIntoView({ behavior: "smooth", block: "center" });
-                                        setTimeout(() => el.focus(), 300);
-                                    }
-                                }}
-                                className={`${Style.button} ${Style.guild}`}>
-                                Search your Character
+                                type="button"
+                                onClick={scrollToCharacterSearch}
+                                className={`${Style.button} ${Style.searchButton}`}>
+                                <GiCrossedSwords />
+                                <span>Search Your Character</span>
                             </button>
                         </div>
                     </div>
+                </div>
 
-                    <div className={Style.staffContainer}>
-                        <h2>Staff Members to Look for</h2>
-                        <div className={Style.staffGrid}>
-                            {staff.length > 0 ? (
-                                staff.map((member) => (
-                                    <div
-                                        key={member._id || member.name}
-                                        className={Style.staffCard}
-                                        data-rank={member.guildInsight.rankNumber}
-                                        onClick={() => {
-                                            navigate(
-                                                `/check/${member?.server}/${member?.playerRealm?.slug}/${member?.name}`
-                                            );
-                                        }}>
-                                        <img
-                                            src={member.media?.avatar}
-                                            alt={member.name}
-                                            className={Style.staffAvatar}
-                                        />
-                                        <div className={Style.staffInfo}>
-                                            <h3>{member.name}</h3>
-                                            <p>{guildRanks[member.guildInsight.rankNumber]}</p>
-                                            <span className={Style.realm}>
-                                                {member.playerRealm?.name}
-                                            </span>
+                <div className={Style.content}>
+                    <section className={Style.section}>
+                        <h2 className={Style.sectionHeading}>Why Players Choose Us</h2>
+
+                        <div className={Style.perkGrid}>
+                            {perks.map((perk, index) => {
+                                const Icon = perk.icon;
+                                const isActive = hoveredPerk === index;
+
+                                return (
+                                    <article
+                                        key={perk.title}
+                                        className={`${Style.perkCard} ${
+                                            isActive ? Style.perkCardActive : ""
+                                        }`}
+                                        onMouseEnter={() => setHoveredPerk(index)}
+                                        onMouseLeave={() => setHoveredPerk(null)}>
+                                        <div className={Style.perkHeading}>
+                                            <Icon className={Style.perkIcon} />
+                                            <h3>{perk.title}</h3>
                                         </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <p className={Style.loading}>Fetching staff data...</p>
-                            )}
+                                        <p>{perk.desc}</p>
+                                    </article>
+                                );
+                            })}
                         </div>
-                    </div>
+                    </section>
+
+                    <section className={Style.section}>
+                        <article className={`${Style.panel} ${Style.aboutCard}`}>
+                            <h2 className={Style.panelHeading}>About the Guild</h2>
+
+                            <div className={Style.aboutText}>
+                                <p>
+                                    <span className={Style.highlightGold}>PvP Scalpel</span> is one
+                                    of the most respected and performance-driven PvP guilds in the
+                                    world.
+                                    <br />
+                                    We are a{" "}
+                                    <span className={Style.highlightGold}>
+                                        private, invite-only
+                                    </span>{" "}
+                                    community - and we intend to keep it that way.
+                                </p>
+
+                                <p>
+                                    We unite{" "}
+                                    <span className={Style.highlightStrong}>
+                                        Alliance players from multiple realms
+                                    </span>{" "}
+                                    who share a passion for competitive Arenas, Battlegrounds,
+                                    Blitz, and World PvP. Our members are active daily, working
+                                    together to climb rankings, refine strategies, and dominate
+                                    every challenge Azeroth throws at us.
+                                </p>
+
+                                <p>
+                                    Whether you&apos;re chasing Gladiator titles or simply love
+                                    clean, coordinated fights - you&apos;ll find partners, guidance,
+                                    and real camaraderie here.
+                                </p>
+                            </div>
+                        </article>
+                    </section>
+
+                    <section className={`${Style.section} ${Style.splitSection}`}>
+                        <article className={Style.panel}>
+                            <h2 className={Style.panelHeadingGold}>
+                                <FaStar />
+                                <span>Requirements</span>
+                            </h2>
+
+                            <ul className={Style.requirementsList}>
+                                {requirements.map((requirement) => (
+                                    <li key={requirement} className={Style.requirementItem}>
+                                        <FaChevronRight className={Style.chevron} />
+                                        <span>{requirement}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </article>
+
+                        <article className={Style.panel}>
+                            <h2 className={Style.panelHeadingGold}>
+                                <FaShieldAlt />
+                                <span>How to Join</span>
+                            </h2>
+
+                            <div className={Style.stepList}>
+                                {steps.map((step) => (
+                                    <div key={step.num} className={Style.stepRow}>
+                                        <span className={Style.stepNumber}>{step.num}</span>
+                                        <p>{step.text}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </article>
+                    </section>
+
+                    <section className={Style.section}>
+                        <div ref={staffContainerRef} className={Style.staffContainer}>
+                            <h2>Staff Members to Look for</h2>
+                            <div ref={staffGridRef} className={Style.staffGrid}>
+                                {staff.length > 0 ? (
+                                    staff.map((member) => (
+                                        <div
+                                            key={member._id || member.name}
+                                            className={Style.staffCard}
+                                            data-rank={member.guildInsight.rankNumber}
+                                            onClick={() => {
+                                                navigate(
+                                                    `/check/${member?.server}/${member?.playerRealm?.slug}/${member?.name}`,
+                                                );
+                                            }}>
+                                            <img
+                                                src={member.media?.avatar}
+                                                alt={member.name}
+                                                className={Style.staffAvatar}
+                                            />
+                                            <div className={Style.staffInfo}>
+                                                <h3>{member.name}</h3>
+                                                <p>{guildRanks[member.guildInsight.rankNumber]}</p>
+                                                <span className={Style.realm}>
+                                                    {member.playerRealm?.name}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className={Style.loading}>Fetching staff data...</p>
+                                )}
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </section>
         </>

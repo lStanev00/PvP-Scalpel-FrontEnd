@@ -1,6 +1,5 @@
 export default function exctractSearch (inputString) {
     if(inputString === "") return undefined
-    if(typeof inputString !== "string" && inputString?.length < 3) return undefined
     if(inputString === undefined) return undefined
     let searchParts = inputString.trim();
 
@@ -25,6 +24,7 @@ export default function exctractSearch (inputString) {
     }
 
     if(name === undefined) return undefined
+    if (typeof name === "string" && name.replaceAll(" ", "").length < 3) return undefined;
     if (realm === undefined) realm = "!undefined";
     if (server === undefined) server = "!undefined";
             
