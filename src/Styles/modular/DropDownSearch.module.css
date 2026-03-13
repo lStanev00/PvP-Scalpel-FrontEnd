@@ -19,6 +19,49 @@
     padding: 0;
 }
 
+.dropdownInfo {
+    padding: 0.9rem;
+    max-height: none;
+    overflow: hidden;
+}
+
+.infoCard {
+    padding: 0.95rem 1rem;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 12px;
+    background:
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 42%),
+        linear-gradient(180deg, rgba(18, 24, 40, 0.98), rgba(11, 15, 26, 0.98));
+    box-shadow:
+        inset 0 0 12px rgba(96, 165, 250, 0.05),
+        0 12px 24px rgba(0, 0, 0, 0.24);
+}
+
+.infoTitle {
+    margin: 0 0 0.4rem;
+    color: #e8f2ff;
+    font-size: 0.96rem;
+    font-weight: 700;
+}
+
+.infoText,
+.infoHint {
+    margin: 0;
+    color: rgba(219, 234, 254, 0.82);
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.infoText {
+    margin-bottom: 0.35rem;
+}
+
+.infoText span,
+.infoHint span {
+    color: #7dd3fc;
+    font-weight: 600;
+}
+
 .dropdown::-webkit-scrollbar {
     width: 6px;
 }

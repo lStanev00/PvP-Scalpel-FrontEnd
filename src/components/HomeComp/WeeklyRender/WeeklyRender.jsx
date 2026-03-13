@@ -50,7 +50,8 @@ export default function WeeklyRender({ weeklyData }) {
         return (
             <section className={Style.wrapper}>
                 <h2 className={Style.title}>Top Weekly Gainers</h2>
-                <p className={Style.error}>No leaderboard data found this week.</p>
+                {/* <p className={Style.error}>No leaderboard data found this week.</p> */}
+                <p className={Style.error}>No rating changes are found this week.</p>
             </section>
         );
 
