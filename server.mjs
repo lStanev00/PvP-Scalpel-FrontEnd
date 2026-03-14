@@ -217,6 +217,10 @@ app.use((req, res, next) => {
             return;
         }
 
+        if (res.statusCode === 404 && req.suppress404Log) {
+            return;
+        }
+
         if (res.statusCode >= 400) {
             log("warn", "request.end", payload);
             return;
@@ -514,6 +518,7 @@ function buildCharNotFoundSeo(canonical) {
 }
 
 app.get("/check/:server/:realm/:name", async (req, res) => {
+    req.suppress404Log = true;
     const { server, realm, name } = req.params;
     const canonical = `https://pvpscalpel.com/check/${encodeURIComponent(
         server
@@ -543,7 +548,7 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
             const description =
                 "Analyze any World of Warcraft character on PvP Scalpel. Check ratings, specs, guild data, and PvP performance insights.";
 
-            res.status(404);
+            res.status(200);
             return renderPage(res, "char", {
                 title,
                 description,
@@ -576,11 +581,7 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
             : null;
 
         if (!data || data?.errorMSG) {
-            log("warn", "character.not_found", {
-                id: req.requestId,
-                endpoint,
-            });
-            res.status(404);
+            res.status(200);
             return renderPage(res, "char", buildCharNotFoundSeo(canonical));
         }
 
