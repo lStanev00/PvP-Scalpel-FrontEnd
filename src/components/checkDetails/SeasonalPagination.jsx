@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Style from "../../Styles/modular/SeasonalPagination.module.css";
 import { AchievementDiv } from "./Achievements.jsx";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
@@ -71,6 +71,8 @@ function buildPrefixSummary(seasonalAchievesMap) {
 }
 
 export default function SeasonalPagination({ seasonalAchievesMap }) {
+    const collapseTimerRef = useRef(null);
+    const expandFrameRef = useRef(null);
     const renderedSections = useMemo(
         () =>
             seasonalAchievesMap
@@ -79,14 +81,28 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
         [seasonalAchievesMap],
     );
     const [showAllAchievements, setShowAllAchievements] = useState(false);
+    const [isClosingAchievements, setIsClosingAchievements] = useState(false);
+    const [isExpandedContentVisible, setIsExpandedContentVisible] = useState(false);
     const [expandedSections, setExpandedSections] = useState(() => {
         const defaultOpen = new Set(renderedSections.slice(0, 2).map(([key]) => key));
         return defaultOpen;
     });
 
+    useEffect(() => {
+        return () => {
+            if (collapseTimerRef.current) {
+                clearTimeout(collapseTimerRef.current);
+            }
+            if (expandFrameRef.current) {
+                cancelAnimationFrame(expandFrameRef.current);
+            }
+        };
+    }, []);
+
     if (!seasonalAchievesMap || seasonalAchievesMap.size === 0) return null;
 
     const prefixSummary = buildPrefixSummary(seasonalAchievesMap);
+    const shouldRenderExpandedContent = showAllAchievements || isClosingAchievements;
 
     const toggleSection = (sectionName) => {
         setExpandedSections((current) => {
@@ -98,6 +114,43 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
             }
             return next;
         });
+    };
+
+    const handleExpandAchievements = () => {
+        if (collapseTimerRef.current) {
+            clearTimeout(collapseTimerRef.current);
+        }
+        if (expandFrameRef.current) {
+            cancelAnimationFrame(expandFrameRef.current);
+        }
+
+        setIsClosingAchievements(false);
+        setIsExpandedContentVisible(false);
+        setShowAllAchievements(true);
+        expandFrameRef.current = requestAnimationFrame(() => {
+            expandFrameRef.current = requestAnimationFrame(() => {
+                setIsExpandedContentVisible(true);
+                expandFrameRef.current = null;
+            });
+        });
+    };
+
+    const handleCollapseAchievements = () => {
+        if (collapseTimerRef.current) {
+            clearTimeout(collapseTimerRef.current);
+        }
+        if (expandFrameRef.current) {
+            cancelAnimationFrame(expandFrameRef.current);
+            expandFrameRef.current = null;
+        }
+
+        setIsExpandedContentVisible(false);
+        setIsClosingAchievements(true);
+        setShowAllAchievements(false);
+        collapseTimerRef.current = setTimeout(() => {
+            setIsClosingAchievements(false);
+            collapseTimerRef.current = null;
+        }, 560);
     };
 
     return (
@@ -161,80 +214,102 @@ export default function SeasonalPagination({ seasonalAchievesMap }) {
                         </div>
                     )}
 
-                    {showAllAchievements && (
-                        <div className={Style.pageContent}>
-                            {renderedSections.map(([key, value]) => {
-                                const isExpanded = expandedSections.has(key);
-                                return (
-                                    <section key={uuidv4()} className={Style.seasonalMain}>
-                                        <button
-                                            type="button"
-                                            className={Style.seasonHeader}
-                                            onClick={() => toggleSection(key)}
-                                            aria-expanded={isExpanded}>
-                                            <h2>{key}</h2>
-                                            {isExpanded ? (
-                                                <FaChevronUp size={12} />
-                                            ) : (
-                                                <FaChevronDown size={12} />
-                                            )}
-                                        </button>
-                                        <div
-                                            className={`${Style.seasonalAchieves} ${
-                                                isExpanded ? Style.expanded : Style.collapsed
-                                            }`}>
-                                            {value &&
-                                                Object.entries(value).map(([, achList]) =>
-                                                    achList.map((ach) => {
-                                                        if (!ach.criteria) {
-                                                            <AchievementDiv
-                                                                key={uuidv4()}
-                                                                seasonal={true}
-                                                                achData={ach}
-                                                            />;
-                                                        }
+                    {shouldRenderExpandedContent && (
+                        <div
+                            className={`${Style.expandedContentShell} ${
+                                isExpandedContentVisible
+                                    ? Style.expandedContentOpen
+                                    : Style.expandedContentClosing
+                            }`}>
+                            <div className={Style.inlineToggleRow}>
+                                <button
+                                    type="button"
+                                    className={`${Style.moduleToggle} ${Style.inlineToggle}`}
+                                    onClick={handleCollapseAchievements}
+                                    aria-expanded={showAllAchievements}>
+                                    <span>Hide PvP Achievements</span>
+                                    <FaChevronUp size={12} />
+                                </button>
+                            </div>
 
-                                                        try {
-                                                            return (
+                            <div className={Style.pageContent}>
+                                {renderedSections.map(([key, value]) => {
+                                    const isExpanded = expandedSections.has(key);
+                                    return (
+                                        <section key={uuidv4()} className={Style.seasonalMain}>
+                                            <button
+                                                type="button"
+                                                className={Style.seasonHeader}
+                                                onClick={() => toggleSection(key)}
+                                                aria-expanded={isExpanded}>
+                                                <h2>{key}</h2>
+                                                <span className={Style.seasonHeaderIcon}>
+                                                    {isExpanded ? (
+                                                        <FaChevronUp size={12} />
+                                                    ) : (
+                                                        <FaChevronDown size={12} />
+                                                    )}
+                                                </span>
+                                            </button>
+                                            <div
+                                                className={`${Style.seasonalAchieves} ${
+                                                    isExpanded ? Style.expanded : Style.collapsed
+                                                }`}>
+                                                {value &&
+                                                    Object.entries(value).map(([, achList]) =>
+                                                        achList.map((ach) => {
+                                                            if (!ach.criteria) {
                                                                 <AchievementDiv
-                                                                    key={(
-                                                                        ach._id ||
-                                                                        ach.criteria ||
-                                                                        ach.name
-                                                                    ).replace(/\s+/g, "-")}
+                                                                    key={uuidv4()}
                                                                     seasonal={true}
                                                                     achData={ach}
-                                                                />
-                                                            );
-                                                        } catch {
-                                                            return (
-                                                                <AchievementDiv
-                                                                    key={ach._id || ach.criteria}
-                                                                    seasonal={true}
-                                                                    achData={ach}
-                                                                />
-                                                            );
-                                                        }
-                                                    }),
-                                                )}
-                                        </div>
-                                    </section>
-                                );
-                            })}
+                                                                />;
+                                                            }
+
+                                                            try {
+                                                                return (
+                                                                    <AchievementDiv
+                                                                        key={(
+                                                                            ach._id ||
+                                                                            ach.criteria ||
+                                                                            ach.name
+                                                                        ).replace(/\s+/g, "-")}
+                                                                        seasonal={true}
+                                                                        achData={ach}
+                                                                    />
+                                                                );
+                                                            } catch {
+                                                                return (
+                                                                    <AchievementDiv
+                                                                        key={
+                                                                            ach._id || ach.criteria
+                                                                        }
+                                                                        seasonal={true}
+                                                                        achData={ach}
+                                                                    />
+                                                                );
+                                                            }
+                                                        }),
+                                                    )}
+                                            </div>
+                                        </section>
+                                    );
+                                })}
+                            </div>
                         </div>
                     )}
                 </div>
             )}
-            <button
-                type="button"
-                className={Style.moduleToggle}
-                onClick={() => setShowAllAchievements((current) => !current)}
-                aria-expanded={showAllAchievements}>
-                <span>
-                    {showAllAchievements ? "Hide PvP Achievements" : "Show all PvP Achievements"}
-                </span>
-                {showAllAchievements ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
-            </button>
+            {!shouldRenderExpandedContent && (
+                <button
+                    type="button"
+                    className={Style.moduleToggle}
+                    onClick={handleExpandAchievements}
+                    aria-expanded={showAllAchievements}>
+                    <span>Show all PvP Achievements</span>
+                    <FaChevronDown size={12} />
+                </button>
+            )}
         </section>
     );
 }
