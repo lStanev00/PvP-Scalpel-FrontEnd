@@ -18,6 +18,7 @@ import Footer from "./components/Footer.jsx";
 import Download from "./pages/Download.jsx";
 import DesktopBeta from "./pages/DesktopBeta.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import localStorageValidatoor from "./helpers/localStorageValidator.js";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
 const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
@@ -30,6 +31,7 @@ export default function AppContent() {
 
     useEffect(() => {
         httpFetch("/verify/me");
+        localStorageValidatoor()
     }, [httpFetch]);
 
     return (

@@ -51,7 +51,7 @@ export const UserProvider = ({ children }) => {
  * >} A normalized result object containing the HTTP status and either parsed JSON data
  * or an error message when the request fails before a valid response is returned.
  */
-async function httpFetchWithCredentials(endpoint, options = {}) {
+export async function httpFetchWithCredentials(endpoint, options = {}) {
     const apiDomain = import.meta.env.VITE_API_URL || "https://api.pvpscalpel.com";
     if (!apiDomain) {
         return {
