@@ -1,13 +1,14 @@
-import httpFetch from "../../../helpers/httpFetch.js";
 import { FaFlag } from "react-icons/fa";
 import Style from "./BracketButton.module.css";
+import { UserContext } from "../../../hooks/ContextVariables.jsx";
+import { useContext } from "react";
 
 export default function BGBtn({ setData, setPage, setContent }) {
+    const { httpFetch } = useContext(UserContext);
+
     const clickHandler = async () => {
         setData(() => undefined);
-        let reqData;
-        const res = await httpFetch(`/LDB/BG`);
-        reqData = await res.json();
+        let reqData = (await httpFetch(`/LDB/BG`))?.data;
         let rank = 1;
         const paginatedData = [];
 
