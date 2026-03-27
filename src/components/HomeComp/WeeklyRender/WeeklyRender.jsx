@@ -4,8 +4,12 @@ import Style from "./WeeklyRender.module.css";
 export default function WeeklyRender({ weeklyData }) {
     const navigate = useNavigate();
 
+    if (weeklyData == null) {
+        return null;
+    }
+
     // Basic structure validation
-    if (!weeklyData || typeof weeklyData !== "object") {
+    if (typeof weeklyData !== "object") {
         console.warn("WeeklyRender: Invalid weeklyData format", weeklyData);
         return (
             <section className={Style.wrapper}>
