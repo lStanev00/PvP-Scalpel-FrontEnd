@@ -19,8 +19,8 @@ const SOCKET_URL = "wss://ws.pvpscalpel.com";
 const LOADING_STEPS = [
     "Opening websocket connection",
     "Sending scan payload",
-    "Receiving streamed players",
-    "Building lobby snapshot",
+    "Receiving bracket context",
+    "Receiving player IDs and streamed players",
 ];
 
 function getCharacterKey(character) {
@@ -98,6 +98,31 @@ function getBestRating(character) {
     };
 }
 
+function getDisplaySpec(character) {
+    return (
+        character?.searchSpecRequested?.name ||
+        character?.activeSpec?.name ||
+        "Unknown spec"
+    );
+}
+
+function getAverageItemLevel(character) {
+    const gearEntries = Object.values(character?.gear || {}).filter((item) => {
+        const level = Number(item?.level);
+        return Number.isFinite(level) && level > 1;
+    });
+
+    if (!gearEntries.length) {
+        return "Unknown";
+    }
+
+    const totalItemLevel = gearEntries.reduce((sum, item) => {
+        return sum + Number(item.level);
+    }, 0);
+
+    return String(Math.round(totalItemLevel / gearEntries.length));
+}
+
 function getRealmLabel(character) {
     const realm = character?.playerRealm?.name || "Unknown realm";
     const region = character?.server ? String(character.server).toUpperCase() : "";
@@ -163,9 +188,9 @@ function LoadingPanel({ stepIndex }) {
                         return (
                             <div
                                 key={step}
-                                className={`${Style.loadingStep} ${active ? Style.loadingStepActive : ""} ${
-                                    done ? Style.loadingStepDone : ""
-                                }`}
+                                className={`${Style.loadingStep} ${
+                                    active ? Style.loadingStepActive : ""
+                                } ${done ? Style.loadingStepDone : ""}`}
                             >
                                 <span className={Style.loadingStepDot}>
                                     {done ? <FiCheckCircle /> : <span />}
@@ -236,14 +261,21 @@ function IdlePanel({ status }) {
                 </article>
                 <article className={Style.idleCard}>
                     <span className={Style.idleLabel}>Output</span>
-                    <strong>Bracket, rating, health-ready snapshot</strong>
+                    <strong>Bracket, player IDs, and streamed character data</strong>
                 </article>
             </div>
         </section>
     );
 }
 
-function ResultsPanel({ status, players, onRetry, onReset }) {
+function ResultsPanel({
+    status,
+    players,
+    bracketName,
+    expectedPlayerCount,
+    onRetry,
+    onReset,
+}) {
     const firstPlayer = players[0];
 
     return (
@@ -271,36 +303,44 @@ function ResultsPanel({ status, players, onRetry, onReset }) {
                     <strong>{getSocketLabel(status)}</strong>
                 </article>
                 <article className={Style.summaryCard}>
-                    <span>Players</span>
+                    <span>Bracket</span>
+                    <strong>{bracketName || "Waiting"}</strong>
+                </article>
+                <article className={Style.summaryCard}>
+                    <span>Expected</span>
+                    <strong>{expectedPlayerCount || "Unknown"}</strong>
+                </article>
+                <article className={Style.summaryCard}>
+                    <span>Received</span>
                     <strong>{players.length}</strong>
-                </article>
-                <article className={Style.summaryCard}>
-                    <span>Region</span>
-                    <strong>{firstPlayer?.server?.toUpperCase() || "Unknown"}</strong>
-                </article>
-                <article className={Style.summaryCard}>
-                    <span>Feed</span>
-                    <strong>WebSocket</strong>
                 </article>
             </div>
 
             <div className={Style.playersPanel}>
                 <div className={Style.playersPanelHeader}>
                     <h3>Streamed Team</h3>
-                    <span>{players.length} players received</span>
+                    <span>
+                        {players.length}
+                        {expectedPlayerCount ? ` / ${expectedPlayerCount}` : ""} players received
+                    </span>
                 </div>
 
                 <div className={Style.playersList}>
                     {players.map((player) => {
                         const avatar = getAvatar(player);
                         const rating = getBestRating(player);
+                        const averageItemLevel = getAverageItemLevel(player);
 
                         return (
                             <article key={getCharacterKey(player)} className={Style.playerCard}>
                                 <div className={Style.playerMain}>
                                     <div className={Style.playerAvatar}>
                                         {avatar ? (
-                                            <img src={avatar} alt="" className={Style.playerAvatarImage} />
+                                            <img
+                                                src={avatar}
+                                                alt=""
+                                                className={Style.playerAvatarImage}
+                                            />
                                         ) : (
                                             <FiShield />
                                         )}
@@ -309,7 +349,7 @@ function ResultsPanel({ status, players, onRetry, onReset }) {
                                     <div className={Style.playerIdentity}>
                                         <strong>{player?.name || "Unknown character"}</strong>
                                         <span>
-                                            {player?.activeSpec?.name || "Unknown spec"} ·{" "}
+                                            {getDisplaySpec(player)} |{" "}
                                             {player?.class?.name || "Unknown class"}
                                         </span>
                                     </div>
@@ -331,6 +371,11 @@ function ResultsPanel({ status, players, onRetry, onReset }) {
                                         <span>Guild</span>
                                         <strong>{player?.guildName || "Independent"}</strong>
                                     </div>
+
+                                    <div className={Style.playerStat}>
+                                        <span>Avg ilvl</span>
+                                        <strong>{averageItemLevel}</strong>
+                                    </div>
                                 </div>
                             </article>
                         );
@@ -345,6 +390,8 @@ export default function LobbyScan() {
     const [status, setStatus] = useState("connecting");
     const [input, setInput] = useState("");
     const [players, setPlayers] = useState([]);
+    const [bracketName, setBracketName] = useState("");
+    const [expectedPlayerIds, setExpectedPlayerIds] = useState([]);
     const [error, setError] = useState("");
     const [stepIndex, setStepIndex] = useState(0);
 
@@ -352,18 +399,20 @@ export default function LobbyScan() {
     const pendingPayloadRef = useRef("");
 
     const sendPayload = useCallback((socket) => {
+        const scanPayload = pendingPayloadRef.current.trim();
+
+        if (!scanPayload) return;
+
         const payload = {
             type: "queueCheck",
-            data: pendingPayloadRef.current.trim()
+            data: scanPayload,
         };
-
-        if (!payload) return;
 
         if (!socket || socket.readyState !== WebSocket.OPEN) {
             throw new Error("The lobby websocket is not ready.");
         }
 
-        socket.send(payload);
+        socket.send(JSON.stringify(payload));
         pendingPayloadRef.current = "";
         setStatus("loading");
         setError("");
@@ -408,15 +457,43 @@ export default function LobbyScan() {
                 }
 
                 const parsed = JSON.parse(event.data);
-                console.info(parsed)
 
                 if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-                    throw new Error("Received an invalid player payload.");
+                    throw new Error("Received an invalid websocket payload.");
                 }
 
-                setPlayers((current) => mergeCharacter(current, parsed));
-                setStatus("success");
-                setError("");
+                if (parsed.type === "bracketObj") {
+                    setBracketName(parsed?.name || "Unknown bracket");
+                    setError("");
+                    return;
+                }
+
+                if (parsed.type === "playerIDs") {
+                    if (!Array.isArray(parsed.data)) {
+                        throw new Error("Received an invalid player IDs payload.");
+                    }
+
+                    setExpectedPlayerIds(parsed.data.map((entry) => String(entry)));
+                    setError("");
+                    return;
+                }
+
+                if (parsed.type === "charData") {
+                    if (!parsed.data || typeof parsed.data !== "object" || Array.isArray(parsed.data)) {
+                        throw new Error("Received an invalid character data payload.");
+                    }
+
+                    const nextCharacter = {
+                        ...parsed.data,
+                        initSearch: parsed.initSearch || "",
+                        searchSpecRequested: parsed.searchSpecRequested || null,
+                    };
+
+                    setPlayers((current) => mergeCharacter(current, nextCharacter));
+                    setStatus("success");
+                    setError("");
+                    return;
+                }
             } catch (err) {
                 setError(err?.message || "Failed to process the websocket payload.");
                 setStatus("error");
@@ -491,6 +568,8 @@ export default function LobbyScan() {
 
         pendingPayloadRef.current = payload;
         setPlayers([]);
+        setBracketName("");
+        setExpectedPlayerIds([]);
         setError("");
 
         const socket = socketRef.current;
@@ -533,6 +612,8 @@ export default function LobbyScan() {
         pendingPayloadRef.current = "";
         setInput("");
         setPlayers([]);
+        setBracketName("");
+        setExpectedPlayerIds([]);
         setError("");
 
         const socket = socketRef.current;
@@ -564,7 +645,6 @@ export default function LobbyScan() {
             <div className={Style.container}>
                 <section className={Style.heroSection}>
                     <div className={Style.heroFrame}>
-
                         <img
                             src="/logo/logo_resized.png"
                             alt="PvP Scalpel Logo"
@@ -575,9 +655,8 @@ export default function LobbyScan() {
                             <span>{getSocketLabel(status)}</span>
                         </div>
 
-                        <h1 className={Style.heroTitle}>Lobby Scaner</h1>
+                        <h1 className={Style.heroTitle}>Lobby Scanner</h1>
                         <p className={Style.heroLead}>Quickly analyze your lobbies.</p>
-  
 
                         <form className={Style.scanForm} onSubmit={handleSubmit}>
                             <div className={Style.scanBar}>
@@ -641,6 +720,16 @@ export default function LobbyScan() {
                                     <span>Prepare the layout for health-aware reads.</span>
                                 </div>
                             </article>
+
+                            <article className={Style.featureCard}>
+                                <div className={Style.featureIcon}>
+                                    <FiActivity />
+                                </div>
+                                <div className={Style.featureBody}>
+                                    <strong>Player IDs</strong>
+                                    <span>Track expected responses before character data arrives.</span>
+                                </div>
+                            </article>
                         </div>
                     </div>
                 </section>
@@ -658,6 +747,8 @@ export default function LobbyScan() {
                     <ResultsPanel
                         status={status}
                         players={players}
+                        bracketName={bracketName}
+                        expectedPlayerCount={expectedPlayerIds.length}
                         onRetry={handleRetry}
                         onReset={handleReset}
                     />
