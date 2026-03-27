@@ -1,13 +1,14 @@
-import httpFetch from "../../../helpers/httpFetch.js";
 import { GiLightningTrio } from "react-icons/gi";
 import Style from "./BracketButton.module.css";
+import { useContext } from "react";
+import { UserContext } from "../../../hooks/ContextVariables";
 
 export default function BlitzBtn({ setData, setPage, setContent }) {
+    const { httpFetch } = useContext(UserContext);
+    
     const clickHandler = async () => {
-        const res = await httpFetch(`/LDB/blitz`);
         setData(() => undefined);
-
-        let reqData = await res.json();
+        let reqData = (await httpFetch(`/LDB/blitz`))?.data;
         let rank = 1;
         const paginatedData = [];
 

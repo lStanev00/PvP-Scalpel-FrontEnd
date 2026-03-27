@@ -3,13 +3,14 @@
 import { useParams } from "react-router-dom";
 import Style from "../../Styles/modular/charDetails.module.css";
 import timeAgo, { isOlderThan5Minutes } from "../../helpers/timeAgo.js";
-import httpFetch from "../../helpers/httpFetch.js";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { CharacterContext } from "../../pages/CharDetails.jsx";
+import { UserContext } from "../../hooks/ContextVariables.jsx";
 
 export default function ReloadBTN({ isUpdating, setUpdating }) {
     const { server, realm, name } = useParams();
     const { setData, data } = useContext(CharacterContext);
+    const { httpFetch } = useContext(UserContext);
 
     const [lastUpdatedAt, setLastUpdatedAt] = useState(() => {
         if (!data?.updatedAt) return null;
@@ -32,7 +33,7 @@ export default function ReloadBTN({ isUpdating, setUpdating }) {
             });
 
             if (!request.ok) return;
-            const requestData = await request.json();
+            const requestData = request.data;
 
             if (request.status !== 200) return setData({ errorMSG: requestData.messege });
 

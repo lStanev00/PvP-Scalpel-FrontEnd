@@ -1,12 +1,17 @@
-import httpFetch from "../../../helpers/httpFetch.js";
 import { GiBattleAxe } from "react-icons/gi";
 import Style from "./BracketButton.module.css";
+import { UserContext } from "../../../hooks/ContextVariables.jsx";
+import { useContext } from "react";
 
 export default function TwosBTN({ setData, setPage, setContent }) {
+
+    const { httpFetch } = useContext(UserContext);
+
+
     const clickHandler = async () => {
         setData(() => undefined);
         const res = await httpFetch(`/LDB/2v2`);
-        let reqData = await res.json();
+        let reqData = res?.data;
         let rank = 1;
         const paginatedData = [];
 

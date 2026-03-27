@@ -1,12 +1,14 @@
 import { GiCrossedSwords } from "react-icons/gi";
-import httpFetch from "../../../helpers/httpFetch.js";
 import Style from "./BracketButton.module.css"
+import { UserContext } from "../../../hooks/ContextVariables.jsx";
+import { useContext } from "react";
 
 export default function ShuffleBTN({ setData, setPage, setContent }) {
+    const { httpFetch } = useContext(UserContext);
+
     const clickHandler = async () => {
         setData(() => undefined);
-        const res = await httpFetch(`/LDB/solo`);
-        let reqData = await res.json();
+        let reqData =( await httpFetch(`/LDB/solo`))?.data;
         let rank = 1;
         const paginatedData = [];
 

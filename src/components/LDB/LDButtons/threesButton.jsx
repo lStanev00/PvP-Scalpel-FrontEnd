@@ -1,16 +1,17 @@
-import httpFetch from "../../../helpers/httpFetch.js";
 import { GiTripleScratches } from "react-icons/gi";
 import Style from "./BracketButton.module.css";
+import { UserContext } from "../../../hooks/ContextVariables";
+import { useContext } from "react";
 
 export default function ThreesBTN({  setData, setPage, setContent  }){
+    const { httpFetch } = useContext(UserContext);
+    
     const clickHandler = async (event) => {
-        const res = await httpFetch(`/LDB/3v3`);
         // const res = await fetch(`http://localhost:59534/LDB/3v3`);
 
-        let reqData = await res.json();
+        let reqData = (await httpFetch(`/LDB/3v3`))?.data;
         let rank = 1;
         const paginatedData = [];
-    
         for (let i = 0; i < reqData.length; i += 10) {
             const page = reqData.slice(i, i + 10);
             let pageMap = []
