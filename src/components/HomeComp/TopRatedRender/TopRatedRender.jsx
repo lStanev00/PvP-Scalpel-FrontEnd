@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import Style from "../WeeklyRender/WeeklyRender.module.css";
 
 export default function TopRatedRender({ topData }) {
-    if (!topData || Object.keys(topData).length === 0) return null;
     const navigate = useNavigate();
+    if (!topData || Object.keys(topData).length === 0) return null;
 
     const order = ["solo", "blitz", "3v3", "2v2", "BG"];
     const mapTitle = {
