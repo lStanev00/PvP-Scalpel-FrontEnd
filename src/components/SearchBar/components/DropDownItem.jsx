@@ -1,6 +1,31 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../hooks/ContextVariables";
+import { getGameClasses } from "../../../helpers/storageOperations/gameData.js";
+
+function getClassIconMedia(char) {
+    const classMedia = char?.class?.media;
+    if (typeof classMedia === "string" && classMedia.trim() !== "") {
+        return classMedia;
+    }
+
+    const className = char?.class?.name;
+    if (typeof className === "string" && className.trim() !== "") {
+        const cachedClass = getGameClasses()?.find((entry) => {
+            const entryName = entry?.name;
+            return (
+                typeof entryName === "string"
+                && entryName.trim().toLowerCase() === className.trim().toLowerCase()
+            );
+        });
+
+        if (typeof cachedClass?.media === "string" && cachedClass.media.trim() !== "") {
+            return cachedClass.media;
+        }
+    }
+
+    return "/item_fallback.png";
+}
 
 function ServerFlag({ region, className }) {
     switch (region) {
@@ -96,6 +121,7 @@ export default function DropDownItem({ entry, Style, guessChar = undefined }) {
     const navigate = useNavigate();
     const char = entry?.char || undefined;
     const { inputRef } = useContext(UserContext);
+    const classIconMedia = getClassIconMedia(char);
 
     const handleClick = () => {
         if (inputRef?.current) inputRef.current.value = "";
@@ -128,8 +154,8 @@ export default function DropDownItem({ entry, Style, guessChar = undefined }) {
         <li onClick={handleClick} className={Style.dropdownItem}>
             <img
                 className={Style.classIcon}
-                src={char.class.media}
-                alt={char.class.name + " class icon"}
+                src={classIconMedia}
+                alt={(char?.class?.name || "Unknown") + " class icon"}
             />
 
             <div className={Style.playerData}>
