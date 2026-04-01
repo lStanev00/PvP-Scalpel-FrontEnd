@@ -1,18 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-    FiActivity,
     FiAlertTriangle,
     FiCheckCircle,
-    FiHeart,
     FiRefreshCw,
     FiSearch,
-    FiShield,
-    FiTarget,
-    FiTrendingUp,
     FiZap,
 } from "react-icons/fi";
 import SEOLobbyScan from "../SEO/SEOLobbyScan.jsx";
 import Style from "../Styles/modular/LobbyScan.module.css";
+import LobbyPlayerCard from "../components/LobbyScan/LobbyPlayerCard.jsx";
 
 const SOCKET_URL = "wss://ws.pvpscalpel.com";
 
@@ -20,41 +16,138 @@ const LOADING_STEPS = [
     "Opening websocket connection",
     "Sending scan payload",
     "Receiving bracket context",
-    "Receiving player IDs and streamed players",
+    "Receiving team IDs and streamed players",
 ];
 
-function getCharacterKey(character) {
-    if (!character || typeof character !== "object") return null;
-
-    if (character._id) return String(character._id);
-
-    const server = String(character.server || "").trim().toLowerCase();
-    const realm = String(
-        character.playerRealm?.slug || character.playerRealm?.name || ""
-    )
+function normalizeLobbyPayload(value) {
+    return String(value || "")
         .trim()
-        .toLowerCase();
-    const name = String(character.name || "").trim().toLowerCase();
-
-    if (!server && !realm && !name) return null;
-
-    return `${server}:${realm}:${name}`;
+        .replace(/\s+/g, "|")
+        .replace(/\|+/g, "|");
 }
 
-function mergeCharacter(list, nextCharacter) {
-    const key = getCharacterKey(nextCharacter);
+function normalizeServerEntryId(value) {
+    return String(value || "");
+}
 
-    if (!key) return list;
+function formatServerEntryName(value) {
+    const rawName = normalizeServerEntryId(value).split(":")[0] || "";
 
-    const index = list.findIndex((entry) => getCharacterKey(entry) === key);
-
-    if (index === -1) {
-        return [...list, nextCharacter];
+    if (!rawName) {
+        return "Unknown player";
     }
 
-    const next = [...list];
-    next[index] = nextCharacter;
-    return next;
+    return rawName.charAt(0).toUpperCase() + rawName.slice(1);
+}
+
+function createLobbyRow(serverEntryId, team, index) {
+    return {
+        rowId: `${team}:${index}:${serverEntryId}`,
+        serverEntryId,
+        order: index + 1,
+        team,
+        rawEntry: serverEntryId,
+        displaySearch: formatServerEntryName(serverEntryId),
+        status: "loading",
+        character: null,
+        message: "Waiting for server response.",
+        spec: null,
+    };
+}
+
+function upsertTeamRows(list, ids, team) {
+    const normalizedIds = (Array.isArray(ids) ? ids : [])
+        .map((entry) => normalizeServerEntryId(entry))
+        .filter(Boolean);
+
+    const nextRows = [...list];
+
+    normalizedIds.forEach((serverEntryId, index) => {
+        const existingIndex = nextRows.findIndex((entry) => entry.serverEntryId === serverEntryId);
+
+        if (existingIndex >= 0) {
+            nextRows[existingIndex] = {
+                ...nextRows[existingIndex],
+                team,
+                order: index + 1,
+                displaySearch: nextRows[existingIndex].displaySearch || formatServerEntryName(serverEntryId),
+            };
+            return;
+        }
+
+        nextRows.push(createLobbyRow(serverEntryId, team, index));
+    });
+
+    return nextRows;
+}
+
+function mergeCharacter(list, serverEntryId, nextCharacter, nextMessage = "") {
+    let didUpdate = false;
+
+    const nextRows = list.map((entry) => {
+        if (didUpdate || entry.serverEntryId !== serverEntryId) {
+            return entry;
+        }
+
+        didUpdate = true;
+
+        return {
+            ...entry,
+            status: "ready",
+            character: nextCharacter,
+            message: nextMessage,
+            spec: entry.spec || nextCharacter?.searchSpecRequested || null,
+            displaySearch: entry.displaySearch || formatServerEntryName(serverEntryId),
+        };
+    });
+
+    if (didUpdate) {
+        return nextRows;
+    }
+
+    return [
+        ...nextRows,
+        {
+            ...createLobbyRow(serverEntryId, "unassigned", nextRows.length),
+            status: "ready",
+            character: nextCharacter,
+            message: nextMessage,
+            spec: nextCharacter?.searchSpecRequested || null,
+        },
+    ];
+}
+
+function markEntryMissing(list, serverEntryId, message) {
+    let didUpdate = false;
+
+    const nextRows = list.map((entry) => {
+        if (didUpdate || entry.serverEntryId !== serverEntryId) {
+            return entry;
+        }
+
+        didUpdate = true;
+
+        return {
+            ...entry,
+            status: "missing",
+            character: null,
+            message,
+            displaySearch: entry.displaySearch || formatServerEntryName(serverEntryId),
+        };
+    });
+
+    if (didUpdate) {
+        return nextRows;
+    }
+
+    return [
+        ...nextRows,
+        {
+            ...createLobbyRow(serverEntryId, "unassigned", nextRows.length),
+            status: "missing",
+            message,
+        },
+    ];
 }
 
 function normalizeBracketLabel(value) {
@@ -65,44 +158,138 @@ function normalizeBracketLabel(value) {
         .replace(/\b\w/g, (match) => match.toUpperCase());
 }
 
-function getBestRating(character) {
-    if (!character?.rating || typeof character.rating !== "object") {
-        return {
-            value: "No rating",
-            bracket: "No bracket",
-        };
+function normalizeComparable(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+}
+
+function getLobbyBracketAchievement(character, bracket) {
+    const normalizedBracket = String(bracket?.name || "").trim().toLowerCase();
+    const achieves = character?.achieves || {};
+    const listAchievements = Array.isArray(character?.listAchievements)
+        ? character.listAchievements
+        : [];
+
+    let achievement = null;
+
+    if (bracket?.isSolo && normalizedBracket.includes("blitz")) {
+        const blitzAchieves = achieves?.Blitz;
+        const titleName = String(blitzAchieves?.XP?.name || "");
+        const winsName = String(blitzAchieves?.WINS?.name || "");
+        const strategistExist = listAchievements.find((entry) =>
+            entry?.name?.includes("Strategist")
+        );
+
+        if (strategistExist) {
+            achievement = {
+                name: "Strategist",
+                media: strategistExist?.media || blitzAchieves?.WINS?.media || blitzAchieves?.XP?.media || "",
+                description:
+                    strategistExist?.description ||
+                    blitzAchieves?.WINS?.description ||
+                    blitzAchieves?.XP?.description ||
+                    "",
+            };
+        } else if (winsName.includes("Strategist")) {
+            achievement = {
+                name: "Strategist",
+                media: blitzAchieves?.WINS?.media || blitzAchieves?.XP?.media || "",
+                description:
+                    blitzAchieves?.WINS?.description ||
+                    blitzAchieves?.XP?.description ||
+                    "",
+            };
+        } else if (titleName.includes("Hero of the Horde")) {
+            achievement = {
+                name: "Hero of the Horde",
+                media: blitzAchieves?.XP?.media || "",
+                description: blitzAchieves?.XP?.description || "",
+            };
+        } else if (titleName.includes("Hero of the Alliance")) {
+            achievement = {
+                name: "Hero of the Alliance",
+                media: blitzAchieves?.XP?.media || "",
+                description: blitzAchieves?.XP?.description || "",
+            };
+        } else {
+            achievement = blitzAchieves?.XP || null;
+        }
+    } else if (bracket?.isSolo && normalizedBracket.includes("solo")) {
+        achievement = achieves?.solo || null;
+    } else if (
+        normalizedBracket.includes("rated battleground") ||
+        normalizedBracket === "rbg"
+    ) {
+        achievement = achieves?.RBG?.XP || null;
+    } else if (normalizedBracket.includes("2v2")) {
+        achievement = achieves?.["2s"] || null;
+    } else if (normalizedBracket.includes("3v3")) {
+        achievement = achieves?.["3s"] || null;
     }
 
-    let bestRating = 0;
-    let bestBracket = "";
-
-    Object.entries(character.rating).forEach(([bracketKey, bracketValue]) => {
-        const currentRating = Number(bracketValue?.currentSeason?.rating ?? 0);
-
-        if (currentRating > bestRating) {
-            bestRating = currentRating;
-            bestBracket = bracketKey;
-        }
-    });
-
-    if (!bestRating) {
-        return {
-            value: "No rating",
-            bracket: "No bracket",
-        };
+    if (!achievement?.name) {
+        return null;
     }
 
     return {
-        value: String(bestRating),
-        bracket: normalizeBracketLabel(bestBracket),
+        name: String(achievement.name || "").trim(),
+        media: achievement.media || "",
+        description: achievement.description || "",
     };
 }
 
-function getDisplaySpec(character) {
+function getLobbyAchievementRecordValue(achievement) {
+    if (!achievement?.name) {
+        return "";
+    }
+
+    const description = String(achievement.description || "");
+    const numericMatch = description.match(/\b\d{4}\b/);
+
+    if (numericMatch?.[0]) {
+        return numericMatch[0];
+    }
+
+    const achievementName = String(achievement.name || "");
+
+    if (
+        achievementName.includes("Strategist") ||
+        achievementName.includes("Hero of the Horde") ||
+        achievementName.includes("Hero of the Alliance") ||
+        achievementName.includes("Legend")
+    ) {
+        return "2400+";
+    }
+
+    return "";
+}
+
+function getDisplaySpec(row) {
     return (
-        character?.searchSpecRequested?.name ||
-        character?.activeSpec?.name ||
+        row?.spec?.name ||
+        row?.character?.searchSpecRequested?.name ||
+        row?.character?.activeSpec?.name ||
         "Unknown spec"
+    );
+}
+
+function getSpecIcon(row) {
+    return (
+        row?.spec?.media ||
+        row?.character?.searchSpecRequested?.media ||
+        row?.character?.activeSpec?.media ||
+        ""
+    );
+}
+
+function getRoleLabel(row) {
+    return (
+        row?.spec?.role ||
+        row?.character?.searchSpecRequested?.role ||
+        row?.character?.activeSpec?.role ||
+        "damage"
     );
 }
 
@@ -123,20 +310,177 @@ function getAverageItemLevel(character) {
     return String(Math.round(totalItemLevel / gearEntries.length));
 }
 
-function getRealmLabel(character) {
-    const realm = character?.playerRealm?.name || "Unknown realm";
-    const region = character?.server ? String(character.server).toUpperCase() : "";
+function getBracketContext(value) {
+    const rawValue = typeof value === "string" ? value : value?.name || "";
+    const normalized = normalizeComparable(rawValue);
 
-    return region ? `${realm} (${region})` : realm;
+    if (normalized.includes("shuffle")) {
+        return { key: "shuffle", name: "Solo Shuffle", isSolo: true };
+    }
+
+    if (normalized.includes("blitz")) {
+        return { key: "blitz", name: "BG Blitz", isSolo: true };
+    }
+
+    if (normalized.includes("2v2")) {
+        return { key: "2v2", name: "2v2", isSolo: false };
+    }
+
+    if (normalized.includes("3v3")) {
+        return { key: "3v3", name: "3v3", isSolo: false };
+    }
+
+    if (normalized === "rbg" || normalized.includes("ratedbattleground")) {
+        return { key: "rbg", name: "Rated Battleground", isSolo: false };
+    }
+
+    return {
+        key: normalized,
+        name: normalizeBracketLabel(rawValue),
+        isSolo: false,
+    };
 }
 
-function getAvatar(character) {
-    return (
-        character?.media?.avatar ||
-        character?.media?.charImg ||
-        character?.media?.banner ||
-        ""
-    );
+function bracketKeyMatches(entryKey, bracketKey) {
+    const normalizedEntryKey = normalizeComparable(entryKey);
+
+    if (!normalizedEntryKey || !bracketKey) return false;
+
+    if (bracketKey === "shuffle") return normalizedEntryKey.includes("shuffle");
+    if (bracketKey === "blitz") return normalizedEntryKey.includes("blitz");
+    if (bracketKey === "rbg") {
+        return normalizedEntryKey === "rbg" || normalizedEntryKey.includes("ratedbattleground");
+    }
+
+    return normalizedEntryKey.includes(bracketKey);
+}
+
+function getBestBracketEntry(character) {
+    const entries = Object.entries(character?.rating || {});
+    let bestEntry = null;
+    let bestScore = -1;
+
+    entries.forEach(([entryKey, entryValue]) => {
+        const score = Number(entryValue?.currentSeason?.rating ?? 0);
+
+        if (score > bestScore) {
+            bestScore = score;
+            bestEntry = [entryKey, entryValue];
+        }
+    });
+
+    return bestEntry || entries[0] || null;
+}
+
+function resolveLobbyBracketData(character, row, bracket) {
+    const entries = Object.entries(character?.rating || {});
+    const requestedBracket = getBracketContext(bracket);
+
+    if (!entries.length) {
+        return {
+            key: "",
+            data: null,
+            context: requestedBracket,
+        };
+    }
+
+    const specToken = normalizeComparable(getDisplaySpec(row));
+    let resolvedEntry = null;
+
+    if (requestedBracket.key === "shuffle" || requestedBracket.key === "blitz") {
+        resolvedEntry = entries.find(([entryKey]) => {
+            const normalizedEntryKey = normalizeComparable(entryKey);
+            return (
+                bracketKeyMatches(entryKey, requestedBracket.key) &&
+                (!specToken || normalizedEntryKey.includes(specToken))
+            );
+        });
+    }
+
+    if (!resolvedEntry && requestedBracket.key) {
+        resolvedEntry = entries.find(([entryKey]) =>
+            bracketKeyMatches(entryKey, requestedBracket.key)
+        );
+    }
+
+    if (!resolvedEntry) {
+        resolvedEntry = getBestBracketEntry(character);
+    }
+
+    return {
+        key: resolvedEntry?.[0] || "",
+        data: resolvedEntry?.[1] || null,
+        context: getBracketContext(resolvedEntry?.[0] || bracket),
+        usedRequestedBracket: Boolean(resolvedEntry && requestedBracket.key && bracketKeyMatches(resolvedEntry[0], requestedBracket.key)),
+    };
+}
+
+function mapLobbyRowToCard(row, bracket) {
+    const name = row?.character?.name || row?.displaySearch || "Unknown player";
+    const role = row.status === "ready" ? getRoleLabel(row) : row?.spec?.role || "";
+    const specIcon = getSpecIcon(row);
+    const isReady = row.status === "ready" && row.character;
+    const isMissing = row.status === "missing";
+
+    if (!isReady) {
+        return {
+            rowId: row.rowId,
+            status: row.status,
+            name,
+            role,
+            specIcon,
+            ratingValue: isMissing ? "No data" : "--",
+            recordTitle:
+                row.message ||
+                (isMissing
+                    ? "The player could not be resolved."
+                    : "Waiting for server response."),
+            recordIcon: specIcon,
+            recordValue: "",
+            avgItemLevel: "Unknown",
+            avgIcon: specIcon,
+            currentSeason: null,
+            href: "",
+        };
+    }
+
+    const resolvedBracket = resolveLobbyBracketData(row.character, row, bracket);
+    const bracketData = resolvedBracket.data;
+    const achievement = getLobbyBracketAchievement(row.character, resolvedBracket.context);
+    const ratingValue = bracketData?.currentSeason?.rating;
+
+    return {
+        rowId: row.rowId,
+        status: row.status,
+        name,
+        role,
+        specIcon,
+        ratingValue:
+            ratingValue === 0 || Number.isFinite(Number(ratingValue))
+                ? String(ratingValue)
+                : "No rating",
+        recordTitle: achievement?.name || "No XP yet",
+        recordIcon: achievement?.media || specIcon,
+        recordValue: getLobbyAchievementRecordValue(achievement),
+        avgItemLevel: getAverageItemLevel(row.character),
+        avgIcon: specIcon,
+        currentSeason: bracketData?.currentSeason || null,
+        href: getCharacterHref(row.character),
+    };
+}
+
+function getCharacterHref(character) {
+    const server = character?.server;
+    const realm = character?.playerRealm?.slug;
+    const name = character?.name;
+
+    if (!server || !realm || !name) {
+        return "";
+    }
+
+    return `/check/${encodeURIComponent(server)}/${encodeURIComponent(realm)}/${encodeURIComponent(
+        name
+    )}`;
 }
 
 function getSocketLabel(status) {
@@ -154,6 +498,12 @@ function getStatusTone(status) {
     if (status === "success") return Style.statusPillSuccess;
     if (status === "loading" || status === "connecting") return Style.statusPillLive;
     return "";
+}
+
+function getPayloadEntryId(payload) {
+    return normalizeServerEntryId(
+        payload?.initSearch || payload?.initialSearch || payload?.search || payload?.data?.initSearch
+    );
 }
 
 function LoadingPanel({ stepIndex }) {
@@ -261,7 +611,7 @@ function IdlePanel({ status }) {
                 </article>
                 <article className={Style.idleCard}>
                     <span className={Style.idleLabel}>Output</span>
-                    <strong>Bracket, player IDs, and streamed character data</strong>
+                    <strong>Spec placeholders, bracket, player IDs, and character data</strong>
                 </article>
             </div>
         </section>
@@ -269,118 +619,60 @@ function IdlePanel({ status }) {
 }
 
 function ResultsPanel({
-    status,
-    players,
-    bracketName,
-    expectedPlayerCount,
-    onRetry,
-    onReset,
+    rows,
+    bracket,
 }) {
-    const firstPlayer = players[0];
+    const sortedRows = [...rows].sort((left, right) => {
+        const leftOrder = Number(left?.order ?? 0);
+        const rightOrder = Number(right?.order ?? 0);
+        return leftOrder - rightOrder;
+    });
+    const sections = [
+        {
+            key: "team1",
+            title: "Team 1",
+            rows: sortedRows.filter((row) => row.team === "team1"),
+        },
+        {
+            key: "team2",
+            title: "Team 2",
+            rows: sortedRows.filter((row) => row.team === "team2"),
+        },
+        {
+            key: "unassigned",
+            title: "Unassigned",
+            rows: sortedRows.filter((row) => row.team !== "team1" && row.team !== "team2"),
+        },
+    ].filter((section) => section.rows.length > 0);
+
+    const openProfile = (href) => {
+        if (!href || typeof window === "undefined") return;
+        window.open(href, "_blank", "noopener,noreferrer");
+    };
 
     return (
         <section className={Style.resultsSection}>
-            <div className={Style.resultsHeader}>
-                <div>
-                    <span className={Style.sectionEyebrow}>Live snapshot</span>
-                    <h2>Lobby scan results</h2>
-                </div>
+            <div className={Style.teamResultsStack}>
+                {sections.map((section) => (
+                    <section key={section.key} className={Style.teamSection}>
+                        <header className={Style.teamSectionHeader}>
+                            <h2 className={Style.teamSectionTitle}>{section.title}</h2>
+                        </header>
 
-                <div className={Style.actionRow}>
-                    <button type="button" className={Style.secondaryButton} onClick={onRetry}>
-                        <FiRefreshCw />
-                        <span>Refresh</span>
-                    </button>
-                    <button type="button" className={Style.ghostButton} onClick={onReset}>
-                        Reset
-                    </button>
-                </div>
-            </div>
-
-            <div className={Style.summaryStrip}>
-                <article className={Style.summaryCard}>
-                    <span>Connection</span>
-                    <strong>{getSocketLabel(status)}</strong>
-                </article>
-                <article className={Style.summaryCard}>
-                    <span>Bracket</span>
-                    <strong>{bracketName || "Waiting"}</strong>
-                </article>
-                <article className={Style.summaryCard}>
-                    <span>Expected</span>
-                    <strong>{expectedPlayerCount || "Unknown"}</strong>
-                </article>
-                <article className={Style.summaryCard}>
-                    <span>Received</span>
-                    <strong>{players.length}</strong>
-                </article>
-            </div>
-
-            <div className={Style.playersPanel}>
-                <div className={Style.playersPanelHeader}>
-                    <h3>Streamed Team</h3>
-                    <span>
-                        {players.length}
-                        {expectedPlayerCount ? ` / ${expectedPlayerCount}` : ""} players received
-                    </span>
-                </div>
-
-                <div className={Style.playersList}>
-                    {players.map((player) => {
-                        const avatar = getAvatar(player);
-                        const rating = getBestRating(player);
-                        const averageItemLevel = getAverageItemLevel(player);
-
-                        return (
-                            <article key={getCharacterKey(player)} className={Style.playerCard}>
-                                <div className={Style.playerMain}>
-                                    <div className={Style.playerAvatar}>
-                                        {avatar ? (
-                                            <img
-                                                src={avatar}
-                                                alt=""
-                                                className={Style.playerAvatarImage}
-                                            />
-                                        ) : (
-                                            <FiShield />
-                                        )}
-                                    </div>
-
-                                    <div className={Style.playerIdentity}>
-                                        <strong>{player?.name || "Unknown character"}</strong>
-                                        <span>
-                                            {getDisplaySpec(player)} |{" "}
-                                            {player?.class?.name || "Unknown class"}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div className={Style.playerMeta}>
-                                    <div className={Style.playerStat}>
-                                        <span>Realm</span>
-                                        <strong>{getRealmLabel(player)}</strong>
-                                    </div>
-
-                                    <div className={Style.playerStat}>
-                                        <span>Best Rating</span>
-                                        <strong>{rating.value}</strong>
-                                        <em>{rating.bracket}</em>
-                                    </div>
-
-                                    <div className={Style.playerStat}>
-                                        <span>Guild</span>
-                                        <strong>{player?.guildName || "Independent"}</strong>
-                                    </div>
-
-                                    <div className={Style.playerStat}>
-                                        <span>Avg ilvl</span>
-                                        <strong>{averageItemLevel}</strong>
-                                    </div>
-                                </div>
-                            </article>
-                        );
-                    })}
-                </div>
+                        <div className={Style.cardsGrid}>
+                            {section.rows.map((row) => {
+                                const card = mapLobbyRowToCard(row, bracket);
+                                return (
+                                    <LobbyPlayerCard
+                                        key={card.rowId}
+                                        card={card}
+                                        onOpen={openProfile}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </section>
+                ))}
             </div>
         </section>
     );
@@ -389,9 +681,8 @@ function ResultsPanel({
 export default function LobbyScan() {
     const [status, setStatus] = useState("connecting");
     const [input, setInput] = useState("");
-    const [players, setPlayers] = useState([]);
-    const [bracketName, setBracketName] = useState("");
-    const [expectedPlayerIds, setExpectedPlayerIds] = useState([]);
+    const [rows, setRows] = useState([]);
+    const [bracket, setBracket] = useState(null);
     const [error, setError] = useState("");
     const [stepIndex, setStepIndex] = useState(0);
 
@@ -463,7 +754,19 @@ export default function LobbyScan() {
                 }
 
                 if (parsed.type === "bracketObj") {
-                    setBracketName(parsed?.name || "Unknown bracket");
+                    setBracket(parsed);
+                    setError("");
+                    return;
+                }
+
+                if (parsed.type === "team1IDs" || parsed.type === "team2IDs") {
+                    if (!Array.isArray(parsed.data)) {
+                        throw new Error("Received an invalid team IDs payload.");
+                    }
+
+                    setRows((current) =>
+                        upsertTeamRows(current, parsed.data, parsed.type === "team1IDs" ? "team1" : "team2")
+                    );
                     setError("");
                     return;
                 }
@@ -473,23 +776,47 @@ export default function LobbyScan() {
                         throw new Error("Received an invalid player IDs payload.");
                     }
 
-                    setExpectedPlayerIds(parsed.data.map((entry) => String(entry)));
+                    setRows((current) => upsertTeamRows(current, parsed.data, "unassigned"));
                     setError("");
                     return;
                 }
 
+                const serverEntryId = getPayloadEntryId(parsed);
+
                 if (parsed.type === "charData") {
-                    if (!parsed.data || typeof parsed.data !== "object" || Array.isArray(parsed.data)) {
-                        throw new Error("Received an invalid character data payload.");
+                    if (parsed.data && typeof parsed.data === "object" && !Array.isArray(parsed.data)) {
+                        const nextCharacter = {
+                            ...parsed.data,
+                            initSearch: parsed.initSearch || "",
+                            searchSpecRequested: parsed.searchSpecRequested || null,
+                        };
+
+                        setRows((current) => mergeCharacter(current, serverEntryId, nextCharacter));
+                        setStatus("success");
+                        setError("");
+                        return;
                     }
 
-                    const nextCharacter = {
-                        ...parsed.data,
-                        initSearch: parsed.initSearch || "",
-                        searchSpecRequested: parsed.searchSpecRequested || null,
-                    };
+                    if (serverEntryId) {
+                        const message =
+                            parsed?.data?.errorMSG ||
+                            parsed?.errorMSG ||
+                            "The server returned no data for this character.";
 
-                    setPlayers((current) => mergeCharacter(current, nextCharacter));
+                        setRows((current) => markEntryMissing(current, serverEntryId, message));
+                        setStatus("success");
+                        setError("");
+                        return;
+                    }
+                }
+
+                if (serverEntryId && (parsed?.errorMSG || parsed?.data?.errorMSG)) {
+                    const message =
+                        parsed?.data?.errorMSG ||
+                        parsed?.errorMSG ||
+                        "The server returned no data for this character.";
+
+                    setRows((current) => markEntryMissing(current, serverEntryId, message));
                     setStatus("success");
                     setError("");
                     return;
@@ -503,7 +830,7 @@ export default function LobbyScan() {
         socket.onerror = () => {
             if (socketRef.current !== socket) return;
 
-            setError("The websocket connection reported an unexpected error.");
+            setError("The lobby websocket connection reported an unexpected error.");
             setStatus("error");
         };
 
@@ -558,7 +885,7 @@ export default function LobbyScan() {
     }, [status]);
 
     const startScan = useCallback(() => {
-        const payload = input.trim();
+        const payload = normalizeLobbyPayload(input);
 
         if (!payload) {
             setError("Paste a PvP Scalpel lobby string before starting the scan.");
@@ -567,9 +894,8 @@ export default function LobbyScan() {
         }
 
         pendingPayloadRef.current = payload;
-        setPlayers([]);
-        setBracketName("");
-        setExpectedPlayerIds([]);
+        setRows([]);
+        setBracket(null);
         setError("");
 
         const socket = socketRef.current;
@@ -611,9 +937,8 @@ export default function LobbyScan() {
     const handleReset = () => {
         pendingPayloadRef.current = "";
         setInput("");
-        setPlayers([]);
-        setBracketName("");
-        setExpectedPlayerIds([]);
+        setRows([]);
+        setBracket(null);
         setError("");
 
         const socket = socketRef.current;
@@ -626,9 +951,10 @@ export default function LobbyScan() {
         connect();
     };
 
-    const showLoading = status === "connecting" || status === "loading";
-    const showError = status === "error" || (status === "closed" && players.length === 0);
-    const showResults = players.length > 0;
+    const showLoadingPanel =
+        (status === "connecting" || status === "loading") && rows.length === 0;
+    const showError = status === "error" || (status === "closed" && rows.length === 0);
+    const showResults = rows.length > 0;
 
     return (
         <section className={Style.page}>
@@ -657,6 +983,10 @@ export default function LobbyScan() {
 
                         <h1 className={Style.heroTitle}>Lobby Scanner</h1>
                         <p className={Style.heroLead}>Quickly analyze your lobbies.</p>
+                        <p className={Style.heroText}>
+                            Paste the addon payload, stream the lobby, and read every player through
+                            compact PvP cards instead of stacked stat boxes.
+                        </p>
 
                         <form className={Style.scanForm} onSubmit={handleSubmit}>
                             <div className={Style.scanBar}>
@@ -689,52 +1019,10 @@ export default function LobbyScan() {
                                 <span>Stream live player reads</span>
                             </div>
                         </form>
-
-                        <div className={Style.featureCards}>
-                            <article className={Style.featureCard}>
-                                <div className={Style.featureIcon}>
-                                    <FiTarget />
-                                </div>
-                                <div className={Style.featureBody}>
-                                    <strong>Bracket</strong>
-                                    <span>See the lobby context instantly.</span>
-                                </div>
-                            </article>
-
-                            <article className={Style.featureCard}>
-                                <div className={Style.featureIcon}>
-                                    <FiTrendingUp />
-                                </div>
-                                <div className={Style.featureBody}>
-                                    <strong>Rating</strong>
-                                    <span>Pull the strongest visible rating signal.</span>
-                                </div>
-                            </article>
-
-                            <article className={Style.featureCard}>
-                                <div className={Style.featureIcon}>
-                                    <FiHeart />
-                                </div>
-                                <div className={Style.featureBody}>
-                                    <strong>Health</strong>
-                                    <span>Prepare the layout for health-aware reads.</span>
-                                </div>
-                            </article>
-
-                            <article className={Style.featureCard}>
-                                <div className={Style.featureIcon}>
-                                    <FiActivity />
-                                </div>
-                                <div className={Style.featureBody}>
-                                    <strong>Player IDs</strong>
-                                    <span>Track expected responses before character data arrives.</span>
-                                </div>
-                            </article>
-                        </div>
                     </div>
                 </section>
 
-                {showLoading && <LoadingPanel stepIndex={stepIndex} />}
+                {showLoadingPanel && <LoadingPanel stepIndex={stepIndex} />}
                 {showError && (
                     <ErrorPanel
                         message={error || "The lobby connection is unavailable right now."}
@@ -742,15 +1030,11 @@ export default function LobbyScan() {
                         onReset={handleReset}
                     />
                 )}
-                {!showLoading && !showError && !showResults && <IdlePanel status={status} />}
+                {!showLoadingPanel && !showError && !showResults && <IdlePanel status={status} />}
                 {showResults && (
                     <ResultsPanel
-                        status={status}
-                        players={players}
-                        bracketName={bracketName}
-                        expectedPlayerCount={expectedPlayerIds.length}
-                        onRetry={handleRetry}
-                        onReset={handleReset}
+                        rows={rows}
+                        bracket={bracket}
                     />
                 )}
             </div>

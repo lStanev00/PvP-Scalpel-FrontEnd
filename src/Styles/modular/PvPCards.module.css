@@ -195,8 +195,12 @@
 }
 
 .recordIcon {
-    width: 36px;
-    height: 36px;
+    width: 100%;
+    height: 100%;
+    max-width: 36px;
+    max-height: 36px;
+    justify-self: center;
+    align-self: center;
 }
 
 .recordCopy {
@@ -269,6 +273,11 @@
         height: 76px;
     }
 
+    .recordIcon {
+        max-width: 36px;
+        max-height: 36px;
+    }
+
     .pvp-rating {
         font-size: 2.45rem;
     }
@@ -330,7 +339,7 @@
     }
 
     .recordIcon {
-        width: 32px;
-        height: 32px;
+        max-width: 32px;
+        max-height: 32px;
     }
 }
