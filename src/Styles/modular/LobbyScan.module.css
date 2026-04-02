@@ -682,123 +682,301 @@
     line-height: 1.3;
 }
 
-.cardsGrid {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-    gap: 18px;
-    margin-top: 0;
-    /* align-items: start; */
+.lobbyTableShell {
+    border: 1px solid rgba(209, 162, 58, 0.14);
+    border-radius: 18px;
+    background:
+        linear-gradient(180deg, rgba(14, 20, 39, 0.94), rgba(8, 12, 24, 0.96));
+    box-shadow:
+        0 22px 54px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
 }
 
-.teamResultsStack {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+.lobbyTableScroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 10px 10px;
 }
 
-.teamSection {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.lobbyTableBody {
+    min-width: 780px;
 }
 
-.teamSectionHeader {
-    display: flex;
+.lobbyTableLabels,
+.lobbyTableRow {
+    display: grid;
+    grid-template-columns: minmax(240px, 1.8fr) 96px 110px minmax(220px, 1.15fr) 92px;
+    gap: 8px;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 2px;
 }
 
-.teamSectionTitle {
-    margin: 0;
-    color: #f4f0db;
-    font-size: clamp(1.05rem, 1.5vw, 1.22rem);
-    line-height: 1.1;
-    letter-spacing: 0.06em;
+.lobbyTableLabels {
+    padding: 0 8px 10px;
+    color: rgba(230, 234, 240, 0.28);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
-.lobbyCard {
-    width: 100%;
-    max-width: none;
-    min-height: fit-content;
-    height: fit-content;
-    max-height: none;
-    align-self: start;
+.lobbyTableColPlayer,
+.lobbyTableColRecord {
+    text-align: left;
 }
 
-.lobbyCardReady {
+.lobbyTableColStat {
+    text-align: center;
+}
+
+.lobbySortButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
     cursor: pointer;
 }
 
-.lobbyCardReady:focus-visible {
-    outline: 2px solid rgba(0, 245, 212, 0.55);
-    outline-offset: 2px;
+.lobbySortButtonActive {
+    color: rgba(229, 238, 255, 0.86);
 }
 
-.lobbyCardMissing {
-    border-color: rgba(255, 107, 107, 0.24);
-    background:
-        radial-gradient(circle at top center, rgba(255, 255, 255, 0.04), transparent 38%),
-        linear-gradient(180deg, rgba(34, 18, 30, 0.96), rgba(14, 9, 18, 0.98));
+.lobbySortIcon {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.76rem;
 }
 
-.lobbyInfoStack {
+.lobbyTeamDivider {
     display: flex;
-    flex-direction: column;
-    margin-top: 0.48rem;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px 8px;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(230, 234, 240, 0.34);
 }
 
-.lobbyInfoStack:first-child {
-    padding-top: 5rem;
+.lobbyTeamDivider:first-child {
+    padding-top: 2px;
 }
 
-.lobbyInfoRow {
-    margin-top: 0;
-    min-height: 0;
-    border-top: none !important;
-    border-bottom: none !important;
-    gap: 0.62rem;
-    padding-top: 0.18rem;
-    padding-bottom: 0.18rem;
+.lobbyTeamDivider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
 }
 
-.lobbyInfoRowFirst {
-    padding-top: 1rem;
-    padding-bottom: 0.12rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+.lobbyTableRow {
+    position: relative;
+    padding: 10px 14px;
+    border-radius: 10px;
+    transition:
+        background 140ms ease,
+        box-shadow 140ms ease;
 }
 
-.lobbyInfoRowLast {
-    /* padding-top: 0.12rem; */
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+.lobbyTableRow::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 58%;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
 }
 
-.lobbyInfoIcon {
-    width: 36px;
-    height: 36px;
-    align-self: center;
+.lobbyTableRowReady {
+    cursor: pointer;
 }
 
-.lobbyInfoIcon img,
-.lobbyInfoIcon > div {
-    width: 100%;
-    height: 100%;
+.lobbyTableRowReady:hover {
+    background: rgba(58, 167, 255, 0.08);
+    box-shadow:
+        inset 0 0 0 1px rgba(120, 176, 255, 0.26),
+        0 0 0 1px rgba(120, 176, 255, 0.08);
 }
 
-.lobbyIconFallback {
+.lobbyTableRowReady:focus-visible {
+    outline: 2px solid rgba(0, 245, 212, 0.45);
+    outline-offset: -2px;
+}
+
+.lobbyTableRowMissing {
+    background: rgba(122, 31, 44, 0.16);
+}
+
+.lobbyTableRowTeam1::before {
+    background: rgba(124, 242, 194, 0.58);
+}
+
+.lobbyTableRowTeam2::before {
+    background: rgba(255, 99, 99, 0.6);
+}
+
+.lobbyTableRowUnassigned::before {
+    background: rgba(142, 160, 212, 0.4);
+}
+
+.lobbyTablePlayer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.lobbyTablePlayerIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    overflow: hidden;
     display: grid;
     place-items: center;
-    border-radius: 999px;
-    color: rgba(245, 207, 99, 0.92);
-    font-size: 1.25rem;
+    flex-shrink: 0;
 }
 
-.lobbyFooterSpacer {
-    min-height: 34px;
+.lobbyTablePlayerIcon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lobbyTableIconFallback {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    color: rgba(245, 207, 99, 0.92);
+    font-size: 0.95rem;
+}
+
+.lobbyTablePlayerInfo {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.lobbyTablePlayerName {
+    color: #d9edff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lobbyTablePlayerSubline {
+    color: rgba(230, 234, 240, 0.42);
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lobbyTableCellActive {
+    color: rgba(228, 238, 255, 0.96);
+}
+
+.lobbyTableStat {
+    color: rgba(239, 244, 255, 0.86);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.lobbyRoleBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.lobbyRoleBadgeTank {
+    color: rgba(125, 214, 255, 0.95);
+    background: rgba(50, 120, 190, 0.14);
+}
+
+.lobbyRoleBadgeHealer {
+    color: rgba(98, 229, 181, 0.95);
+    background: rgba(34, 133, 103, 0.14);
+}
+
+.lobbyRoleBadgeDamage {
+    color: rgba(255, 184, 109, 0.96);
+    background: rgba(168, 90, 36, 0.14);
+}
+
+.lobbyRoleBadgeEmpty {
+    color: rgba(212, 221, 246, 0.82);
+    background: rgba(106, 118, 159, 0.12);
+}
+
+.lobbyTableRecord {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+    min-width: 0;
+}
+
+.lobbyTableRecordIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.lobbyTableRecordIcon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lobbyTableRecordCopy {
+    min-width: 0;
+}
+
+.lobbyTableRecordTitle {
+    display: block;
+    color: rgba(235, 240, 252, 0.8);
+    font-size: 0.82rem;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.lobbyTableRecordValue {
+    color: #f4c44f;
+    font-size: 0.84rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
 
 @keyframes scanSpin {
@@ -845,9 +1023,6 @@
         min-height: 64px;
     }
 
-    .cardsGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
 }
 
 @media (max-width: 780px) {
@@ -880,16 +1055,22 @@
         font-size: 1.7rem;
     }
 
-    .idleGrid,
-    .cardsGrid {
+    .idleGrid {
         grid-template-columns: 1fr;
     }
 
     .livePanelHeader,
-    .resultsHeader,
-    .teamSectionHeader {
+    .resultsHeader {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .lobbyTableScroll {
+        padding: 0 8px 8px;
+    }
+
+    .lobbyTableBody {
+        min-width: 720px;
     }
 
     .scanInput {

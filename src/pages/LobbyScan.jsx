@@ -8,7 +8,7 @@ import {
 } from "react-icons/fi";
 import SEOLobbyScan from "../SEO/SEOLobbyScan.jsx";
 import Style from "../Styles/modular/LobbyScan.module.css";
-import LobbyPlayerCard from "../components/LobbyScan/LobbyPlayerCard.jsx";
+import LobbyPlayersTable from "../components/LobbyScan/LobbyPlayersTable.jsx";
 
 const SOCKET_URL = "wss://ws.pvpscalpel.com";
 
@@ -310,6 +310,17 @@ function getAverageItemLevel(character) {
     return String(Math.round(totalItemLevel / gearEntries.length));
 }
 
+function getPlayerSubline(row) {
+    if (row?.status !== "ready") {
+        return "Waiting for player data";
+    }
+
+    const spec = row?.character?.searchSpecRequested?.name || row?.character?.activeSpec?.name || "";
+    const charClass = row?.character?.class?.name || "";
+
+    return [spec, charClass].filter(Boolean).join(" ") || "Unknown specialization";
+}
+
 function getBracketContext(value) {
     const rawValue = typeof value === "string" ? value : value?.name || "";
     const normalized = normalizeComparable(rawValue);
@@ -415,57 +426,74 @@ function resolveLobbyBracketData(character, row, bracket) {
     };
 }
 
-function mapLobbyRowToCard(row, bracket) {
-    const name = row?.character?.name || row?.displaySearch || "Unknown player";
-    const role = row.status === "ready" ? getRoleLabel(row) : row?.spec?.role || "";
-    const specIcon = getSpecIcon(row);
+function mapLobbyRowToTableRow(row, bracket) {
+    const playerName = row?.character?.name || row?.displaySearch || "Unknown player";
+    const playerSubline = getPlayerSubline(row);
+    const playerIcon = getSpecIcon(row);
+    const roleValue = String(getRoleLabel(row) || "").toLowerCase();
     const isReady = row.status === "ready" && row.character;
     const isMissing = row.status === "missing";
 
     if (!isReady) {
         return {
             rowId: row.rowId,
+            team: row.team,
             status: row.status,
-            name,
-            role,
-            specIcon,
+            href: "",
+            playerName,
+            playerSubline,
+            playerIcon,
+            roleValue,
             ratingValue: isMissing ? "No data" : "--",
+            ratingSortValue: null,
             recordTitle:
                 row.message ||
                 (isMissing
                     ? "The player could not be resolved."
                     : "Waiting for server response."),
-            recordIcon: specIcon,
+            recordIcon: playerIcon,
             recordValue: "",
+            recordSortValue: null,
             avgItemLevel: "Unknown",
-            avgIcon: specIcon,
-            currentSeason: null,
-            href: "",
+            avgItemLevelSortValue: null,
         };
     }
 
     const resolvedBracket = resolveLobbyBracketData(row.character, row, bracket);
-    const bracketData = resolvedBracket.data;
     const achievement = getLobbyBracketAchievement(row.character, resolvedBracket.context);
+    const bracketData = resolvedBracket.data;
     const ratingValue = bracketData?.currentSeason?.rating;
+    const resolvedRecordValue = getLobbyAchievementRecordValue(achievement);
+    const avgItemLevel = getAverageItemLevel(row.character);
 
     return {
         rowId: row.rowId,
+        team: row.team,
         status: row.status,
-        name,
-        role,
-        specIcon,
+        href: getCharacterHref(row.character),
+        playerName,
+        playerSubline,
+        playerIcon,
+        roleValue,
         ratingValue:
             ratingValue === 0 || Number.isFinite(Number(ratingValue))
                 ? String(ratingValue)
                 : "No rating",
+        ratingSortValue:
+            ratingValue === 0 || Number.isFinite(Number(ratingValue)) ? Number(ratingValue) : null,
         recordTitle: achievement?.name || "No XP yet",
-        recordIcon: achievement?.media || specIcon,
-        recordValue: getLobbyAchievementRecordValue(achievement),
-        avgItemLevel: getAverageItemLevel(row.character),
-        avgIcon: specIcon,
-        currentSeason: bracketData?.currentSeason || null,
-        href: getCharacterHref(row.character),
+        recordIcon: achievement?.media || playerIcon,
+        recordValue: resolvedRecordValue,
+        recordSortValue:
+            resolvedRecordValue === "2400+"
+                ? 2401
+                : Number.isFinite(Number(resolvedRecordValue))
+                  ? Number(resolvedRecordValue)
+                  : null,
+        avgItemLevel,
+        avgItemLevelSortValue: Number.isFinite(Number(avgItemLevel))
+            ? Number(avgItemLevel)
+            : null,
     };
 }
 
@@ -652,28 +680,13 @@ function ResultsPanel({
 
     return (
         <section className={Style.resultsSection}>
-            <div className={Style.teamResultsStack}>
-                {sections.map((section) => (
-                    <section key={section.key} className={Style.teamSection}>
-                        <header className={Style.teamSectionHeader}>
-                            <h2 className={Style.teamSectionTitle}>{section.title}</h2>
-                        </header>
-
-                        <div className={Style.cardsGrid}>
-                            {section.rows.map((row) => {
-                                const card = mapLobbyRowToCard(row, bracket);
-                                return (
-                                    <LobbyPlayerCard
-                                        key={card.rowId}
-                                        card={card}
-                                        onOpen={openProfile}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </section>
-                ))}
-            </div>
+            <LobbyPlayersTable
+                sections={sections.map((section) => ({
+                    ...section,
+                    rows: section.rows.map((row) => mapLobbyRowToTableRow(row, bracket)),
+                }))}
+                onOpen={openProfile}
+            />
         </section>
     );
 }
