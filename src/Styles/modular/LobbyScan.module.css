@@ -781,6 +781,7 @@
     position: relative;
     padding: 10px 14px;
     border-radius: 10px;
+    overflow: hidden;
     transition:
         background 140ms ease,
         box-shadow 140ms ease;
@@ -800,6 +801,30 @@
 
 .lobbyTableRowReady {
     cursor: pointer;
+}
+
+.lobbyTableRowLoading {
+    background:
+        linear-gradient(180deg, rgba(15, 22, 42, 0.92), rgba(9, 13, 26, 0.94));
+}
+
+.lobbyTableRowLoading::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            110deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.03) 26%,
+            rgba(124, 242, 194, 0.1) 42%,
+            rgba(58, 167, 255, 0.14) 50%,
+            rgba(255, 255, 255, 0.03) 62%,
+            transparent 100%
+        );
+    transform: translateX(-120%);
+    animation: lobbyRowShimmer 2.2s ease-in-out infinite;
+    pointer-events: none;
 }
 
 .lobbyTableRowReady:hover {
@@ -865,6 +890,16 @@
     font-size: 0.95rem;
 }
 
+.lobbyTableIconLoading {
+    color: transparent;
+}
+
+.lobbyTableIconLoadingCore {
+    width: 16px;
+    height: 16px;
+    border-radius: 6px;
+}
+
 .lobbyTablePlayerInfo {
     display: grid;
     gap: 2px;
@@ -914,6 +949,11 @@
     line-height: 1;
 }
 
+.lobbyRoleBadgeLoading {
+    background: rgba(106, 118, 159, 0.12);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
 .lobbyRoleBadgeTank {
     color: rgba(125, 214, 255, 0.95);
     background: rgba(50, 120, 190, 0.14);
@@ -932,6 +972,70 @@
 .lobbyRoleBadgeEmpty {
     color: rgba(212, 221, 246, 0.82);
     background: rgba(106, 118, 159, 0.12);
+}
+
+.lobbySkeletonBlock {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(124, 242, 194, 0.08));
+}
+
+.lobbySkeletonBlock::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.18),
+        transparent
+    );
+    transform: translateX(-100%);
+    animation: lobbyInnerShimmer 2s ease-in-out infinite;
+}
+
+.lobbySkeletonSubline {
+    width: min(148px, 92%);
+    height: 12px;
+}
+
+.lobbySkeletonRoleBadge {
+    width: 14px;
+    height: 14px;
+}
+
+.lobbySkeletonStat {
+    width: 56px;
+    height: 18px;
+    margin-inline: auto;
+}
+
+.lobbySkeletonStatShort {
+    width: 42px;
+    height: 18px;
+    margin-inline: auto;
+}
+
+.lobbyTableRecordLoadingCopy {
+    display: grid;
+    gap: 6px;
+}
+
+.lobbySkeletonRecordTitle {
+    width: min(120px, 88%);
+    height: 13px;
+}
+
+.lobbySkeletonRecordSubtitle {
+    width: min(88px, 68%);
+    height: 11px;
+}
+
+.lobbySkeletonRecordValue {
+    width: 42px;
+    height: 14px;
 }
 
 .lobbyTableRecord {
@@ -1006,6 +1110,24 @@
     50% {
         transform: scale(1.05);
         opacity: 1;
+    }
+}
+
+@keyframes lobbyRowShimmer {
+    from {
+        transform: translateX(-120%);
+    }
+    to {
+        transform: translateX(120%);
+    }
+}
+
+@keyframes lobbyInnerShimmer {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
     }
 }
 

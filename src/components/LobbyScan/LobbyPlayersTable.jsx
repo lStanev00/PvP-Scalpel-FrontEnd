@@ -24,18 +24,30 @@ function PlayerIcon({ src, alt }) {
     );
 }
 
+function LoadingIcon() {
+    return (
+        <span className={`${Style.lobbyTableIconFallback} ${Style.lobbyTableIconLoading}`} aria-hidden="true">
+            <span className={`${Style.lobbySkeletonBlock} ${Style.lobbyTableIconLoadingCore}`} />
+        </span>
+    );
+}
+
+function SkeletonBlock({ className = "" }) {
+    return <span className={`${Style.lobbySkeletonBlock} ${className}`.trim()} aria-hidden="true" />;
+}
+
 function getRoleRank(value) {
     return ROLE_SORT_ORDER[String(value || "").toLowerCase()] ?? 99;
 }
 
-function compareNullableNumbers(left, right) {
+function compareNullableNumbers(left, right, direction) {
     const leftHasValue = typeof left === "number" && Number.isFinite(left);
     const rightHasValue = typeof right === "number" && Number.isFinite(right);
 
     if (!leftHasValue && !rightHasValue) return 0;
     if (!leftHasValue) return 1;
     if (!rightHasValue) return -1;
-    return left - right;
+    return (left - right) * direction;
 }
 
 function sortRows(rows, sortKey, sortDirection) {
@@ -46,26 +58,44 @@ function sortRows(rows, sortKey, sortDirection) {
         let result = 0;
 
         if (sortKey === "role") {
-            result = getRoleRank(left.roleValue) - getRoleRank(right.roleValue);
+            const leftRank = getRoleRank(left.roleValue);
+            const rightRank = getRoleRank(right.roleValue);
+            const leftUnknown = leftRank >= 99;
+            const rightUnknown = rightRank >= 99;
+
+            if (leftUnknown || rightUnknown) {
+                if (leftUnknown && rightUnknown) {
+                    result = 0;
+                } else {
+                    result = leftUnknown ? 1 : -1;
+                }
+            } else {
+                result = (leftRank - rightRank) * direction;
+            }
+
             if (result === 0) {
                 result = String(left.playerName || "").localeCompare(String(right.playerName || ""));
             }
         } else if (sortKey === "rating") {
-            result = compareNullableNumbers(left.ratingSortValue, right.ratingSortValue);
+            result = compareNullableNumbers(left.ratingSortValue, right.ratingSortValue, direction);
         } else if (sortKey === "record") {
-            result = compareNullableNumbers(left.recordSortValue, right.recordSortValue);
+            result = compareNullableNumbers(left.recordSortValue, right.recordSortValue, direction);
             if (result === 0) {
                 result = String(left.recordTitle || "").localeCompare(String(right.recordTitle || ""));
             }
         } else if (sortKey === "ilvl") {
-            result = compareNullableNumbers(left.avgItemLevelSortValue, right.avgItemLevelSortValue);
+            result = compareNullableNumbers(
+                left.avgItemLevelSortValue,
+                right.avgItemLevelSortValue,
+                direction
+            );
         }
 
         if (result === 0) {
             result = String(left.playerName || "").localeCompare(String(right.playerName || ""));
         }
 
-        return result * direction;
+        return result;
     });
 
     return copy;
@@ -90,8 +120,21 @@ function SortButton({ label, columnKey, sortKey, sortDirection, onSort, classNam
     );
 }
 
-function RoleBadge({ role, active }) {
+function RoleBadge({ role, active, loading }) {
     const normalizedRole = String(role || "").toLowerCase();
+
+    if (loading && !normalizedRole) {
+        return (
+            <span
+                className={`${Style.lobbyRoleBadge} ${Style.lobbyRoleBadgeLoading} ${
+                    active ? Style.lobbyTableCellActive : ""
+                }`}
+                aria-hidden="true"
+            >
+                <SkeletonBlock className={Style.lobbySkeletonRoleBadge} />
+            </span>
+        );
+    }
 
     if (normalizedRole === "tank") {
         return (
@@ -149,6 +192,23 @@ function RoleBadge({ role, active }) {
 }
 
 function RecordCell({ row, active }) {
+    if (row.status === "loading") {
+        return (
+            <div className={`${Style.lobbyTableRecord} ${active ? Style.lobbyTableCellActive : ""}`}>
+                <div className={Style.lobbyTableRecordIcon}>
+                    <LoadingIcon />
+                </div>
+                <div className={Style.lobbyTableRecordCopy}>
+                    <div className={Style.lobbyTableRecordLoadingCopy}>
+                        <SkeletonBlock className={Style.lobbySkeletonRecordTitle} />
+                        <SkeletonBlock className={Style.lobbySkeletonRecordSubtitle} />
+                    </div>
+                </div>
+                <SkeletonBlock className={Style.lobbySkeletonRecordValue} />
+            </div>
+        );
+    }
+
     return (
         <div className={`${Style.lobbyTableRecord} ${active ? Style.lobbyTableCellActive : ""}`}>
             <div className={Style.lobbyTableRecordIcon}>
@@ -173,10 +233,7 @@ function TableRow({ row, onOpen, sortKey }) {
         );
     }
 
-    if (row.status === "loading") {
-        return null;
-    }
-
+    const isLoading = row.status === "loading";
     const isClickable = Boolean(row.href && typeof onOpen === "function");
 
     const openRow = () => {
@@ -189,7 +246,9 @@ function TableRow({ row, onOpen, sortKey }) {
             <div
                 className={`${Style.lobbyTableRow} ${
                     isClickable ? Style.lobbyTableRowReady : ""
-                } ${row.status === "missing" ? Style.lobbyTableRowMissing : ""} ${
+                } ${isLoading ? Style.lobbyTableRowLoading : ""} ${
+                    row.status === "missing" ? Style.lobbyTableRowMissing : ""
+                } ${
                     row.team === "team1"
                         ? Style.lobbyTableRowTeam1
                         : row.team === "team2"
@@ -209,11 +268,21 @@ function TableRow({ row, onOpen, sortKey }) {
             >
                 <div className={Style.lobbyTablePlayer}>
                     <div className={Style.lobbyTablePlayerIcon}>
-                        <PlayerIcon src={row.playerIcon} alt={`${row.playerName} specialization`} />
+                        {isLoading && !row.playerIcon ? (
+                            <LoadingIcon />
+                        ) : (
+                            <PlayerIcon src={row.playerIcon} alt={`${row.playerName} specialization`} />
+                        )}
                     </div>
                     <div className={Style.lobbyTablePlayerInfo}>
                         <span className={Style.lobbyTablePlayerName}>{row.playerName}</span>
-                        <span className={Style.lobbyTablePlayerSubline}>{row.playerSubline}</span>
+                        {row.playerSubline ? (
+                            <span className={Style.lobbyTablePlayerSubline}>{row.playerSubline}</span>
+                        ) : isLoading ? (
+                            <SkeletonBlock className={Style.lobbySkeletonSubline} />
+                        ) : (
+                            <span className={Style.lobbyTablePlayerSubline}>Unknown specialization</span>
+                        )}
                     </div>
                 </div>
 
@@ -222,7 +291,11 @@ function TableRow({ row, onOpen, sortKey }) {
                         sortKey === "role" ? Style.lobbyTableCellActive : ""
                     }`}
                 >
-                    <RoleBadge role={row.roleValue} active={sortKey === "role"} />
+                    <RoleBadge
+                        role={row.roleValue}
+                        active={sortKey === "role"}
+                        loading={isLoading}
+                    />
                 </span>
 
                 <span
@@ -230,7 +303,11 @@ function TableRow({ row, onOpen, sortKey }) {
                         sortKey === "rating" ? Style.lobbyTableCellActive : ""
                     }`}
                 >
-                    {row.ratingValue}
+                    {isLoading ? (
+                        <SkeletonBlock className={Style.lobbySkeletonStat} />
+                    ) : (
+                        row.ratingValue
+                    )}
                 </span>
 
                 <RecordCell row={row} active={sortKey === "record"} />
@@ -240,7 +317,11 @@ function TableRow({ row, onOpen, sortKey }) {
                         sortKey === "ilvl" ? Style.lobbyTableCellActive : ""
                     }`}
                 >
-                    {row.avgItemLevel}
+                    {isLoading ? (
+                        <SkeletonBlock className={Style.lobbySkeletonStatShort} />
+                    ) : (
+                        row.avgItemLevel
+                    )}
                 </span>
             </div>
         </div>

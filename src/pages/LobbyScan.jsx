@@ -117,7 +117,7 @@ function mergeCharacter(list, serverEntryId, nextCharacter, nextMessage = "") {
     ];
 }
 
-function markEntryMissing(list, serverEntryId, message) {
+function markEntryMissing(list, serverEntryId, message, nextSpec = null) {
     let didUpdate = false;
 
     const nextRows = list.map((entry) => {
@@ -132,6 +132,7 @@ function markEntryMissing(list, serverEntryId, message) {
             status: "missing",
             character: null,
             message,
+            spec: entry.spec || nextSpec || null,
             displaySearch: entry.displaySearch || formatServerEntryName(serverEntryId),
         };
     });
@@ -146,6 +147,7 @@ function markEntryMissing(list, serverEntryId, message) {
             ...createLobbyRow(serverEntryId, "unassigned", nextRows.length),
             status: "missing",
             message,
+            spec: nextSpec || null,
         },
     ];
 }
@@ -289,7 +291,7 @@ function getRoleLabel(row) {
         row?.spec?.role ||
         row?.character?.searchSpecRequested?.role ||
         row?.character?.activeSpec?.role ||
-        "damage"
+        ""
     );
 }
 
@@ -311,12 +313,13 @@ function getAverageItemLevel(character) {
 }
 
 function getPlayerSubline(row) {
-    if (row?.status !== "ready") {
-        return "Waiting for player data";
-    }
-
-    const spec = row?.character?.searchSpecRequested?.name || row?.character?.activeSpec?.name || "";
+    const spec =
+        row?.spec?.name || row?.character?.searchSpecRequested?.name || row?.character?.activeSpec?.name || "";
     const charClass = row?.character?.class?.name || "";
+
+    if (row?.status !== "ready") {
+        return [spec, charClass].filter(Boolean).join(" ") || "";
+    }
 
     return [spec, charClass].filter(Boolean).join(" ") || "Unknown specialization";
 }
@@ -444,17 +447,16 @@ function mapLobbyRowToTableRow(row, bracket) {
             playerSubline,
             playerIcon,
             roleValue,
-            ratingValue: isMissing ? "No data" : "--",
+            ratingValue: isMissing ? "No data" : "",
             ratingSortValue: null,
             recordTitle:
-                row.message ||
-                (isMissing
-                    ? "The player could not be resolved."
-                    : "Waiting for server response."),
+                isMissing
+                    ? row.message || "The player could not be resolved."
+                    : "",
             recordIcon: playerIcon,
             recordValue: "",
             recordSortValue: null,
-            avgItemLevel: "Unknown",
+            avgItemLevel: isMissing ? "Unknown" : "",
             avgItemLevelSortValue: null,
         };
     }
@@ -816,7 +818,14 @@ export default function LobbyScan() {
                             parsed?.errorMSG ||
                             "The server returned no data for this character.";
 
-                        setRows((current) => markEntryMissing(current, serverEntryId, message));
+                        setRows((current) =>
+                            markEntryMissing(
+                                current,
+                                serverEntryId,
+                                message,
+                                parsed.searchSpecRequested || null
+                            )
+                        );
                         setStatus("success");
                         setError("");
                         return;
@@ -829,7 +838,14 @@ export default function LobbyScan() {
                         parsed?.errorMSG ||
                         "The server returned no data for this character.";
 
-                    setRows((current) => markEntryMissing(current, serverEntryId, message));
+                    setRows((current) =>
+                        markEntryMissing(
+                            current,
+                            serverEntryId,
+                            message,
+                            parsed.searchSpecRequested || null
+                        )
+                    );
                     setStatus("success");
                     setError("");
                     return;
