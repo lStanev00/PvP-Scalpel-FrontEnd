@@ -19,6 +19,13 @@ const LOADING_STEPS = [
     "Receiving team IDs and streamed players",
 ];
 
+const INITIAL_SCAN_TRACKING = {
+    hasTeam1Payload: false,
+    hasTeam2Payload: false,
+    usesLegacyPlayerIds: false,
+    scanAutoClosed: false,
+};
+
 function normalizeLobbyPayload(value) {
     return String(value || "")
         .trim()
@@ -703,6 +710,38 @@ export default function LobbyScan() {
 
     const socketRef = useRef(null);
     const pendingPayloadRef = useRef("");
+    const scanTrackingRef = useRef({ ...INITIAL_SCAN_TRACKING });
+
+    const resetScanTracking = useCallback(() => {
+        scanTrackingRef.current = { ...INITIAL_SCAN_TRACKING };
+    }, []);
+
+    const closeSocket = useCallback(({ autoClosed = false } = {}) => {
+        const socket = socketRef.current;
+
+        if (!socket) {
+            if (autoClosed) {
+                scanTrackingRef.current.scanAutoClosed = true;
+                setStatus("success");
+            }
+            return;
+        }
+
+        scanTrackingRef.current.scanAutoClosed = autoClosed;
+        socketRef.current = null;
+
+        if (
+            socket.readyState === WebSocket.OPEN ||
+            socket.readyState === WebSocket.CONNECTING
+        ) {
+            socket.close();
+        }
+
+        if (autoClosed) {
+            setStatus("success");
+            setError("");
+        }
+    }, []);
 
     const sendPayload = useCallback((socket) => {
         const scanPayload = pendingPayloadRef.current.trim();
@@ -779,6 +818,14 @@ export default function LobbyScan() {
                         throw new Error("Received an invalid team IDs payload.");
                     }
 
+                    if (parsed.type === "team1IDs") {
+                        scanTrackingRef.current.hasTeam1Payload = true;
+                    } else {
+                        scanTrackingRef.current.hasTeam2Payload = true;
+                    }
+
+                    scanTrackingRef.current.usesLegacyPlayerIds = false;
+
                     setRows((current) =>
                         upsertTeamRows(current, parsed.data, parsed.type === "team1IDs" ? "team1" : "team2")
                     );
@@ -789,6 +836,13 @@ export default function LobbyScan() {
                 if (parsed.type === "playerIDs") {
                     if (!Array.isArray(parsed.data)) {
                         throw new Error("Received an invalid player IDs payload.");
+                    }
+
+                    if (
+                        !scanTrackingRef.current.hasTeam1Payload &&
+                        !scanTrackingRef.current.hasTeam2Payload
+                    ) {
+                        scanTrackingRef.current.usesLegacyPlayerIds = true;
                     }
 
                     setRows((current) => upsertTeamRows(current, parsed.data, "unassigned"));
@@ -807,7 +861,6 @@ export default function LobbyScan() {
                         };
 
                         setRows((current) => mergeCharacter(current, serverEntryId, nextCharacter));
-                        setStatus("success");
                         setError("");
                         return;
                     }
@@ -826,7 +879,6 @@ export default function LobbyScan() {
                                 parsed.searchSpecRequested || null
                             )
                         );
-                        setStatus("success");
                         setError("");
                         return;
                     }
@@ -846,7 +898,6 @@ export default function LobbyScan() {
                             parsed.searchSpecRequested || null
                         )
                     );
-                    setStatus("success");
                     setError("");
                     return;
                 }
@@ -867,7 +918,7 @@ export default function LobbyScan() {
             if (socketRef.current !== socket) return;
 
             socketRef.current = null;
-            setStatus("closed");
+            setStatus(scanTrackingRef.current.scanAutoClosed ? "success" : "closed");
         };
 
         return socket;
@@ -892,6 +943,41 @@ export default function LobbyScan() {
             }
         };
     }, [connect]);
+
+    useEffect(() => {
+        const socket = socketRef.current;
+        const hasRows = rows.length > 0;
+        const hasLoadingRows = rows.some((row) => row?.status === "loading");
+        const allRowsResolved = hasRows && !hasLoadingRows;
+        const {
+            hasTeam1Payload,
+            hasTeam2Payload,
+            usesLegacyPlayerIds,
+            scanAutoClosed,
+        } = scanTrackingRef.current;
+
+        if (!socket || scanAutoClosed || !allRowsResolved) {
+            return;
+        }
+
+        const isSocketActive =
+            socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING;
+
+        if (!isSocketActive) {
+            return;
+        }
+
+        const shouldClose =
+            usesLegacyPlayerIds
+                ? hasRows
+                : hasTeam1Payload && hasTeam2Payload;
+
+        if (!shouldClose) {
+            return;
+        }
+
+        closeSocket({ autoClosed: true });
+    }, [closeSocket, rows]);
 
     useEffect(() => {
         if (status !== "connecting" && status !== "loading") {
@@ -922,26 +1008,14 @@ export default function LobbyScan() {
             return;
         }
 
+        closeSocket();
+        resetScanTracking();
         pendingPayloadRef.current = payload;
         setRows([]);
         setBracket(null);
         setError("");
-
-        const socket = socketRef.current;
-
-        if (socket?.readyState === WebSocket.OPEN) {
-            try {
-                sendPayload(socket);
-                return;
-            } catch (err) {
-                setError(err?.message || "Failed to send the scan payload.");
-                setStatus("error");
-                return;
-            }
-        }
-
         connect();
-    }, [connect, input, sendPayload]);
+    }, [closeSocket, connect, input, resetScanTracking]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -964,18 +1038,13 @@ export default function LobbyScan() {
     };
 
     const handleReset = () => {
+        closeSocket();
+        resetScanTracking();
         pendingPayloadRef.current = "";
         setInput("");
         setRows([]);
         setBracket(null);
         setError("");
-
-        const socket = socketRef.current;
-
-        if (socket?.readyState === WebSocket.OPEN) {
-            setStatus("ready");
-            return;
-        }
 
         connect();
     };
