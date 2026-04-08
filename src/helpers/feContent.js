@@ -1,4 +1,83 @@
 const FE_CONTENT_EXPIRY_BUFFER_MS = 30 * 1000;
+const FE_CONTENT_STORAGE_KEY = "pvpscalpel.feContentCache";
+
+function canUseLocalStorage() {
+    return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+}
+
+function isCachedContentEntryValid(content) {
+    return (
+        content &&
+        typeof content === "object" &&
+        typeof content.url === "string" &&
+        typeof content.expiresAt === "number"
+    );
+}
+
+function isCachedContentExpired(content) {
+    return (
+        content.expiresAt > 0 && content.expiresAt - FE_CONTENT_EXPIRY_BUFFER_MS <= Date.now()
+    );
+}
+
+function readPersistedFEContentCache() {
+    if (!canUseLocalStorage()) return {};
+
+    try {
+        const rawCache = window.localStorage.getItem(FE_CONTENT_STORAGE_KEY);
+        if (!rawCache) return {};
+
+        const parsedCache = JSON.parse(rawCache);
+        return parsedCache && typeof parsedCache === "object" ? parsedCache : {};
+    } catch {
+        return {};
+    }
+}
+
+function syncPersistedFEContentCache(cache) {
+    if (!canUseLocalStorage()) return;
+
+    const persistedCache = {};
+
+    for (const [path, content] of cache.entries()) {
+        if (!isCachedContentEntryValid(content) || isCachedContentExpired(content)) {
+            continue;
+        }
+
+        persistedCache[path] = {
+            url: content.url,
+            expiresAt: content.expiresAt,
+        };
+    }
+
+    if (!Object.keys(persistedCache).length) {
+        window.localStorage.removeItem(FE_CONTENT_STORAGE_KEY);
+        return;
+    }
+
+    window.localStorage.setItem(FE_CONTENT_STORAGE_KEY, JSON.stringify(persistedCache));
+}
+
+/**
+ * Creates the FE-content cache seeded from persisted, still-valid entries.
+ *
+ * @returns {Map<string, { url?: string, expiresAt?: number, promise?: Promise<string> }>}
+ */
+export function createFEContentCache() {
+    const persistedCache = readPersistedFEContentCache();
+    const cache = new Map();
+
+    for (const [path, content] of Object.entries(persistedCache)) {
+        if (!isCachedContentEntryValid(content) || isCachedContentExpired(content)) {
+            continue;
+        }
+
+        cache.set(path, content);
+    }
+
+    syncPersistedFEContentCache(cache);
+    return cache;
+}
 
 /**
  * Fetches a frontend-content asset descriptor and converts it into a cached resource shape.
@@ -41,11 +120,7 @@ export function getCachedFEContent(cache, fetchFEContent, path) {
     const cachedContent = cache.get(path);
 
     if (cachedContent?.url) {
-        const hasExpiration = cachedContent.expiresAt > 0;
-        const isExpired =
-            hasExpiration && cachedContent.expiresAt - FE_CONTENT_EXPIRY_BUFFER_MS <= Date.now();
-
-        if (!isExpired) {
+        if (!isCachedContentExpired(cachedContent)) {
             return Promise.resolve(cachedContent.url);
         }
     }
@@ -58,14 +133,17 @@ export function getCachedFEContent(cache, fetchFEContent, path) {
         .then((content) => {
             if (!content.url) {
                 cache.delete(path);
+                syncPersistedFEContentCache(cache);
                 return "";
             }
 
             cache.set(path, content);
+            syncPersistedFEContentCache(cache);
             return content.url;
         })
         .catch(() => {
             cache.delete(path);
+            syncPersistedFEContentCache(cache);
             return "";
         });
 

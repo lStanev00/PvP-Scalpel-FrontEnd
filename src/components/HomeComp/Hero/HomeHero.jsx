@@ -8,7 +8,7 @@ const PLAYBACK_RATE = 0.5;
 const MOBILE_MEDIA_QUERY = "(max-width: 768px)";
 
 export default function HomeHero() {
-    const { user, httpFetch } = useContext(UserContext);
+    const { user, FEContent } = useContext(UserContext);
     const [videoUrl, setVideoUrl] = useState("");
     const [videoReady, setVideoReady] = useState(false);
     const [videoFailed, setVideoFailed] = useState(false);
@@ -48,17 +48,12 @@ export default function HomeHero() {
         const loadHeroVideo = async () => {
             setVideoReady(false);
             setVideoFailed(false);
-
-            const response = await httpFetch("/CDN/FEContent?path=landing.mp4");
-            const data = response?.data;
-            const url =
-                response?.ok && data && typeof data === "object"
-                    ? data.url || data.downloadUrl || ""
-                    : "";
+            const url = await FEContent.homeHeroVideo();
 
             if (!isActive) return;
 
             if (!url) {
+                setVideoUrl("");
                 setVideoFailed(true);
                 return;
             }
@@ -71,7 +66,7 @@ export default function HomeHero() {
         return () => {
             isActive = false;
         };
-    }, [httpFetch, isMobile]);
+    }, [FEContent, isMobile]);
 
     useEffect(() => {
         return () => {

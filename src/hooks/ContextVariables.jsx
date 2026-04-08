@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
 
 import { createContext, useCallback, useMemo, useRef, useState } from "react";
-import { fetchFEContentResource, getCachedFEContent } from "../helpers/feContent.js";
+import {
+    createFEContentCache,
+    fetchFEContentResource,
+    getCachedFEContent,
+} from "../helpers/feContent.js";
 import { httpFetchWithCredentials } from "../helpers/httpFetch.js";
 
 export const UserContext = createContext();
@@ -15,7 +19,11 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(undefined);
     const inputRef = useRef();
-    const feContentCacheRef = useRef(new Map());
+    const feContentCacheRef = useRef(null);
+
+    if (feContentCacheRef.current === null) {
+        feContentCacheRef.current = createFEContentCache();
+    }
 
     const httpFetch = useCallback(async (endpoint, options = {}) => {
         const req = await httpFetchWithCredentials(endpoint, options);
