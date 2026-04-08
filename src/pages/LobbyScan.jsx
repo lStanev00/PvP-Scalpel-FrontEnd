@@ -631,8 +631,7 @@ function IdlePanel({ status }) {
         <section className={Style.livePanel}>
             <div className={Style.livePanelHeader}>
                 <div>
-                    <span className={Style.sectionEyebrow}>Ready surface</span>
-                    <h2>Waiting for a lobby string</h2>
+                    <h2>How it works</h2>
                     <p>Scan in-game, copy the addon string, then paste it here before the gates open.</p>
                 </div>
             </div>
@@ -1074,17 +1073,12 @@ export default function LobbyScan() {
                             alt="PvP Scalpel Logo"
                             className={Style.logo}
                         />
-                        <div className={`${Style.statusPill} ${getStatusTone(status)}`}>
+                        {/* <div className={`${Style.statusPill} ${getStatusTone(status)}`}>
                             <span className={Style.statusDot} />
                             <span>{getSocketLabel(status)}</span>
-                        </div>
+                        </div> */}
 
-                        <h1 className={Style.heroTitle}>Lobby Scanner</h1>
-                        <p className={Style.heroLead}>Quickly analyze your lobbies.</p>
-                        <p className={Style.heroText}>
-                            Paste the addon payload, stream the lobby, and read every player through
-                            compact PvP cards instead of stacked stat boxes.
-                        </p>
+                        <h1 className={Style.heroTitle}>Lobby Scan</h1>
 
                         <form className={Style.scanForm} onSubmit={handleSubmit}>
                             <div className={Style.scanBar}>

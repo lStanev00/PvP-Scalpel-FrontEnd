@@ -38,7 +38,7 @@ export default function AppContent() {
     return (
         // <Router>
         <>
-            <div className={Style.pageWrapper}>
+            <div style={{"--custom-val" : ""}} className={Style.pageWrapper}>
                 <Navigation />
 
                 <main>
@@ -100,7 +100,7 @@ export default function AppContent() {
                         <Route path="/goto/:email" element={<GotoEmail />} />
                         <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/posts" element={<Posts />} />
-                        <Route path="/lobby-scan" element={<LobbyScan />} />
+                        <Route path="/scan" element={<LobbyScan />} />
                         <Route path="/download" element={<Download />} />
                         <Route path="/desktopBeta" element={<DesktopBeta />} />
                         <Route path="/404" element={<NotFound />} />

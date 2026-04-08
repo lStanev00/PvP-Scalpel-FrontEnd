@@ -48,7 +48,7 @@ export default function Navigation() {
                         </>
                     )}
                     <li>
-                        <Link to="/lobby-scan">PvP Lobby Scan</Link>
+                        <Link to="/scan">Lobby Scan</Link>
                     </li>
                     <li>
                         <Link to="/posts">Posts</Link>
