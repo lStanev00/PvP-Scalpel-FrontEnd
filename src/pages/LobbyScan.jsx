@@ -626,29 +626,55 @@ function ErrorPanel({ message, onRetry, onReset }) {
     );
 }
 
-function IdlePanel({ status }) {
+function IdlePanel() {
     return (
-        <section className={Style.livePanel}>
-            <div className={Style.livePanelHeader}>
-                <div>
-                    <h2>How it works</h2>
-                    <p>Scan in-game, copy the addon string, then paste it here before the gates open.</p>
+        <section className={`${Style.livePanel} ${Style.idlePanel}`}>
+            <div className={Style.idleSectionShell}>
+                <div className={Style.idleSectionHeader}>
+                    <div>
+                        <h2>How it works</h2>
+                        <p>Scan in-game, copy the addon string, then paste it here before the gates open.</p>
+                    </div>
                 </div>
-            </div>
 
-            <div className={Style.idleGrid}>
-                <article className={Style.idleCard}>
-                    <span className={Style.idleLabel}>Connection</span>
-                    <strong>{getSocketLabel(status)}</strong>
-                </article>
-                <article className={Style.idleCard}>
-                    <span className={Style.idleLabel}>Input</span>
-                    <strong>Addon lobby payload</strong>
-                </article>
-                <article className={Style.idleCard}>
-                    <span className={Style.idleLabel}>Output</span>
-                    <strong>Spec placeholders, bracket, player IDs, and character data</strong>
-                </article>
+                <ol className={Style.idleCardGrid}>
+                    <li className={Style.idleWorkflowCard}>
+                        <div className={Style.idleCardTop}>
+                            <span className={Style.idleCardIcon} aria-hidden="true">
+                                <FiCheckCircle />
+                            </span>
+                            <span className={Style.idleCardNumber}>01</span>
+                        </div>
+                        <div className={Style.idleCardContent}>
+                            <h3>Connection Ready</h3>
+                            <p>Socket ready</p>
+                        </div>
+                    </li>
+                    <li className={Style.idleWorkflowCard}>
+                        <div className={Style.idleCardTop}>
+                            <span className={Style.idleCardIcon} aria-hidden="true">
+                                <FiSearch />
+                            </span>
+                            <span className={Style.idleCardNumber}>02</span>
+                        </div>
+                        <div className={Style.idleCardContent}>
+                            <h3>Paste Addon Payload</h3>
+                            <p>Copy the lobby string from the addon and paste it here before the gates open.</p>
+                        </div>
+                    </li>
+                    <li className={Style.idleWorkflowCard}>
+                        <div className={Style.idleCardTop}>
+                            <span className={Style.idleCardIcon} aria-hidden="true">
+                                <FiZap />
+                            </span>
+                            <span className={Style.idleCardNumber}>03</span>
+                        </div>
+                        <div className={Style.idleCardContent}>
+                            <h3>Review Live Results</h3>
+                            <p>See each team fill in with player rating, record, and average item level.</p>
+                        </div>
+                    </li>
+                </ol>
             </div>
         </section>
     );
@@ -1122,7 +1148,7 @@ export default function LobbyScan() {
                         onReset={handleReset}
                     />
                 )}
-                {!showLoadingPanel && !showError && !showResults && <IdlePanel status={status} />}
+                {!showLoadingPanel && !showError && !showResults && <IdlePanel />}
                 {showResults && (
                     <ResultsPanel
                         rows={rows}

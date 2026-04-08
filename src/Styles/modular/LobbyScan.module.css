@@ -357,6 +357,226 @@
     padding: 28px;
 }
 
+.idlePanel {
+    padding: 16px 0 8px;
+}
+
+.idleSectionShell {
+    position: relative;
+    padding: clamp(28px, 4vw, 40px);
+    border-radius: 26px;
+    border: 1px solid rgba(132, 148, 196, 0.14);
+    background:
+        linear-gradient(180deg, rgba(9, 12, 21, 0.98) 0%, rgba(11, 15, 28, 0.95) 100%);
+    box-shadow:
+        0 26px 58px rgba(0, 0, 0, 0.36),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.idleSectionShell::before {
+    content: "";
+    position: absolute;
+    right: -4rem;
+    bottom: -5rem;
+    width: min(28rem, 42vw);
+    height: min(28rem, 42vw);
+    background: url("/logo/logo_resized.png") center / contain no-repeat;
+    opacity: 0.035;
+    filter: blur(10px) saturate(0.7);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.idleSectionShell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(255, 205, 94, 0.06), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 26%),
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 18px);
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.idleSectionHeader {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.idleSectionHeader > div {
+    width: min(640px, 100%);
+    text-align: center;
+}
+
+.idleSectionHeader h2 {
+    margin: 0;
+    color: #f6f8ff;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    text-shadow: 0 10px 28px rgba(255, 194, 78, 0.12);
+}
+
+.idleSectionHeader p {
+    margin: 0.9rem auto 0;
+    max-width: 40rem;
+    color: rgba(220, 228, 255, 0.82);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.idleCardGrid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.idleCardGrid::before {
+    content: "";
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 52px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 210, 96, 0.04) 0%,
+        rgba(255, 210, 96, 0.24) 22%,
+        rgba(96, 118, 255, 0.14) 50%,
+        rgba(255, 210, 96, 0.24) 78%,
+        rgba(255, 210, 96, 0.04) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.idleWorkflowCard {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-height: 220px;
+    padding: 24px;
+    border-radius: 22px;
+    border: 1px solid rgba(132, 148, 196, 0.14);
+    background:
+        linear-gradient(180deg, rgba(18, 23, 39, 0.92) 0%, rgba(9, 13, 24, 0.96) 100%);
+    box-shadow:
+        0 18px 36px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.045);
+    backdrop-filter: blur(8px);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.idleWorkflowCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 214, 122, 0) 0%,
+        rgba(255, 214, 122, 0.55) 50%,
+        rgba(255, 214, 122, 0) 100%
+    );
+    opacity: 0.65;
+}
+
+.idleWorkflowCard:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 209, 96, 0.22);
+    box-shadow:
+        0 24px 44px rgba(0, 0, 0, 0.28),
+        0 0 22px rgba(255, 195, 74, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.idleCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.idleCardIcon {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 214, 122, 0.16);
+    background:
+        linear-gradient(180deg, rgba(58, 45, 16, 0.48) 0%, rgba(15, 19, 31, 0.98) 100%);
+    color: #ffd566;
+    font-size: 1.35rem;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 12px 28px rgba(0, 0, 0, 0.24),
+        0 0 18px rgba(255, 196, 74, 0.06);
+}
+
+.idleCardIcon::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 214, 122, 0.9);
+    box-shadow: 0 0 12px rgba(255, 214, 122, 0.45);
+}
+
+.idleCardNumber {
+    color: rgba(255, 214, 122, 0.62);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.idleCardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.idleCardContent h3 {
+    margin: 0;
+    color: #f7f9ff;
+    font-size: 1.18rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.idleCardContent p {
+    margin: 0;
+    color: rgba(211, 220, 248, 0.84);
+    font-size: 0.97rem;
+    line-height: 1.6;
+}
+
 .resultsSection {
     margin-top: 18px;
     padding: 0;
@@ -629,8 +849,11 @@
 .idleGrid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: 24px;
+    gap: 0;
+    align-items: start;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 214, 117, 0.12);
 }
 
 .idleCard,
@@ -640,6 +863,18 @@
     border-radius: 18px;
     background:
         linear-gradient(180deg, rgba(18, 24, 47, 0.88), rgba(10, 14, 27, 0.9));
+}
+
+.idleCard {
+    padding: 10px 28px 6px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    text-align: center;
+}
+
+.idleCard + .idleCard {
+    border-left: 1px solid rgba(255, 214, 117, 0.1);
 }
 
 .idleLabel,
@@ -661,6 +896,96 @@
     font-size: 1rem;
     font-weight: 800;
     line-height: 1.3;
+}
+
+.idleCard strong {
+    max-width: 24ch;
+    margin: 10px auto 0;
+    font-size: 1.08rem;
+}
+
+.idleSteps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+    width: min(720px, 100%);
+    margin: 0 auto;
+    padding: 0;
+}
+
+.idleStepItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    padding-bottom: 1.35rem;
+    color: #9fb1d6;
+    text-align: center;
+}
+
+.idleStepItem:last-child {
+    padding-bottom: 0;
+}
+
+.idleStepItem:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: calc(100% - 0.15rem);
+    transform: translateX(-50%);
+    width: 2px;
+    height: 1.3rem;
+    border-radius: 999px;
+    background: linear-gradient(
+        180deg,
+        rgba(245, 194, 78, 0.34) 0%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    box-shadow: 0 0 10px rgba(245, 194, 78, 0.08);
+}
+
+.idleStepIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    background: rgba(245, 194, 78, 0.16);
+    color: #f5c24e;
+}
+
+.idleStepIcon svg {
+    width: 19px;
+    height: 19px;
+}
+
+.idleStepText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: center;
+    max-width: 30rem;
+    font-size: 1rem;
+    color: #cbd6ef;
+    font-weight: 600;
+}
+
+.idleStepHeading {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.idleStepTitle {
+    color: #f1f5ff;
+}
+
+.idleStepSubtitle {
+    color: #9fb1d6;
+    line-height: 1.55;
 }
 
 .lobbyTableShell {
@@ -1113,8 +1438,27 @@
 }
 
 @media (max-width: 1100px) {
+    .idleCardGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .idleCardGrid::before {
+        display: none;
+    }
+
+    .idleWorkflowCard {
+        min-height: 0;
+    }
+
     .idleGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .idleCard + .idleCard {
+        border-left: none;
+        border-top: 1px solid rgba(255, 214, 117, 0.1);
+        padding-top: 24px;
     }
 
     .scanBar,
@@ -1147,6 +1491,46 @@
         border-radius: 0;
     }
 
+    .idlePanel {
+        padding: 10px 0 0;
+    }
+
+    .idleSectionShell {
+        padding: 24px 20px;
+        border-radius: 22px;
+    }
+
+    .idleSectionHeader {
+        margin-bottom: 1.5rem;
+    }
+
+    .idleSectionHeader h2 {
+        font-size: clamp(1.75rem, 8vw, 2.2rem);
+    }
+
+    .idleSectionHeader p {
+        font-size: 0.96rem;
+    }
+
+    .idleCardGrid {
+        gap: 16px;
+    }
+
+    .idleWorkflowCard {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .idleCardIcon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+    }
+
+    .idleCardContent h3 {
+        font-size: 1.08rem;
+    }
+
     .logoMark {
         width: 132px;
         height: 132px;
@@ -1166,6 +1550,10 @@
     .resultsHeader {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .idlePanel .livePanelHeader {
+        align-items: center;
     }
 
     .lobbyTableScroll {
