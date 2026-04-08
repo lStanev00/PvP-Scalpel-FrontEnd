@@ -1,0 +1,1590 @@
+.page {
+    position: relative;
+    width: 100%;
+    padding: 1.5rem 1rem 4.5rem;
+    color: var(--color-text);
+    background:
+        radial-gradient(circle at top, rgba(0, 245, 212, 0.06), transparent 36%),
+        radial-gradient(circle at bottom right, rgba(255, 215, 0, 0.06), transparent 28%),
+        linear-gradient(180deg, rgba(19, 24, 42, 0.82), rgba(8, 10, 20, 0.9));
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.03), 0 0 30px rgba(0, 0, 0, 0.45);
+    isolation: isolate;
+}
+
+.backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+.pageBackdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.backdropGlowTop {
+    position: absolute;
+    top: -8rem;
+    left: 50%;
+    width: 54rem;
+    height: 24rem;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(255, 195, 56, 0.18) 0%, rgba(255, 195, 56, 0) 72%);
+    filter: blur(18px);
+}
+
+.backdropGlowLeft {
+    position: absolute;
+    left: -12rem;
+    top: 18rem;
+    width: 28rem;
+    height: 28rem;
+    background: radial-gradient(circle, rgba(62, 90, 214, 0.14) 0%, rgba(62, 90, 214, 0) 70%);
+    filter: blur(24px);
+}
+
+.backdropGlowRight {
+    position: absolute;
+    right: -10rem;
+    top: 12rem;
+    width: 24rem;
+    height: 24rem;
+    background: radial-gradient(circle, rgba(255, 181, 39, 0.12) 0%, rgba(255, 181, 39, 0) 70%);
+    filter: blur(26px);
+}
+
+.backdropPattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.18) 0, transparent 10rem),
+        linear-gradient(rgba(255, 200, 80, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 200, 80, 0.08) 1px, transparent 1px);
+    background-size: auto, 4.5rem 4.5rem, 4.5rem 4.5rem;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.35));
+}
+
+.backdropVignette {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at center, transparent 42%, rgba(0, 0, 0, 0.38) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.44));
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    width: min(1360px, calc(100% - 32px));
+    margin: 0 auto;
+}
+
+.heroSection {
+    margin-bottom: 20px;
+}
+
+.heroFrame {
+    position: relative;
+    padding: 34px 28px 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.statusPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    margin-bottom: 1.35rem;
+    border: 1px solid rgba(255, 215, 0, 0.22);
+    border-radius: 999px;
+    background: rgba(255, 215, 0, 0.08);
+    color: #ffe79a;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.06);
+    width: fit-content;
+}
+
+.statusPillLive {
+    border-color: rgba(93, 120, 255, 0.42);
+    color: #d8e0ff;
+}
+
+.statusPillSuccess {
+    border-color: rgba(89, 213, 143, 0.34);
+    color: #d9ffe7;
+}
+
+.statusPillError {
+    border-color: rgba(255, 109, 109, 0.38);
+    color: #ffd7d7;
+}
+
+.statusDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #f5bd34;
+    box-shadow: 0 0 12px rgba(255, 194, 56, 0.7);
+    flex: 0 0 auto;
+}
+
+.logo {
+    width: clamp(7.5rem, 12vw, 10rem);
+    height: auto;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.18));
+    justify-self: center;
+}
+
+.logoMarkOuter {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle at center, rgba(27, 156, 255, 0.15), transparent 45%),
+        linear-gradient(135deg, #a4680b 0%, #ffd15f 38%, #8b5c10 100%);
+    box-shadow:
+        0 0 0 6px rgba(255, 194, 58, 0.08),
+        0 0 40px rgba(255, 190, 43, 0.22);
+}
+
+.logoMarkOuter::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #1a2452 0%, #081226 100%);
+    box-shadow: inset 0 0 0 2px rgba(255, 214, 120, 0.26);
+}
+
+.logoMarkInner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 104px;
+    height: 104px;
+    border-radius: 999px;
+    color: #ffd15d;
+    font-size: 2.2rem;
+    background:
+        radial-gradient(circle at 35% 30%, rgba(45, 165, 255, 0.45), rgba(18, 28, 62, 0.8) 60%),
+        linear-gradient(180deg, #16315b 0%, #091327 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 219, 132, 0.14),
+        0 18px 40px rgba(0, 0, 0, 0.3);
+}
+
+.heroTitle {
+    margin: 0;
+    text-align: center;
+    color: #f0c84d;
+    font-size: clamp(2.5rem, 4vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-shadow: 0 3px 22px rgba(255, 196, 63, 0.18);
+}
+
+.heroLead {
+    margin: 16px 0 0;
+    text-align: center;
+    color: #eef2ff;
+    font-size: clamp(1.2rem, 2vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.heroText {
+    width: min(860px, 100%);
+    margin: 14px auto 0;
+    text-align: center;
+    color: rgba(238, 242, 255, 0.82);
+    font-size: 1.08rem;
+    line-height: 1.6;
+}
+
+.scanForm {
+    width: min(980px, 100%);
+    margin: 24px auto 0;
+}
+
+.scanBar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 248px;
+    gap: 14px;
+    align-items: stretch;
+}
+
+.scanInputWrap {
+    position: relative;
+    min-width: 0;
+    border: 1px solid rgba(215, 170, 59, 0.35);
+    border-radius: 22px;
+    background:
+        linear-gradient(180deg, rgba(9, 14, 28, 0.96), rgba(15, 21, 44, 0.94));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 216, 125, 0.05),
+        0 10px 26px rgba(0, 0, 0, 0.28);
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        transform 180ms ease;
+}
+
+.scanInputWrap:focus-within {
+    border-color: rgba(255, 204, 82, 0.62);
+    box-shadow:
+        0 0 0 1px rgba(255, 204, 82, 0.22),
+        0 0 26px rgba(61, 97, 236, 0.18),
+        inset 0 1px 0 rgba(255, 220, 143, 0.08);
+    transform: translateY(-1px);
+}
+
+.scanInputIcon {
+    position: absolute;
+    top: 20px;
+    left: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 209, 95, 0.92);
+    font-size: 1.1rem;
+    pointer-events: none;
+}
+
+.scanInput {
+    width: 100%;
+    min-height: 96px;
+    padding: 18px 20px 18px 52px;
+    border: 0;
+    resize: vertical;
+    outline: none;
+    background: transparent;
+    color: #f4f6ff;
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.scanInput::placeholder {
+    color: rgba(202, 209, 238, 0.52);
+}
+
+.scanButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 96px;
+    padding: 0 24px;
+    border: 1px solid rgba(255, 204, 80, 0.52);
+    border-radius: 22px;
+    background:
+        linear-gradient(180deg, #ffd45e 0%, #efaf18 100%);
+    color: #171107;
+    font: inherit;
+    font-size: 1.08rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow:
+        0 18px 34px rgba(255, 176, 14, 0.18),
+        inset 0 1px 0 rgba(255, 244, 204, 0.55);
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease,
+        filter 160ms ease;
+}
+
+.scanButton:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 22px 42px rgba(255, 176, 14, 0.24),
+        inset 0 1px 0 rgba(255, 244, 204, 0.62);
+    filter: brightness(1.02);
+}
+
+.scanButton:active {
+    transform: translateY(0);
+}
+
+.helperLine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+    color: rgba(227, 233, 255, 0.72);
+    font-size: 0.92rem;
+    line-height: 1.4;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.helperDivider {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 204, 78, 0.6);
+    flex: 0 0 auto;
+}
+
+.sectionEyebrow {
+    display: inline-block;
+    color: #f0c54b;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.livePanel {
+    padding: 28px;
+}
+
+.idlePanel {
+    padding: 16px 0 8px;
+}
+
+.idleSectionShell {
+    position: relative;
+    padding: clamp(28px, 4vw, 40px);
+    border-radius: 26px;
+    border: 1px solid rgba(132, 148, 196, 0.14);
+    background:
+        linear-gradient(180deg, rgba(9, 12, 21, 0.98) 0%, rgba(11, 15, 28, 0.95) 100%);
+    box-shadow:
+        0 26px 58px rgba(0, 0, 0, 0.36),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.idleSectionShell::before {
+    content: "";
+    position: absolute;
+    right: -4rem;
+    bottom: -5rem;
+    width: min(28rem, 42vw);
+    height: min(28rem, 42vw);
+    background: url("/logo/logo_resized.png") center / contain no-repeat;
+    opacity: 0.035;
+    filter: blur(10px) saturate(0.7);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.idleSectionShell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(255, 205, 94, 0.06), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 26%),
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 18px);
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.idleSectionHeader {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.idleSectionHeader > div {
+    width: min(640px, 100%);
+    text-align: center;
+}
+
+.idleSectionHeader h2 {
+    margin: 0;
+    color: #f6f8ff;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    text-shadow: 0 10px 28px rgba(255, 194, 78, 0.12);
+}
+
+.idleSectionHeader p {
+    margin: 0.9rem auto 0;
+    max-width: 40rem;
+    color: rgba(220, 228, 255, 0.82);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.idleCardGrid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.idleCardGrid::before {
+    content: "";
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 52px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 210, 96, 0.04) 0%,
+        rgba(255, 210, 96, 0.24) 22%,
+        rgba(96, 118, 255, 0.14) 50%,
+        rgba(255, 210, 96, 0.24) 78%,
+        rgba(255, 210, 96, 0.04) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.idleWorkflowCard {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-height: 220px;
+    padding: 24px;
+    border-radius: 22px;
+    border: 1px solid rgba(132, 148, 196, 0.14);
+    background:
+        linear-gradient(180deg, rgba(18, 23, 39, 0.92) 0%, rgba(9, 13, 24, 0.96) 100%);
+    box-shadow:
+        0 18px 36px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.045);
+    backdrop-filter: blur(8px);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.idleWorkflowCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 214, 122, 0) 0%,
+        rgba(255, 214, 122, 0.55) 50%,
+        rgba(255, 214, 122, 0) 100%
+    );
+    opacity: 0.65;
+}
+
+.idleWorkflowCard:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 209, 96, 0.22);
+    box-shadow:
+        0 24px 44px rgba(0, 0, 0, 0.28),
+        0 0 22px rgba(255, 195, 74, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.idleCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.idleCardIcon {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 214, 122, 0.16);
+    background:
+        linear-gradient(180deg, rgba(58, 45, 16, 0.48) 0%, rgba(15, 19, 31, 0.98) 100%);
+    color: #ffd566;
+    font-size: 1.35rem;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 12px 28px rgba(0, 0, 0, 0.24),
+        0 0 18px rgba(255, 196, 74, 0.06);
+}
+
+.idleCardIcon::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 214, 122, 0.9);
+    box-shadow: 0 0 12px rgba(255, 214, 122, 0.45);
+}
+
+.idleCardNumber {
+    color: rgba(255, 214, 122, 0.62);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.idleCardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.idleCardContent h3 {
+    margin: 0;
+    color: #f7f9ff;
+    font-size: 1.18rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.idleCardContent p {
+    margin: 0;
+    color: rgba(211, 220, 248, 0.84);
+    font-size: 0.97rem;
+    line-height: 1.6;
+}
+
+.resultsSection {
+    margin-top: 18px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.livePanelHeader,
+.resultsHeader,
+.playersPanelHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.livePanelHeader h2,
+.resultsHeader h2 {
+    margin: 10px 0 0;
+    color: #f4f0db;
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    line-height: 1.15;
+}
+
+.livePanelHeader p {
+    margin: 10px 0 0;
+    color: rgba(230, 236, 255, 0.76);
+    line-height: 1.6;
+}
+
+.liveBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid rgba(90, 123, 255, 0.26);
+    border-radius: 999px;
+    background: rgba(13, 20, 42, 0.8);
+    color: #d9e2ff;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.loadingShell {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 26px;
+    margin-top: 24px;
+    padding: 26px;
+    border: 1px solid rgba(255, 201, 79, 0.16);
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 25% 30%, rgba(52, 96, 255, 0.08), transparent 30%),
+        linear-gradient(180deg, rgba(8, 13, 28, 0.92), rgba(13, 18, 34, 0.92));
+}
+
+.loadingVisual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 240px;
+}
+
+.loadingRingOuter,
+.loadingRingMid,
+.loadingRingInner {
+    position: absolute;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 202, 77, 0.18);
+}
+
+.loadingRingOuter {
+    width: 220px;
+    height: 220px;
+    animation: scanSpin 8s linear infinite;
+}
+
+.loadingRingMid {
+    width: 164px;
+    height: 164px;
+    border-color: rgba(80, 116, 255, 0.22);
+    animation: scanSpinReverse 6.5s linear infinite;
+}
+
+.loadingRingInner {
+    width: 108px;
+    height: 108px;
+    border-color: rgba(255, 209, 92, 0.28);
+    animation: scanPulse 2.2s ease-in-out infinite;
+}
+
+.loadingCore {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: radial-gradient(circle, #ffd35b 0%, #e3a919 100%);
+    box-shadow:
+        0 0 28px rgba(255, 194, 53, 0.48),
+        0 0 60px rgba(84, 114, 255, 0.14);
+}
+
+.loadingSweep {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 999px;
+    background: conic-gradient(from 0deg, rgba(88, 121, 255, 0.28), transparent 28%, transparent 100%);
+    filter: blur(2px);
+    animation: scanSpin 3s linear infinite;
+    opacity: 0.9;
+}
+
+.loadingSteps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: center;
+}
+
+.loadingStep {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 54px;
+    padding: 0 16px;
+    border: 1px solid rgba(255, 203, 83, 0.1);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.015);
+    color: rgba(232, 237, 255, 0.72);
+    transition:
+        border-color 180ms ease,
+        background 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
+}
+
+.loadingStepActive {
+    border-color: rgba(255, 204, 80, 0.3);
+    background: rgba(255, 202, 76, 0.05);
+    color: #fff2c2;
+    transform: translateX(2px);
+}
+
+.loadingStepDone {
+    border-color: rgba(77, 195, 130, 0.26);
+    color: rgba(221, 255, 232, 0.88);
+}
+
+.loadingStepDot {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 202, 79, 0.24);
+    color: #f5cd65;
+    flex: 0 0 auto;
+    background: rgba(9, 13, 26, 0.86);
+    font-size: 0.9rem;
+}
+
+.loadingStepDot span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: currentColor;
+}
+
+.errorShell {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 22px;
+    padding: 20px;
+    border: 1px solid rgba(255, 112, 112, 0.2);
+    border-radius: 18px;
+    background:
+        linear-gradient(180deg, rgba(44, 16, 20, 0.7), rgba(25, 11, 14, 0.8));
+}
+
+.errorIcon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(255, 87, 87, 0.08);
+    color: #ff8e8e;
+    font-size: 1.3rem;
+    flex: 0 0 auto;
+}
+
+.errorContent {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.errorContent strong {
+    color: #fff0f0;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.errorContent span {
+    color: rgba(255, 225, 225, 0.75);
+    line-height: 1.45;
+}
+
+.actionRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.primaryButton,
+.secondaryButton,
+.ghostButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 18px;
+    border-radius: 14px;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease,
+        color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.primaryButton {
+    margin-top: 22px;
+    border: 1px solid rgba(255, 204, 82, 0.4);
+    background: linear-gradient(180deg, #ffd35c 0%, #efaf18 100%);
+    color: #171107;
+    box-shadow:
+        0 14px 28px rgba(255, 175, 15, 0.16),
+        inset 0 1px 0 rgba(255, 248, 220, 0.5);
+}
+
+.primaryButton:hover,
+.secondaryButton:hover,
+.ghostButton:hover {
+    transform: translateY(-1px);
+}
+
+.secondaryButton {
+    border: 1px solid rgba(255, 204, 82, 0.28);
+    background: rgba(255, 196, 58, 0.08);
+    color: #f7d66c;
+}
+
+.ghostButton {
+    border: 1px solid rgba(214, 223, 255, 0.14);
+    background: rgba(255, 255, 255, 0.02);
+    color: rgba(233, 238, 255, 0.84);
+}
+
+.idleGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    align-items: start;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 214, 117, 0.12);
+}
+
+.idleCard,
+.summaryCard {
+    padding: 18px;
+    border: 1px solid rgba(211, 165, 58, 0.18);
+    border-radius: 18px;
+    background:
+        linear-gradient(180deg, rgba(18, 24, 47, 0.88), rgba(10, 14, 27, 0.9));
+}
+
+.idleCard {
+    padding: 10px 28px 6px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    text-align: center;
+}
+
+.idleCard + .idleCard {
+    border-left: 1px solid rgba(255, 214, 117, 0.1);
+}
+
+.idleLabel,
+.summaryCard span,
+.playerStat span {
+    display: block;
+    color: rgba(219, 226, 255, 0.66);
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.idleCard strong,
+.summaryCard strong,
+.playerStat strong {
+    display: block;
+    margin-top: 8px;
+    color: #f6f2df;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.idleCard strong {
+    max-width: 24ch;
+    margin: 10px auto 0;
+    font-size: 1.08rem;
+}
+
+.idleSteps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+    width: min(720px, 100%);
+    margin: 0 auto;
+    padding: 0;
+}
+
+.idleStepItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    padding-bottom: 1.35rem;
+    color: #9fb1d6;
+    text-align: center;
+}
+
+.idleStepItem:last-child {
+    padding-bottom: 0;
+}
+
+.idleStepItem:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: calc(100% - 0.15rem);
+    transform: translateX(-50%);
+    width: 2px;
+    height: 1.3rem;
+    border-radius: 999px;
+    background: linear-gradient(
+        180deg,
+        rgba(245, 194, 78, 0.34) 0%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    box-shadow: 0 0 10px rgba(245, 194, 78, 0.08);
+}
+
+.idleStepIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    background: rgba(245, 194, 78, 0.16);
+    color: #f5c24e;
+}
+
+.idleStepIcon svg {
+    width: 19px;
+    height: 19px;
+}
+
+.idleStepText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: center;
+    max-width: 30rem;
+    font-size: 1rem;
+    color: #cbd6ef;
+    font-weight: 600;
+}
+
+.idleStepHeading {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.idleStepTitle {
+    color: #f1f5ff;
+}
+
+.idleStepSubtitle {
+    color: #9fb1d6;
+    line-height: 1.55;
+}
+
+.lobbyTableShell {
+    border: 1px solid rgba(209, 162, 58, 0.14);
+    border-radius: 18px;
+    background:
+        linear-gradient(180deg, rgba(14, 20, 39, 0.94), rgba(8, 12, 24, 0.96));
+    box-shadow:
+        0 22px 54px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+}
+
+.lobbyTableScroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 10px 10px;
+}
+
+.lobbyTableBody {
+    min-width: 780px;
+}
+
+.lobbyTableLabels,
+.lobbyTableRow {
+    display: grid;
+    grid-template-columns: minmax(240px, 1.8fr) 96px 110px minmax(220px, 1.15fr) 92px;
+    gap: 8px;
+    align-items: center;
+}
+
+.lobbyTableLabels {
+    padding: 0 8px 10px;
+    color: rgba(230, 234, 240, 0.28);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.lobbyTableColPlayer,
+.lobbyTableColRecord {
+    text-align: left;
+}
+
+.lobbyTableColStat {
+    text-align: center;
+}
+
+.lobbySortButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+}
+
+.lobbySortButtonActive {
+    color: rgba(229, 238, 255, 0.86);
+}
+
+.lobbySortIcon {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.76rem;
+}
+
+.lobbyTeamDivider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px 8px;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(230, 234, 240, 0.34);
+}
+
+.lobbyTeamDivider:first-child {
+    padding-top: 2px;
+}
+
+.lobbyTeamDivider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.lobbyTableRow {
+    position: relative;
+    padding: 10px 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition:
+        background 140ms ease,
+        box-shadow 140ms ease;
+}
+
+.lobbyTableRow::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 58%;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.lobbyTableRowReady {
+    cursor: pointer;
+}
+
+.lobbyTableRowLoading {
+    background:
+        linear-gradient(180deg, rgba(15, 22, 42, 0.92), rgba(9, 13, 26, 0.94));
+}
+
+.lobbyTableRowLoading::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            110deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.03) 26%,
+            rgba(124, 242, 194, 0.1) 42%,
+            rgba(58, 167, 255, 0.14) 50%,
+            rgba(255, 255, 255, 0.03) 62%,
+            transparent 100%
+        );
+    transform: translateX(-120%);
+    animation: lobbyRowShimmer 2.2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.lobbyTableRowReady:hover {
+    background: rgba(58, 167, 255, 0.08);
+    box-shadow:
+        inset 0 0 0 1px rgba(120, 176, 255, 0.26),
+        0 0 0 1px rgba(120, 176, 255, 0.08);
+}
+
+.lobbyTableRowReady:focus-visible {
+    outline: 2px solid rgba(0, 245, 212, 0.45);
+    outline-offset: -2px;
+}
+
+.lobbyTableRowMissing {
+    background: rgba(122, 31, 44, 0.16);
+}
+
+.lobbyTableRowTeam1::before {
+    background: rgba(124, 242, 194, 0.58);
+}
+
+.lobbyTableRowTeam2::before {
+    background: rgba(255, 99, 99, 0.6);
+}
+
+.lobbyTableRowUnassigned::before {
+    background: rgba(142, 160, 212, 0.4);
+}
+
+.lobbyTablePlayer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.lobbyTablePlayerIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.lobbyTablePlayerIcon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lobbyTableIconFallback {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    color: rgba(245, 207, 99, 0.92);
+    font-size: 0.95rem;
+}
+
+.lobbyTableIconLoading {
+    color: transparent;
+}
+
+.lobbyTableIconLoadingCore {
+    width: 16px;
+    height: 16px;
+    border-radius: 6px;
+}
+
+.lobbyTablePlayerInfo {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.lobbyTablePlayerName {
+    color: #d9edff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lobbyTablePlayerSubline {
+    color: rgba(230, 234, 240, 0.42);
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lobbyTableCellActive {
+    color: rgba(228, 238, 255, 0.96);
+}
+
+.lobbyTableStat {
+    color: rgba(239, 244, 255, 0.86);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.lobbyRoleBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.lobbyRoleBadgeLoading {
+    background: rgba(106, 118, 159, 0.12);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+.lobbyRoleBadgeTank {
+    color: rgba(125, 214, 255, 0.95);
+    background: rgba(50, 120, 190, 0.14);
+}
+
+.lobbyRoleBadgeHealer {
+    color: rgba(98, 229, 181, 0.95);
+    background: rgba(34, 133, 103, 0.14);
+}
+
+.lobbyRoleBadgeDamage {
+    color: rgba(255, 184, 109, 0.96);
+    background: rgba(168, 90, 36, 0.14);
+}
+
+.lobbyRoleBadgeEmpty {
+    color: rgba(212, 221, 246, 0.82);
+    background: rgba(106, 118, 159, 0.12);
+}
+
+.lobbySkeletonBlock {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(124, 242, 194, 0.08));
+}
+
+.lobbySkeletonBlock::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.18),
+        transparent
+    );
+    transform: translateX(-100%);
+    animation: lobbyInnerShimmer 2s ease-in-out infinite;
+}
+
+.lobbySkeletonSubline {
+    width: min(148px, 92%);
+    height: 12px;
+}
+
+.lobbySkeletonRoleBadge {
+    width: 14px;
+    height: 14px;
+}
+
+.lobbySkeletonStat {
+    width: 56px;
+    height: 18px;
+    margin-inline: auto;
+}
+
+.lobbySkeletonStatShort {
+    width: 42px;
+    height: 18px;
+    margin-inline: auto;
+}
+
+.lobbyTableRecordLoadingCopy {
+    display: grid;
+    gap: 6px;
+}
+
+.lobbySkeletonRecordTitle {
+    width: min(120px, 88%);
+    height: 13px;
+}
+
+.lobbySkeletonRecordSubtitle {
+    width: min(88px, 68%);
+    height: 11px;
+}
+
+.lobbySkeletonRecordValue {
+    width: 42px;
+    height: 14px;
+}
+
+.lobbyTableRecord {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: center;
+    min-width: 0;
+}
+
+.lobbyTableRecordIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.lobbyTableRecordIcon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lobbyTableRecordCopy {
+    min-width: 0;
+}
+
+.lobbyTableRecordTitle {
+    display: block;
+    color: rgba(235, 240, 252, 0.8);
+    font-size: 0.82rem;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.lobbyTableRecordValue {
+    color: #f4c44f;
+    font-size: 0.84rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+@keyframes scanSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes scanSpinReverse {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes scanPulse {
+    0%,
+    100% {
+        transform: scale(0.98);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+}
+
+@keyframes lobbyRowShimmer {
+    from {
+        transform: translateX(-120%);
+    }
+    to {
+        transform: translateX(120%);
+    }
+}
+
+@keyframes lobbyInnerShimmer {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@media (max-width: 1100px) {
+    .idleCardGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .idleCardGrid::before {
+        display: none;
+    }
+
+    .idleWorkflowCard {
+        min-height: 0;
+    }
+
+    .idleGrid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .idleCard + .idleCard {
+        border-left: none;
+        border-top: 1px solid rgba(255, 214, 117, 0.1);
+        padding-top: 24px;
+    }
+
+    .scanBar,
+    .loadingShell {
+        grid-template-columns: 1fr;
+    }
+
+    .scanButton {
+        min-height: 64px;
+    }
+
+}
+
+@media (max-width: 780px) {
+    .container {
+        width: min(100% - 28px, 1320px);
+        padding-top: 24px;
+        padding-bottom: 64px;
+    }
+
+    .heroFrame,
+    .livePanel,
+    .resultsSection {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .resultsSection {
+        padding: 0;
+        border-radius: 0;
+    }
+
+    .idlePanel {
+        padding: 10px 0 0;
+    }
+
+    .idleSectionShell {
+        padding: 24px 20px;
+        border-radius: 22px;
+    }
+
+    .idleSectionHeader {
+        margin-bottom: 1.5rem;
+    }
+
+    .idleSectionHeader h2 {
+        font-size: clamp(1.75rem, 8vw, 2.2rem);
+    }
+
+    .idleSectionHeader p {
+        font-size: 0.96rem;
+    }
+
+    .idleCardGrid {
+        gap: 16px;
+    }
+
+    .idleWorkflowCard {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .idleCardIcon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+    }
+
+    .idleCardContent h3 {
+        font-size: 1.08rem;
+    }
+
+    .logoMark {
+        width: 132px;
+        height: 132px;
+    }
+
+    .logoMarkInner {
+        width: 84px;
+        height: 84px;
+        font-size: 1.7rem;
+    }
+
+    .idleGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .livePanelHeader,
+    .resultsHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .idlePanel .livePanelHeader {
+        align-items: center;
+    }
+
+    .lobbyTableScroll {
+        padding: 0 8px 8px;
+    }
+
+    .lobbyTableBody {
+        min-width: 720px;
+    }
+
+    .scanInput {
+        min-height: 112px;
+    }
+
+    .loadingVisual {
+        min-height: 180px;
+    }
+
+    .loadingRingOuter,
+    .loadingSweep {
+        width: 170px;
+        height: 170px;
+    }
+
+    .loadingRingMid {
+        width: 124px;
+        height: 124px;
+    }
+
+    .loadingRingInner {
+        width: 82px;
+        height: 82px;
+    }
+}

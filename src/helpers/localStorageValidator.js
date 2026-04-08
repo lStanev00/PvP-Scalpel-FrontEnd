@@ -1,4 +1,4 @@
-import { httpFetchWithCredentials } from "../hooks/ContextVariables.jsx";
+import { httpFetchWithCredentials } from "./httpFetch.js";
 import {
     getGameData,
     setGameData,
@@ -6,6 +6,11 @@ import {
     setGameSpecs,
 } from "./storageOperations/gameData.js";
 
+/**
+ * Ensures the cached game metadata exists in local storage and backfills missing datasets.
+ *
+ * @returns {Promise<void>}
+ */
 export default async function localStorageValidatoor() {
     let gameData = getGameData();
 

@@ -48,6 +48,9 @@ export default function Navigation() {
                         </>
                     )}
                     <li>
+                        <Link to="/scan">Lobby Scan</Link>
+                    </li>
+                    <li>
                         <Link to="/posts">Posts</Link>
                     </li>
                     <li>
