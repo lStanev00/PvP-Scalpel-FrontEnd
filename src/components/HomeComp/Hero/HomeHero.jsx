@@ -4,7 +4,7 @@ import { GiBroadsword } from "react-icons/gi";
 import { UserContext } from "../../../hooks/ContextVariables.jsx";
 import Style from "./HomeHero.module.css";
 
-const PLAYBACK_RATE = 0.5;
+const PLAYBACK_RATE = 0.4;
 const MOBILE_MEDIA_QUERY = "(max-width: 768px)";
 
 export default function HomeHero() {
