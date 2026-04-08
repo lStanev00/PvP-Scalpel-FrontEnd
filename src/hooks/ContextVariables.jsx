@@ -61,6 +61,7 @@ export const UserProvider = ({ children }) => {
     const FEContent = useMemo(() => {
         return {
             homeHeroVideo: () => getFEContent("landing.mp4"),
+            appBG: () => getFEContent("backg.png"),
             get: getFEContent,
         };
     }, [getFEContent]);
