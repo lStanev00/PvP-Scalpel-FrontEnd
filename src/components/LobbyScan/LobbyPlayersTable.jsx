@@ -3,6 +3,10 @@
 import { useMemo, useState } from "react";
 import { FiArrowDown, FiArrowUp, FiShield } from "react-icons/fi";
 import { LuHeart, LuSword } from "react-icons/lu";
+import {
+    getLobbyTableSort,
+    setLobbyTableSort,
+} from "../../helpers/storageOperations/lobbyTableSort.js";
 import Style from "../../Styles/modular/LobbyScan.module.css";
 
 const ROLE_SORT_ORDER = {
@@ -329,17 +333,25 @@ function TableRow({ row, onOpen, sortKey }) {
 }
 
 export default function LobbyPlayersTable({ sections, onOpen }) {
-    const [sortKey, setSortKey] = useState("rating");
-    const [sortDirection, setSortDirection] = useState("desc");
+    const [{ sortKey, sortDirection }, setSortState] = useState(() => getLobbyTableSort());
 
     const handleSort = (nextKey) => {
+        let nextSortState;
+
         if (sortKey === nextKey) {
-            setSortDirection((currentDirection) => (currentDirection === "asc" ? "desc" : "asc"));
+            nextSortState = setLobbyTableSort({
+                sortKey,
+                sortDirection: sortDirection === "asc" ? "desc" : "asc",
+            });
+            setSortState(nextSortState);
             return;
         }
 
-        setSortKey(nextKey);
-        setSortDirection(nextKey === "role" ? "asc" : "desc");
+        nextSortState = setLobbyTableSort({
+            sortKey: nextKey,
+            sortDirection: nextKey === "role" ? "asc" : "desc",
+        });
+        setSortState(nextSortState);
     };
 
     const sortedSections = useMemo(
