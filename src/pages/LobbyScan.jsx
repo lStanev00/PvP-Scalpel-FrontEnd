@@ -974,6 +974,8 @@ export default function LobbyScan() {
         const hasRows = rows.length > 0;
         const hasLoadingRows = rows.some((row) => row?.status === "loading");
         const allRowsResolved = hasRows && !hasLoadingRows;
+        const team1Count = rows.filter((row) => row?.team === "team1").length;
+        const team2Count = rows.filter((row) => row?.team === "team2").length;
         const {
             hasTeam1Payload,
             hasTeam2Payload,
@@ -992,10 +994,13 @@ export default function LobbyScan() {
             return;
         }
 
-        const shouldClose =
-            usesLegacyPlayerIds
-                ? hasRows
-                : hasTeam1Payload && hasTeam2Payload;
+        const hasAnyTeamPayload = hasTeam1Payload || hasTeam2Payload;
+        const isSingleTeamOnly =
+            hasAnyTeamPayload && (team1Count === 0 || team2Count === 0);
+
+        const shouldClose = usesLegacyPlayerIds
+            ? hasRows
+            : hasAnyTeamPayload && (hasTeam1Payload && hasTeam2Payload || isSingleTeamOnly);
 
         if (!shouldClose) {
             return;
