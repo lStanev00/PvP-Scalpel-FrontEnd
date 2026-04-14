@@ -1006,13 +1006,13 @@
 }
 
 .lobbyTableBody {
-    min-width: 780px;
+    min-width: 900px;
 }
 
 .lobbyTableLabels,
 .lobbyTableRow {
     display: grid;
-    grid-template-columns: minmax(240px, 1.8fr) 96px 110px minmax(220px, 1.15fr) 92px;
+    grid-template-columns: minmax(240px, 1.8fr) 82px 100px 100px minmax(190px, 1.15fr) 92px;
     gap: 8px;
     align-items: center;
 }
@@ -1243,6 +1243,14 @@
     white-space: nowrap;
 }
 
+.lobbyTableIlvlAbove {
+    color: rgba(98, 229, 181, 0.95);
+}
+
+.lobbyTableIlvlBelow {
+    color: rgba(255, 99, 99, 0.92);
+}
+
 .lobbyRoleBadge {
     display: inline-flex;
     align-items: center;
@@ -1344,12 +1352,20 @@
     height: 14px;
 }
 
-.lobbyTableRecord {
+.lobbyTableRecord,
+.lobbyTableXP {
     display: grid;
-    grid-template-columns: 28px minmax(0, 1fr) auto;
     gap: 8px;
     align-items: center;
     min-width: 0;
+}
+
+.lobbyTableRecord {
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+}
+
+.lobbyTableXP {
+    grid-template-columns: 28px minmax(0, 1fr);
 }
 
 .lobbyTableRecordIcon {
@@ -1561,7 +1577,7 @@
     }
 
     .lobbyTableBody {
-        min-width: 720px;
+        min-width: 860px;
     }
 
     .scanInput {

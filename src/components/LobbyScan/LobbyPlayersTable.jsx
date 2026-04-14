@@ -85,7 +85,12 @@ function sortRows(rows, sortKey, sortDirection) {
         } else if (sortKey === "record") {
             result = compareNullableNumbers(left.recordSortValue, right.recordSortValue, direction);
             if (result === 0) {
-                result = String(left.recordTitle || "").localeCompare(String(right.recordTitle || ""));
+                result = String(left.xpTitle || "").localeCompare(String(right.xpTitle || ""));
+            }
+        } else if (sortKey === "xp") {
+            result = compareNullableNumbers(left.xpSortValue, right.xpSortValue, direction);
+            if (result === 0) {
+                result = String(left.xpTitle || "").localeCompare(String(right.xpTitle || ""));
             }
         } else if (sortKey === "ilvl") {
             result = compareNullableNumbers(
@@ -103,6 +108,20 @@ function sortRows(rows, sortKey, sortDirection) {
     });
 
     return copy;
+}
+
+function getItemLevelToneClass(row, lobbyAverageItemLevel) {
+    const itemLevel = row.avgItemLevelSortValue;
+
+    if (!Number.isFinite(itemLevel) || !Number.isFinite(lobbyAverageItemLevel)) {
+        return "";
+    }
+
+    const delta = itemLevel - lobbyAverageItemLevel;
+
+    if (delta > 5) return Style.lobbyTableIlvlAbove;
+    if (delta < -5) return Style.lobbyTableIlvlBelow;
+    return "";
 }
 
 function SortButton({ label, columnKey, sortKey, sortDirection, onSort, className = "" }) {
@@ -195,10 +214,10 @@ function RoleBadge({ role, active, loading }) {
     );
 }
 
-function RecordCell({ row, active }) {
+function XPCell({ row }) {
     if (row.status === "loading") {
         return (
-            <div className={`${Style.lobbyTableRecord} ${active ? Style.lobbyTableCellActive : ""}`}>
+            <div className={Style.lobbyTableXP}>
                 <div className={Style.lobbyTableRecordIcon}>
                     <LoadingIcon />
                 </div>
@@ -208,27 +227,23 @@ function RecordCell({ row, active }) {
                         <SkeletonBlock className={Style.lobbySkeletonRecordSubtitle} />
                     </div>
                 </div>
-                <SkeletonBlock className={Style.lobbySkeletonRecordValue} />
             </div>
         );
     }
 
     return (
-        <div className={`${Style.lobbyTableRecord} ${active ? Style.lobbyTableCellActive : ""}`}>
+        <div className={Style.lobbyTableXP}>
             <div className={Style.lobbyTableRecordIcon}>
-                <PlayerIcon src={row.recordIcon} alt={`${row.playerName} record`} />
+                <PlayerIcon src={row.xpIcon} alt={`${row.playerName} XP`} />
             </div>
             <div className={Style.lobbyTableRecordCopy}>
-                <span className={Style.lobbyTableRecordTitle}>{row.recordTitle}</span>
+                <span className={Style.lobbyTableRecordTitle}>{row.xpTitle}</span>
             </div>
-            {row.recordValue ? (
-                <span className={Style.lobbyTableRecordValue}>{row.recordValue}</span>
-            ) : null}
         </div>
     );
 }
 
-function TableRow({ row, onOpen, sortKey }) {
+function TableRow({ row, onOpen, sortKey, lobbyAverageItemLevel }) {
     if (row.teamDivider) {
         return (
             <div className={Style.lobbyTeamDivider}>
@@ -314,12 +329,24 @@ function TableRow({ row, onOpen, sortKey }) {
                     )}
                 </span>
 
-                <RecordCell row={row} active={sortKey === "record"} />
+                <span
+                    className={`${Style.lobbyTableStat} ${
+                        sortKey === "record" ? Style.lobbyTableCellActive : ""
+                    }`}
+                >
+                    {isLoading ? (
+                        <SkeletonBlock className={Style.lobbySkeletonStatShort} />
+                    ) : (
+                        row.recordValue || "No record"
+                    )}
+                </span>
+
+                <XPCell row={row} />
 
                 <span
                     className={`${Style.lobbyTableStat} ${
                         sortKey === "ilvl" ? Style.lobbyTableCellActive : ""
-                    }`}
+                    } ${getItemLevelToneClass(row, lobbyAverageItemLevel)}`}
                 >
                     {isLoading ? (
                         <SkeletonBlock className={Style.lobbySkeletonStatShort} />
@@ -363,6 +390,18 @@ export default function LobbyPlayersTable({ sections, onOpen }) {
         [sections, sortDirection, sortKey]
     );
 
+    const lobbyAverageItemLevel = useMemo(() => {
+        const values = sections
+            .flatMap((section) => section.rows)
+            .map((row) => row.avgItemLevelSortValue)
+            .filter((value) => Number.isFinite(value));
+
+        if (!values.length) return null;
+
+        const total = values.reduce((sum, value) => sum + value, 0);
+        return total / values.length;
+    }, [sections]);
+
     const rows = [];
 
     sortedSections.forEach((section) => {
@@ -404,6 +443,14 @@ export default function LobbyPlayersTable({ sections, onOpen }) {
                             sortKey={sortKey}
                             sortDirection={sortDirection}
                             onSort={handleSort}
+                            className={Style.lobbyTableColStat}
+                        />
+                        <SortButton
+                            label="XP"
+                            columnKey="xp"
+                            sortKey={sortKey}
+                            sortDirection={sortDirection}
+                            onSort={handleSort}
                             className={Style.lobbyTableColRecord}
                         />
                         <SortButton
@@ -417,7 +464,13 @@ export default function LobbyPlayersTable({ sections, onOpen }) {
                     </div>
 
                     {rows.map((row) => (
-                        <TableRow key={row.rowId} row={row} onOpen={onOpen} sortKey={sortKey} />
+                        <TableRow
+                            key={row.rowId}
+                            row={row}
+                            onOpen={onOpen}
+                            sortKey={sortKey}
+                            lobbyAverageItemLevel={lobbyAverageItemLevel}
+                        />
                     ))}
                 </div>
             </div>
