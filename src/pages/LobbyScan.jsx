@@ -275,6 +275,28 @@ function getLobbyAchievementRecordValue(achievement) {
     return "";
 }
 
+function getXpSortValue(achievement) {
+    const xpRecordValue = getLobbyAchievementRecordValue(achievement);
+
+    if (xpRecordValue === "2400+") {
+        return 2401;
+    }
+
+    return Number.isFinite(Number(xpRecordValue)) ? Number(xpRecordValue) : null;
+}
+
+function getBracketRecordValue(bracketData) {
+    const rawRecord = bracketData?.record;
+
+    if (typeof rawRecord === "number" && Number.isFinite(rawRecord)) {
+        return String(rawRecord);
+    }
+
+    const recordMatch = String(rawRecord || "").match(/\d+/);
+
+    return recordMatch?.[0] || "";
+}
+
 function getDisplaySpec(row) {
     return (
         row?.spec?.name ||
@@ -314,7 +336,7 @@ function getAverageItemLevel(character) {
         return "Unknown";
     }
 
-    const totalItemLevel = gearEntries.reduce((sum, item) => {
+    const totalItemLevel = gearEntries.reduce((sum, [, item]) => {
         return sum + Number(item.level);
     }, 0);
 
@@ -458,11 +480,12 @@ function mapLobbyRowToTableRow(row, bracket) {
             roleValue,
             ratingValue: isMissing ? "No data" : "",
             ratingSortValue: null,
-            recordTitle:
+            xpTitle:
                 isMissing
                     ? row.message || "The player could not be resolved."
                     : "",
-            recordIcon: playerIcon,
+            xpIcon: playerIcon,
+            xpSortValue: null,
             recordValue: "",
             recordSortValue: null,
             avgItemLevel: isMissing ? "Unknown" : "",
@@ -474,7 +497,7 @@ function mapLobbyRowToTableRow(row, bracket) {
     const achievement = getLobbyBracketAchievement(row.character, resolvedBracket.context);
     const bracketData = resolvedBracket.data;
     const ratingValue = bracketData?.currentSeason?.rating;
-    const resolvedRecordValue = getLobbyAchievementRecordValue(achievement);
+    const resolvedRecordValue = getBracketRecordValue(bracketData);
     const avgItemLevel = getAverageItemLevel(row.character);
 
     return {
@@ -492,15 +515,13 @@ function mapLobbyRowToTableRow(row, bracket) {
                 : "No rating",
         ratingSortValue:
             ratingValue === 0 || Number.isFinite(Number(ratingValue)) ? Number(ratingValue) : null,
-        recordTitle: achievement?.name || "No XP yet",
-        recordIcon: achievement?.media || playerIcon,
+        xpTitle: achievement?.name || "No XP yet",
+        xpIcon: achievement?.media || playerIcon,
+        xpSortValue: getXpSortValue(achievement),
         recordValue: resolvedRecordValue,
-        recordSortValue:
-            resolvedRecordValue === "2400+"
-                ? 2401
-                : Number.isFinite(Number(resolvedRecordValue))
-                  ? Number(resolvedRecordValue)
-                  : null,
+        recordSortValue: Number.isFinite(Number(resolvedRecordValue))
+            ? Number(resolvedRecordValue)
+            : null,
         avgItemLevel,
         avgItemLevelSortValue: Number.isFinite(Number(avgItemLevel))
             ? Number(avgItemLevel)

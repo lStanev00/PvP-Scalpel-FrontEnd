@@ -5,7 +5,7 @@ const DEFAULT_SORT = {
     sortDirection: "desc",
 };
 
-const ALLOWED_SORT_KEYS = new Set(["role", "rating", "record", "ilvl"]);
+const ALLOWED_SORT_KEYS = new Set(["role", "rating", "record", "xp", "ilvl"]);
 const ALLOWED_SORT_DIRECTIONS = new Set(["asc", "desc"]);
 
 function getStorage() {
@@ -56,4 +56,3 @@ export function setLobbyTableSort(value) {
     storage.setItem(STORAGE_KEY, JSON.stringify(nextValue));
     return nextValue;
 }
-
