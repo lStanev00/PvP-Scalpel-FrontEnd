@@ -303,7 +303,9 @@ function getRoleLabel(row) {
 }
 
 function getAverageItemLevel(character) {
-    const gearEntries = Object.values(character?.gear || {}).filter((item) => {
+    const ignoredSlots = new Set(["tabard", "shirt"]);
+    const gearEntries = Object.entries(character?.gear || {}).filter(([slot, item]) => {
+        if (ignoredSlots.has(slot)) return false;
         const level = Number(item?.level);
         return Number.isFinite(level) && level > 1;
     });
