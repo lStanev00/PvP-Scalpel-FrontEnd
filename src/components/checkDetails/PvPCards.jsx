@@ -14,7 +14,8 @@ export default function PvPCards({ bracketData, bracketLabel = undefined, specLa
     if (!hasRating && !hasRecord) return null;
 
     const rating = hasRating ? rawRating : null;
-    const ratingMedia = currentSeason?.title?.media;
+    let ratingMedia = currentSeason?.title?.media;
+    if (!rating && !ratingMedia) ratingMedia = "https://render.worldofwarcraft.com/eu/icons/56/ui_rankedpvp_01.jpg"
     const ratingName = currentSeason?.title?.name;
     const hasHeroMedia = Boolean(ratingMedia || ratingName);
     if (specLabel == "Rated Battleground") specLabel = "RBG 10v10";
