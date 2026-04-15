@@ -24,7 +24,10 @@
     position: relative;
     overflow: visible;
     box-sizing: border-box;
-    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
 }
 
 .pvp-card:hover {
@@ -111,6 +114,7 @@
     flex: 1;
     gap: 0.55rem;
     height: auto;
+    justify-content: space-between;
 }
 
 .cardSection {
@@ -182,16 +186,19 @@
 }
 
 .recordSection {
-    display: grid;
-    grid-template-columns: 42px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 0.78rem;
-    min-height: 78px;
+    /* display: grid; */
+    /* grid-template-columns: 42px minmax(0, 1fr) auto; */
+    /* align-items: center; */
+    /* gap: 0.78rem; */
+    min-height: 68px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 0.6rem;
-    padding-bottom: 0.6rem;
+    padding: 0.5rem 0.4rem;
     margin-top: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .recordIcon {
@@ -208,6 +215,14 @@
     display: flex;
     flex-direction: column;
     gap: 0.14rem;
+    align-self: center;
+    margin-left: 0;
+}
+
+.recordMediaAndText {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
 }
 
 .recordTitle {
@@ -232,6 +247,7 @@
     text-shadow:
         0 0 8px rgba(255, 215, 0, 0.2),
         0 0 16px rgba(255, 215, 0, 0.08);
+    width: fit-content;
 }
 
 .recordWrapper {

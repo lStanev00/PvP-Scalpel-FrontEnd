@@ -80,7 +80,6 @@ export function Details() {
                     entry.name.includes("Strategist")
                 );
                 if (strategistExist) {
-                    console.info(strategistExist);
                     if (blitzRatings[bracketKey]) {
                         blitzRatings[bracketKey].achieves = {
                             name: "Strategist",
@@ -90,13 +89,13 @@ export function Details() {
                 }
             }
         } else if (bracketKey == `2v2` || bracketKey == `3v3` || bracketKey == `rbg`) {
-            const rating = bracketData?.currentSeason?.rating;
-            const shouldSkip =
-                (!bracketData?.achieves && rating === 0) || rating === undefined;
+            // const rating = bracketData?.currentSeason?.rating;
+            // const shouldSkip =
+            //     (!bracketData?.achieves && rating === 0) || rating === undefined;
 
-            if (!shouldSkip) {
-                otherRatings[bracketKey] = bracketData;
-            }
+            // if (!shouldSkip) {
+            // }
+            otherRatings[bracketKey] = bracketData;
         }
     });
 
