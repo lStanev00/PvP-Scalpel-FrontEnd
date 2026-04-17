@@ -29,7 +29,7 @@ export default function TalentSection() {
         <section className={Style.section}>
             <h2>
                 <GiScrollUnfurled className={Style.iconHeader} />
-                Talent Code
+                &nbsp;Talent Code
             </h2>
 
             <div className={Style.inner}>
