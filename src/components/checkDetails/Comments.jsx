@@ -5,11 +5,10 @@ import NewPostForm from "./NewPostForm";
 export default function Comments() {
     return (
         <main className={Style.main}>
-            <h1>Comments</h1>
+            <NewPostForm />
             <section className={Style.contentWrapper}>
+                <h1>Comments</h1>
                 <CommentsSection />
-                <NewPostForm />
-
             </section>
         </main>
     );

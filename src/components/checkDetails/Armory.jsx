@@ -16,7 +16,7 @@ export default function Armory() {
     return (
         <HoverContext.Provider value={{ hoverItem, setHoverItem, coursorPosition }}>
             <section className={`${Style.parentSection}`}>
-                <h1 style={{ fontSize: "2.4rem", marginBottom: "1rem" }}>Armory</h1>
+                <h1 style={{marginBottom: "0.5rem"}}>Armory</h1>
 
                 <div
                     className={`${ParentStyle["inner-section"]} ${Style.main}`}
