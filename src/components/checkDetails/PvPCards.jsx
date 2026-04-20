@@ -20,6 +20,7 @@ export default function PvPCards({ bracketData, bracketLabel = undefined, specLa
     const hasHeroMedia = Boolean(ratingMedia || ratingName);
     if (specLabel == "Rated Battleground") specLabel = "RBG 10v10";
 
+    if (bracketData?.record == 0 && !rating) return null;
     return (
         <article className={`${Style["pvp-card"]} ${!hasRecord ? Style.ratingOnlyCard : ""}`}>
             <header className={`${Style.cardHeader} ${bracketLabel ? Style.cardHeaderSplit : ""}`}>
@@ -71,7 +72,7 @@ export default function PvPCards({ bracketData, bracketLabel = undefined, specLa
                             </div>
                         </div>
 
-                        {bracketData.record && (
+                        {bracketData.record && bracketData.record !== "0" && (
                             <span className={Style.recordValue}>{bracketData.record}</span>
                         )}
                     </section>
