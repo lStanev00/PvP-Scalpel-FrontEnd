@@ -454,7 +454,7 @@ export default function LobbyPlayersTable({ sections, onOpen }) {
                             className={Style.lobbyTableColRecord}
                         />
                         <SortButton
-                            label="Avg ilvl"
+                            label="Avg PVP ilvl"
                             columnKey="ilvl"
                             sortKey={sortKey}
                             sortDirection={sortDirection}

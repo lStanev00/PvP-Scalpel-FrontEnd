@@ -324,20 +324,24 @@ function getRoleLabel(row) {
     );
 }
 
+
+const AVERAGE_ITEM_LEVEL_IGNORED_SLOTS = new Set(["tabard", "shirt"]);
+function isAverageItemLevelGearEntry([slot, item]) {
+    if (AVERAGE_ITEM_LEVEL_IGNORED_SLOTS.has(slot)) return false;
+
+    const level = Number(item?.level);
+    return Number.isFinite(level) && level > 1;
+}
+
 function getAverageItemLevel(character) {
-    const ignoredSlots = new Set(["tabard", "shirt"]);
-    const gearEntries = Object.entries(character?.gear || {}).filter(([slot, item]) => {
-        if (ignoredSlots.has(slot)) return false;
-        const level = Number(item?.level);
-        return Number.isFinite(level) && level > 1;
-    });
+    const gearEntries = Object.entries(character?.gear || {}).filter(isAverageItemLevelGearEntry);
 
     if (!gearEntries.length) {
         return "Unknown";
     }
 
     const totalItemLevel = gearEntries.reduce((sum, [, item]) => {
-        return sum + Number(item.level);
+        return sum + Number(item.pvpIlvl);
     }, 0);
 
     return String(Math.round(totalItemLevel / gearEntries.length));
