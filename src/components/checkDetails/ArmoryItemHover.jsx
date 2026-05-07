@@ -7,19 +7,32 @@ export default function ArmoryItemHover() {
 
     if (!item) return null;
     const zoom = getCurrentZoom();
+    const viewportWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+    const showLeft = coursorPosition.x > viewportWidth / 2;
+    const showAbove = coursorPosition.y > viewportHeight * 0.68;
+    const scaledX = coursorPosition.x / zoom;
+    const scaledY = coursorPosition.y / zoom;
+    const scaledViewportWidth = viewportWidth / zoom;
+    const scaledViewportHeight = viewportHeight / zoom;
+    const positionStyle = {
+        ...(showAbove
+            ? { bottom: `calc(${scaledViewportHeight - scaledY}px + 0.5rem)` }
+            : { top: `calc(${scaledY}px + 0.5rem)` }),
+        ...(showLeft
+            ? { right: `calc(${scaledViewportWidth - scaledX}px + 1.5rem)` }
+            : { left: `calc(${scaledX}px + 1.5rem)` }),
+    };
 
     return (
         <div
             className={Style.wrapper}
-            style={{
-                top: `calc(${coursorPosition.y / zoom}px + 0.5rem)`,
-                left: `calc(${coursorPosition.x / zoom}px + 1.5rem)`,
-            }}>
+            style={positionStyle}>
             <img src={item.media} alt={item.name} className={Style.icon} />
 
             <div className={Style.details}>
                 <h4 className={Style.name}>{item.name}</h4>
-                <p className={Style.level}>Item Level {item.level}</p>
+                {item.pvpIlvl && <p className={Style.level}>PvP Item Level {item.pvpIlvl}</p>}
 
                 <ul className={Style.stats}>
                     {item.stats?.map((stat, index) => (
