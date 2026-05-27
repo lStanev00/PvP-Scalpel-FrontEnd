@@ -17,7 +17,7 @@ const distDir = path.join(rootDir, "dist");
 
 function resolveApiBase() {
     const raw =
-        process.env.API_URL ||
+        process.env.REST_URL ||
         process.env.VITE_API_URL ||
         "https://api.pvpscalpel.com";
 
