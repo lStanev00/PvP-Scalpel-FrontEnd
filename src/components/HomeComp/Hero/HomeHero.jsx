@@ -48,8 +48,8 @@ export default function HomeHero() {
         const loadHeroVideo = async () => {
             setVideoReady(false);
             setVideoFailed(false);
-            // const url = await FEContent.homeHeroVideo();
-            const url = "https://bucket.pvpscalpel.com/pvp-scalpel-frontend/landing.mp4";
+            const url = await FEContent.homeHeroVideo();
+            // const url = "https://bucket.pvpscalpel.com/pvp-scalpel-frontend/landing.mp4";
 
             if (!isActive) return;
 
