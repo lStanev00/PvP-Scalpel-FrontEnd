@@ -56,8 +56,17 @@ export default function Navigation() {
                     <li>
                         <Link to="/roster">Members</Link>
                     </li>
-                    <li>
-                        <Link to="/leaderboard">Leaderboard</Link>
+                    <li className={Style.navDropdown}>
+                        <Link to="/leaderboard" className={Style.leaderboardLink}>
+                            Leaderboard
+                        </Link>
+                        <div className={Style.leaderboardMenu}>
+                            <Link to="/leaderboard/solo-shuffle">Solo Shuffle</Link>
+                            <Link to="/leaderboard/2v2">2v2 Arena</Link>
+                            <Link to="/leaderboard/3v3">3v3 Arena</Link>
+                            <Link to="/leaderboard/blitz">Blitz BG</Link>
+                            <Link to="/leaderboard/rated-bg">Rated BG</Link>
+                        </div>
                     </li>
                 </ul>
             </nav>
