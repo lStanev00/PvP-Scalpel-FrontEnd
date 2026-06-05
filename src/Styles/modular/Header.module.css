@@ -103,6 +103,61 @@
     border-color: rgba(255, 215, 0, 0.4);
 }
 
+.navDropdown {
+    position: relative;
+}
+
+.leaderboardLink {
+    display: inline-block;
+}
+
+.leaderboardMenu {
+    position: absolute;
+    top: calc(100% + 0.35rem);
+    right: 0;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 10.5rem;
+    padding: 0.55rem;
+    border: 1px solid rgba(255, 215, 0, 0.28);
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(24, 28, 49, 0.98), rgba(13, 17, 31, 0.98));
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.45),
+        0 0 14px rgba(255, 215, 0, 0.12);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.25rem);
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease;
+}
+
+.leaderboardMenu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -0.55rem;
+    height: 0.55rem;
+}
+
+.leaderboardMenu a {
+    display: block;
+    padding: 0.48rem 0.7rem;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.navDropdown:hover .leaderboardMenu,
+.navDropdown:focus-within .leaderboardMenu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
 /* subtle pulse animation (optional, ambient) */
 @keyframes faintPulse {
     0%, 100% {

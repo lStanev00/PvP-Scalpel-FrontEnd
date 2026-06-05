@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Style from "../../Styles/modular/WeeklyTop.module.css";
 import { UserContext } from "../../hooks/ContextVariables.jsx";
 import { useNavigate } from "react-router-dom";
+import { FaTrophy } from "react-icons/fa";
 
 export default function WeeklyTop({ content }) {
     const { httpFetch } = useContext(UserContext);
@@ -41,11 +42,15 @@ export default function WeeklyTop({ content }) {
     }, [httpFetch, bracket]);
 
     return (
-        <div className={Style.card}>
-            <div className={Style.header}>
-                <h3>Weekly Top 5</h3>
+        <section className={Style.card} aria-labelledby="weekly-top-title">
+            <header className={Style.header}>
+                <span className={Style.headerIcon} aria-hidden="true">
+                    <FaTrophy />
+                </span>
+                <h3 id="weekly-top-title">Weekly Top 5 Gainers</h3>
                 <span className={Style.badge}>{bracket.toUpperCase()}</span>
-            </div>
+                {/* <span className={Style.connectorTop} aria-hidden="true" /> */}
+            </header>
 
             {loading ? (
                 <div className={Style.loading}>Loading…</div>
@@ -54,9 +59,12 @@ export default function WeeklyTop({ content }) {
             ) : (
                 <ul className={Style.list}>
                     {top.map((p, idx) => {
-                        const parts = p?.playerSearch.split(":");
+                        // /check/eu/chamber-of-aspects/yvonipa
+                        const parts = p?.playerSearch.split(":").reverse();
+                        parts.unshift("/check");
+                        const navLink = parts.join("/")
                         return <li
-                            onClick={() => navigate(`/check/${parts[2]}/${parts[1]}/${parts[0]}`)}
+                            onClick={() => navigate(navLink)}
                             key={`${p._id || p.name}-${idx}`}
                             className={`${Style.item} ${idx < 3 ? Style.podium : ""}`}>
                             <div className={Style.rank}>#{idx + 1}</div>
@@ -69,7 +77,8 @@ export default function WeeklyTop({ content }) {
                                 height={44}
                             />
                             <div className={Style.meta}>
-                                <div className={Style.name}>{p.name}</div>
+                                <p className={Style.name}>{p.name}</p>
+                                <p className={Style.realm}>{p.activeSpec.name}</p>
                             </div>
                             <div className={Style.rating}>
                                 <span className={Style.startRating}>{p?.startRating || 0}</span>
@@ -85,10 +94,6 @@ export default function WeeklyTop({ content }) {
                 </ul>
             )}
 
-            <div className={Style.footer}>
-                <span>Updated</span>
-                <time>{updated ? new Date(updated).toLocaleString() : "—"}</time>
-            </div>
-        </div>
+        </section>
     );
 }

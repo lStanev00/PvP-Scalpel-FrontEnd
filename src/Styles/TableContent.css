@@ -176,20 +176,19 @@
     .leaderboard-table thead th {
         font-size: 0.75rem;
     }
+    .leaderboard-table thead th:nth-child(3),
     .leaderboard-table tbody td:nth-child(3) {
         display: none;
     }
 }
 
 @media (max-width: 600px) {
-    .leaderboard-table thead th:nth-child(4),
     .leaderboard-table thead th:nth-child(5),
-    .leaderboard-table tbody td:nth-child(4),
     .leaderboard-table tbody td:nth-child(5) {
         display: none;
     }
     .leaderboard-table tbody td:nth-child(2) {
-        min-width: 140px;
+        min-width: 120px;
     }
     .leaderboard-table img {
         width: 28px;
