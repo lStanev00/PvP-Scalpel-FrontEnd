@@ -62,7 +62,6 @@ export const UserProvider = ({ children }) => {
         return {
             // homeHeroVideo: () => getFEContent("landing.mp4"),
             homeHeroVideo: () => "https://bucket.pvpscalpel.com/pvp-scalpel-frontend/landing.mp4",
-            appBG: () => getFEContent("backg.png"),
             appBG: () => "https://bucket.pvpscalpel.com/pvp-scalpel-frontend/backg.png",
             get: getFEContent,
         };
