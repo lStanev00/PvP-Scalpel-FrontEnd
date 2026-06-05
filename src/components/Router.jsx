@@ -3,6 +3,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../hooks/ContextVariables";
 import Style from "../Styles/modular/Header.module.css";
 import SearchBar from "./SearchBar/SearchBar";
+import { FaFlag } from "react-icons/fa";
+import {
+    GiBattleAxe,
+    GiCrossedSwords,
+    GiLightningTrio,
+    GiTripleScratches,
+} from "react-icons/gi";
 
 export default function Navigation() {
     const { user } = useContext(UserContext);
@@ -61,11 +68,26 @@ export default function Navigation() {
                             Leaderboard
                         </Link>
                         <div className={Style.leaderboardMenu}>
-                            <Link to="/leaderboard/solo-shuffle">Solo Shuffle</Link>
-                            <Link to="/leaderboard/2v2">2v2 Arena</Link>
-                            <Link to="/leaderboard/3v3">3v3 Arena</Link>
-                            <Link to="/leaderboard/blitz">Blitz BG</Link>
-                            <Link to="/leaderboard/rated-bg">Rated BG</Link>
+                            <Link to="/leaderboard/solo-shuffle">
+                                <GiCrossedSwords className={Style.leaderboardMenuIcon} />
+                                <span>Solo Shuffle</span>
+                            </Link>
+                            <Link to="/leaderboard/2v2">
+                                <GiBattleAxe className={Style.leaderboardMenuIcon} />
+                                <span>2v2 Arena</span>
+                            </Link>
+                            <Link to="/leaderboard/3v3">
+                                <GiTripleScratches className={Style.leaderboardMenuIcon} />
+                                <span>3v3 Arena</span>
+                            </Link>
+                            <Link to="/leaderboard/blitz">
+                                <GiLightningTrio className={Style.leaderboardMenuIcon} />
+                                <span>Blitz BG</span>
+                            </Link>
+                            <Link to="/leaderboard/rated-bg">
+                                <FaFlag className={Style.leaderboardMenuIcon} />
+                                <span>Rated BG</span>
+                            </Link>
                         </div>
                     </li>
                 </ul>
