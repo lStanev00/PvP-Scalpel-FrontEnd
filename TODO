@@ -1,2 +1,5 @@
 remove all global CSSes while contain same appearences
 done
+
+postion the weekly leaderboard modue at `https://www.pvpscalpel.com/leaderboard/*`, at top of the main leaderboard so the page layout becomes like `feed`
+working
