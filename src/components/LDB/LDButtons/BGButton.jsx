@@ -31,8 +31,17 @@ export default function BGBtn({ setData, setPage, setContent }) {
                     const numXP = description
                         .replace(`Earn a rating of `, ``)
                         .replace(` in either Rated Battlegrounds or Rated Battleground Blitz.`, ``);
-
+                        
                     XP.description = numXP;
+                        
+                    if (name.includes(`Hero of the Alliance`)) {
+                        XP.name = "Hero of the Alliance";
+                        XP.description = ""
+
+                    } else if (name.includes(`Hero of the Horde`)) {
+                        XP.name = "Hero of the Horde";
+                        XP.description = ""
+                    }
 
                     char.XP = XP;
                 }

@@ -18,13 +18,14 @@ export default function ContentContainer({ data, content, page, setPage }) {
             {/* Main Table aStnd Search */}
             <div className={Style.mainContent}>
                 <div className={Style.MainLDB}>
+                    <WeeklyTop content={content} />
+
                     <LDBSearch data={data} setPage={setPage} refs={refs} />
                     <TableContent page={page} content={content} refs={refs} />
                     <PaginatioContainer data={data} page={page} setPage={setPage} />
                 </div>
-                <aside className={Style.sidePanel}>
-                    <WeeklyTop content={content} />
-                </aside>
+                {/* <aside className={Style.sidePanel}> */}
+                {/* </aside> */}
             </div>
 
             {/* Sticky Weekly Top Sidebar */}
