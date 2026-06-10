@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import Style from "../Styles/modular/LogReg.module.css";
+import { getSafeInternalTarget } from "../helpers/authRedirect.js";
 import getFingerprint from "../helpers/getFingerprint.js";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { UserContext } from "../hooks/ContextVariables.jsx";
@@ -9,8 +10,8 @@ export default function Login() {
     const [newDivError, setnewDivError] = useState();
     const navigate = useNavigate();
     const { setUser, httpFetch } = useContext(UserContext);
-    const [commingFrom, setRelocation] = useSearchParams();
-    const goto = commingFrom.get(`target`);
+    const [comingFrom] = useSearchParams();
+    const goto = getSafeInternalTarget(comingFrom.get("target"));
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -51,7 +52,7 @@ export default function Login() {
             if (req.status == 200) {
                 await httpFetch(`/verify/me`);
                 if (goto) {
-                    return navigate(`${goto}`);
+                    return navigate(goto);
                 }
                 navigate(`/`);
                 await new Promise((resolve) => setTimeout(resolve, 200));
@@ -116,7 +117,7 @@ export default function Login() {
                             Forgot your password? <Link to="/reset/password">Reset here</Link>
                         </p>
                         <p>
-                            Don't have an account? <Link to="/register">Register here</Link>
+                            Don&apos;t have an account? <Link to="/register">Register here</Link>
                         </p>
                     </div>
                 </form>
