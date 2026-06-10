@@ -18,6 +18,7 @@ export const UserContext = createContext();
  */
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(undefined);
+    const [authStatus, setAuthStatus] = useState("checking");
     const inputRef = useRef();
     const feContentCacheRef = useRef(null);
 
@@ -28,8 +29,12 @@ export const UserProvider = ({ children }) => {
     const httpFetch = useCallback(async (endpoint, options = {}) => {
         const req = await httpFetchWithCredentials(endpoint, options);
 
-        if (req.status === 403) {
-            setUser(undefined);
+        const isDiscordCodeError =
+            endpoint === "/link/discord" && Boolean(req.data?.message);
+
+        if (req.status === 403 && !isDiscordCodeError) {
+            setUser(null);
+            setAuthStatus("guest");
 
             if (import.meta.env.DEV) {
                 console.warn(
@@ -42,7 +47,13 @@ export const UserProvider = ({ children }) => {
         }
 
         if (endpoint === `/verify/me`) {
-            if (req.status === 200) setUser(req.data);
+            if (req.status === 200 && req.data?._id) {
+                setUser(req.data);
+                setAuthStatus("authenticated");
+            } else {
+                setUser(null);
+                setAuthStatus("guest");
+            }
         }
 
         return req;
@@ -68,8 +79,8 @@ export const UserProvider = ({ children }) => {
     }, [getFEContent]);
 
     const value = useMemo(() => {
-        return { user, setUser, httpFetch, inputRef, fetchFEContent, FEContent };
-    }, [user, httpFetch, fetchFEContent, FEContent]);
+        return { user, setUser, authStatus, httpFetch, inputRef, fetchFEContent, FEContent };
+    }, [user, authStatus, httpFetch, fetchFEContent, FEContent]);
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
