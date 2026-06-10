@@ -48,7 +48,7 @@
     inset: -18%;
     z-index: -1;
     background-image:
-        url("/backgrounds/cinematic_fog.webp"),
+        var(--asset-cinematic-fog),
         repeating-linear-gradient(
             180deg,
             rgba(255, 255, 255, 0.022) 0px,

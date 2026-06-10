@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { FaDiscord, FaDownload } from "react-icons/fa";
 import { GiBroadsword } from "react-icons/gi";
 import { UserContext } from "../../../hooks/ContextVariables.jsx";
+import { publicAssetUrl } from "../../../helpers/assets.js";
 import Style from "./HomeHero.module.css";
 
 const PLAYBACK_RATE = 0.4;
@@ -49,7 +50,6 @@ export default function HomeHero() {
             setVideoReady(false);
             setVideoFailed(false);
             const url = await FEContent.homeHeroVideo();
-            // const url = "https://bucket.pvpscalpel.com/pvp-scalpel-frontend/landing.mp4";
 
             if (!isActive) return;
 
@@ -145,7 +145,11 @@ export default function HomeHero() {
             {!isVideoActive ? <div className={Style.overlay} aria-hidden="true" /> : null}
 
             <div className={Style.content}>
-                <img className={Style.logo} src="/logo/logo_resized.png" alt="PvP Scalpel Logo" />
+                <img
+                    className={Style.logo}
+                    src={publicAssetUrl("logo/logo_resized.png")}
+                    alt="PvP Scalpel Logo"
+                />
                 <h1>PvP Scalpel</h1>
                 <p className={Style.p}>
                     Precision. Performance. Power.

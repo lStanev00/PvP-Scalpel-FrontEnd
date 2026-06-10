@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSEO } from "../hooks/useSEO";
 import { UserContext } from "../hooks/ContextVariables";
 import FailureState from "../components/failure/FailureState.jsx";
+import { publicAssetUrl } from "../helpers/assets.js";
 
 export default function CharacterNotFound() {
     const { server, realm, name } = useParams();
@@ -31,12 +32,12 @@ export default function CharacterNotFound() {
             "No verified PvP data exists for this character. Verify spelling, realm, and region, then scan again.",
         ogType: "website",
         ogUrl: canonical,
-        ogImage: "https://pvpscalpel.com/logo/logo_resized.png",
+        ogImage: publicAssetUrl("logo/logo_resized.png"),
         twitterCard: "summary_large_image",
         twitterTitle: "Target Not Found | PvP Scalpel",
         twitterDescription:
             "No verified PvP data exists for this character. Verify spelling, realm, and region, then scan again.",
-        twitterImage: "https://pvpscalpel.com/logo/logo_resized.png",
+        twitterImage: publicAssetUrl("logo/logo_resized.png"),
     });
 
     useEffect(() => {

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import MagnifierSearchStyle from "../Styles/modular/MaginifierSearch.module.css";
+import { publicAssetUrl } from "../helpers/assets.js";
 
 export default function Loading({ height = undefined }) {
     const [isClient, setIsClient] = useState(false);
@@ -19,7 +20,7 @@ export default function Loading({ height = undefined }) {
         >
             {isClient ? (
                 <video
-                    src="/animations/output1.webm"
+                    src={publicAssetUrl("animations/output1.webm")}
                     autoPlay
                     loop
                     muted

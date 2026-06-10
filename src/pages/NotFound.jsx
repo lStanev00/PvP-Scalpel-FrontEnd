@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSEO } from "../hooks/useSEO";
 import FailureState from "../components/failure/FailureState.jsx";
+import { publicAssetUrl } from "../helpers/assets.js";
 
 export default function NotFound() {
     const location = useLocation();
@@ -20,11 +21,11 @@ export default function NotFound() {
         ogDescription: "This page doesn't exist. Return to the Command Center or go back.",
         ogType: "website",
         ogUrl: canonical,
-        ogImage: "https://pvpscalpel.com/logo/logo_resized.png",
+        ogImage: publicAssetUrl("logo/logo_resized.png"),
         twitterCard: "summary_large_image",
         twitterTitle: "404 — Signal Lost | PvP Scalpel",
         twitterDescription: "This page doesn't exist. Return to the Command Center or go back.",
-        twitterImage: "https://pvpscalpel.com/logo/logo_resized.png",
+        twitterImage: publicAssetUrl("logo/logo_resized.png"),
     });
 
     useEffect(() => {

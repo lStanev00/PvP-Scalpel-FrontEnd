@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../hooks/ContextVariables";
 import { getGameClasses } from "../../../helpers/storageOperations/gameData.js";
+import { publicAssetUrl } from "../../../helpers/assets.js";
 
 function getClassIconMedia(char) {
     const classMedia = char?.class?.media;
@@ -24,7 +25,7 @@ function getClassIconMedia(char) {
         }
     }
 
-    return "/item_fallback.png";
+    return publicAssetUrl("item_fallback.png");
 }
 
 function ServerFlag({ region, className }) {
@@ -136,7 +137,11 @@ export default function DropDownItem({ entry, Style, guessChar = undefined }) {
     if (guessChar)
         return (
             <li onClick={handleClick} className={Style.dropdownItem}>
-                <img className={Style.classIcon} src="/plus_icon.png" alt="Add icon" />
+                <img
+                    className={Style.classIcon}
+                    src={publicAssetUrl("plus_icon.png")}
+                    alt="Add icon"
+                />
 
                 <div className={Style.playerData}>
                     <p className={Style.nameRealm}>

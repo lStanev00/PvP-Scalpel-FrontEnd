@@ -6,6 +6,7 @@ import {
     fetchFEContentResource,
     getCachedFEContent,
 } from "../helpers/feContent.js";
+import { assetUrl } from "../helpers/assets.js";
 import { httpFetchWithCredentials } from "../helpers/httpFetch.js";
 
 export const UserContext = createContext();
@@ -71,9 +72,8 @@ export const UserProvider = ({ children }) => {
 
     const FEContent = useMemo(() => {
         return {
-            // homeHeroVideo: () => getFEContent("landing.mp4"),
-            homeHeroVideo: () => "https://bucket.pvpscalpel.com/pvp-scalpel-frontend/landing.mp4",
-            appBG: () => "https://bucket.pvpscalpel.com/pvp-scalpel-frontend/backg.png",
+            homeHeroVideo: () => assetUrl("landing.mp4"),
+            appBG: () => assetUrl("backg.png"),
             get: getFEContent,
         };
     }, [getFEContent]);

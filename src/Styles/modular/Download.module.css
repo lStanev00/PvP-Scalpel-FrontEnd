@@ -91,7 +91,7 @@
             rgba(12, 14, 22, 0.35) 72%,
             rgba(12, 14, 22, 0) 100%
         ),
-        url("/backgrounds/download_page_bg.png");
+        var(--asset-download-background);
     background-repeat: no-repeat;
     background-position: right center;
     background-size: contain;

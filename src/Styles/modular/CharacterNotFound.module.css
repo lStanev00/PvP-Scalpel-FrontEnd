@@ -35,7 +35,7 @@
     position: absolute;
     inset: -18%;
     z-index: -1;
-    background-image: url("/backgrounds/cinematic_fog.webp");
+    background-image: var(--asset-cinematic-fog);
     background-size: cover;
     background-position: center;
     opacity: 0.16;
@@ -293,4 +293,3 @@
         padding: 2rem 1.2rem;
     }
 }
-

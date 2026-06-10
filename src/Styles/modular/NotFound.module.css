@@ -26,10 +26,9 @@
             rgba(0, 0, 0, 0) 3px,
             rgba(0, 0, 0, 0) 7px
         ),
-        url("/backgrounds/404-bg.png"),
-        url("/backgrounds/main_background.png");
-    background-size: cover, cover, cover, auto, cover, cover;
-    background-position: center, center, center, 0 0, center, center;
+        var(--asset-main-background);
+    background-size: cover, cover, cover, auto, cover;
+    background-position: center, center, center, 0 0, center;
     filter: saturate(1.05) contrast(1.05);
     opacity: 1;
     animation: scanShift 18s linear infinite;
@@ -41,7 +40,7 @@
     position: absolute;
     inset: -20%;
     z-index: -2;
-    background-image: url("/backgrounds/cinematic_fog.webp");
+    background-image: var(--asset-cinematic-fog);
     background-size: cover;
     background-position: center;
     opacity: 0.18;

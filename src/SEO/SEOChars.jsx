@@ -1,4 +1,5 @@
 import { useSEO } from "../hooks/useSEO";
+import { publicAssetUrl } from "../helpers/assets.js";
 
 export default function SEOChars({ char }) {
     if (!char) return null;
@@ -38,7 +39,7 @@ View detailed gear, talents, achievements, and performance history on PvP Scalpe
     const image =
         char.media?.charImg ||
         char.media?.avatar ||
-        "https://pvpscalpel.com/logo/logo_resized.png";
+        publicAssetUrl("logo/logo_resized.png");
 
     const canonical = `https://pvpscalpel.com/check/${region.toLowerCase()}/${
         char.playerRealm?.slug

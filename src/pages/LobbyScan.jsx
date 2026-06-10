@@ -8,6 +8,7 @@ import {
 } from "react-icons/fi";
 import SEOLobbyScan from "../SEO/SEOLobbyScan.jsx";
 import Style from "../Styles/modular/LobbyScan.module.css";
+import { publicAssetUrl } from "../helpers/assets.js";
 import LobbyPlayersTable from "../components/LobbyScan/LobbyPlayersTable.jsx";
 
 const SOCKET_URL = "wss://ws.pvpscalpel.com";
@@ -1127,7 +1128,7 @@ export default function LobbyScan() {
                 <section className={Style.heroSection}>
                     <div className={Style.heroFrame}>
                         <img
-                            src="/logo/logo_resized.png"
+                            src={publicAssetUrl("logo/logo_resized.png")}
                             alt="PvP Scalpel Logo"
                             className={Style.logo}
                         />

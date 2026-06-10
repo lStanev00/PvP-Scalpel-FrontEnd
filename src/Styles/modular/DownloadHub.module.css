@@ -22,7 +22,7 @@
 }
 
 .hub::before {
-    background-image: url("/backgrounds/main_background.png");
+    background-image: var(--asset-main-background);
     background-position: center;
     background-size: cover;
     opacity: 0.03;

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useSEO } from "../hooks/useSEO";
+import { publicAssetUrl } from "../helpers/assets.js";
 
 export default function SEODesktopBeta() {
     useSEO({
@@ -12,12 +13,12 @@ export default function SEODesktopBeta() {
             "Private closed beta information for the PvP Scalpel Desktop companion application.",
         ogType: "website",
         ogUrl: "https://pvpscalpel.com/desktop-beta",
-        ogImage: "https://pvpscalpel.com/logo/logo_resized.png",
+        ogImage: publicAssetUrl("logo/logo_resized.png"),
         twitterCard: "summary_large_image",
         twitterTitle: "PvP Scalpel Desktop — Closed Beta",
         twitterDescription:
             "Private closed beta information for the PvP Scalpel Desktop companion application.",
-        twitterImage: "https://pvpscalpel.com/logo/logo_resized.png",
+        twitterImage: publicAssetUrl("logo/logo_resized.png"),
     });
 
     useEffect(() => {

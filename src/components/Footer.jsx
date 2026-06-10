@@ -1,10 +1,12 @@
+import { publicAssetUrl } from "../helpers/assets.js";
+
 export default function Footer({Style}) {
     return (
         <footer className={Style.footer}>
             <div className={Style["footer-inner"]}>
                 <div className={Style["footer-brand"]}>
                     <img
-                        src="/logo/logo_resized.png"
+                        src={publicAssetUrl("logo/logo_resized.png")}
                         alt="PvP Scalpel Logo"
                         className={Style["footer-logo"]}
                     />

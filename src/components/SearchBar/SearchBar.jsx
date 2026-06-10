@@ -44,7 +44,6 @@ export default function SearchBar({ onSearch }) {
             className={Style.searchBar}
             ref={(el) => (searchBarEl.current = el)}
             id="searchBar">
-            {/* <img src="/magnifierLupe.png" alt="" width={40} onClick={(e) => {handleDivClick(e, true)}}/> */}
             <HiOutlineMagnifyingGlass
                 width={40}
                 onClick={(e) => {
