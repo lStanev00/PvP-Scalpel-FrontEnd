@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Style from "./WeeklyRender.module.css";
+import { publicAssetUrl } from "../../../helpers/assets.js";
 
 export default function WeeklyRender({ weeklyData }) {
     const navigate = useNavigate();
@@ -68,8 +69,10 @@ export default function WeeklyRender({ weeklyData }) {
                     if (parts.length < 3) return null;
 
                     const urlPart = [parts[2], parts[1], parts[0]].join("/");
-                    const banner = top?.media?.banner || "/item_fallback.png";
-                    const specMedia = top?.activeSpec?.media || "/spec_fallback.png";
+                    const banner =
+                        top?.media?.banner || publicAssetUrl("item_fallback.png");
+                    const specMedia =
+                        top?.activeSpec?.media || publicAssetUrl("item_fallback.png");
 
                     return (
                         <article

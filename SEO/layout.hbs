@@ -11,8 +11,8 @@
         />
         <meta name="author" content="Lachezar Stanev" />
 
-        <link rel="icon" type="image/png" href="/logo/logo_resized.png" />
-        <link rel="apple-touch-icon" href="/logo/logo_resized.png" />
+        <link rel="icon" type="image/png" href="{{logoUrl}}" />
+        <link rel="apple-touch-icon" href="{{logoUrl}}" />
 
         <meta
             property="og:type"
@@ -28,7 +28,7 @@
         />
         <meta
             property="og:image"
-            content="{{#if ogImage}}{{ogImage}}{{else}}https://pvpscalpel.com/logo/logo_resized.png{{/if}}"
+            content="{{#if ogImage}}{{ogImage}}{{else}}{{logoUrl}}{{/if}}"
         />
         <meta
             property="og:url"
@@ -50,7 +50,7 @@
         />
         <meta
             name="twitter:image"
-            content="{{#if twitterImage}}{{twitterImage}}{{else}}{{#if ogImage}}{{ogImage}}{{else}}https://pvpscalpel.com/logo/logo_resized.png{{/if}}{{/if}}"
+            content="{{#if twitterImage}}{{twitterImage}}{{else}}{{#if ogImage}}{{ogImage}}{{else}}{{logoUrl}}{{/if}}{{/if}}"
         />
 
         <meta
@@ -65,6 +65,8 @@
         <script type="application/ld+json">{{{jsonLD}}}</script>
         {{/if}}
 
+        <link rel="preconnect" href="{{assetOrigin}}" crossorigin />
+        <link rel="dns-prefetch" href="{{assetOrigin}}" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         {{#if headExtra}}

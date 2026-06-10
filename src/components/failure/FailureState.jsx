@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 
 import Style from "../../Styles/modular/FailureState.module.css";
+import { publicAssetUrl } from "../../helpers/assets.js";
 
 export default function FailureState({
-    variant = "default",
     wallpaper = null,
     eyebrow,
     title,
@@ -16,11 +16,7 @@ export default function FailureState({
     linkAction,
 }) {
     const resolvedWallpaper =
-        wallpaper !== null
-            ? wallpaper
-            : variant === "404"
-            ? 'url("/backgrounds/404-bg.png"), url("/backgrounds/main_background.png")'
-            : 'url("/backgrounds/main_background.png")';
+        wallpaper !== null ? wallpaper : "var(--asset-main-background)";
 
     return (
         <section
@@ -35,7 +31,7 @@ export default function FailureState({
                 <div className={Style.header}>
                     <img
                         className={Style.crest}
-                        src="/logo/logo_resized.png"
+                        src={publicAssetUrl("logo/logo_resized.png")}
                         alt=""
                         aria-hidden="true"
                     />

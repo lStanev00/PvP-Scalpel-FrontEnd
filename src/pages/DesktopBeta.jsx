@@ -1,5 +1,6 @@
 import Style from "../Styles/modular/DesktopBeta.module.css";
 import SEODesktopBeta from "../SEO/SEODesktopBeta";
+import { publicAssetUrl } from "../helpers/assets.js";
 
 export default function DesktopBeta() {
     return (
@@ -7,7 +8,7 @@ export default function DesktopBeta() {
             <SEODesktopBeta />
             <div className={Style.header}>
                 <img
-                    src="/logo/logo_resized.png"
+                    src={publicAssetUrl("logo/logo_resized.png")}
                     alt="PvP Scalpel Logo"
                     className={Style.logo}
                 />

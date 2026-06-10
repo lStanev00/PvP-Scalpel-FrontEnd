@@ -4,6 +4,7 @@ import { CharacterContext } from "../../pages/CharDetails";
 import Style from "../../Styles/modular/charDetails.module.css";
 import { useNavigate } from "react-router-dom";
 import { DetailsProvider } from "./Details";
+import { publicAssetUrl } from "../../helpers/assets.js";
 
 export default function UserDataContainer() {
     const navigate = useNavigate();
@@ -61,7 +62,9 @@ export default function UserDataContainer() {
                         transition: "transform 0.2s ease",
                     }}
                     onClick={async (e) => await likeHandler(e)}
-                    src={`/user_action_icons/${isLiked ? "Liked" : "Like"}.png`}
+                    src={publicAssetUrl(
+                        `user_action_icons/${isLiked ? "Liked" : "Like"}.png`,
+                    )}
                     alt="Character Avatar"
                 />
                 <div className={Style["banner-content"]}>
@@ -76,7 +79,7 @@ export default function UserDataContainer() {
                         cursor: "pointer",
                     }}
                     onClick={commentsSectionClickHandler}
-                    src="/user_action_icons/Comments.png"
+                    src={publicAssetUrl("user_action_icons/Comments.png")}
                     alt="Character Avatar"
                 />
                 <div
@@ -90,7 +93,10 @@ export default function UserDataContainer() {
                     </strong>
                 </div>
 
-                <img src="/user_action_icons/View_Count.png" alt="Character Avatar" />
+                <img
+                    src={publicAssetUrl("user_action_icons/View_Count.png")}
+                    alt="Character Avatar"
+                />
                 <div className={Style["banner-content"]}>
                     <strong>{viewCount} Views</strong>
                 </div>

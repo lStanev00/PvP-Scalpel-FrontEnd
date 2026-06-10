@@ -382,7 +382,7 @@
     bottom: -5rem;
     width: min(28rem, 42vw);
     height: min(28rem, 42vw);
-    background: url("/logo/logo_resized.png") center / contain no-repeat;
+    background: var(--asset-logo) center / contain no-repeat;
     opacity: 0.035;
     filter: blur(10px) saturate(0.7);
     pointer-events: none;

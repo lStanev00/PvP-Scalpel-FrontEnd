@@ -10,6 +10,7 @@ import {
     GiLightningTrio,
     GiTripleScratches,
 } from "react-icons/gi";
+import { publicAssetUrl } from "../helpers/assets.js";
 
 export default function Navigation() {
     const { user } = useContext(UserContext);
@@ -26,7 +27,7 @@ export default function Navigation() {
                     className={Style.logo}>
                     <img
                         className={Style["logo-img"]}
-                        src="/logo/logo_resized.png"
+                        src={publicAssetUrl("logo/logo_resized.png")}
                         alt="logo pic"
                     />
                     {/* PvP Scalpel */}

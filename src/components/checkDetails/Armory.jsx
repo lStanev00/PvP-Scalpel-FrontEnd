@@ -2,8 +2,10 @@ import { createContext, useContext , useState } from "react";
 import { DetailsProvider } from "./Details";
 import Style from "../../Styles/modular/Armory.module.css";
 import { CharacterContext } from "../../pages/CharDetails";
-import fallback_img from "/item_fallback.png";
 import ArmoryItemHover from "./ArmoryItemHover";
+import { publicAssetUrl } from "../../helpers/assets.js";
+
+const fallbackImg = publicAssetUrl("item_fallback.png");
 
 export const HoverContext = createContext();
 
@@ -85,13 +87,13 @@ function ItemGenerator({ name }) {
     const { gear: items } = data;
     const item = items?.[name];
 
-    if (!item) return <img className={Style.itemImg} src={fallback_img} />;
-    if (name.length <= 2) return <img className={Style.itemImg} src={fallback_img} />;
+    if (!item) return <img className={Style.itemImg} src={fallbackImg} />;
+    if (name.length <= 2) return <img className={Style.itemImg} src={fallbackImg} />;
     if (item)
         return (
             <img
                 className={Style.itemImg}
-                src={item?.media ? item?.media : fallback_img}
+                src={item?.media ? item?.media : fallbackImg}
                 onMouseEnter={() => setHoverItem(item)}
                 onMouseLeave={() => setHoverItem(null)}
             />

@@ -21,12 +21,21 @@ import LobbyScan from "./pages/LobbyScan.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import localStorageValidatoor from "./helpers/localStorageValidator.js";
 import LinkDiscord from "./pages/linkDiscord.jsx";
+import { publicAssetUrl } from "./helpers/assets.js";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
 const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
 const LDB = lazy(() => import("./pages/LDB.jsx"));
 const RosterPage = lazy(() => import("./pages/Roster.jsx"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage.jsx"))
+
+const assetStyles = {
+    "--asset-main-background": `url("${publicAssetUrl("backgrounds/main_background.png")}")`,
+    "--asset-cinematic-fog": `url("${publicAssetUrl("backgrounds/cinematic_fog.webp")}")`,
+    "--asset-download-background": `url("${publicAssetUrl("backgrounds/download_page_bg.png")}")`,
+    "--asset-inventory-background": `url("${publicAssetUrl("inventory_backg.png")}")`,
+    "--asset-logo": `url("${publicAssetUrl("logo/logo_resized.png")}")`,
+};
 
 export default function AppContent() {
     const { httpFetch } = useContext(UserContext);
@@ -39,7 +48,7 @@ export default function AppContent() {
     return (
         // <Router>
         <>
-            <div style={{"--custom-val" : ""}} className={Style.pageWrapper}>
+            <div style={{ "--custom-val": "", ...assetStyles }} className={Style.pageWrapper}>
                 <Navigation />
 
                 <main>

@@ -14,6 +14,7 @@ import Style from "../Styles/modular/JoinGuild.module.css";
 import { groupedRanks, guildRanks } from "../components/Roster/helpers/guildRanks.js";
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import SEOJoinGuild from "../SEO/SEOJoinGuild.jsx";
+import { publicAssetUrl } from "../helpers/assets.js";
 
 export default function JoinGuild() {
     const navigate = useNavigate();
@@ -145,7 +146,7 @@ export default function JoinGuild() {
                 <div className={Style.hero}>
                     <div className={Style.heroInner}>
                         <img
-                            src="/logo/logo_resized.png"
+                            src={publicAssetUrl("logo/logo_resized.png")}
                             alt="PvP Scalpel Logo"
                             className={Style.logo}
                         />

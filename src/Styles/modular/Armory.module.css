@@ -92,7 +92,7 @@
 .bgLayer {
     position: absolute;
     inset: 0;
-    background-image: url("/inventory_backg.png");
+    background-image: var(--asset-inventory-background);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

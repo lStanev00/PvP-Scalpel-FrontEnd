@@ -14,6 +14,28 @@ app.disable("x-powered-by");
 const rootDir = __dirname;
 const seoDir = path.join(rootDir, "SEO");
 const distDir = path.join(rootDir, "dist");
+const DEFAULT_ASSET_BASE_URL =
+    "https://bucket.pvpscalpel.com/pvp-scalpel-frontend";
+
+function resolveAssetBase() {
+    const raw =
+        process.env.ASSET_BASE_URL ||
+        process.env.VITE_ASSET_BASE_URL ||
+        DEFAULT_ASSET_BASE_URL;
+
+    return String(raw || DEFAULT_ASSET_BASE_URL)
+        .trim()
+        .replace(/\/+$/, "");
+}
+
+function assetUrl(assetPath) {
+    return `${assetBase}/${String(assetPath || "").replace(/^\/+/, "")}`;
+}
+
+const assetBase = resolveAssetBase();
+const publicAssetBase = assetUrl("public");
+const logoUrl = `${publicAssetBase}/logo/logo_resized.png`;
+const assetOrigin = new URL(assetBase).origin;
 
 function resolveApiBase() {
     const raw =
@@ -275,6 +297,10 @@ function renderPage(res, view, data = {}) {
         headExtra: buildAssets.headTags,
         bodyScripts: buildAssets.scriptTag,
         scriptSrc,
+        assetBase,
+        publicAssetBase,
+        logoUrl,
+        assetOrigin,
         ...data,
     });
     log("debug", "render.page", {
@@ -450,7 +476,7 @@ function buildCharSeo(char, canonical) {
     const image =
         char?.media?.charImg ||
         char?.media?.avatar ||
-        "https://pvpscalpel.com/logo/logo_resized.png";
+        logoUrl;
 
     const structuredData = {
         "@context": "https://schema.org",
@@ -499,7 +525,7 @@ function buildCharNotFoundSeo(canonical) {
     const title = "Character Not Found | PvP Scalpel";
     const description =
         "We couldn't find that character. Check the realm, server, and name, then try again.";
-    const image = "https://pvpscalpel.com/logo/logo_resized.png";
+    const image = logoUrl;
 
     return {
         title,
@@ -557,11 +583,11 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
                 ogDescription: description,
                 ogType: "website",
                 ogUrl: canonical,
-                ogImage: "https://pvpscalpel.com/logo/logo_resized.png",
+                ogImage: logoUrl,
                 twitterCard: "summary_large_image",
                 twitterTitle: title,
                 twitterDescription: description,
-                twitterImage: "https://pvpscalpel.com/logo/logo_resized.png",
+                twitterImage: logoUrl,
             });
         }
 
