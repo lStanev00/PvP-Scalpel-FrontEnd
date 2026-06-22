@@ -9,7 +9,7 @@ import { lazy, Suspense, useContext, useEffect } from "react";
 import { UserContext } from "./hooks/ContextVariables.jsx";
 import ResetPassword from "./pages/utility/ResetPassword.jsx";
 import VlidateToken from "./pages/utility/VlidateToken.jsx";
-import { GuestRoute, UserRoute } from "./hooks/Guards.jsx";
+import { AdminRoute, GuestRoute, UserRoute } from "./hooks/Guards.jsx";
 import Logout from "./pages/utility/Logout.jsx";
 import Posts from "./pages/Posts.jsx";
 import Loading from "./components/loading.jsx";
@@ -28,6 +28,7 @@ const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
 const LDB = lazy(() => import("./pages/LDB.jsx"));
 const RosterPage = lazy(() => import("./pages/Roster.jsx"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage.jsx"))
+const MediaUpload = lazy(() => import("./pages/MediaUpload.jsx"));
 
 const assetStyles = {
     "--asset-main-background": `url("${publicAssetUrl("backgrounds/main_background.png")}")`,
@@ -63,6 +64,17 @@ export default function AppContent() {
                                 }
                             ></Route>
                             <Route path="/logout" element={<Logout />} />
+                        </Route>
+
+                        <Route element={<AdminRoute />}>
+                            <Route
+                                path="/upload/media"
+                                element={
+                                    <Suspense fallback={<Loading />}>
+                                        <MediaUpload />
+                                    </Suspense>
+                                }
+                            />
                         </Route>
 
                         <Route element={<GuestRoute />}>

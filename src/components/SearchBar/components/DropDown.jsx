@@ -1,27 +1,11 @@
-import { useContext, useEffect, useState } from "react"
-import exctractSearch from "../../../helpers/extractSearch.js";
+/* eslint-disable react/prop-types */
+
+import { useContext } from "react"
 import { UserContext } from "../../../hooks/ContextVariables.jsx";
 import DropDownItem from "./DropDownItem.jsx";
 import Style from "../../../Styles/modular/DropDownSearch.module.css"
 import Loading from "../../loading.jsx";
-import fromResultFromSearch from "../../../helpers/fromResultFromSearch.js";
-
-function parseSearchInput(inputString) {
-    const rawValue = typeof inputString === "string" ? inputString.trim() : "";
-    const [rawName = "", rawRealm = ""] = rawValue.split("-");
-    const name = rawName.trim();
-    const realm = rawRealm.trim();
-    const nameLength = name.replaceAll(" ", "").length;
-
-    return {
-        hasInput: rawValue.length > 0,
-        name,
-        realm,
-        hasRealm: realm.length > 0,
-        nameLength,
-        isTooShortName: nameLength > 0 && nameLength < 3,
-    };
-}
+import { useCharacterSearch } from "../../../hooks/useCharacterSearch.js";
 
 function hasRenderableItems(searchData) {
     return [searchData?.addChars, searchData?.exactMatch, searchData?.chars].some(
@@ -40,59 +24,16 @@ function InfoPanel({ title, children }) {
     );
 }
 
-function getServerPriority(entry) {
-    const normalizedEntry = Array.isArray(entry) ? entry[0] : entry;
-    const server = (
-        normalizedEntry?.server
-        || normalizedEntry?.char?.server
-        || normalizedEntry?.char?.playerRealm?.server
-        || ""
-    ).toLowerCase();
-
-    if (server === "eu") return 0;
-    if (server === "us") return 1;
-    return 2;
-}
-
-function sortByServerPriority(entries) {
-    if (!Array.isArray(entries)) return entries;
-
-    return [...entries].sort((a, b) => getServerPriority(a) - getServerPriority(b));
-}
-
 export default function DropDown({inputString, visible}) {
-    const [searchState, setSearchState] = useState({ status: "idle", data: null });
-    const { httpFetch, inputRef } = useContext(UserContext);
-    const parsedInput = parseSearchInput(inputString);
-    const shouldSearch = parsedInput.hasInput && !parsedInput.isTooShortName;
-
-    useEffect(() => {
-        if (!parsedInput.hasInput || parsedInput.isTooShortName) {
-            setSearchState({ status: "idle", data: null });
-            return undefined;
-        }
-
-        setSearchState({ status: "loading", data: null });
-        const checker = inputString;
-        const handler = setTimeout(async () => {
-            if (checker === inputString) {
-                const searchString = (exctractSearch(inputString));
-                if (!searchString) {
-                    setSearchState({ status: "idle", data: null });
-                    return;
-                }
-
-                const req = await httpFetch(`/searchCharacter?search=${searchString}`);
-                if(req.ok && req.data) {
-                    setSearchState({ status: "ready", data: fromResultFromSearch(req) });
-                } else {
-                    setSearchState({ status: "ready", data: null });
-                }
-            }
-        }, 400);
-
-        return () => clearTimeout(handler); 
-    }, [httpFetch, inputString, parsedInput.hasInput, parsedInput.isTooShortName]);
+    const { inputRef } = useContext(UserContext);
+    const {
+        status,
+        parsedInput,
+        shouldSearch,
+        addChars,
+        exactMatch,
+        chars,
+    } = useCharacterSearch(inputString);
 
     if (!visible || inputString === undefined) return null;
 
@@ -122,22 +63,18 @@ export default function DropDown({inputString, visible}) {
         );
     }
 
-    if (searchState.status === "loading" && shouldSearch) return (
+    if (status === "loading" && shouldSearch) return (
         <ul className={Style.dropdown}><Loading height={199}/></ul>
 
     )
 
-    const searchData = searchState.data;
-    const sortedAddChars = sortByServerPriority(searchData?.addChars);
-    const sortedExactMatch = sortByServerPriority(searchData?.exactMatch);
-    const sortedChars = sortByServerPriority(searchData?.chars);
     const hasResults = hasRenderableItems({
-        addChars: sortedAddChars,
-        exactMatch: sortedExactMatch,
-        chars: sortedChars,
+        addChars,
+        exactMatch,
+        chars,
     });
 
-    if (searchState.status === "ready" && !hasResults && !parsedInput.hasRealm) {
+    if (status === "ready" && !hasResults && !parsedInput.hasRealm) {
         return (
             <InfoPanel title="Add a realm">
                 <p className={Style.infoText}>
@@ -150,21 +87,21 @@ export default function DropDown({inputString, visible}) {
         );
     }
 
-    if (searchState.status === "ready" && inputRef?.current?.value !== "" && (hasResults || parsedInput.hasRealm)) {
+    if (status === "ready" && inputRef?.current?.value !== "" && (hasResults || parsedInput.hasRealm)) {
         return (
             <ul className={Style.dropdown}>
                 {
-                    sortedAddChars
-                    && Array.isArray(sortedAddChars)
+                    addChars
+                    && Array.isArray(addChars)
                     && (
-                        sortedAddChars.map((entry, index) => <DropDownItem key={`${index}:${entry?.charName}:${entry?.realmSlug}`} Style={Style} guessChar={entry}/>)
+                        addChars.map((entry, index) => <DropDownItem key={`${index}:${entry?.charName}:${entry?.realmSlug}`} Style={Style} guessChar={entry}/>)
                     )
                 }
                 {
-                    sortedExactMatch
-                    && Array.isArray(sortedExactMatch)
+                    exactMatch
+                    && Array.isArray(exactMatch)
                     && (
-                        sortedExactMatch
+                        exactMatch
                             .filter(Boolean)
                             .map((entry, index) => {
                                 const key = entry?.char?._id ?? entry?._id ?? `${index}:${entry?.charName ?? "unknown"}`;
@@ -173,9 +110,9 @@ export default function DropDown({inputString, visible}) {
                     )
                 }
                 {
-                sortedChars
+                chars
                 && (
-                    sortedChars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style}/>)
+                    chars.map(entry => <DropDownItem key={entry.char._id} entry={entry} Style={Style}/>)
                 )
                 }
             </ul>
