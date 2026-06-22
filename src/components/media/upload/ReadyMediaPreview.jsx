@@ -7,7 +7,7 @@ import {
     formatMiB,
     formatVideoType,
 } from "./mediaUploadFormatting.js";
-import { useMediaUpload } from "./MediaUploadContext.jsx";
+import { useMediaUpload } from "./context/useMediaUpload.js";
 
 export default function ReadyMediaPreview() {
     const { readyMedia } = useMediaUpload();

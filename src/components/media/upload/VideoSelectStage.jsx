@@ -13,7 +13,7 @@ import { MAX_CHUNK_BYTES } from "../../../helpers/fileChunking.js";
 import { formatMediaTime } from "../../../helpers/mediaFormatting.js";
 import Style from "../../../Styles/modular/MediaUpload.module.css";
 import { formatBytes, formatMiB } from "./mediaUploadFormatting.js";
-import { useMediaUpload } from "./MediaUploadContext.jsx";
+import { useMediaUpload } from "./context/useMediaUpload.js";
 
 export default function VideoSelectStage() {
     const fileInputRef = useRef(null);

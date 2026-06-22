@@ -8,7 +8,7 @@ import DataTravelLoader from "../../DataTravelLoader.jsx";
 import { formatMediaTime } from "../../../helpers/mediaFormatting.js";
 import Style from "../../../Styles/modular/MediaUpload.module.css";
 import { LONG_VIDEO_SECONDS } from "./mediaUploadConstants.js";
-import { useMediaUpload } from "./MediaUploadContext.jsx";
+import { useMediaUpload } from "./context/useMediaUpload.js";
 
 export default function ThumbnailStage() {
     const {

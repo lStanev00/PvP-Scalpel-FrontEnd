@@ -1,7 +1,7 @@
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import CharacterMultiSelect from "../CharacterMultiSelect.jsx";
 import Style from "../../../Styles/modular/MediaUpload.module.css";
-import { useMediaUpload } from "./MediaUploadContext.jsx";
+import { useMediaUpload } from "./context/useMediaUpload.js";
 
 export default function MetadataStage() {
     const {

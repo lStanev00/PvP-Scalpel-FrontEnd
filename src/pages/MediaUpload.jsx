@@ -1,8 +1,8 @@
 import { FaFilm } from "react-icons/fa6";
 import {
     MediaUploadProvider,
-    useMediaUpload,
-} from "../components/media/upload/MediaUploadContext.jsx";
+} from "../components/media/upload/context/MediaUploadProvider.jsx";
+import { useMediaUpload } from "../components/media/upload/context/useMediaUpload.js";
 import MetadataStage from "../components/media/upload/MetadataStage.jsx";
 import ReadyMediaPreview from "../components/media/upload/ReadyMediaPreview.jsx";
 import StageNav from "../components/media/upload/StageNav.jsx";

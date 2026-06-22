@@ -1,7 +1,7 @@
 import { FaCheck } from "react-icons/fa6";
 import Style from "../../../Styles/modular/MediaUpload.module.css";
 import { MEDIA_UPLOAD_STAGES } from "./mediaUploadConstants.js";
-import { useMediaUpload } from "./MediaUploadContext.jsx";
+import { useMediaUpload } from "./context/useMediaUpload.js";
 
 export default function StageNav() {
     const {
