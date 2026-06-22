@@ -165,8 +165,12 @@ export function MediaUploadProvider({ children }) {
         let cancelled = false;
         dispatch({ type: "prepare/start" });
 
+        // Defer chunk preparation by one tick so React can paint the
+        // "preparing" state before the synchronous Blob slicing starts.
         const preparationTimer = window.setTimeout(() => {
             try {
+                // This is where the selected video is split into ordered
+                // upload-ready Blob chunks plus its manifest metadata.
                 const preparedVideo = splitFileIntoEqualChunks(state.videoFile);
                 if (!cancelled) {
                     dispatch({ type: "prepare/success", preparedVideo });
@@ -184,6 +188,8 @@ export function MediaUploadProvider({ children }) {
         }, 0);
 
         return () => {
+            // If the user replaces/removes the video while preparation is queued,
+            // ignore the stale result and cancel the pending timer.
             cancelled = true;
             window.clearTimeout(preparationTimer);
         };
@@ -213,11 +219,15 @@ export function MediaUploadProvider({ children }) {
     const selectVideo = useCallback((file) => {
         dispatch({ type: "error/set", error: "" });
 
+        // Stage 1 accepts only browser-recognized video files or known video
+        // extensions; invalid input stops before state changes trigger effects.
         if (!file || !isVideoFile(file)) {
             dispatch({ type: "error/set", error: "Choose a valid video file." });
             return;
         }
 
+        // Invalidate pending thumbnail work because a new source video changes
+        // every derived artifact: chunks, thumbnails, duration, and ready media.
         thumbnailRequestRef.current += 1;
         dispatch({ type: "video/select", file });
     }, []);
