@@ -5,19 +5,13 @@ import { isVideoFile } from "../mediaUploadFormatting.js";
 import { useThumbnailCapture } from "../hooks/useThumbnailCapture.js";
 import { useVideoPreparation } from "../hooks/useVideoPreparation.js";
 import { buildReadyMedia } from "../logic/buildReadyMedia.js";
-import {
-    validateMetadata,
-    validateReadyPackage,
-} from "../logic/mediaUploadValidation.js";
+import { validateMetadata, validateReadyPackage } from "../logic/mediaUploadValidation.js";
 import {
     initialMediaUploadState,
     mediaUploadActions,
     mediaUploadReducer,
 } from "./mediaUploadReducer.js";
-import {
-    MediaUploadActionsContext,
-    MediaUploadStateContext,
-} from "./useMediaUpload.js";
+import { MediaUploadActionsContext, MediaUploadStateContext } from "./useMediaUpload.js";
 
 export function MediaUploadProvider({ children }) {
     const [state, dispatch] = useReducer(mediaUploadReducer, initialMediaUploadState);
@@ -27,27 +21,28 @@ export function MediaUploadProvider({ children }) {
         videoFile: state.videoFile,
     });
 
-    const {
-        captureThumbnails,
-        clearThumbnails,
-        invalidateThumbnailRequests,
-    } = useThumbnailCapture({ dispatch, state });
+    const { captureThumbnails, clearThumbnails, invalidateThumbnailRequests } = useThumbnailCapture(
+        { dispatch, state },
+    );
 
-    const selectVideo = useCallback((file) => {
-        dispatch(mediaUploadActions.setError(""));
+    const selectVideo = useCallback(
+        (file) => {
+            dispatch(mediaUploadActions.setError(""));
 
-        // Stage 1 accepts only browser-recognized video files or known video
-        // extensions; invalid input stops before state changes trigger effects.
-        if (!file || !isVideoFile(file)) {
-            dispatch(mediaUploadActions.setError("Choose a valid video file."));
-            return;
-        }
+            // Stage 1 accepts only browser-recognized video files or known video
+            // extensions; invalid input stops before state changes trigger effects.
+            if (!file || !isVideoFile(file)) {
+                dispatch(mediaUploadActions.setError("Choose a valid video file."));
+                return;
+            }
 
-        // Invalidate pending thumbnail work because a new source video changes
-        // every derived artifact: chunks, thumbnails, duration, and ready media.
-        invalidateThumbnailRequests();
-        dispatch(mediaUploadActions.selectVideo(file));
-    }, [invalidateThumbnailRequests]);
+            // Invalidate pending thumbnail work because a new source video changes
+            // every derived artifact: chunks, thumbnails, duration, and ready media.
+            invalidateThumbnailRequests();
+            dispatch(mediaUploadActions.selectVideo(file));
+        },
+        [invalidateThumbnailRequests],
+    );
 
     const removeVideo = useCallback(() => {
         invalidateThumbnailRequests();
@@ -78,37 +73,54 @@ export function MediaUploadProvider({ children }) {
         dispatch(mediaUploadActions.updateCharacters(characters));
     }, []);
 
-    const canOpenStage = useCallback((stage) => {
-        if (stage === 1) return true;
-        if (stage === 2) return Boolean(state.preparedVideo && state.duration);
-        return Boolean(state.preparedVideo && state.duration && state.metadataComplete);
-    }, [state.duration, state.metadataComplete, state.preparedVideo]);
+    const canOpenStage = useCallback(
+        (stage) => {
+            if (stage === 1) return true;
+            if (stage === 2) return Boolean(state.preparedVideo && state.duration);
+            return Boolean(state.preparedVideo && state.duration && state.metadataComplete);
+        },
+        [state.duration, state.metadataComplete, state.preparedVideo],
+    );
 
-    const stageComplete = useCallback((stage) => {
-        if (stage === 1) return Boolean(state.preparedVideo && state.duration);
-        if (stage === 2) return state.metadataComplete;
-        return Boolean(state.readyMedia);
-    }, [state.duration, state.metadataComplete, state.preparedVideo, state.readyMedia]);
+    const stageComplete = useCallback(
+        (stage) => {
+            if (stage === 1) {
+                return Boolean(state.preparedVideo && state.duration);
+            }
+            if (stage === 2) return state.metadataComplete;
+            return Boolean(state.readyMedia);
+        },
+        [state.duration, state.metadataComplete, state.preparedVideo, state.readyMedia],
+    );
 
-    const openStage = useCallback((stage) => {
-        if (state.preparingVideo) return;
-        if (!canOpenStage(stage)) return;
-        dispatch(mediaUploadActions.openStage(stage));
-    }, [canOpenStage, state.preparingVideo]);
+    const openStage = useCallback(
+        (stage) => {
+            if (state.preparingVideo) return;
+            if (!canOpenStage(stage)) return;
 
-    const continueToThumbnails = useCallback((event) => {
-        event?.preventDefault?.();
-        dispatch(mediaUploadActions.setError(""));
+            
 
-        const validationError = validateMetadata(state);
-        if (validationError) {
-            dispatch(mediaUploadActions.setError(validationError));
-            return;
-        }
+            dispatch(mediaUploadActions.openStage(stage));
+        },
+        [canOpenStage, state.preparingVideo],
+    );
 
-        dispatch(mediaUploadActions.completeMetadata());
-        if (state.thumbnails.length === 0) void captureThumbnails();
-    }, [captureThumbnails, state]);
+    const continueToThumbnails = useCallback(
+        (event) => {
+            event?.preventDefault?.();
+            dispatch(mediaUploadActions.setError(""));
+
+            const validationError = validateMetadata(state);
+            if (validationError) {
+                dispatch(mediaUploadActions.setError(validationError));
+                return;
+            }
+
+            dispatch(mediaUploadActions.completeMetadata());
+            if (state.thumbnails.length === 0) void captureThumbnails();
+        },
+        [captureThumbnails, state],
+    );
 
     const selectThumbnail = useCallback((thumbnail) => {
         dispatch(mediaUploadActions.selectThumbnail(thumbnail));
@@ -126,41 +138,44 @@ export function MediaUploadProvider({ children }) {
         dispatch(mediaUploadActions.setReadyMedia(buildReadyMedia(state)));
     }, [state]);
 
-    const actions = useMemo(() => ({
-        canOpenStage,
-        captureThumbnails,
-        clearThumbnails,
-        continueToThumbnails,
-        finishPackage,
-        openStage,
-        removeVideo,
-        selectThumbnail,
-        selectVideo,
-        setDragActive,
-        setDuration,
-        setError,
-        stageComplete,
-        updateCharacters,
-        updateDescription,
-        updateTitle,
-    }), [
-        canOpenStage,
-        captureThumbnails,
-        clearThumbnails,
-        continueToThumbnails,
-        finishPackage,
-        openStage,
-        removeVideo,
-        selectThumbnail,
-        selectVideo,
-        setDragActive,
-        setDuration,
-        setError,
-        stageComplete,
-        updateCharacters,
-        updateDescription,
-        updateTitle,
-    ]);
+    const actions = useMemo(
+        () => ({
+            canOpenStage,
+            captureThumbnails,
+            clearThumbnails,
+            continueToThumbnails,
+            finishPackage,
+            openStage,
+            removeVideo,
+            selectThumbnail,
+            selectVideo,
+            setDragActive,
+            setDuration,
+            setError,
+            stageComplete,
+            updateCharacters,
+            updateDescription,
+            updateTitle,
+        }),
+        [
+            canOpenStage,
+            captureThumbnails,
+            clearThumbnails,
+            continueToThumbnails,
+            finishPackage,
+            openStage,
+            removeVideo,
+            selectThumbnail,
+            selectVideo,
+            setDragActive,
+            setDuration,
+            setError,
+            stageComplete,
+            updateCharacters,
+            updateDescription,
+            updateTitle,
+        ],
+    );
 
     return (
         <MediaUploadStateContext.Provider value={state}>
