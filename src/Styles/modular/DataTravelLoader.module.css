@@ -1,0 +1,221 @@
+.loader {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+    min-height: 6.5rem;
+    padding: 1rem;
+    border: 1px solid rgba(0, 245, 212, 0.16);
+    border-radius: 14px;
+    color: var(--color-text);
+    background:
+        linear-gradient(110deg, rgba(0, 245, 212, 0.055), transparent 52%),
+        rgba(5, 8, 18, 0.72);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.compact {
+    min-height: 4.7rem;
+    padding: 0.78rem 0.9rem;
+}
+
+.visual {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 5.8rem auto;
+    align-items: center;
+    width: 9rem;
+}
+
+.compact .visual {
+    grid-template-columns: auto 4.1rem auto;
+    width: 7rem;
+}
+
+.node {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid rgba(0, 245, 212, 0.42);
+    border-radius: 999px;
+    background: #07131c;
+    box-shadow:
+        0 0 0 0 rgba(0, 245, 212, 0.3),
+        0 0 18px rgba(0, 245, 212, 0.22);
+    animation: dataNodePulse 1.6s ease-in-out infinite;
+}
+
+.node:last-child {
+    border-color: rgba(255, 216, 74, 0.46);
+    box-shadow:
+        0 0 0 0 rgba(255, 216, 74, 0.26),
+        0 0 18px rgba(255, 216, 74, 0.2);
+    animation-delay: 0.45s;
+}
+
+.route {
+    position: relative;
+    display: block;
+    height: 2px;
+    overflow: hidden;
+    background: linear-gradient(90deg, rgba(0, 245, 212, 0.18), rgba(255, 216, 74, 0.32));
+}
+
+.route::before {
+    content: "";
+    position: absolute;
+    inset: -0.45rem 0;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 0.55rem,
+            rgba(255, 255, 255, 0.18) 0.55rem,
+            rgba(255, 255, 255, 0.18) 0.62rem
+        );
+    animation: dataRouteDrift 1.2s linear infinite;
+}
+
+.packetOne,
+.packetTwo,
+.packetThree {
+    position: absolute;
+    top: 50%;
+    left: -0.45rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: #00f5d4;
+    box-shadow: 0 0 14px rgba(0, 245, 212, 0.8);
+    transform: translateY(-50%);
+    animation: dataPacketTravel 1.45s ease-in-out infinite;
+}
+
+.packetTwo {
+    background: #ffd84a;
+    box-shadow: 0 0 14px rgba(255, 216, 74, 0.7);
+    animation-delay: 0.32s;
+}
+
+.packetThree {
+    width: 0.32rem;
+    height: 0.32rem;
+    animation-delay: 0.68s;
+}
+
+.copy {
+    display: grid;
+    min-width: 0;
+    gap: 0.25rem;
+}
+
+.copy strong {
+    color: #eef7ff;
+    font-size: 0.88rem;
+    letter-spacing: 0;
+}
+
+.copy span {
+    color: var(--color-muted);
+    font-size: 0.76rem;
+    line-height: 1.45;
+}
+
+.steps {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.steps li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+    padding: 0.48rem 0.58rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    color: rgba(229, 236, 249, 0.62);
+    background: rgba(255, 255, 255, 0.025);
+    font-size: 0.7rem;
+}
+
+.steps li > span {
+    flex: 0 0 auto;
+    width: 0.48rem;
+    height: 0.48rem;
+    border-radius: 999px;
+    background: currentColor;
+}
+
+.stepActive {
+    border-color: rgba(0, 245, 212, 0.22) !important;
+    color: #99fff0 !important;
+    background: rgba(0, 245, 212, 0.055) !important;
+}
+
+.stepDone {
+    border-color: rgba(255, 216, 74, 0.18) !important;
+    color: #ffe590 !important;
+}
+
+@keyframes dataPacketTravel {
+    0% {
+        opacity: 0;
+        transform: translate(-0.25rem, -50%) scale(0.7);
+    }
+
+    18% {
+        opacity: 1;
+    }
+
+    82% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(6.45rem, -50%) scale(1);
+    }
+}
+
+@keyframes dataRouteDrift {
+    to {
+        transform: translateX(0.7rem);
+    }
+}
+
+@keyframes dataNodePulse {
+    50% {
+        box-shadow:
+            0 0 0 0.32rem rgba(0, 245, 212, 0.055),
+            0 0 20px rgba(0, 245, 212, 0.24);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .node,
+    .route::before,
+    .packetOne,
+    .packetTwo,
+    .packetThree {
+        animation: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .loader {
+        grid-template-columns: 1fr;
+    }
+
+    .visual {
+        justify-self: center;
+    }
+}

@@ -9,6 +9,7 @@ import {
     FaImage,
     FaTrash,
 } from "react-icons/fa6";
+import DataTravelLoader from "../components/DataTravelLoader.jsx";
 import CharacterMultiSelect from "../components/media/CharacterMultiSelect.jsx";
 import PvPScalpelVideoPlayer from "../components/media/PvPScalpelVideoPlayer.jsx";
 import {
@@ -412,7 +413,19 @@ export default function MediaUpload() {
                                         </button>
                                     </div>
                                 </div>
-
+                                {preparingVideo && (
+                                    <DataTravelLoader
+                                        compact
+                                        label="Preparing video parts"
+                                        detail="Splitting the source video into upload-ready chunks."
+                                        steps={[
+                                            "Reading source",
+                                            "Balancing chunks",
+                                            "Preparing manifest",
+                                        ]}
+                                        activeStep={1}
+                                    />
+                                )}
                                 {preparedVideo && (
                                     <dl
                                         className={Style.preparationSummary}
@@ -590,10 +603,16 @@ export default function MediaUpload() {
                         </div>
 
                         {generatingThumbnails ? (
-                            <div className={Style.thumbnailLoading}>
-                                <span />
-                                Capturing frames from the source video...
-                            </div>
+                            <DataTravelLoader
+                                label="Capturing thumbnail frames"
+                                detail="Reading the source video and preparing cover options."
+                                steps={[
+                                    "Seeking frames",
+                                    "Rendering images",
+                                    "Preparing choices",
+                                ]}
+                                activeStep={1}
+                            />
                         ) : thumbnails.length > 0 ? (
                             <div className={Style.thumbnailGrid}>
                                 {thumbnails.map((thumbnail) => {
