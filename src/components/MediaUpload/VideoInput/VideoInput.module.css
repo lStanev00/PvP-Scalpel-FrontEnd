@@ -1,0 +1,159 @@
+.uploadSection {
+    display: grid;
+    place-items: center;
+    gap: 0.85rem;
+    width: 100%;
+    min-height: clamp(18rem, 38vh, 30rem);
+    color: var(--color-text);
+}
+
+.videoInput {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.dropBox {
+    display: grid;
+    place-items: center;
+    grid-template-rows: auto auto auto;
+    gap: clamp(0.85rem, 1.6vw, 1.35rem);
+    width: min(100%, 56rem);
+    max-width: 100%;
+    min-height: clamp(13rem, 24vh, 20rem);
+    padding: clamp(1.25rem, 2.2vw, 2.25rem);
+    border: 1px dashed rgba(0, 245, 212, 0.22);
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(14, 18, 30, 0.95), rgba(10, 12, 22, 0.9));
+    box-shadow:
+        0 22px 58px rgba(0, 0, 0, 0.44),
+        0 0 18px rgba(0, 245, 212, 0.05);
+    color: var(--color-text);
+    cursor: pointer;
+    text-align: center;
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease,
+        background 0.25s ease;
+    user-select: none;
+}
+
+.dropBox:hover,
+.videoInput:focus-visible + .dropBox,
+.dropBoxActive {
+    border-color: rgba(0, 245, 212, 0.52);
+    background:
+        radial-gradient(circle at center, rgba(0, 245, 212, 0.055), transparent 48%),
+        linear-gradient(145deg, rgba(14, 18, 30, 0.98), rgba(10, 12, 22, 0.94));
+    box-shadow:
+        0 0 14px rgba(0, 245, 212, 0.16),
+        inset 0 0 6px rgba(0, 245, 212, 0.08),
+        0 22px 58px rgba(0, 0, 0, 0.48);
+    transform: translateY(-1px) scale(1.01);
+}
+
+.dropBox:active {
+    transform: scale(0.98);
+}
+
+.plusMark {
+    display: grid;
+    place-items: center;
+    width: clamp(4rem, 5.6vw, 5.75rem);
+    height: clamp(4rem, 5.6vw, 5.75rem);
+    background: radial-gradient(circle, rgba(0, 245, 212, 0.12), rgba(0, 245, 212, 0.02) 68%, transparent 70%);
+    color: rgba(5, 163, 142, 0.9);
+    font-size: clamp(2.7rem, 3.8vw, 4rem);
+    filter: drop-shadow(0 0 14px rgba(0, 245, 212, 0.42));
+}
+
+.plusMark svg {
+    display: block;
+}
+
+.selectText {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    min-width: clamp(11rem, 15vw, 14rem);
+    padding: clamp(0.68rem, 1vw, 0.86rem) clamp(1rem, 1.5vw, 1.35rem);
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(0, 245, 212, 0.95), rgba(255, 215, 0, 0.75));
+    color: #0b0f1c;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    box-shadow:
+        0 0 16px rgba(0, 245, 212, 0.16),
+        inset 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.dropBox:hover .selectText,
+.videoInput:focus-visible + .dropBox .selectText,
+.dropBoxActive .selectText {
+    background: linear-gradient(90deg, rgba(0, 245, 212, 0.9), rgba(255, 215, 0, 0.9));
+    box-shadow:
+        0 0 18px rgba(0, 245, 212, 0.22),
+        inset 0 0 8px rgba(255, 255, 255, 0.14);
+}
+
+.supportText {
+    color: rgba(152, 163, 199, 0.85);
+    font-size: 0.9rem;
+}
+
+.fileStatus {
+    width: min(100%, 44rem);
+    min-height: 0;
+    margin: 0.1rem 0 0;
+    padding: 0;
+    overflow-wrap: anywhere;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: rgba(157, 176, 219, 0.9);
+    font-size: 0.82rem;
+    text-align: center;
+    box-shadow: none;
+}
+
+.fileStatusError {
+    padding: 0.52rem 0.75rem;
+    border: 1px solid rgba(255, 90, 90, 0.28);
+    border-radius: 10px;
+    background: rgba(255, 70, 70, 0.1);
+    color: #ff8a8a;
+    box-shadow: inset 0 0 10px rgba(255, 70, 70, 0.12);
+}
+
+@media (max-width: 650px) {
+    .uploadSection {
+        min-height: clamp(14rem, 36vh, 22rem);
+        padding: 0.75rem;
+    }
+
+    .dropBox {
+        width: 100%;
+        min-height: 12rem;
+        padding: 1.2rem;
+        border-radius: 14px;
+    }
+
+    .plusMark {
+        width: 4rem;
+        height: 4rem;
+        font-size: 2.75rem;
+    }
+
+    .selectText {
+        width: 100%;
+        min-width: 0;
+    }
+}
