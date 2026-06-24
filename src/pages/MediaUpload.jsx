@@ -1,5 +1,8 @@
 import { FaFilm } from "react-icons/fa6";
 import {
+    MediaUploadApiDataProvider,
+} from "../components/media/upload/context/MediaUploadApiDataContext.jsx";
+import {
     MediaUploadProvider,
 } from "../components/media/upload/context/MediaUploadProvider.jsx";
 import { useMediaUpload } from "../components/media/upload/context/useMediaUpload.js";
@@ -30,28 +33,30 @@ function MediaUploadEditor() {
 
 export default function MediaUpload() {
     return (
-        <MediaUploadProvider>
-            <section className={Style.page}>
-                <div className={Style.ambient} aria-hidden="true">
-                    <div className={Style.glowOne} />
-                    <div className={Style.glowTwo} />
-                </div>
-
-                <header className={Style.hero}>
-                    <div className={Style.eyebrow}>
-                        <FaFilm />
-                        Admin media studio
+        <MediaUploadApiDataProvider>
+            <MediaUploadProvider>
+                <section className={Style.page}>
+                    <div className={Style.ambient} aria-hidden="true">
+                        <div className={Style.glowOne} />
+                        <div className={Style.glowTwo} />
                     </div>
-                    <h1>
-                        Upload <span>Combat Media</span>
-                    </h1>
-                    <p>
-                        Choose gameplay footage, add its context, and select a cover frame.
-                    </p>
-                </header>
 
-                <MediaUploadEditor />
-            </section>
-        </MediaUploadProvider>
+                    <header className={Style.hero}>
+                        <div className={Style.eyebrow}>
+                            <FaFilm />
+                            Admin media studio
+                        </div>
+                        <h1>
+                            Upload <span>Combat Media</span>
+                        </h1>
+                        <p>
+                            Choose gameplay footage, add its context, and select a cover frame.
+                        </p>
+                    </header>
+
+                    <MediaUploadEditor />
+                </section>
+            </MediaUploadProvider>
+        </MediaUploadApiDataProvider>
     );
 }
