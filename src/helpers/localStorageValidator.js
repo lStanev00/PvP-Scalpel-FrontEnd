@@ -1,3 +1,13 @@
+/**
+ * Developer note:
+ * This module owns startup validation for the `gameData` localStorage entry.
+ * It keeps classes, specs, and brackets cached under one object and refreshes
+ * the whole cache when `gameData.updatedAt` is older than the two-day TTL
+ * defined in `storageOperations/gameData.js`.
+ *
+ * Brackets API responses are wrapped as `{ value, Count }`; only `value` is
+ * persisted under `gameData.brackets`.
+ */
 import { httpFetchWithCredentials } from "./httpFetch.js";
 import {
     getGameData,
