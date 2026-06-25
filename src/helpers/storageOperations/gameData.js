@@ -1,4 +1,5 @@
 const STORAGE_KEY = "gameData";
+const GAME_DATA_TTL_MS = 2 * 24 * 60 * 60 * 1000;
 
 /**
  * @typedef {"tank" | "damage" | "healer"} GameRole
@@ -36,6 +37,7 @@ const STORAGE_KEY = "gameData";
  * @property {GameClass[]=} classes
  * @property {GameSpecialization[]=} specs
  * @property {GameBracket[]=} brackets
+ * @property {number=} updatedAt
  */
 
 function getStorage() {
@@ -78,6 +80,17 @@ export function setGameData(value) {
 }
 
 /**
+ * Returns whether the cached game data is older than the supported TTL.
+ *
+ * @param {GameData} value - Parsed `gameData` object.
+ * @returns {boolean} True when the cache should be refreshed.
+ */
+export function isGameDataExpired(value) {
+    const updatedAt = Number(value?.updatedAt);
+    return !Number.isFinite(updatedAt) || Date.now() - updatedAt >= GAME_DATA_TTL_MS;
+}
+
+/**
  * Returns the cached game classes collection.
  *
  * @returns {GameClass[] | undefined} Stored `classes` value.
@@ -96,6 +109,7 @@ export function setGameClasses(classes) {
     const nextValue = {
         ...getGameData(),
         classes,
+        updatedAt: Date.now(),
     };
 
     return setGameData(nextValue);
@@ -120,6 +134,7 @@ export function setGameSpecs(specs) {
     const nextValue = {
         ...getGameData(),
         specs,
+        updatedAt: Date.now(),
     };
 
     return setGameData(nextValue);
@@ -144,6 +159,7 @@ export function setGameBrackets(brackets) {
     const nextValue = {
         ...getGameData(),
         brackets,
+        updatedAt: Date.now(),
     };
 
     return setGameData(nextValue);

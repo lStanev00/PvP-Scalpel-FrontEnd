@@ -1,6 +1,7 @@
 import { httpFetchWithCredentials } from "./httpFetch.js";
 import {
     getGameData,
+    isGameDataExpired,
     setGameData,
     setGameBrackets,
     setGameClasses,
@@ -14,6 +15,11 @@ import {
  */
 export default async function localStorageValidatoor() {
     let gameData = getGameData();
+
+    if (Object.keys(gameData).length && isGameDataExpired(gameData)) {
+        gameData = {};
+        setGameData(gameData);
+    }
 
     if (!Object.keys(gameData).length) {
         gameData = {};
