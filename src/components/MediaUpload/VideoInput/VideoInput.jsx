@@ -1,11 +1,20 @@
-import { useCallback, useId, useState } from "react";
-import { FiUploadCloud } from "react-icons/fi";
+import { useCallback, useEffect, useId, useState } from "react";
+import { FiArrowRight, FiCheck, FiUploadCloud } from "react-icons/fi";
 
 import Style from "./VideoInput.module.css";
+import { useMediaUploadContext } from "../MediaUploadContext.js";
 
 const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 const ACCEPTED_VIDEO_EXTENSIONS = [".mp4", ".webm", ".ogg"];
 const ACCEPT_ATTRIBUTE = ACCEPTED_VIDEO_TYPES.join(",");
+const ACTIVE_STAGE_STORAGE_KEY = "mediaUploadActiveStage";
+
+function readStoredActiveStage() {
+    if (typeof window === "undefined") return 0;
+
+    const storedStage = Number(window.sessionStorage.getItem(ACTIVE_STAGE_STORAGE_KEY));
+    return storedStage === 1 ? 1 : 0;
+}
 
 function isAcceptedVideo(file) {
     if (!file) return false;
@@ -30,11 +39,30 @@ function formatFileSize(bytes) {
     return size.toFixed(size >= 10 || unitIndex === 0 ? 0 : 1) + " " + units[unitIndex];
 }
 
-export default function VideoInput({ videoInputRef }) {
+export default function VideoInput({ videoInputRef, setStage }) {
     const inputId = useId();
     const [isDragging, setIsDragging] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const { videoFile, setVideoFile, isVideoLocked, setIsVideoLocked } = useMediaUploadContext();
     const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        if (isVideoLocked && readStoredActiveStage() === 0) {
+            setStage(1);
+        }
+    }, [isVideoLocked, setStage]);
+
+    const goToStage = useCallback(
+        (nextStage) => {
+            const resolvedStage = typeof nextStage === "function"
+                ? nextStage(readStoredActiveStage())
+                : nextStage;
+            const clampedStage = resolvedStage === 1 ? 1 : 0;
+
+            window.sessionStorage.setItem(ACTIVE_STAGE_STORAGE_KEY, String(clampedStage));
+            setStage(clampedStage);
+        },
+        [setStage],
+    );
 
     const setInputFile = useCallback(
         (file) => {
@@ -50,8 +78,10 @@ export default function VideoInput({ videoInputRef }) {
 
     const selectFile = useCallback(
         (file, shouldSyncInput = false) => {
+            if (isVideoLocked) return;
+
             if (!isAcceptedVideo(file)) {
-                setSelectedFile(null);
+                setVideoFile(null);
                 setErrorMessage("Drop or select an MP4, WebM, or Ogg video.");
 
                 if (videoInputRef.current) {
@@ -65,10 +95,10 @@ export default function VideoInput({ videoInputRef }) {
                 setInputFile(file);
             }
 
-            setSelectedFile(file);
+            setVideoFile(file);
             setErrorMessage("");
         },
-        [setInputFile, videoInputRef],
+        [isVideoLocked, setInputFile, setVideoFile, videoInputRef],
     );
 
     const handleInputChange = useCallback(
@@ -80,14 +110,16 @@ export default function VideoInput({ videoInputRef }) {
 
     const handleDragEnter = useCallback((event) => {
         event.preventDefault();
+        if (isVideoLocked) return;
         setIsDragging(true);
-    }, []);
+    }, [isVideoLocked]);
 
     const handleDragOver = useCallback((event) => {
         event.preventDefault();
+        if (isVideoLocked) return;
         event.dataTransfer.dropEffect = "copy";
         setIsDragging(true);
-    }, []);
+    }, [isVideoLocked]);
 
     const handleDragLeave = useCallback((event) => {
         if (event.currentTarget.contains(event.relatedTarget)) return;
@@ -98,68 +130,137 @@ export default function VideoInput({ videoInputRef }) {
         (event) => {
             event.preventDefault();
             setIsDragging(false);
+            if (isVideoLocked) return;
 
             const files = Array.from(event.dataTransfer.files);
             const videoFile = files.find(isAcceptedVideo);
 
             selectFile(videoFile, true);
         },
-        [selectFile],
+        [isVideoLocked, selectFile],
     );
 
     const handleKeyDown = useCallback(
         (event) => {
             if (event.key !== "Enter" && event.key !== " ") return;
             event.preventDefault();
+            if (isVideoLocked) return;
             videoInputRef.current?.click();
         },
-        [videoInputRef],
+        [isVideoLocked, videoInputRef],
     );
 
+    const selectedFileSize = videoFile ? formatFileSize(videoFile.size) : "";
+    const selectedFileType = videoFile?.type?.replace("video/", "").toUpperCase() || "VIDEO";
     const statusMessage =
         errorMessage ||
-        (selectedFile
-            ? selectedFile.name +
-              (formatFileSize(selectedFile.size) ? " - " + formatFileSize(selectedFile.size) : "")
+        (videoFile
+            ? videoFile.name + (selectedFileSize ? " - " + selectedFileSize : "")
             : "MP4, WebM, or Ogg");
 
     return (
-        <section className={Style.uploadSection}>
-            <input
-                id={inputId}
-                className={Style.videoInput}
-                type="file"
-                accept={ACCEPT_ATTRIBUTE}
-                ref={videoInputRef}
-                onChange={handleInputChange}
-            />
-
-            <label
-                className={[Style.dropBox, isDragging ? Style.dropBoxActive : ""]
+        <>
+            <section
+                className={[
+                    Style.uploadSection,
+                    videoFile ? Style.uploadSectionSelected : "",
+                ]
                     .filter(Boolean)
-                    .join(" ")}
-                htmlFor={inputId}
-                role="button"
-                tabIndex={0}
-                onDragEnter={handleDragEnter}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                onKeyDown={handleKeyDown}>
-                <span className={Style.plusMark} aria-hidden="true">
-                    <FiUploadCloud />
-                </span>
-                <span className={Style.selectText}>
-                    {isDragging ? "Drop video" : "Select or drop video"}
-                </span>
-                <p
-                    className={[Style.fileStatus, errorMessage ? Style.fileStatusError : ""]
+                    .join(" ")}>
+                <input
+                    id={inputId}
+                    className={Style.videoInput}
+                    type="file"
+                    accept={ACCEPT_ATTRIBUTE}
+                    ref={videoInputRef}
+                    disabled={isVideoLocked}
+                    onChange={handleInputChange}
+                />
+
+                <label
+                    className={[
+                        Style.dropBox,
+                        isDragging ? Style.dropBoxActive : "",
+                        videoFile ? Style.dropBoxSelected : "",
+                        isVideoLocked ? Style.dropBoxLocked : "",
+                    ]
                         .filter(Boolean)
                         .join(" ")}
-                    aria-live="polite">
-                    {statusMessage}
-                </p>
-            </label>
-        </section>
+                    htmlFor={inputId}
+                    role="button"
+                    tabIndex={0}
+                    onDragEnter={handleDragEnter}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onKeyDown={handleKeyDown}>
+                    {videoFile ? (
+                        <span className={Style.selectedSummary}>
+                            <span className={Style.selectedMark} aria-hidden="true">
+                                <FiCheck />
+                            </span>
+                            <span className={Style.selectedDetails}>
+                                <span className={Style.selectedName}>{videoFile.name}</span>
+                                <span className={Style.selectedMeta}>
+                                    {selectedFileSize}
+                                    {selectedFileSize ? " - " : ""}
+                                    {selectedFileType}
+                                </span>
+                            </span>
+                            <span className={Style.selectedAction}>
+                                {isVideoLocked ? "Video locked" : "Change video"}
+                            </span>
+                        </span>
+                    ) : (
+                        <>
+                            <span className={Style.plusMark} aria-hidden="true">
+                                <FiUploadCloud />
+                            </span>
+                            <span className={Style.selectText}>
+                                {isDragging ? "Drop video" : "Select or drop video"}
+                            </span>
+                            <p
+                                className={[Style.fileStatus, errorMessage ? Style.fileStatusError : ""]
+                                    .filter(Boolean)
+                                    .join(" ")}
+                                aria-live="polite">
+                                {statusMessage}
+                            </p>
+                        </>
+                    )}
+                </label>
+            </section>
+
+            <button
+                type="button"
+                className={[
+                    Style.nextActionButton,
+                    videoFile ? Style.nextActionButtonSelected : Style.nextActionButtonDisabled,
+                ]
+                    .filter(Boolean)
+                    .join(" ")}
+                onClick={() =>
+                    goToStage((now) => {
+                        setIsVideoLocked(true);
+                        const newVal = now + 1;
+                        return newVal;
+                    })
+                }
+                disabled={!videoFile}
+                title={videoFile ? undefined : "Select video first"}
+                aria-label={videoFile ? "Next" : "Select video first"}>
+                {videoFile ? (
+                    <>
+                        <span>Next</span>
+                        <FiArrowRight className={Style.nextActionIcon} aria-hidden="true" />
+                    </>
+                ) : (
+                    <>
+                        <span className={Style.nextActionIdle}>Continue</span>
+                        <span className={Style.nextActionHint}>Select video first</span>
+                    </>
+                )}
+            </button>
+        </>
     );
 }

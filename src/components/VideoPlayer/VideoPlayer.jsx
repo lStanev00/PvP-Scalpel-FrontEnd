@@ -1,5 +1,26 @@
 ﻿/* eslint-disable react/prop-types */
 
+/**
+ * Reusable handcrafted media player.
+ *
+ * Usage:
+ * import VideoPlayer from "../components/VideoPlayer/VideoPlayer.jsx";
+ *
+ * <VideoPlayer
+ *     src={videoUrl}
+ *     poster={posterUrl}
+ *     title="Match review"
+ *     mediaRef={videoRef}
+ *     onTimeUpdate={(event) => console.log(event.currentTarget.currentTime)}
+ * />
+ *
+ * Optional props:
+ * - playRange: { start, end } locks playback to a time range.
+ * - editableRange: { start, end, onChange } shows trim range controls.
+ * - bufferGate: { enabled, ready, label } shows loading/buffer gate UI.
+ * - media callbacks: onLoadedMetadata, onTimeUpdate, onPlay, onPause, onError.
+ * - className: extra wrapper class.
+ */
 import { useEffect, useRef, useState } from "react";
 import {
     FaCompress,

@@ -70,7 +70,7 @@
 .hero {
     position: relative;
     z-index: 1;
-    padding: 1.4rem 0 0.35rem;
+    /* padding: 1.4rem 0 0.35rem; */
 }
 
 .heroInner {
@@ -138,6 +138,26 @@
     color: #8f9ab6;
     font-size: clamp(0.95rem, 1.7vw, 1.05rem);
     line-height: 1.45;
+}
+
+.stagePlaceholder {
+    display: grid;
+    place-items: center;
+    width: min(100%, 44rem);
+    min-height: clamp(12rem, 24vh, 18rem);
+    margin: clamp(2.5rem, 7vw, 5rem) auto 0;
+    padding: 2rem;
+    border: 1px solid rgba(0, 245, 212, 0.2);
+    border-radius: 16px;
+    background:
+        radial-gradient(circle at center, rgba(0, 245, 212, 0.055), transparent 52%),
+        linear-gradient(145deg, rgba(14, 18, 30, 0.92), rgba(8, 11, 20, 0.9));
+    color: rgba(177, 203, 255, 0.9);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: 0 22px 58px rgba(0, 0, 0, 0.36);
 }
 
 @media (max-width: 650px) {
