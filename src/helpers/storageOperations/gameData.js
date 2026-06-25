@@ -22,9 +22,20 @@ const STORAGE_KEY = "gameData";
  */
 
 /**
+ * @typedef {object} GameBracket
+ * @property {number} _id
+ * @property {string} name
+ * @property {boolean} isRated
+ * @property {boolean} isSolo
+ * @property {string=} slug
+ * @property {number=} blizID
+ */
+
+/**
  * @typedef {object} GameData
  * @property {GameClass[]=} classes
  * @property {GameSpecialization[]=} specs
+ * @property {GameBracket[]=} brackets
  */
 
 function getStorage() {
@@ -109,6 +120,30 @@ export function setGameSpecs(specs) {
     const nextValue = {
         ...getGameData(),
         specs,
+    };
+
+    return setGameData(nextValue);
+}
+
+/**
+ * Returns the cached game brackets collection.
+ *
+ * @returns {GameBracket[] | undefined} Stored `brackets` value.
+ */
+export function getGameBrackets() {
+    return getGameData().brackets;
+}
+
+/**
+ * Merges and persists the cached game brackets collection.
+ *
+ * @param {GameBracket[]} brackets - Brackets payload to store under `gameData.brackets`.
+ * @returns {GameData} The updated `gameData` object.
+ */
+export function setGameBrackets(brackets) {
+    const nextValue = {
+        ...getGameData(),
+        brackets,
     };
 
     return setGameData(nextValue);

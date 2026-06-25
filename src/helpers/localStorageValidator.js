@@ -2,6 +2,7 @@ import { httpFetchWithCredentials } from "./httpFetch.js";
 import {
     getGameData,
     setGameData,
+    setGameBrackets,
     setGameClasses,
     setGameSpecs,
 } from "./storageOperations/gameData.js";
@@ -19,7 +20,7 @@ export default async function localStorageValidatoor() {
         setGameData(gameData);
     }
 
-    const { classes, specs } = gameData;
+    const { classes, specs, brackets } = gameData;
 
     if (!classes) {
         try {
@@ -43,6 +44,19 @@ export default async function localStorageValidatoor() {
             }
         } catch (error) {
             console.warn("req failed");
+            console.error(error);
+        }
+    }
+
+    if (!brackets) {
+        try {
+            const req = await httpFetchWithCredentials("/game/brackets");
+
+            if (Array.isArray(req.data?.value)) {
+                setGameBrackets(req.data.value);
+            }
+        } catch (error) {
+            console.warn("brackets req failed");
             console.error(error);
         }
     }
