@@ -1,24 +1,163 @@
-export default function thumbnailGenerate(video) {
+/**
+ * Dev note:
+ * Browser-only thumbnail helper for local video files. This creates an
+ * off-DOM video element, samples one frame from the start, middle, and end
+ * thirds of the file, and returns three JPEG blobs. It does not upload,
+ * persist, or create preview URLs for the generated thumbnails.
+ */
 
-    console.info(video)
+const THUMBNAIL_MIME_TYPE = "image/jpeg";
+const THUMBNAIL_QUALITY = 0.8;
+const EDGE_PADDING_SECONDS = 0.25;
 
+/**
+ * Generate three thumbnail blobs from randomized start, middle, and end
+ * timestamps in a provided video file.
+ *
+ * @param {File} file - Browser video file selected by the user.
+ * @returns {Promise<Blob[]>} Resolves with exactly three JPEG thumbnail blobs.
+ * @throws {TypeError} When the provided value is not a File/Blob.
+ * @throws {Error} When the video cannot load, seek, or render to a blob.
+ */
+export default async function thumbnailGenerate(file) {
+    if (!(file instanceof Blob)) {
+        throw new TypeError("thumbnailGenerate expects a browser File or Blob.");
+    }
 
-    // return new Promise((resolve) => {
-    //     video.currentTime = time;
+    const objectUrl = URL.createObjectURL(file);
+    const video = document.createElement("video");
 
-    //     video.onseeked = () => {
-    //         const canvas = document.createElement("canvas");
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.src = objectUrl;
 
-    //         canvas.width = video.videoWidth;
-    //         canvas.height = video.videoHeight;
+    try {
+        await loadVideoMetadata(video);
 
-    //         const ctx = canvas.getContext("2d");
+        if (!Number.isFinite(video.duration) || video.duration <= 0) {
+            throw new Error("Video duration is not available.");
+        }
 
-    //         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const timestamps = getRandomSegmentTimestamps(video.duration);
+        const thumbnails = [];
 
-    //         canvas.toBlob((blob) => {
-    //             resolve(blob);
-    //         }, "image/jpeg", 0.8);
-    //     };
-    // });
+        for (const time of timestamps) {
+            await seekVideo(video, time);
+            thumbnails.push(await captureVideoFrame(video));
+        }
+
+        return thumbnails;
+    } finally {
+        cleanupVideo(video);
+        URL.revokeObjectURL(objectUrl);
+    }
+}
+
+function loadVideoMetadata(video) {
+    return new Promise((resolve, reject) => {
+        const cleanup = () => {
+            video.onloadedmetadata = null;
+            video.onerror = null;
+        };
+
+        video.onloadedmetadata = () => {
+            cleanup();
+            resolve();
+        };
+
+        video.onerror = () => {
+            cleanup();
+            reject(new Error("Video metadata failed to load."));
+        };
+
+        video.load();
+    });
+}
+
+function seekVideo(video, time) {
+    return new Promise((resolve, reject) => {
+        const cleanup = () => {
+            video.onseeked = null;
+            video.onerror = null;
+        };
+
+        video.onseeked = () => {
+            cleanup();
+            resolve();
+        };
+
+        video.onerror = () => {
+            cleanup();
+            reject(new Error(`Video failed to seek to ${time.toFixed(2)}s.`));
+        };
+
+        video.currentTime = time;
+    });
+}
+
+function captureVideoFrame(video) {
+    const canvas = document.createElement("canvas");
+    const width = video.videoWidth;
+    const height = video.videoHeight;
+
+    if (!width || !height) {
+        throw new Error("Video frame dimensions are not available.");
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+        throw new Error("Could not create a canvas rendering context.");
+    }
+
+    context.drawImage(video, 0, 0, width, height);
+
+    return new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => {
+            if (!blob) {
+                reject(new Error("Canvas failed to generate a thumbnail blob."));
+                return;
+            }
+
+            resolve(blob);
+        }, THUMBNAIL_MIME_TYPE, THUMBNAIL_QUALITY);
+    });
+}
+
+function getRandomSegmentTimestamps(duration) {
+    const segmentLength = duration / 3;
+
+    return [0, 1, 2].map((segmentIndex) => {
+        const segmentStart = segmentIndex * segmentLength;
+        const segmentEnd = segmentIndex === 2
+            ? duration
+            : (segmentIndex + 1) * segmentLength;
+
+        return getRandomTimeInSegment(segmentStart, segmentEnd, duration);
+    });
+}
+
+function getRandomTimeInSegment(segmentStart, segmentEnd, duration) {
+    const safeStart = Math.min(segmentStart + EDGE_PADDING_SECONDS, segmentEnd);
+    const safeEnd = Math.max(segmentEnd - EDGE_PADDING_SECONDS, safeStart);
+    const fallbackTime = segmentStart + ((segmentEnd - segmentStart) / 2);
+    const randomTime = safeEnd > safeStart
+        ? safeStart + (Math.random() * (safeEnd - safeStart))
+        : fallbackTime;
+
+    return clamp(randomTime, 0, Math.max(0, duration - 0.05));
+}
+
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
+
+function cleanupVideo(video) {
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
 }
