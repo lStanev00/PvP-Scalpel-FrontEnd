@@ -1,9 +1,11 @@
 /**
  * Dev note:
- * Browser-only thumbnail helper for local video files. This creates an
- * off-DOM video element, samples one frame from the start, middle, and end
- * thirds of the file, and returns three JPEG blobs. It does not upload,
- * persist, or create preview URLs for the generated thumbnails.
+ * Browser-only thumbnail helper for local video files or an already-rendered
+ * video element. The default export creates an off-DOM video element from a
+ * file. The named export reuses an existing HTMLVideoElement, such as the one
+ * exposed by VideoPlayer's mediaRef. Both paths sample one frame from the
+ * start, middle, and end thirds of the media and return three JPEG blobs. This
+ * helper does not upload, persist, or create preview URLs for the thumbnails.
  */
 
 const THUMBNAIL_MIME_TYPE = "image/jpeg";
@@ -33,64 +35,117 @@ export default async function thumbnailGenerate(file) {
     video.src = objectUrl;
 
     try {
-        await loadVideoMetadata(video);
-
-        if (!Number.isFinite(video.duration) || video.duration <= 0) {
-            throw new Error("Video duration is not available.");
-        }
-
-        const timestamps = getRandomSegmentTimestamps(video.duration);
-        const thumbnails = [];
-
-        for (const time of timestamps) {
-            await seekVideo(video, time);
-            thumbnails.push(await captureVideoFrame(video));
-        }
-
-        return thumbnails;
+        await waitForVideoMetadata(video, true);
+        return generateThumbnailsFromLoadedVideo(video);
     } finally {
         cleanupVideo(video);
         URL.revokeObjectURL(objectUrl);
     }
 }
 
-function loadVideoMetadata(video) {
+/**
+ * Generate three thumbnail blobs from randomized start, middle, and end
+ * timestamps using an existing video element.
+ *
+ * This avoids creating a second video element when the upload flow already has
+ * a rendered player. The function pauses while seeking and restores the
+ * original playback time/play state after capture.
+ *
+ * @param {HTMLVideoElement} video - Existing loaded or loading video element.
+ * @returns {Promise<Blob[]>} Resolves with exactly three JPEG thumbnail blobs.
+ * @throws {TypeError} When the provided value is not an HTMLVideoElement.
+ * @throws {Error} When the video cannot load metadata, seek, or render to a blob.
+ */
+export async function generateThumbnailsFromVideoElement(video) {
+    if (!(video instanceof HTMLVideoElement)) {
+        throw new TypeError("generateThumbnailsFromVideoElement expects an HTMLVideoElement.");
+    }
+
+    await waitForVideoMetadata(video, false);
+
+    const originalTime = video.currentTime;
+    const wasPaused = video.paused;
+
+    video.pause();
+
+    try {
+        return await generateThumbnailsFromLoadedVideo(video);
+    } finally {
+        await restoreVideoPlayback(video, originalTime, wasPaused);
+    }
+}
+
+async function generateThumbnailsFromLoadedVideo(video) {
+    if (!Number.isFinite(video.duration) || video.duration <= 0) {
+        throw new Error("Video duration is not available.");
+    }
+
+    const timestamps = getRandomSegmentTimestamps(video.duration);
+    const thumbnails = [];
+
+    for (const time of timestamps) {
+        await seekVideo(video, time);
+        thumbnails.push(await captureVideoFrame(video));
+    }
+
+    return thumbnails;
+}
+
+function waitForVideoMetadata(video, shouldLoad) {
+    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+        return Promise.resolve();
+    }
+
     return new Promise((resolve, reject) => {
         const cleanup = () => {
-            video.onloadedmetadata = null;
-            video.onerror = null;
+            video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+            video.removeEventListener("error", handleError);
         };
 
-        video.onloadedmetadata = () => {
+        const handleLoadedMetadata = () => {
             cleanup();
             resolve();
         };
 
-        video.onerror = () => {
+        const handleError = () => {
             cleanup();
             reject(new Error("Video metadata failed to load."));
         };
 
-        video.load();
+        video.addEventListener("loadedmetadata", handleLoadedMetadata, { once: true });
+        video.addEventListener("error", handleError, { once: true });
+
+        if (shouldLoad) {
+            video.load();
+        }
     });
 }
 
 function seekVideo(video, time) {
+    if (Math.abs(video.currentTime - time) < 0.01) {
+        return new Promise((resolve) => {
+            requestAnimationFrame(resolve);
+        });
+    }
+
     return new Promise((resolve, reject) => {
         const cleanup = () => {
-            video.onseeked = null;
-            video.onerror = null;
+            video.removeEventListener("seeked", handleSeeked);
+            video.removeEventListener("error", handleError);
         };
 
-        video.onseeked = () => {
+        const handleSeeked = () => {
             cleanup();
             resolve();
         };
 
-        video.onerror = () => {
+        const handleError = () => {
             cleanup();
             reject(new Error(`Video failed to seek to ${time.toFixed(2)}s.`));
         };
+
+        video.addEventListener("seeked", handleSeeked, { once: true });
+        video.addEventListener("error", handleError, { once: true });
 
         video.currentTime = time;
     });
@@ -160,4 +215,18 @@ function cleanupVideo(video) {
     video.pause();
     video.removeAttribute("src");
     video.load();
+}
+
+async function restoreVideoPlayback(video, originalTime, wasPaused) {
+    try {
+        if (Number.isFinite(originalTime)) {
+            await seekVideo(video, originalTime);
+        }
+
+        if (!wasPaused) {
+            await video.play();
+        }
+    } catch {
+        // Thumbnail generation succeeded; restore failures should not hide that.
+    }
 }
