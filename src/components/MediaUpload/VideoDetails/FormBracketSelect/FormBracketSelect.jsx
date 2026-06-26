@@ -5,6 +5,7 @@ import {
     getGameBrackets,
 } from "../../../../helpers/storageOperations/gameData.js";
 import Style from "./FormBracketSelect.module.css";
+import { useVideoDetailsContext } from "../VideoDetailsProvider.js";
 
 function readCachedBrackets() {
     const brackets = getGameBrackets();
@@ -12,6 +13,7 @@ function readCachedBrackets() {
 }
 
 export default function FormBracketSelect() {
+    const {setBracket} = useVideoDetailsContext();
     const [brackets, setBrackets] = useState(readCachedBrackets);
     const sortedBrackets = useMemo(() => {
         const unknownBracket = brackets.find((bracket) => bracket?._id === 0);
@@ -24,6 +26,9 @@ export default function FormBracketSelect() {
                     String(left?.name || "").localeCompare(String(right?.name || ""))
                 );
             });
+        
+        // initial set of the bracket
+        setBracket("0");
 
         return unknownBracket ? [unknownBracket, ...remainingBrackets] : remainingBrackets;
     }, [brackets]);
@@ -52,7 +57,7 @@ export default function FormBracketSelect() {
                     </option>
                 )}
                 {sortedBrackets.map((bracket) => (
-                    <option key={bracket._id} value={bracket._id}>
+                    <option onSelect={() => setBracket(bracket._id.toString())} key={bracket._id} value={bracket._id}>
                         {bracket.name}
                     </option>
                 ))}
