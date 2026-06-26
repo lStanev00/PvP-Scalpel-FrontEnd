@@ -7,8 +7,12 @@ import { getGameClasses } from "../../../../helpers/storageOperations/gameData.j
 import { useVideoDetailsContext } from "../VideoDetailsProvider.js";
 import Style from "./FormCharSelect.module.css";
 
+function normalizeSearchEntry(entry) {
+    return Array.isArray(entry) ? entry[0] : entry;
+}
+
 function getCharacterId(entry) {
-    return entry?.char?._id;
+    return normalizeSearchEntry(entry)?.char?._id;
 }
 
 function hasCharacterId(characterId) {
@@ -16,9 +20,10 @@ function hasCharacterId(characterId) {
 }
 
 function getCharacterLabel(entry) {
-    const char = entry?.char;
+    const normalizedEntry = normalizeSearchEntry(entry);
+    const char = normalizedEntry?.char;
     const name = char?.name || "Unknown character";
-    const realm = entry?.realmName || char?.playerRealm?.name || char?.playerRealm?.slug || "Unknown realm";
+    const realm = normalizedEntry?.realmName || char?.playerRealm?.name || char?.playerRealm?.slug || "Unknown realm";
     const server = (char?.server || char?.playerRealm?.server || "").toUpperCase();
 
     return {
@@ -55,15 +60,16 @@ function getClassIconMedia(char) {
 }
 
 function CharacterResult({ entry, onSelect }) {
-    const char = entry?.char;
-    const label = getCharacterLabel(entry);
+    const normalizedEntry = normalizeSearchEntry(entry);
+    const char = normalizedEntry?.char;
+    const label = getCharacterLabel(normalizedEntry);
 
     return (
         <li>
             <button
                 type="button"
                 className={Style.characterResult}
-                onClick={() => onSelect(entry)}>
+                onClick={() => onSelect(normalizedEntry)}>
                 <img
                     className={Style.characterIcon}
                     src={getClassIconMedia(char)}
@@ -79,6 +85,34 @@ function CharacterResult({ entry, onSelect }) {
     );
 }
 
+function GuessResult({ guessChar }) {
+    const region = (guessChar?.server || "").toUpperCase();
+
+    return (
+        <li>
+            <div className={`${Style.characterResult} ${Style.guessResult}`} aria-disabled="true">
+                <img
+                    className={Style.characterIcon}
+                    src={publicAssetUrl("plus_icon.png")}
+                    alt=""
+                    aria-hidden="true"
+                />
+                <span className={Style.resultText}>
+                    <strong>
+                        {guessChar?.charName} - {guessChar?.realmName}
+                    </strong>
+                    <small>Search match needs confirmation before it can be attached.</small>
+                </span>
+                {region && <span className={Style.serverPill}>{region}</span>}
+            </div>
+        </li>
+    );
+}
+
+function DropdownInfo({ children }) {
+    return <div className={Style.dropdownState}>{children}</div>;
+}
+
 export default function FormCharSelect() {
     const searchInputRef = useRef(null);
     const [characterSearch, setCharacterSearch] = useState("");
@@ -88,6 +122,7 @@ export default function FormCharSelect() {
         status,
         parsedInput,
         shouldSearch,
+        addChars,
         exactMatch,
         chars,
     } = useCharacterSearch(characterSearch);
@@ -96,10 +131,11 @@ export default function FormCharSelect() {
         const uniqueEntries = new Map();
 
         [...exactMatch, ...chars].forEach((entry) => {
-            const characterId = getCharacterId(entry);
+            const normalizedEntry = normalizeSearchEntry(entry);
+            const characterId = getCharacterId(normalizedEntry);
 
             if (!hasCharacterId(characterId) || uniqueEntries.has(characterId)) return;
-            uniqueEntries.set(characterId, entry);
+            uniqueEntries.set(characterId, normalizedEntry);
         });
 
         return [...uniqueEntries.values()];
@@ -113,6 +149,10 @@ export default function FormCharSelect() {
     const selectableResults = characterResults.filter((entry) => {
         return !selectedCharacterIds.has(getCharacterId(entry));
     });
+
+    const showDropdown = parsedInput.hasInput;
+    const hasGuessResults = Array.isArray(addChars) && addChars.length > 0;
+    const hasSelectableResults = selectableResults.length > 0;
 
     const handleCharacterSelect = (entry) => {
         const characterId = getCharacterId(entry);
@@ -163,14 +203,24 @@ export default function FormCharSelect() {
                     Select a confirmed search result to add its character ID to this video.
                 </p>
 
-                {parsedInput.hasInput && (
+                {showDropdown && (
                     <div className={Style.dropdown}>
-                        {status === "loading" && shouldSearch && (
-                            <div className={Style.dropdownState}>Searching characters...</div>
+                        {parsedInput.isTooShortName && !parsedInput.hasRealm && (
+                            <DropdownInfo>Enter at least 3 letters.</DropdownInfo>
                         )}
 
-                        {status === "ready" && selectableResults.length > 0 && (
+                        {status === "loading" && shouldSearch && (
+                            <DropdownInfo>Searching characters...</DropdownInfo>
+                        )}
+
+                        {status === "ready" && (hasGuessResults || hasSelectableResults) && (
                             <ul className={Style.resultList}>
+                                {hasGuessResults && addChars.map((entry, index) => (
+                                    <GuessResult
+                                        key={`${index}:${entry?.charName}:${entry?.realmSlug}`}
+                                        guessChar={entry}
+                                    />
+                                ))}
                                 {selectableResults.map((entry) => (
                                     <CharacterResult
                                         key={getCharacterId(entry)}
@@ -181,14 +231,14 @@ export default function FormCharSelect() {
                             </ul>
                         )}
 
-                        {status === "ready" && selectableResults.length === 0 && (
-                            <div className={Style.dropdownState}>
-                                {characterResults.length ? "Character already added." : "No confirmed character found."}
-                            </div>
-                        )}
-
-                        {parsedInput.isTooShortName && (
-                            <div className={Style.dropdownState}>Enter at least 3 letters.</div>
+                        {status === "ready" && !hasGuessResults && !hasSelectableResults && !parsedInput.isTooShortName && (
+                            <DropdownInfo>
+                                {characterResults.length
+                                    ? "Character already added."
+                                    : parsedInput.hasRealm
+                                        ? "No confirmed character found."
+                                        : "Add a realm after a dash to narrow it down."}
+                            </DropdownInfo>
                         )}
                     </div>
                 )}
@@ -205,7 +255,7 @@ export default function FormCharSelect() {
                                 <input type="hidden" name="characters" value={characterId} />
                                 <img
                                     className={Style.characterIcon}
-                                    src={getClassIconMedia(entry?.char)}
+                                    src={getClassIconMedia(normalizeSearchEntry(entry)?.char)}
                                     alt={(entry?.char?.class?.name || "Unknown") + " class icon"}
                                 />
                                 <span>
