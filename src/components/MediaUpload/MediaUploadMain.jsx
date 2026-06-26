@@ -3,17 +3,12 @@ import { useMediaUploadContext } from "./MediaUploadContext.js";
 import VideoInput from "./VideoInput/VideoInput.jsx";
 import Style from "./MediaUploadMain.module.css";
 import { useEffect, useMemo, useState } from "react";
-import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
 import VideoDetails from "./VideoDetails/VideoDetails.jsx";
 import { VideoDetailsProvider } from "./VideoDetails/VideoDetailsProvider.js";
 
 export default function MediaUploadMain() {
     const { videoInputRef, videoFile } = useMediaUploadContext();
     const [activeStage, setStage] = useState(0);
-    const videoPreviewUrl = useMemo(() => {
-        if (!videoFile) return "";
-        return URL.createObjectURL(videoFile);
-    }, [videoFile]);
 
     const stages = [
         [
@@ -22,14 +17,6 @@ export default function MediaUploadMain() {
         ],
         [() => <VideoDetails />, "Video selected. Continue with details next."],
     ];
-
-    useEffect(() => {
-        return () => {
-            if (videoPreviewUrl) {
-                URL.revokeObjectURL(videoPreviewUrl);
-            }
-        };
-    }, [videoPreviewUrl]);
 
     return (
         <VideoDetailsProvider>
@@ -59,7 +46,6 @@ export default function MediaUploadMain() {
                         </div>
                     </header>
 
-                    {videoPreviewUrl && <VideoPlayer src={videoPreviewUrl} title="test" />}
 
                     {stages[activeStage] && stages[activeStage][0]()}
                 </section>

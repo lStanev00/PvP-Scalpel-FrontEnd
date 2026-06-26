@@ -43,7 +43,7 @@ export default function AppContent() {
 
     useEffect(() => {
         httpFetch("/verify/me");
-        localStorageValidatoor()
+        localStorageValidatoor();
     }, [httpFetch]);
 
     return (

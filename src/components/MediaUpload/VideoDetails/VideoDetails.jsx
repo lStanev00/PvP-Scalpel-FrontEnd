@@ -3,8 +3,12 @@ import { FiChevronRight } from "react-icons/fi";
 import FormBracketSelect from "./FormBracketSelect/FormBracketSelect.jsx";
 import FormCharSelect from "./FormCharSelect/FormCharSelect.jsx";
 import Style from "./VideoDetails.module.css";
+import { useVideoDetailsContext } from "./VideoDetailsProvider.js";
 
 export default function VideoDetails() {
+
+    const {setIsPrivate} = useVideoDetailsContext();
+
     return (
         <form className={Style.detailsForm} aria-labelledby="media-details-title">
             <div className={Style.formHeader}>
@@ -43,7 +47,7 @@ export default function VideoDetails() {
 
             <div className={Style.footerRow}>
                 <label className={Style.privacyToggle} htmlFor="media-video-private">
-                    <input id="media-video-private" name="isPrivate" type="checkbox" />
+                    <input id="media-video-private" name="isPrivate" type="checkbox" onChange={(e) => setIsPrivate(e.target.checked)}/>
                     <span className={Style.toggleVisual} aria-hidden="true">
                         <span />
                     </span>

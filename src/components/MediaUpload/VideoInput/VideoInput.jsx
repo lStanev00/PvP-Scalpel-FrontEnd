@@ -1,8 +1,10 @@
-import { useCallback, useId, useState } from "react";
+import { useCallback, useContext, useEffect, useId, useMemo, useState } from "react";
 import { FiArrowRight, FiCheck, FiUploadCloud } from "react-icons/fi";
 
 import Style from "./VideoInput.module.css";
 import { useMediaUploadContext } from "../MediaUploadContext.js";
+import VideoPlayer from "../../VideoPlayer/VideoPlayer.jsx";
+import { UserContext } from "../../../hooks/ContextVariables.jsx";
 
 const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 const ACCEPTED_VIDEO_EXTENSIONS = [".mp4", ".webm", ".ogg"];
@@ -36,13 +38,14 @@ export default function VideoInput({ videoInputRef, setStage }) {
     const [isDragging, setIsDragging] = useState(false);
     const { videoFile, setVideoFile, isVideoLocked, setIsVideoLocked } = useMediaUploadContext();
     const [errorMessage, setErrorMessage] = useState("");
+    const { httpFetch } = useContext(UserContext);
+    
 
     const goToStage = useCallback(
         (nextStage) => {
             setStage((currentStage) => {
-                const resolvedStage = typeof nextStage === "function"
-                    ? nextStage(currentStage)
-                    : nextStage;
+                const resolvedStage =
+                    typeof nextStage === "function" ? nextStage(currentStage) : nextStage;
 
                 return resolvedStage === 1 ? 1 : 0;
             });
@@ -94,18 +97,24 @@ export default function VideoInput({ videoInputRef, setStage }) {
         [selectFile],
     );
 
-    const handleDragEnter = useCallback((event) => {
-        event.preventDefault();
-        if (isVideoLocked) return;
-        setIsDragging(true);
-    }, [isVideoLocked]);
+    const handleDragEnter = useCallback(
+        (event) => {
+            event.preventDefault();
+            if (isVideoLocked) return;
+            setIsDragging(true);
+        },
+        [isVideoLocked],
+    );
 
-    const handleDragOver = useCallback((event) => {
-        event.preventDefault();
-        if (isVideoLocked) return;
-        event.dataTransfer.dropEffect = "copy";
-        setIsDragging(true);
-    }, [isVideoLocked]);
+    const handleDragOver = useCallback(
+        (event) => {
+            event.preventDefault();
+            if (isVideoLocked) return;
+            event.dataTransfer.dropEffect = "copy";
+            setIsDragging(true);
+        },
+        [isVideoLocked],
+    );
 
     const handleDragLeave = useCallback((event) => {
         if (event.currentTarget.contains(event.relatedTarget)) return;
@@ -144,13 +153,25 @@ export default function VideoInput({ videoInputRef, setStage }) {
             ? videoFile.name + (selectedFileSize ? " - " + selectedFileSize : "")
             : "MP4, WebM, or Ogg");
 
+    const videoPreviewUrl = useMemo(() => {
+        if (!videoFile) return "";
+        return URL.createObjectURL(videoFile);
+    }, [videoFile]);
+
+    useEffect(() => {
+        return () => {
+            if (videoPreviewUrl) {
+                URL.revokeObjectURL(videoPreviewUrl);
+            }
+        };
+    }, [videoPreviewUrl]);
+
     return (
         <>
+            {videoPreviewUrl && <VideoPlayer src={videoPreviewUrl} title="test" />}
+
             <section
-                className={[
-                    Style.uploadSection,
-                    videoFile ? Style.uploadSectionSelected : "",
-                ]
+                className={[Style.uploadSection, videoFile ? Style.uploadSectionSelected : ""]
                     .filter(Boolean)
                     .join(" ")}>
                 <input
@@ -206,7 +227,10 @@ export default function VideoInput({ videoInputRef, setStage }) {
                                 {isDragging ? "Drop video" : "Select or drop video"}
                             </span>
                             <p
-                                className={[Style.fileStatus, errorMessage ? Style.fileStatusError : ""]
+                                className={[
+                                    Style.fileStatus,
+                                    errorMessage ? Style.fileStatusError : "",
+                                ]
                                     .filter(Boolean)
                                     .join(" ")}
                                 aria-live="polite">
@@ -225,19 +249,22 @@ export default function VideoInput({ videoInputRef, setStage }) {
                 ]
                     .filter(Boolean)
                     .join(" ")}
-                onClick={() =>
+                onClick={async () =>
+                {
+                    const res = await  
                     goToStage((now) => {
                         setIsVideoLocked(true);
                         const newVal = now + 1;
                         return newVal;
                     })
                 }
+                }
                 disabled={!videoFile}
                 title={videoFile ? undefined : "Select video first"}
                 aria-label={videoFile ? "Next" : "Select video first"}>
                 {videoFile ? (
                     <>
-                        <span>Next</span>
+                        <span>Upload Video</span>
                         <FiArrowRight className={Style.nextActionIcon} aria-hidden="true" />
                     </>
                 ) : (
