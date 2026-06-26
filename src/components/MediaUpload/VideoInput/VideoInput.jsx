@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useId, useState } from "react";
 import { FiArrowRight, FiCheck, FiUploadCloud } from "react-icons/fi";
 
 import Style from "./VideoInput.module.css";
@@ -7,14 +7,6 @@ import { useMediaUploadContext } from "../MediaUploadContext.js";
 const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 const ACCEPTED_VIDEO_EXTENSIONS = [".mp4", ".webm", ".ogg"];
 const ACCEPT_ATTRIBUTE = ACCEPTED_VIDEO_TYPES.join(",");
-const ACTIVE_STAGE_STORAGE_KEY = "mediaUploadActiveStage";
-
-function readStoredActiveStage() {
-    if (typeof window === "undefined") return 0;
-
-    const storedStage = Number(window.sessionStorage.getItem(ACTIVE_STAGE_STORAGE_KEY));
-    return storedStage === 1 ? 1 : 0;
-}
 
 function isAcceptedVideo(file) {
     if (!file) return false;
@@ -45,21 +37,15 @@ export default function VideoInput({ videoInputRef, setStage }) {
     const { videoFile, setVideoFile, isVideoLocked, setIsVideoLocked } = useMediaUploadContext();
     const [errorMessage, setErrorMessage] = useState("");
 
-    useEffect(() => {
-        if (isVideoLocked && readStoredActiveStage() === 0) {
-            setStage(1);
-        }
-    }, [isVideoLocked, setStage]);
-
     const goToStage = useCallback(
         (nextStage) => {
-            const resolvedStage = typeof nextStage === "function"
-                ? nextStage(readStoredActiveStage())
-                : nextStage;
-            const clampedStage = resolvedStage === 1 ? 1 : 0;
+            setStage((currentStage) => {
+                const resolvedStage = typeof nextStage === "function"
+                    ? nextStage(currentStage)
+                    : nextStage;
 
-            window.sessionStorage.setItem(ACTIVE_STAGE_STORAGE_KEY, String(clampedStage));
-            setStage(clampedStage);
+                return resolvedStage === 1 ? 1 : 0;
+            });
         },
         [setStage],
     );

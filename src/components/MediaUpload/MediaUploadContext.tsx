@@ -7,17 +7,9 @@ import {
     type RefObject,
     type SetStateAction,
     type Dispatch,
-    useEffect,
     useState,
 } from "react";
 import splitVideoIntoChunks from "./VideoInput/videoSlicer.js";
-
-const VIDEO_LOCK_STORAGE_KEY = "mediaUploadVideoLocked";
-
-function readStoredVideoLock() {
-    if (typeof window === "undefined") return false;
-    return window.sessionStorage.getItem(VIDEO_LOCK_STORAGE_KEY) === "true";
-}
 
 type VideoMimeType = "video/mp4" | "video/webm" | "video/ogg";
 type VideoChunk = ReturnType<typeof splitVideoIntoChunks>[number];
@@ -44,11 +36,7 @@ export const MediaUpload = createContext<MediaUploadContextValue | null>(null);
 export function MediaUploadProvider({ children }: MediaUploadProviderProps) {
     const videoInputRef = useRef<HTMLInputElement | null>(null);
     const [videoFile, setVideoFile] = useState<VideoFile | null>(null);
-    const [isVideoLocked, setIsVideoLocked] = useState(readStoredVideoLock);
-
-    useEffect(() => {
-        window.sessionStorage.setItem(VIDEO_LOCK_STORAGE_KEY, String(isVideoLocked));
-    }, [isVideoLocked]);
+    const [isVideoLocked, setIsVideoLocked] = useState(false);
 
     const videoChunks = useMemo(() => {
         if (!videoFile) return null;

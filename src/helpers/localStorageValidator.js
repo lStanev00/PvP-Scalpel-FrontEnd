@@ -1,21 +1,18 @@
 /**
  * Developer note:
  * This module owns startup validation for the `gameData` localStorage entry.
- * It keeps classes, specs, and brackets cached under one object and refreshes
- * the whole cache when `gameData.updatedAt` is older than the two-day TTL
- * defined in `storageOperations/gameData.js`.
+ * It delegates cache repair to `storageOperations/gameData.js`, which keeps
+ * classes, specs, and brackets cached under one object and refreshes the whole
+ * cache when any required dataset is missing or the two-day TTL has expired.
  *
  * Brackets API responses are wrapped as `{ value, Count }`; only `value` is
  * persisted under `gameData.brackets`.
  */
-import { httpFetchWithCredentials } from "./httpFetch.js";
 import {
     getGameData,
     isGameDataExpired,
-    setGameData,
-    setGameBrackets,
-    setGameClasses,
-    setGameSpecs,
+    isGameDataMissingRequiredValue,
+    refreshGameDataCache,
 } from "./storageOperations/gameData.js";
 
 /**
@@ -24,56 +21,9 @@ import {
  * @returns {Promise<void>}
  */
 export default async function localStorageValidatoor() {
-    let gameData = getGameData();
+    const gameData = getGameData();
 
-    if (Object.keys(gameData).length && isGameDataExpired(gameData)) {
-        gameData = {};
-        setGameData(gameData);
-    }
-
-    if (!Object.keys(gameData).length) {
-        gameData = {};
-        setGameData(gameData);
-    }
-
-    const { classes, specs, brackets } = gameData;
-
-    if (!classes) {
-        try {
-            const req = await httpFetchWithCredentials("/game/classes");
-
-            if (req.data) {
-                setGameClasses(req.data);
-            }
-        } catch (error) {
-            console.warn("req failed");
-            console.error(error);
-        }
-    }
-
-    if (!specs) {
-        try {
-            const req = await httpFetchWithCredentials("/game/specs");
-
-            if (req.data) {
-                setGameSpecs(req.data);
-            }
-        } catch (error) {
-            console.warn("req failed");
-            console.error(error);
-        }
-    }
-
-    if (!brackets) {
-        try {
-            const req = await httpFetchWithCredentials("/game/brackets");
-
-            if (Array.isArray(req.data?.value)) {
-                setGameBrackets(req.data.value);
-            }
-        } catch (error) {
-            console.warn("brackets req failed");
-            console.error(error);
-        }
+    if (isGameDataExpired(gameData) || isGameDataMissingRequiredValue(gameData)) {
+        await refreshGameDataCache();
     }
 }

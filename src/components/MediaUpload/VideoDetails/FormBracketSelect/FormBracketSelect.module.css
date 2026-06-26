@@ -1,0 +1,55 @@
+.field {
+    display: grid;
+    gap: 0.48rem;
+    min-width: 0;
+    margin-bottom: 1rem;
+}
+
+.field label {
+    color: rgba(236, 242, 255, 0.9);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.field select {
+    width: 100%;
+    min-width: 0;
+    min-height: 3.25rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(255, 215, 0, 0.18);
+    border-radius: 14px;
+    outline: none;
+    background:
+        linear-gradient(180deg, rgba(9, 14, 28, 0.96), rgba(12, 17, 32, 0.94));
+    color: #f5f8ff;
+    color-scheme: dark;
+    cursor: pointer;
+    font: inherit;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.035),
+        0 12px 24px rgba(0, 0, 0, 0.2);
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease;
+}
+
+.field select:focus {
+    border-color: rgba(0, 245, 212, 0.42);
+    box-shadow:
+        0 0 0 1px rgba(0, 245, 212, 0.18),
+        0 0 28px rgba(0, 245, 212, 0.11),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+}
+
+.field select option {
+    background: #080c18;
+    color: #f5f8ff;
+}
+
+.field select option:disabled {
+    color: rgba(199, 210, 240, 0.58);
+}
