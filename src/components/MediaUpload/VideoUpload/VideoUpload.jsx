@@ -1,74 +1,32 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../../hooks/ContextVariables.jsx";
 import { useMediaUploadContext } from "../MediaUploadContext.js";
-import uploadBlobToSignedUrl from "./uploadBlobToSignedUrl.ts";
+import uploadBlobToSignedUrl from "./UploadProgressStage/uploadBlobToSignedUrl.js";
+import UploadCompleteStage from "./UploadCompleteStage/UploadCompleteStage.jsx";
+import UploadInitializeStage from "./UploadInitializeStage/UploadInitializeStage.jsx";
+import UploadProgressStage from "./UploadProgressStage/UploadProgressStage.jsx";
 
-const SOCKET_URL = "wss://ws.pvpscalpel.com/";
-
-export default function VideoUpload() {
+export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSocketError }) {
     const { httpFetch } = useContext(UserContext);
     const { videoChunks } = useMediaUploadContext();
     const [uploadStage, setUploadStage] = useState(0);
     const [uploadLinks, setUploadLinks] = useState([]);
     const [mediaMetaDoc, setMediaMetaDoc] = useState();
     const [error, setError] = useState("");
-    const wsRef = useRef(null);
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgressPercent, setUploadProgressPercent] = useState(0);
+    const [uploadSpeedBytesPerSecond, setUploadSpeedBytesPerSecond] = useState(0);
+    const isInitializingRef = useRef(false);
+    const hasStartedUploadRef = useRef(false);
+    const speedSampleRef = useRef({
+        loaded: 0,
+        time: 0,
+        speed: 0,
+    });
 
-    const closeSocket = useCallback(() => {
-        const socket = wsRef.current;
-
-        wsRef.current = null;
-
-        if (
-            socket &&
-            (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)
-        ) {
-            socket.close();
-        }
-    }, []);
-
-    const getUploadSocket = useCallback(() => {
-        const existing = wsRef.current;
-
-        if (existing?.readyState === WebSocket.OPEN) {
-            return Promise.resolve(existing);
-        }
-
-        if (existing?.readyState === WebSocket.CONNECTING) {
-            return new Promise((resolve, reject) => {
-                existing.addEventListener("open", () => resolve(existing), { once: true });
-                existing.addEventListener("error", () => reject(new Error("Upload websocket failed to connect.")), {
-                    once: true,
-                });
-            });
-        }
-
-        return new Promise((resolve, reject) => {
-            const socket = new WebSocket(SOCKET_URL);
-            wsRef.current = socket;
-
-            socket.addEventListener("open", () => resolve(socket), { once: true });
-            socket.addEventListener("error", () => reject(new Error("Upload websocket failed to connect.")), {
-                once: true,
-            });
-            socket.addEventListener("message", (event) => {
-                if (typeof event.data !== "string") return;
-
-                try {
-                    JSON.parse(event.data);
-                } catch {
-                    setError("Received an invalid websocket payload.");
-                }
-            });
-            socket.addEventListener("close", () => {
-                if (wsRef.current === socket) {
-                    wsRef.current = null;
-                }
-            });
-        });
-    }, []);
-
-    const initializeUpload = useCallback(async () => {
+    const initializeUpload = useCallback(async () => { // stage 0
+        if (isInitializingRef.current || uploadStage !== 0) return;
+        isInitializingRef.current = true;
         setError("");
 
         const exportBody = {
@@ -77,6 +35,7 @@ export default function VideoUpload() {
 
         if (videoChunks === null) {
             console.warn(`vChunks is null`);
+            isInitializingRef.current = false;
             return null;
         }
 
@@ -90,23 +49,52 @@ export default function VideoUpload() {
         });
 
         if (req.status === 201) {
-            setUploadLinks(Array.isArray(req.data?.urls) ? req.data.urls : []);
+            const nextUploadLinks = Array.isArray(req.data?.urls) ? req.data.urls : [];
+
+            console.info("Media upload initialized", {
+                chunks: videoChunks,
+                uploadLinks: nextUploadLinks,
+                mediaMetaDoc: req.data?.mediaObj,
+            });
+
+            setUploadLinks(nextUploadLinks);
             setMediaMetaDoc(req.data.mediaObj);
             setUploadStage(1);
+            return;
         }
-    }, [httpFetch, videoChunks]);
 
-    const startUpload = useCallback(async () => {
+        isInitializingRef.current = false;
+        setError(req.data?.msg || "Failed to initialize upload.");
+    }, [httpFetch, uploadStage, videoChunks]);
+
+    const startUpload = useCallback(async () => { // stage 1 this will upload the parts and give feedback to the server
+        if (hasStartedUploadRef.current) return;
+
+        if (uploadSocketStatus !== "open" || uploadSocket?.readyState !== WebSocket.OPEN) {
+            setError(uploadSocketError || "Upload websocket is not ready.");
+            return;
+        }
+
         if (!videoChunks?.length || !uploadLinks.length || !mediaMetaDoc?._id) {
             setError("Upload is not initialized.");
             return;
         }
 
         setError("");
+        hasStartedUploadRef.current = true;
+        setIsUploading(true);
+        setUploadProgressPercent(0);
+        setUploadSpeedBytesPerSecond(0);
+        speedSampleRef.current = {
+            loaded: 0,
+            time: performance.now(),
+            speed: 0,
+        };
         setUploadStage(1);
 
         try {
-            const socket = await getUploadSocket();
+            const totalParts = videoChunks.length;
+            const percentPerPart = 100 / totalParts;
 
             for (let i = 0; i < uploadLinks.length; i += 1) {
                 const signedUrl = uploadLinks[i];
@@ -116,51 +104,143 @@ export default function VideoUpload() {
                     throw new Error("Missing upload part data.");
                 }
 
-                await uploadBlobToSignedUrl(chunk.blob, signedUrl);
+                await uploadBlobToSignedUrl(chunk.blob, signedUrl, ({ loaded, total }) => {
+                    if (!total) return;
 
-                socket.send(JSON.stringify({
+                    const now = performance.now();
+                    const previousSample = speedSampleRef.current;
+                    const elapsedSeconds = (now - previousSample.time) / 1000;
+                    const loadedDelta = loaded - previousSample.loaded;
+
+                    if (elapsedSeconds > 0 && loadedDelta >= 0) {
+                        const currentSpeed = loadedDelta / elapsedSeconds;
+                        const smoothedSpeed = previousSample.speed
+                            ? previousSample.speed * 0.72 + currentSpeed * 0.28
+                            : currentSpeed;
+
+                        speedSampleRef.current = {
+                            loaded,
+                            time: now,
+                            speed: smoothedSpeed,
+                        };
+                        setUploadSpeedBytesPerSecond(smoothedSpeed);
+                    }
+
+                    const baseProgress = i * percentPerPart;
+                    const chunkProgress = (loaded / total) * percentPerPart;
+                    const totalProgress = Math.round(baseProgress + chunkProgress);
+
+                    setUploadProgressPercent(Math.max(0, Math.min(100, totalProgress)));
+                });
+
+                setUploadProgressPercent(Math.round(((i + 1) / totalParts) * 100));
+                speedSampleRef.current = {
+                    loaded: 0,
+                    time: performance.now(),
+                    speed: speedSampleRef.current.speed,
+                };
+
+                const feedbackPayload = {
                     type: "uploadMedia",
                     data: {
-                    type: "uploadFeedback",
-                    msgContext: {
-                        mediaID: mediaMetaDoc._id,
+                        type: "uploadFeedback",
+                        msgContext: {
+                            mediaID: mediaMetaDoc._id,
                             index: chunk.index,
                             route: `videos/${mediaMetaDoc._id}/part_${chunk.index}`,
                         },
                     },
-                }));
+                };
+
+                console.info("Media upload part uploaded", {
+                    part: chunk.index,
+                    signedUrl,
+                    feedbackPayload,
+                });
+
+                uploadSocket.send(JSON.stringify(feedbackPayload));
             }
 
+            console.info("Media upload complete", {
+                mediaMetaDoc,
+                totalParts: videoChunks.length,
+            });
+
+            setUploadProgressPercent(100);
             setUploadStage(2);
         } catch (err) {
+            hasStartedUploadRef.current = false;
             setError(err?.message || "Failed to upload video.");
             setUploadStage(1);
+        } finally {
+            setIsUploading(false);
+            setUploadSpeedBytesPerSecond(0);
         }
-    }, [getUploadSocket, mediaMetaDoc, uploadLinks, videoChunks]);
+    }, [mediaMetaDoc, uploadLinks, uploadSocket, uploadSocketError, uploadSocketStatus, videoChunks]);
 
     useEffect(() => {
-        return closeSocket;
-    }, [closeSocket]);
+        if (!uploadSocket) return undefined;
+
+        const handleMessage = (event) => {
+            if (typeof event.data !== "string") return;
+
+            try {
+                console.info("Media upload websocket message", JSON.parse(event.data));
+            } catch {
+                setError("Received an invalid websocket payload.");
+            }
+        };
+
+        uploadSocket.addEventListener("message", handleMessage);
+
+        return () => {
+            uploadSocket.removeEventListener("message", handleMessage);
+        };
+    }, [uploadSocket]);
+
+    const totalParts = videoChunks?.length || 0;
+    const signedParts = uploadLinks.length;
+    const isSocketReady = uploadSocketStatus === "open" && uploadSocket?.readyState === WebSocket.OPEN;
+    const progressPercent =
+        uploadStage === 2
+            ? 100
+            : uploadStage === 1
+                ? uploadProgressPercent
+                : 8;
+
+    useEffect(() => {
+        if (uploadStage !== 0 || !videoChunks?.length) return;
+        initializeUpload();
+    }, [initializeUpload, uploadStage, videoChunks]);
+
+    useEffect(() => {
+        if (uploadStage !== 1 || !signedParts || !isSocketReady || isUploading) return;
+        startUpload();
+    }, [isSocketReady, isUploading, signedParts, startUpload, uploadStage]);
 
     if (uploadStage === 0) {
         return (
-            <>
-                <p>initializing</p>
-                <button type="button" onClick={initializeUpload}>Initialize upload</button>
-                {error && <p>{error}</p>}
-            </>
+            <UploadInitializeStage
+                progressPercent={progressPercent}
+                error={error || uploadSocketError}
+            />
         );
     }
 
     if (uploadStage === 1) {
         return (
-            <>
-                <p>uploading please wait</p>
-                <button type="button" onClick={startUpload}>Start upload</button>
-                {error && <p>{error}</p>}
-            </>
+            <UploadProgressStage
+                progressPercent={progressPercent}
+                error={error || uploadSocketError}
+                isUploading={isUploading}
+                uploadSpeedBytesPerSecond={uploadSpeedBytesPerSecond}
+            />
         );
     }
 
-    if (uploadStage === 2) return <p>upload complete</p>;
+    return (
+        <UploadCompleteStage
+            progressPercent={progressPercent}
+        />
+    );
 }
