@@ -21,6 +21,10 @@ type VideoFile = File & {
     type: VideoMimeType;
 };
 
+type MediaMetaDoc = Record<string, unknown> & {
+    _id?: string;
+};
+
 type MediaUploadContextValue = {
     videoInputRef: RefObject<HTMLInputElement | null>;
     videoFile: VideoFile | null;
@@ -28,6 +32,9 @@ type MediaUploadContextValue = {
     isVideoLocked: boolean;
     setIsVideoLocked: Dispatch<SetStateAction<boolean>>;
     videoChunks: VideoChunk[] | null;
+    mediaMetaDocRef: RefObject<MediaMetaDoc | null>;
+    setMediaMetaDoc: (mediaMetaDoc: MediaMetaDoc | null) => void;
+    mergeMediaMetaDoc: (mediaMetaDoc: MediaMetaDoc) => void;
     userMedia: unknown[];
     setUserMedia: Dispatch<SetStateAction<unknown[]>>;
     retrieveUserMedia: () => Promise<unknown>;
@@ -42,9 +49,21 @@ export const MediaUpload = createContext<MediaUploadContextValue | null>(null);
 export function MediaUploadProvider({ children }: MediaUploadProviderProps) {
     const { httpFetch } = useContext(UserContext);
     const videoInputRef = useRef<HTMLInputElement | null>(null);
+    const mediaMetaDocRef = useRef<MediaMetaDoc | null>(null);
     const [videoFile, setVideoFile] = useState<VideoFile | null>(null);
     const [isVideoLocked, setIsVideoLocked] = useState(false);
     const [userMedia, setUserMedia] = useState<unknown[]>([]);
+
+    const setMediaMetaDoc = useCallback((mediaMetaDoc: MediaMetaDoc | null) => {
+        mediaMetaDocRef.current = mediaMetaDoc;
+    }, []);
+
+    const mergeMediaMetaDoc = useCallback((mediaMetaDoc: MediaMetaDoc) => {
+        mediaMetaDocRef.current = {
+            ...(mediaMetaDocRef.current || {}),
+            ...mediaMetaDoc,
+        };
+    }, []);
 
     const retrieveUserMedia = useCallback(async () => {
         const req = await httpFetch("/userMedia");
@@ -73,11 +92,14 @@ export function MediaUploadProvider({ children }: MediaUploadProviderProps) {
             isVideoLocked,
             setIsVideoLocked,
             videoChunks,
+            mediaMetaDocRef,
+            setMediaMetaDoc,
+            mergeMediaMetaDoc,
             userMedia,
             setUserMedia,
             retrieveUserMedia,
         };
-    }, [isVideoLocked, retrieveUserMedia, userMedia, videoChunks, videoFile]);
+    }, [isVideoLocked, mergeMediaMetaDoc, retrieveUserMedia, setMediaMetaDoc, userMedia, videoChunks, videoFile]);
 
     return <MediaUpload.Provider value={value}>{children}</MediaUpload.Provider>;
 }

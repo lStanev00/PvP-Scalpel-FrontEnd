@@ -6,12 +6,23 @@ import UploadCompleteStage from "./UploadCompleteStage/UploadCompleteStage.jsx";
 import UploadInitializeStage from "./UploadInitializeStage/UploadInitializeStage.jsx";
 import UploadProgressStage from "./UploadProgressStage/UploadProgressStage.jsx";
 
+function getUploadFeedbackMediaDoc(payload) {
+    if (payload?.type !== "uploadFeedback") return null;
+    if (!payload?.message?.data || typeof payload.message.data !== "object") return null;
+
+    return payload.message.data;
+}
+
 export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSocketError }) {
     const { httpFetch } = useContext(UserContext);
-    const { videoChunks } = useMediaUploadContext();
+    const {
+        videoChunks,
+        mediaMetaDocRef,
+        setMediaMetaDoc,
+        mergeMediaMetaDoc,
+    } = useMediaUploadContext();
     const [uploadStage, setUploadStage] = useState(0);
     const [uploadLinks, setUploadLinks] = useState([]);
-    const [mediaMetaDoc, setMediaMetaDoc] = useState();
     const [error, setError] = useState("");
     const [isUploading, setIsUploading] = useState(false);
     const [uploadProgressPercent, setUploadProgressPercent] = useState(0);
@@ -50,15 +61,16 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
 
         if (req.status === 201) {
             const nextUploadLinks = Array.isArray(req.data?.urls) ? req.data.urls : [];
+            const nextMediaMetaDoc = req.data?.mediaObj || null;
 
             console.info("Media upload initialized", {
                 chunks: videoChunks,
                 uploadLinks: nextUploadLinks,
-                mediaMetaDoc: req.data?.mediaObj,
+                mediaMetaDoc: nextMediaMetaDoc,
             });
 
             setUploadLinks(nextUploadLinks);
-            setMediaMetaDoc(req.data.mediaObj);
+            setMediaMetaDoc(nextMediaMetaDoc);
             setUploadStage(1);
             return;
         }
@@ -75,7 +87,7 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
             return;
         }
 
-        if (!videoChunks?.length || !uploadLinks.length || !mediaMetaDoc?._id) {
+        if (!videoChunks?.length || !uploadLinks.length || !mediaMetaDocRef.current?._id) {
             setError("Upload is not initialized.");
             return;
         }
@@ -140,14 +152,20 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
                     speed: speedSampleRef.current.speed,
                 };
 
+                const mediaID = mediaMetaDocRef.current?._id;
+
+                if (!mediaID) {
+                    throw new Error("Missing media metadata for upload feedback.");
+                }
+
                 const feedbackPayload = {
                     type: "uploadMedia",
                     data: {
                         type: "uploadFeedback",
                         msgContext: {
-                            mediaID: mediaMetaDoc._id,
+                            mediaID,
                             index: chunk.index,
-                            route: `videos/${mediaMetaDoc._id}/part_${chunk.index}`,
+                            route: `videos/${mediaID}/part_${chunk.index}`,
                         },
                     },
                 };
@@ -162,7 +180,7 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
             }
 
             console.info("Media upload complete", {
-                mediaMetaDoc,
+                mediaMetaDoc: mediaMetaDocRef.current,
                 totalParts: videoChunks.length,
             });
 
@@ -176,7 +194,7 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
             setIsUploading(false);
             setUploadSpeedBytesPerSecond(0);
         }
-    }, [mediaMetaDoc, uploadLinks, uploadSocket, uploadSocketError, uploadSocketStatus, videoChunks]);
+    }, [mediaMetaDocRef, uploadLinks, uploadSocket, uploadSocketError, uploadSocketStatus, videoChunks]);
 
     useEffect(() => {
         if (!uploadSocket) return undefined;
@@ -185,7 +203,14 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
             if (typeof event.data !== "string") return;
 
             try {
-                console.info("Media upload websocket message", JSON.parse(event.data));
+                const payload = JSON.parse(event.data);
+                const nextMediaDoc = getUploadFeedbackMediaDoc(payload);
+
+                if (nextMediaDoc) {
+                    mergeMediaMetaDoc(nextMediaDoc);
+                }
+
+                console.info("Media upload websocket message", payload);
             } catch {
                 setError("Received an invalid websocket payload.");
             }
@@ -196,7 +221,7 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
         return () => {
             uploadSocket.removeEventListener("message", handleMessage);
         };
-    }, [uploadSocket]);
+    }, [mergeMediaMetaDoc, uploadSocket]);
 
     const totalParts = videoChunks?.length || 0;
     const signedParts = uploadLinks.length;

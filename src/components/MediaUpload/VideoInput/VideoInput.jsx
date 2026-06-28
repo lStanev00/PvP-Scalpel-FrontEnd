@@ -36,10 +36,11 @@ function formatFileSize(bytes) {
 export default function VideoInput({ videoInputRef, setStage }) {
     const inputId = useId();
     const [isDragging, setIsDragging] = useState(false);
-    const { videoFile, setVideoFile, isVideoLocked, setIsVideoLocked } = useMediaUploadContext();
+    const { videoFile, setVideoFile, isVideoLocked, setIsVideoLocked, userMedia } = useMediaUploadContext();
     const [errorMessage, setErrorMessage] = useState("");
     const { httpFetch } = useContext(UserContext);
-    
+    const [unfinishedMedia, setUnfinishedMedia] = useState(null);
+
 
     const goToStage = useCallback(
         (nextStage) => {
@@ -159,6 +160,30 @@ export default function VideoInput({ videoInputRef, setStage }) {
     }, [videoFile]);
 
     useEffect(() => {
+        if (!userMedia || userMedia.length === 0) return
+        const needFinish = userMedia.filter(mediaItem => {
+            if (mediaItem.state === "await_data") return true;
+
+            return false
+        })
+        console.info(needFinish);
+        setUnfinishedMedia(needFinish);
+    }, [userMedia]);
+
+    const RenderUnfinishedMedia = useCallback(() => {
+        if (!unfinishedMedia) return null;
+
+
+        return <>
+            {Array.isArray(unfinishedMedia) && unfinishedMedia.map(item => {
+                return (<p>{item._id}</p>)
+            })}
+        </>
+
+
+    }, unfinishedMedia)
+
+    useEffect(() => {
         return () => {
             if (videoPreviewUrl) {
                 URL.revokeObjectURL(videoPreviewUrl);
@@ -169,6 +194,8 @@ export default function VideoInput({ videoInputRef, setStage }) {
     return (
         <>
             {videoPreviewUrl && <VideoPlayer src={videoPreviewUrl} title="test" />}
+
+            {unfinishedMedia && RenderUnfinishedMedia()}
 
             <section
                 className={[Style.uploadSection, videoFile ? Style.uploadSectionSelected : ""]
