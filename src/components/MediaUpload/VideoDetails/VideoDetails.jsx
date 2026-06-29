@@ -4,18 +4,18 @@ import FormBracketSelect from "./FormBracketSelect/FormBracketSelect.jsx";
 import FormCharSelect from "./FormCharSelect/FormCharSelect.jsx";
 import Style from "./VideoDetails.module.css";
 import { useVideoDetailsContext } from "./VideoDetailsProvider.js";
+import { useCallback } from "react";
 
 export default function VideoDetails() {
 
-    const {setIsPrivate} = useVideoDetailsContext();
+    const {setIsPrivate, setTitle, setDescription} = useVideoDetailsContext();
+
+    const onContinue = useCallback( async () => {
+        
+    }, [])
 
     return (
         <form className={Style.detailsForm} aria-labelledby="media-details-title">
-            <div className={Style.formHeader}>
-                <span className={Style.eyebrow}>Video details</span>
-                <h2 id="media-details-title">Prepare publishing details</h2>
-                <p>Add the metadata players need before this match video moves into upload review.</p>
-            </div>
 
             <div className={Style.fieldGrid}>
                 <div className={Style.field}>
@@ -25,6 +25,7 @@ export default function VideoDetails() {
                         name="title"
                         type="text"
                         maxLength={120}
+                        onChange={(e) => setTitle(e.target.value)}
                         placeholder="Example: Solo Shuffle comeback on Blade's Edge"
                     />
                 </div>
@@ -39,6 +40,7 @@ export default function VideoDetails() {
                     name="description"
                     rows={5}
                     maxLength={1200}
+                    onChange={(e) => setDescription(e.target.value)}
                     placeholder="Add match context, comp notes, timestamps, or anything useful for review."
                 />
             </div>

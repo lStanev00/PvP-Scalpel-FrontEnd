@@ -5,6 +5,8 @@ import Style from "./MediaUploadMain.module.css";
 import { useEffect, useRef, useState } from "react";
 import VideoUpload from "./VideoUpload/VideoUpload.jsx";
 import { createWebSocketWithCredentials } from "../../helpers/wsConnect.js";
+import VideoDetails from "./VideoDetails/VideoDetails.jsx";
+import { VideoDetailsProvider } from "./VideoDetails/VideoDetailsProvider.js";
 
 export default function MediaUploadMain() {
     const { videoInputRef } = useMediaUploadContext();
@@ -73,10 +75,18 @@ export default function MediaUploadMain() {
                     uploadSocket={uploadSocket}
                     uploadSocketStatus={uploadSocketStatus}
                     uploadSocketError={uploadSocketError}
+                    setStage={setStage}
                 />
             ),
             "Video selected. Upload the prepared media parts next.",
-        ],
+        ], [
+            () => (
+                <VideoDetailsProvider>
+                    <VideoDetails />
+                </VideoDetailsProvider>
+            ),
+            "Give your video a name and description. Select the bracket and the characters involved."
+        ]
     ];
 
     return (

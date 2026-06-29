@@ -13,14 +13,10 @@ function getUploadFeedbackMediaDoc(payload) {
     return payload.message.data;
 }
 
-export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSocketError }) {
+export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSocketError, setStage }) {
     const { httpFetch } = useContext(UserContext);
-    const {
-        videoChunks,
-        mediaMetaDocRef,
-        setMediaMetaDoc,
-        mergeMediaMetaDoc,
-    } = useMediaUploadContext();
+    const { videoChunks, mediaMetaDocRef, setMediaMetaDoc, mergeMediaMetaDoc } =
+        useMediaUploadContext();
     const [uploadStage, setUploadStage] = useState(0);
     const [uploadLinks, setUploadLinks] = useState([]);
     const [error, setError] = useState("");
@@ -35,7 +31,8 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
         speed: 0,
     });
 
-    const initializeUpload = useCallback(async () => { // stage 0
+    const initializeUpload = useCallback(async () => {
+        // stage 0
         if (isInitializingRef.current || uploadStage !== 0) return;
         isInitializingRef.current = true;
         setError("");
@@ -79,7 +76,8 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
         setError(req.data?.msg || "Failed to initialize upload.");
     }, [httpFetch, uploadStage, videoChunks]);
 
-    const startUpload = useCallback(async () => { // stage 1 this will upload the parts and give feedback to the server
+    const startUpload = useCallback(async () => {
+        // stage 1 this will upload the parts and give feedback to the server
         if (hasStartedUploadRef.current) return;
 
         if (uploadSocketStatus !== "open" || uploadSocket?.readyState !== WebSocket.OPEN) {
@@ -194,7 +192,14 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
             setIsUploading(false);
             setUploadSpeedBytesPerSecond(0);
         }
-    }, [mediaMetaDocRef, uploadLinks, uploadSocket, uploadSocketError, uploadSocketStatus, videoChunks]);
+    }, [
+        mediaMetaDocRef,
+        uploadLinks,
+        uploadSocket,
+        uploadSocketError,
+        uploadSocketStatus,
+        videoChunks,
+    ]);
 
     useEffect(() => {
         if (!uploadSocket) return undefined;
@@ -225,13 +230,9 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
 
     const totalParts = videoChunks?.length || 0;
     const signedParts = uploadLinks.length;
-    const isSocketReady = uploadSocketStatus === "open" && uploadSocket?.readyState === WebSocket.OPEN;
-    const progressPercent =
-        uploadStage === 2
-            ? 100
-            : uploadStage === 1
-                ? uploadProgressPercent
-                : 8;
+    const isSocketReady =
+        uploadSocketStatus === "open" && uploadSocket?.readyState === WebSocket.OPEN;
+    const progressPercent = uploadStage === 2 ? 100 : uploadStage === 1 ? uploadProgressPercent : 8;
 
     useEffect(() => {
         if (uploadStage !== 0 || !videoChunks?.length) return;
@@ -264,8 +265,9 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
     }
 
     return (
-        <UploadCompleteStage
-            progressPercent={progressPercent}
-        />
+        <>
+            <UploadCompleteStage progressPercent={progressPercent} />
+            <button onClick={() => setStage(2)}>Continue to details</button>
+        </>
     );
 }
