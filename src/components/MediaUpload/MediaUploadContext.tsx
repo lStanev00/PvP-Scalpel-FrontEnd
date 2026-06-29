@@ -58,6 +58,12 @@ export function MediaUploadProvider({ children }: MediaUploadProviderProps) {
         mediaMetaDocRef.current = mediaMetaDoc;
     }, []);
 
+    /**
+     * Merges partial media metadata into the upload metadata ref without
+     * triggering a context rerender. Use this for frequent websocket feedback
+     * updates that should stay available to upload code but do not need to
+     * redraw the UI on every message.
+     */
     const mergeMediaMetaDoc = useCallback((mediaMetaDoc: MediaMetaDoc) => {
         mediaMetaDocRef.current = {
             ...(mediaMetaDocRef.current || {}),
