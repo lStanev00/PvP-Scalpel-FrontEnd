@@ -12,7 +12,7 @@ function readCachedBrackets() {
     return Array.isArray(brackets) ? brackets : [];
 }
 
-export default function FormBracketSelect() {
+export default function FormBracketSelect({ error, ariaDescribedBy }) {
     const { setBracket } = useVideoDetailsContext();
     const [brackets, setBrackets] = useState(readCachedBrackets);
     const sortedBrackets = useMemo(() => {
@@ -54,6 +54,8 @@ export default function FormBracketSelect() {
                 id="media-video-bracket"
                 name="bracket"
                 defaultValue="0"
+                aria-invalid={Boolean(error)}
+                aria-describedby={ariaDescribedBy}
                 onChange={(e) => setBracket(e.target.value.toString())}>
                 {!sortedBrackets.length && (
                     <option value="" disabled>
@@ -66,6 +68,11 @@ export default function FormBracketSelect() {
                     </option>
                 ))}
             </select>
+            {error && (
+                <p id={ariaDescribedBy} className={Style.fieldError}>
+                    {error}
+                </p>
+            )}
         </div>
     );
 }

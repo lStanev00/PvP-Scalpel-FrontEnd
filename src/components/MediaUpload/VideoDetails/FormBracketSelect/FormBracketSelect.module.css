@@ -45,6 +45,30 @@
     transform: translateY(-1px);
 }
 
+.field select[aria-invalid="true"] {
+    border-color: rgba(255, 101, 130, 0.68);
+    box-shadow:
+        0 0 0 1px rgba(255, 101, 130, 0.18),
+        0 0 24px rgba(255, 101, 130, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.field select[aria-invalid="true"]:focus {
+    border-color: rgba(255, 121, 148, 0.82);
+    box-shadow:
+        0 0 0 1px rgba(255, 101, 130, 0.28),
+        0 0 28px rgba(255, 101, 130, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.fieldError {
+    margin: -0.12rem 0 0;
+    color: #ff9aaa;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
 .field select option {
     background: #080c18;
     color: #f5f8ff;
