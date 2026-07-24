@@ -20,6 +20,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(undefined);
     const [authStatus, setAuthStatus] = useState("checking");
+    const [userMedia, setUserMedia] = useState([]);
     const inputRef = useRef();
     const feContentCacheRef = useRef(null);
 
@@ -30,8 +31,7 @@ export const UserProvider = ({ children }) => {
     const httpFetch = useCallback(async (endpoint, options = {}) => {
         const req = await httpFetchWithCredentials(endpoint, options);
 
-        const isDiscordCodeError =
-            endpoint === "/link/discord" && Boolean(req.data?.message);
+        const isDiscordCodeError = endpoint === "/link/discord" && Boolean(req.data?.message);
 
         if (req.status === 403 && !isDiscordCodeError) {
             setUser(null);
@@ -79,8 +79,16 @@ export const UserProvider = ({ children }) => {
     }, [getFEContent]);
 
     const value = useMemo(() => {
-        return { user, setUser, authStatus, httpFetch, inputRef, fetchFEContent, FEContent };
-    }, [user, authStatus, httpFetch, fetchFEContent, FEContent]);
+        return {
+            user,
+            setUser,
+            authStatus,
+            httpFetch,
+            inputRef,
+            fetchFEContent,
+            FEContent,
+        };
+    }, [user, authStatus, httpFetch, fetchFEContent, FEContent, userMedia]);
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

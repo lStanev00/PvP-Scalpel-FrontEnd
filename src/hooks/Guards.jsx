@@ -15,6 +15,23 @@ export const UserRoute = () => {
     return <Navigate to={`/login?target=${encodeURIComponent(target)}`} replace />;
 };
 
+export const AdminRoute = () => {
+    const { authStatus, user } = useContext(UserContext);
+    const location = useLocation();
+
+    if (authStatus === "checking") return <Loading />;
+
+    if (authStatus !== "authenticated") {
+        const target = `${location.pathname}${location.search}`;
+        return <Navigate to={`/login?target=${encodeURIComponent(target)}`} replace />;
+    }
+
+    if (String(user?.role || "").trim().toLowerCase() !== "admin") {
+        return <Navigate to="/" replace />;
+    }
+
+    return <Outlet />;
+};
 
 export const GuestRoute = () => {
     const { authStatus } = useContext(UserContext);

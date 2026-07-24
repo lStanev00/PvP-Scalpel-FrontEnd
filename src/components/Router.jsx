@@ -21,7 +21,7 @@ export default function Navigation() {
         <div className={Style.header}>
             <div className={Style.upperWrapper}>
                 <div
-                    onClick={(e) => {
+                    onClick={() => {
                         navigate(`/`);
                     }}
                     className={Style.logo}>
@@ -50,6 +50,11 @@ export default function Navigation() {
                             <li>
                                 <Link to="/profile">Profile</Link>
                             </li>
+                            {String(user?.role || "").trim().toLowerCase() === "admin" && (
+                                <li>
+                                    <Link to="/upload/media">Upload Media</Link>
+                                </li>
+                            )}
                             <li>
                                 <Link to="/logout">Logout</Link>
                             </li>

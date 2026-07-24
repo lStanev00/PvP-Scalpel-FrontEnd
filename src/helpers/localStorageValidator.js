@@ -1,9 +1,18 @@
-import { httpFetchWithCredentials } from "./httpFetch.js";
+/**
+ * Developer note:
+ * This module owns startup validation for the `gameData` localStorage entry.
+ * It delegates cache repair to `storageOperations/gameData.js`, which keeps
+ * classes, specs, and brackets cached under one object and refreshes the whole
+ * cache when any required dataset is missing or the two-day TTL has expired.
+ *
+ * Brackets API responses are wrapped as `{ value, Count }`; only `value` is
+ * persisted under `gameData.brackets`.
+ */
 import {
     getGameData,
-    setGameData,
-    setGameClasses,
-    setGameSpecs,
+    isGameDataExpired,
+    isGameDataMissingRequiredValue,
+    refreshGameDataCache,
 } from "./storageOperations/gameData.js";
 
 /**
@@ -12,38 +21,9 @@ import {
  * @returns {Promise<void>}
  */
 export default async function localStorageValidatoor() {
-    let gameData = getGameData();
+    const gameData = getGameData();
 
-    if (!Object.keys(gameData).length) {
-        gameData = {};
-        setGameData(gameData);
-    }
-
-    const { classes, specs } = gameData;
-
-    if (!classes) {
-        try {
-            const req = await httpFetchWithCredentials("/game/classes");
-
-            if (req.data) {
-                setGameClasses(req.data);
-            }
-        } catch (error) {
-            console.warn("req failed");
-            console.error(error);
-        }
-    }
-
-    if (!specs) {
-        try {
-            const req = await httpFetchWithCredentials("/game/specs");
-
-            if (req.data) {
-                setGameSpecs(req.data);
-            }
-        } catch (error) {
-            console.warn("req failed");
-            console.error(error);
-        }
+    if (isGameDataExpired(gameData) || isGameDataMissingRequiredValue(gameData)) {
+        await refreshGameDataCache();
     }
 }

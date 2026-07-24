@@ -13,9 +13,15 @@ export default defineConfig({
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/api/, "")
+      },
+      "/ws" : {
+        target: "wss://ws.pvpscalpel.com",
+        ws: true,
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/ws/, "")
       }
 
     }
   },
-  
 })
