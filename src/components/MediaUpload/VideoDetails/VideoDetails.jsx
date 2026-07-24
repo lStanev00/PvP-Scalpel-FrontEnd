@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import { FiChevronRight } from "react-icons/fi";
 
 import FormBracketSelect from "./FormBracketSelect/FormBracketSelect.jsx";
@@ -29,7 +31,7 @@ function validateVideoDetails({ title, description, bracket }) {
     return nextErrors;
 }
 
-export default function VideoDetails() {
+export default function VideoDetails({ setStage }) {
     const { title, description, bracket, isPrivate, setIsPrivate, setTitle, setDescription, characters } =
         useVideoDetailsContext();
     const {mediaMetaDocRef, mergeMediaMetaDoc } = useMediaUploadContext();
@@ -77,6 +79,7 @@ export default function VideoDetails() {
 
                 console.info(data);
                 console.info(mediaMetaDocRef.current);
+                setStage(3);
 
             }
 
@@ -93,6 +96,7 @@ export default function VideoDetails() {
         mediaMetaDocRef,
         mergeMediaMetaDoc,
         runValidation,
+        setStage,
         title,
     ]);
 

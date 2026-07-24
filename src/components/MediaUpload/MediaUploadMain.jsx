@@ -7,6 +7,7 @@ import VideoUpload from "./VideoUpload/VideoUpload.jsx";
 import { createWebSocketWithCredentials } from "../../helpers/wsConnect.js";
 import VideoDetails from "./VideoDetails/VideoDetails.jsx";
 import { VideoDetailsProvider } from "./VideoDetails/VideoDetailsProvider.js";
+import VideoFinnalize from "./VideoFinnalize/VideoFinnalize.jsx";
 
 export default function MediaUploadMain() {
     const { videoInputRef } = useMediaUploadContext();
@@ -79,14 +80,19 @@ export default function MediaUploadMain() {
                 />
             ),
             "Video selected. Upload the prepared media parts next.",
-        ], [
+        ],
+        [
             () => (
                 <VideoDetailsProvider>
-                    <VideoDetails />
+                    <VideoDetails setStage={setStage} />
                 </VideoDetailsProvider>
             ),
-            "Give your video a name and description. Select the bracket and the characters involved."
-        ]
+            "Give your video a name and description. Select the bracket and the characters involved.",
+        ],
+        [
+            () => <VideoFinnalize />,
+            "Review your video and confirm the content statement before finalizing.",
+        ],
     ];
 
     return (
