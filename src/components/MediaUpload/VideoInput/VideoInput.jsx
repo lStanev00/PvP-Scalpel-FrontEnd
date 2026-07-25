@@ -5,6 +5,7 @@ import Style from "./VideoInput.module.css";
 import { useMediaUploadContext } from "../MediaUploadContext.js";
 import VideoPlayer from "../../VideoPlayer/VideoPlayer.jsx";
 import { UserContext } from "../../../hooks/ContextVariables.jsx";
+import { MAX_MEDIA_BYTES } from "./videoSlicer.js";
 
 const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 const ACCEPTED_VIDEO_EXTENSIONS = [".mp4", ".webm", ".ogg"];
@@ -69,6 +70,21 @@ export default function VideoInput({ videoInputRef, setStage }) {
     const selectFile = useCallback(
         (file, shouldSyncInput = false) => {
             if (isVideoLocked) return;
+
+            if (
+                !Number.isSafeInteger(file?.size) ||
+                file.size <= 0 ||
+                file.size > MAX_MEDIA_BYTES
+            ) {
+                setVideoFile(null);
+                setErrorMessage("Select a non-empty video no larger than 10 GB.");
+
+                if (videoInputRef.current) {
+                    videoInputRef.current.value = "";
+                }
+
+                return;
+            }
 
             if (!isAcceptedVideo(file)) {
                 setVideoFile(null);

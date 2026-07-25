@@ -5,16 +5,27 @@ type UploadProgressEvent = {
 
 type UploadProgressCallback = (event: UploadProgressEvent) => void;
 
+const UPLOAD_TIMEOUT_MS = 10 * 60 * 1000;
+
 export default function uploadBlobToSignedUrl(
     file: Blob,
     signedUrl: string,
     onProgress?: UploadProgressCallback,
 ) {
     return new Promise<boolean>((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
+        if (!(file instanceof Blob) || file.size <= 0) {
+            reject(new TypeError("A non-empty upload part is required."));
+            return;
+        }
+        if (typeof signedUrl !== "string" || !signedUrl.startsWith("https://")) {
+            reject(new TypeError("A valid HTTPS upload URL is required."));
+            return;
+        }
 
+        const xhr = new XMLHttpRequest();
         xhr.open("PUT", signedUrl);
-        xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
+        xhr.timeout = UPLOAD_TIMEOUT_MS;
+        xhr.setRequestHeader("Content-Type", "application/octet-stream");
 
         xhr.upload.onprogress = (event) => {
             if (!event.lengthComputable) return;
@@ -30,15 +41,17 @@ export default function uploadBlobToSignedUrl(
                 return;
             }
 
-            reject(new Error(`Upload failed: ${xhr.status} ${xhr.responseText || ""}`.trim()));
+            reject(new Error(`Upload failed with HTTP ${xhr.status}`));
         };
 
         xhr.onerror = () => {
-            reject(new Error("Upload failed: network error"));
+            reject(new Error("Upload failed because of a network error."));
         };
-
+        xhr.ontimeout = () => {
+            reject(new Error("Upload exceeded the ten-minute part timeout."));
+        };
         xhr.onabort = () => {
-            reject(new Error("Upload failed: request aborted"));
+            reject(new Error("Upload was aborted."));
         };
 
         xhr.send(file);

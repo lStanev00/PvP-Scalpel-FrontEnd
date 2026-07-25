@@ -1,26 +1,66 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../../hooks/ContextVariables.jsx";
 import { useMediaUploadContext } from "../MediaUploadContext.js";
+import { sha256VideoChunk } from "../VideoInput/videoSlicer.js";
 import uploadBlobToSignedUrl from "./UploadProgressStage/uploadBlobToSignedUrl.js";
 import UploadCompleteStage from "./UploadCompleteStage/UploadCompleteStage.jsx";
 import UploadInitializeStage from "./UploadInitializeStage/UploadInitializeStage.jsx";
 import UploadProgressStage from "./UploadProgressStage/UploadProgressStage.jsx";
 
-function getUploadFeedbackMediaDoc(payload) {
-    if (payload?.type !== "uploadFeedback") return null;
-    if (!payload?.message?.data || typeof payload.message.data !== "object") return null;
+function inferVideoMimeType(file) {
+    if (typeof file?.type === "string" && file.type.startsWith("video/")) {
+        return file.type;
+    }
 
-    return payload.message.data;
+    const extension = file?.name?.split(".").pop()?.toLowerCase();
+    const mimeTypes = {
+        mp4: "video/mp4",
+        mov: "video/quicktime",
+        ogg: "video/ogg",
+        webm: "video/webm",
+    };
+
+    return mimeTypes[extension] || "";
 }
 
-export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSocketError, setStage }) {
+function validateUploadTargets(uploads, chunks, mediaId) {
+    if (!Array.isArray(uploads) || uploads.length !== chunks.length) {
+        throw new Error("The server returned an incomplete upload target set.");
+    }
+
+    return chunks.map((chunk, index) => {
+        const target = uploads[index];
+        const expectedKey = `videos/${mediaId}/part_${index}`;
+
+        if (
+            !target ||
+            target.index !== index ||
+            target.keyId !== expectedKey ||
+            typeof target.uploadUrl !== "string" ||
+            !target.uploadUrl.startsWith("https://")
+        ) {
+            throw new Error(`The server returned an invalid target for part ${index}.`);
+        }
+
+        return target;
+    });
+}
+
+export default function VideoUpload({ setStage }) {
     const { httpFetch } = useContext(UserContext);
-    const { videoChunks, mediaMetaDocRef, setMediaMetaDoc, mergeMediaMetaDoc } =
-        useMediaUploadContext();
+    const {
+        videoChunks,
+        videoFile,
+        mediaMetaDocRef,
+        setMediaMetaDoc,
+        mergeMediaMetaDoc,
+    } = useMediaUploadContext();
     const [uploadStage, setUploadStage] = useState(0);
-    const [uploadLinks, setUploadLinks] = useState([]);
+    const [uploadTargets, setUploadTargets] = useState([]);
+    const [uploadParts, setUploadParts] = useState([]);
     const [error, setError] = useState("");
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadFailed, setUploadFailed] = useState(false);
     const [uploadProgressPercent, setUploadProgressPercent] = useState(0);
     const [uploadSpeedBytesPerSecond, setUploadSpeedBytesPerSecond] = useState(0);
     const isInitializingRef = useRef(false);
@@ -32,61 +72,92 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
     });
 
     const initializeUpload = useCallback(async () => {
-        // stage 0
-        if (isInitializingRef.current || uploadStage !== 0) return;
+        if (
+            isInitializingRef.current ||
+            uploadStage !== 0 ||
+            !videoFile ||
+            !videoChunks?.length
+        ) {
+            return;
+        }
+
         isInitializingRef.current = true;
         setError("");
+        setUploadFailed(false);
 
-        const exportBody = {
-            fileData: [],
-        };
+        try {
+            const mimeType = inferVideoMimeType(videoFile);
+            if (!mimeType) {
+                throw new Error("The selected file has an unsupported video type.");
+            }
 
-        if (videoChunks === null) {
-            console.warn(`vChunks is null`);
-            isInitializingRef.current = false;
-            return null;
-        }
+            const fileData = [];
+            for (const chunk of videoChunks) {
+                fileData.push({
+                    index: chunk.index,
+                    start: chunk.start,
+                    end: chunk.end,
+                    size: chunk.size,
+                    sha256: await sha256VideoChunk(chunk.blob),
+                });
+            }
 
-        for (const chunk of videoChunks) {
-            exportBody.fileData.push(`part-${chunk.index}`);
-        }
-
-        const req = await httpFetch("/media", {
-            method: "POST",
-            body: JSON.stringify(exportBody),
-        });
-
-        if (req.status === 201) {
-            const nextUploadLinks = Array.isArray(req.data?.urls) ? req.data.urls : [];
-            const nextMediaMetaDoc = req.data?.mediaObj || null;
-
-            console.info("Media upload initialized", {
-                chunks: videoChunks,
-                uploadLinks: nextUploadLinks,
-                mediaMetaDoc: nextMediaMetaDoc,
+            const response = await httpFetch("/media", {
+                method: "POST",
+                body: JSON.stringify({
+                    file: {
+                        originalName: videoFile.name || "video",
+                        mimeType,
+                        totalBytes: videoFile.size,
+                    },
+                    fileData,
+                }),
             });
 
-            setUploadLinks(nextUploadLinks);
-            setMediaMetaDoc(nextMediaMetaDoc);
-            setUploadStage(1);
-            return;
-        }
+            if (response.status !== 201) {
+                throw new Error(
+                    response.data?.message || "Failed to initialize the media upload.",
+                );
+            }
 
-        isInitializingRef.current = false;
-        setError(req.data?.msg || "Failed to initialize upload.");
-    }, [httpFetch, uploadStage, videoChunks]);
+            const mediaDoc = response.data?.mediaObj;
+            if (!mediaDoc?._id) {
+                throw new Error("The server did not return media upload metadata.");
+            }
+
+            const targets = validateUploadTargets(
+                response.data?.uploads,
+                videoChunks,
+                mediaDoc._id,
+            );
+
+            setUploadTargets(targets);
+            setUploadParts(fileData);
+            setMediaMetaDoc(mediaDoc);
+            setUploadStage(1);
+        } catch (initializationError) {
+            isInitializingRef.current = false;
+            setUploadFailed(true);
+            setError(initializationError?.message || "Failed to initialize upload.");
+        }
+    }, [
+        httpFetch,
+        setMediaMetaDoc,
+        uploadStage,
+        videoChunks,
+        videoFile,
+    ]);
 
     const startUpload = useCallback(async () => {
-        // stage 1 this will upload the parts and give feedback to the server
-        if (hasStartedUploadRef.current) return;
-
-        if (uploadSocketStatus !== "open" || uploadSocket?.readyState !== WebSocket.OPEN) {
-            setError(uploadSocketError || "Upload websocket is not ready.");
-            return;
-        }
-
-        if (!videoChunks?.length || !uploadLinks.length || !mediaMetaDocRef.current?._id) {
-            setError("Upload is not initialized.");
+        if (hasStartedUploadRef.current || uploadFailed) return;
+        if (
+            !videoChunks?.length ||
+            uploadTargets.length !== videoChunks.length ||
+            uploadParts.length !== videoChunks.length ||
+            !mediaMetaDocRef.current?._id
+        ) {
+            setUploadFailed(true);
+            setError("Upload initialization is incomplete.");
             return;
         }
 
@@ -100,167 +171,182 @@ export default function VideoUpload({ uploadSocket, uploadSocketStatus, uploadSo
             time: performance.now(),
             speed: 0,
         };
-        setUploadStage(1);
 
         try {
+            const mediaId = mediaMetaDocRef.current._id;
             const totalParts = videoChunks.length;
             const percentPerPart = 100 / totalParts;
 
-            for (let i = 0; i < uploadLinks.length; i += 1) {
-                const signedUrl = uploadLinks[i];
-                const chunk = videoChunks[i];
+            for (let index = 0; index < totalParts; index += 1) {
+                const target = uploadTargets[index];
+                const chunk = videoChunks[index];
+                const part = uploadParts[index];
 
-                if (!signedUrl || !chunk?.blob) {
-                    throw new Error("Missing upload part data.");
-                }
+                await uploadBlobToSignedUrl(
+                    chunk.blob,
+                    target.uploadUrl,
+                    ({ loaded, total }) => {
+                        if (!total) return;
 
-                await uploadBlobToSignedUrl(chunk.blob, signedUrl, ({ loaded, total }) => {
-                    if (!total) return;
+                        const now = performance.now();
+                        const previousSample = speedSampleRef.current;
+                        const elapsedSeconds = (now - previousSample.time) / 1000;
+                        const loadedDelta = loaded - previousSample.loaded;
 
-                    const now = performance.now();
-                    const previousSample = speedSampleRef.current;
-                    const elapsedSeconds = (now - previousSample.time) / 1000;
-                    const loadedDelta = loaded - previousSample.loaded;
+                        if (elapsedSeconds > 0 && loadedDelta >= 0) {
+                            const currentSpeed = loadedDelta / elapsedSeconds;
+                            const smoothedSpeed = previousSample.speed
+                                ? previousSample.speed * 0.72 + currentSpeed * 0.28
+                                : currentSpeed;
 
-                    if (elapsedSeconds > 0 && loadedDelta >= 0) {
-                        const currentSpeed = loadedDelta / elapsedSeconds;
-                        const smoothedSpeed = previousSample.speed
-                            ? previousSample.speed * 0.72 + currentSpeed * 0.28
-                            : currentSpeed;
+                            speedSampleRef.current = {
+                                loaded,
+                                time: now,
+                                speed: smoothedSpeed,
+                            };
+                            setUploadSpeedBytesPerSecond(smoothedSpeed);
+                        }
 
-                        speedSampleRef.current = {
-                            loaded,
-                            time: now,
-                            speed: smoothedSpeed,
-                        };
-                        setUploadSpeedBytesPerSecond(smoothedSpeed);
-                    }
+                        const baseProgress = index * percentPerPart;
+                        const chunkProgress = (loaded / total) * percentPerPart;
+                        setUploadProgressPercent(
+                            Math.max(
+                                0,
+                                Math.min(100, Math.round(baseProgress + chunkProgress)),
+                            ),
+                        );
+                    },
+                );
 
-                    const baseProgress = i * percentPerPart;
-                    const chunkProgress = (loaded / total) * percentPerPart;
-                    const totalProgress = Math.round(baseProgress + chunkProgress);
-
-                    setUploadProgressPercent(Math.max(0, Math.min(100, totalProgress)));
+                const acknowledgement = await httpFetch("/media/upload-part", {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        _id: mediaId,
+                        index: part.index,
+                        size: part.size,
+                        sha256: part.sha256,
+                    }),
                 });
 
-                setUploadProgressPercent(Math.round(((i + 1) / totalParts) * 100));
+                if (acknowledgement.status !== 200) {
+                    throw new Error(
+                        acknowledgement.data?.message ||
+                            `The server did not acknowledge part ${index}.`,
+                    );
+                }
+                const expectedKey = `videos/${mediaId}/part_${index}`;
+                const expectedState =
+                    index + 1 === totalParts ? "await_data" : "uploading";
+                if (
+                    acknowledgement.data?.acknowledged?.index !== index ||
+                    acknowledgement.data?.acknowledged?.keyId !== expectedKey ||
+                    acknowledgement.data?.mediaObj?.state !== expectedState
+                ) {
+                    throw new Error(
+                        `The server returned an invalid acknowledgement for part ${index}.`,
+                    );
+                }
+                if (acknowledgement.data?.mediaObj) {
+                    mergeMediaMetaDoc(acknowledgement.data.mediaObj);
+                }
+
+                setUploadProgressPercent(Math.round(((index + 1) / totalParts) * 100));
                 speedSampleRef.current = {
                     loaded: 0,
                     time: performance.now(),
                     speed: speedSampleRef.current.speed,
                 };
-
-                const mediaID = mediaMetaDocRef.current?._id;
-
-                if (!mediaID) {
-                    throw new Error("Missing media metadata for upload feedback.");
-                }
-
-                const feedbackPayload = {
-                    type: "uploadMedia",
-                    data: {
-                        type: "uploadFeedback",
-                        msgContext: {
-                            mediaID,
-                            index: chunk.index,
-                            route: `videos/${mediaID}/part_${chunk.index}`,
-                        },
-                    },
-                };
-
-                console.info("Media upload part uploaded", {
-                    part: chunk.index,
-                    signedUrl,
-                    feedbackPayload,
-                });
-
-                uploadSocket.send(JSON.stringify(feedbackPayload));
             }
-
-            console.info("Media upload complete", {
-                mediaMetaDoc: mediaMetaDocRef.current,
-                totalParts: videoChunks.length,
-            });
 
             setUploadProgressPercent(100);
             setUploadStage(2);
-        } catch (err) {
-            hasStartedUploadRef.current = false;
-            setError(err?.message || "Failed to upload video.");
-            setUploadStage(1);
+        } catch (uploadError) {
+            setUploadFailed(true);
+            setError(uploadError?.message || "Failed to upload video.");
         } finally {
             setIsUploading(false);
             setUploadSpeedBytesPerSecond(0);
         }
     }, [
+        httpFetch,
         mediaMetaDocRef,
-        uploadLinks,
-        uploadSocket,
-        uploadSocketError,
-        uploadSocketStatus,
+        mergeMediaMetaDoc,
+        uploadFailed,
+        uploadParts,
+        uploadTargets,
         videoChunks,
     ]);
 
-    useEffect(() => {
-        if (!uploadSocket) return undefined;
+    const progressPercent =
+        uploadStage === 2 ? 100 : uploadStage === 1 ? uploadProgressPercent : 8;
+    const retryUpload = useCallback(() => {
+        setError("");
+        setUploadFailed(false);
 
-        const handleMessage = (event) => {
-            if (typeof event.data !== "string") return;
-
-            try {
-                const payload = JSON.parse(event.data);
-                const nextMediaDoc = getUploadFeedbackMediaDoc(payload);
-
-                if (nextMediaDoc) {
-                    mergeMediaMetaDoc(nextMediaDoc);
-                }
-
-                console.info("Media upload websocket message", payload);
-            } catch {
-                setError("Received an invalid websocket payload.");
-            }
-        };
-
-        uploadSocket.addEventListener("message", handleMessage);
-
-        return () => {
-            uploadSocket.removeEventListener("message", handleMessage);
-        };
-    }, [mergeMediaMetaDoc, uploadSocket]);
-
-    const totalParts = videoChunks?.length || 0;
-    const signedParts = uploadLinks.length;
-    const isSocketReady =
-        uploadSocketStatus === "open" && uploadSocket?.readyState === WebSocket.OPEN;
-    const progressPercent = uploadStage === 2 ? 100 : uploadStage === 1 ? uploadProgressPercent : 8;
+        if (uploadStage === 0) {
+            isInitializingRef.current = false;
+        } else {
+            hasStartedUploadRef.current = false;
+        }
+    }, [uploadStage]);
 
     useEffect(() => {
-        if (uploadStage !== 0 || !videoChunks?.length) return;
+        if (uploadStage !== 0 || !videoChunks?.length || uploadFailed) return;
         initializeUpload();
-    }, [initializeUpload, uploadStage, videoChunks]);
+    }, [initializeUpload, uploadFailed, uploadStage, videoChunks]);
 
     useEffect(() => {
-        if (uploadStage !== 1 || !signedParts || !isSocketReady || isUploading) return;
+        if (
+            uploadStage !== 1 ||
+            uploadTargets.length !== videoChunks?.length ||
+            uploadParts.length !== videoChunks?.length ||
+            isUploading ||
+            uploadFailed
+        ) {
+            return;
+        }
         startUpload();
-    }, [isSocketReady, isUploading, signedParts, startUpload, uploadStage]);
+    }, [
+        isUploading,
+        startUpload,
+        uploadFailed,
+        uploadParts.length,
+        uploadStage,
+        uploadTargets.length,
+        videoChunks?.length,
+    ]);
 
     if (uploadStage === 0) {
         return (
-            <UploadInitializeStage
-                progressPercent={progressPercent}
-                error={error || uploadSocketError}
-            />
+            <>
+                <UploadInitializeStage
+                    progressPercent={progressPercent}
+                    error={error}
+                />
+                {uploadFailed && (
+                    <button type="button" onClick={retryUpload}>
+                        Retry upload initialization
+                    </button>
+                )}
+            </>
         );
     }
 
     if (uploadStage === 1) {
         return (
-            <UploadProgressStage
-                progressPercent={progressPercent}
-                error={error || uploadSocketError}
-                isUploading={isUploading}
-                uploadSpeedBytesPerSecond={uploadSpeedBytesPerSecond}
-            />
+            <>
+                <UploadProgressStage
+                    progressPercent={progressPercent}
+                    error={error}
+                    isUploading={isUploading}
+                    uploadSpeedBytesPerSecond={uploadSpeedBytesPerSecond}
+                />
+                {uploadFailed && (
+                    <button type="button" onClick={retryUpload}>
+                        Retry upload
+                    </button>
+                )}
+            </>
         );
     }
 
