@@ -111,13 +111,17 @@ export default function VideoFinnalize() {
                 body: JSON.stringify({ _id: mediaId }),
             });
 
-            if (response.status === 201 || response.status === 409) {
+            const isAlreadyQueued =
+                response.status === 409 &&
+                ["need_process", "processing"].includes(response.data?.state);
+
+            if (response.status === 201 || isAlreadyQueued) {
                 if (response.data && typeof response.data === "object") {
                     mergeMediaMetaDoc(response.data);
                 }
 
                 if (previewUrl) URL.revokeObjectURL(previewUrl);
-                setFinalizeStatus(response.status === 409 ? "already-queued" : "complete");
+                setFinalizeStatus(isAlreadyQueued ? "already-queued" : "complete");
                 return;
             }
 

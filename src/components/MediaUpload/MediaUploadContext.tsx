@@ -59,10 +59,9 @@ export function MediaUploadProvider({ children }: MediaUploadProviderProps) {
     }, []);
 
     /**
-     * Merges partial media metadata into the upload metadata ref without
-     * triggering a context rerender. Use this for frequent websocket feedback
-     * updates that should stay available to upload code but do not need to
-     * redraw the UI on every message.
+     * Merges REST response metadata into the upload ref without triggering a
+     * context rerender. Upload stages can share current server state without
+     * redrawing the UI for each part acknowledgement.
      */
     const mergeMediaMetaDoc = useCallback((mediaMetaDoc: MediaMetaDoc) => {
         mediaMetaDocRef.current = {
