@@ -4,6 +4,7 @@ import Style from "../WeeklyRender/WeeklyRender.module.css";
 export default function TopRatedRender({ topData }) {
     const navigate = useNavigate();
     if (!topData || Object.keys(topData).length === 0) return null;
+    console.info(topData)
 
     const order = ["solo", "blitz", "3v3", "2v2", "BG"];
     const mapTitle = {
@@ -36,7 +37,7 @@ export default function TopRatedRender({ topData }) {
                             </header>
                             <div
                                 className={Style.banner}
-                                style={{ backgroundImage: `url(${player.media.banner})` }}
+                                style={{ backgroundImage: `url(${player.media.banner ? player.media.banner : player.media.avatar})` }}
                             >
                                 <img
                                     className={Style.spec}
