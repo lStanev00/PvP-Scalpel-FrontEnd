@@ -15,8 +15,8 @@ export default function CharCard({ charArr }) {
                     onClick={() => clickIt(char.playerRealm.slug, char.name)}>
                     <img
                         className={Style.image}
-                        src={char.media?.banner}
-                        alt={`${char.name} banner`}
+                        src={char.media.banner ? char.media.banner : char.media.avatar}
+                        alt={`${char.name} image`}
                     />
                     <div className={Style.details}>
                         <h3>{char.name}</h3>

@@ -70,7 +70,7 @@ export default function WeeklyRender({ weeklyData }) {
 
                     const urlPart = [parts[2], parts[1], parts[0]].join("/");
                     const banner =
-                        top?.media?.banner || publicAssetUrl("item_fallback.png");
+                        top.media.banner ? top.media.banner : top.media.avatar || publicAssetUrl("item_fallback.png");
                     const specMedia =
                         top?.activeSpec?.media || publicAssetUrl("item_fallback.png");
 
