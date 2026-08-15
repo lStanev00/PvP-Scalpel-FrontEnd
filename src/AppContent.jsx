@@ -56,14 +56,13 @@ export default function AppContent() {
                 <main>
                     <Routes>
                         <Route element={<UserRoute />}>
-                            <Route 
+                            <Route
                                 path="/profile"
                                 element={
                                     <Suspense fallback={<Loading />}>
                                         <ProfilePage />
                                     </Suspense>
-                                }
-                            ></Route>
+                                }></Route>
                             <Route path="/logout" element={<Logout />} />
                         </Route>
 
@@ -91,11 +90,8 @@ export default function AppContent() {
                                 <Suspense fallback={<Loading />}>
                                     <RosterPage />
                                 </Suspense>
-                            }
-                        >
-
-                        </Route>
-                        <Route 
+                            }></Route>
+                        <Route
                             path="/leaderboard/*"
                             element={
                                 <Suspense fallback={<Loading />}>
@@ -124,6 +120,14 @@ export default function AppContent() {
                         <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/linkDiscord" element={<LinkDiscord />} />
                         <Route path="/watch" element={<ScalpelTV />} />
+                        <Route
+                            path="/watch/:videoID"
+                            element={
+                                <Suspense fallback={<Loading />}>
+                                    <CharDetails />
+                                </Suspense>
+                            }
+                        />
                         <Route path="/posts" element={<Posts />} />
                         <Route path="/scan" element={<LobbyScan />} />
                         <Route path="/download" element={<Download />} />
