@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound.jsx";
 import localStorageValidatoor from "./helpers/localStorageValidator.js";
 import LinkDiscord from "./pages/linkDiscord.jsx";
 import { publicAssetUrl } from "./helpers/assets.js";
+import ScalpelTV from "./pages/ScalpelTV.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
 const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
@@ -122,6 +123,7 @@ export default function AppContent() {
                         <Route path="/goto/:email" element={<GotoEmail />} />
                         <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/linkDiscord" element={<LinkDiscord />} />
+                        <Route path="/watch" element={<ScalpelTV />} />
                         <Route path="/posts" element={<Posts />} />
                         <Route path="/scan" element={<LobbyScan />} />
                         <Route path="/download" element={<Download />} />
