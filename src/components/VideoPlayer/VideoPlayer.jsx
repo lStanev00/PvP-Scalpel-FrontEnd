@@ -33,6 +33,7 @@ import {
 } from "react-icons/fa6";
 import { formatMediaTime } from "../../helpers/mediaFormatting.js";
 import Style from "./VideoPlayer.module.css";
+import { getGameBrackets } from "../../helpers/storageOperations/gameData.js";
 
 const PLAYBACK_RATES = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
@@ -72,6 +73,7 @@ export default function VideoPlayer({
     onPause,
     onError,
     className = "",
+    brackedId = 0
 }) {
     const playerRef = useRef(null);
     const videoRef = useRef(null);
@@ -92,6 +94,11 @@ export default function VideoPlayer({
     const [speedFeedback, setSpeedFeedback] = useState(null);
     const [bufferedRanges, setBufferedRanges] = useState([]);
     const [bufferedPercent, setBufferedPercent] = useState(0);
+
+    const bracket = getGameBrackets().find((entry) => {
+        const { _id } = entry;
+        return _id === brackedId;
+    });
 
     const bufferGateEnabled = bufferGate?.enabled === true;
 
@@ -596,8 +603,8 @@ export default function VideoPlayer({
             />
 
             <div className={Style.brand} aria-hidden="true">
-                <span className={Style.brandMark}>PVP</span>
-                <span>SCALPEL VIEWER</span>
+                <span className={Style.brandMark}>{brackedId ? bracket.slug : "PVP"}</span>
+                <span> {title ? title : "SCALPEL VIEWER"}</span>
             </div>
 
             {!playing && (
