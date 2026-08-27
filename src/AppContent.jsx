@@ -30,6 +30,7 @@ const LDB = lazy(() => import("./pages/LDB.jsx"));
 const RosterPage = lazy(() => import("./pages/Roster.jsx"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage.jsx"))
 const MediaUpload = lazy(() => import("./pages/MediaUpload.jsx"));
+const Watch = lazy(() => import("./pages/Watch.jsx"));
 
 const assetStyles = {
     "--asset-main-background": `url("${publicAssetUrl("backgrounds/main_background.png")}")`,
@@ -124,7 +125,7 @@ export default function AppContent() {
                             path="/watch/:videoID"
                             element={
                                 <Suspense fallback={<Loading />}>
-                                    <CharDetails />
+                                    <Watch />
                                 </Suspense>
                             }
                         />
