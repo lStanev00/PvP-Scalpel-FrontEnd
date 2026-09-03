@@ -341,6 +341,17 @@ app.get("/leaderboard/:slug", (req, res) => {
     renderPage(res, view);
 });
 
+app.get("/robots.txt", (req, res) => {
+    const robots = `
+User-agent: *
+Allow: /
+
+Sitemap: https://www.pvpscalpel.com/sitemap.xml
+`.trim();
+
+    res.status(200).type("text/plain").send(robots);
+});
+
 const lastmod = new Date().toISOString().slice(0, 10); // out of route so it dont lie
 app.get("/sitemap.xml", (req, res) => {
     const urls = [
