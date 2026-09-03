@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"; // Dont clear imports
+import { Route, Routes, useLocation } from "react-router-dom"; // Dont clear imports
 import Navigation from "./components/Router.jsx";
 import Home from "./pages/Home.jsx";
 import GoToTopButton from "./components/topBtn.jsx";
@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound.jsx";
 import localStorageValidatoor from "./helpers/localStorageValidator.js";
 import LinkDiscord from "./pages/linkDiscord.jsx";
 import { publicAssetUrl } from "./helpers/assets.js";
+import ScalpelTV from "./pages/ScalpelTV.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
 const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
@@ -29,6 +30,7 @@ const LDB = lazy(() => import("./pages/LDB.jsx"));
 const RosterPage = lazy(() => import("./pages/Roster.jsx"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage.jsx"))
 const MediaUpload = lazy(() => import("./pages/MediaUpload.jsx"));
+const Watch = lazy(() => import("./pages/Watch.jsx"));
 
 const assetStyles = {
     "--asset-main-background": `url("${publicAssetUrl("backgrounds/main_background.png")}")`,
@@ -40,6 +42,11 @@ const assetStyles = {
 
 export default function AppContent() {
     const { httpFetch } = useContext(UserContext);
+    const location = useLocation();
+    const hideIconBackground =
+        location.pathname.startsWith("/check/") ||
+        location.pathname === "/watch" ||
+        /^\/watch\/[^/]+\/?$/.test(location.pathname);
 
     useEffect(() => {
         httpFetch("/verify/me");
@@ -49,20 +56,24 @@ export default function AppContent() {
     return (
         // <Router>
         <>
-            <div style={{ "--custom-val": "", ...assetStyles }} className={Style.pageWrapper}>
+            <div
+                style={{ "--custom-val": "", ...assetStyles }}
+                className={`${Style.pageWrapper} ${
+                    hideIconBackground ? Style.detailPageWrapper : ""
+                }`}
+            >
                 <Navigation />
 
                 <main>
                     <Routes>
                         <Route element={<UserRoute />}>
-                            <Route 
+                            <Route
                                 path="/profile"
                                 element={
                                     <Suspense fallback={<Loading />}>
                                         <ProfilePage />
                                     </Suspense>
-                                }
-                            ></Route>
+                                }></Route>
                             <Route path="/logout" element={<Logout />} />
                         </Route>
 
@@ -90,11 +101,8 @@ export default function AppContent() {
                                 <Suspense fallback={<Loading />}>
                                     <RosterPage />
                                 </Suspense>
-                            }
-                        >
-
-                        </Route>
-                        <Route 
+                            }></Route>
+                        <Route
                             path="/leaderboard/*"
                             element={
                                 <Suspense fallback={<Loading />}>
@@ -122,6 +130,15 @@ export default function AppContent() {
                         <Route path="/goto/:email" element={<GotoEmail />} />
                         <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/linkDiscord" element={<LinkDiscord />} />
+                        {/* <Route path="/watch" element={<ScalpelTV />} /> */}
+                        <Route
+                            path="/watch/:videoID"
+                            element={
+                                <Suspense fallback={<Loading />}>
+                                    <Watch />
+                                </Suspense>
+                            }
+                        />
                         <Route path="/posts" element={<Posts />} />
                         <Route path="/scan" element={<LobbyScan />} />
                         <Route path="/download" element={<Download />} />

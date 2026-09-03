@@ -342,11 +342,11 @@ app.get("/leaderboard/:slug", (req, res) => {
 });
 
 app.get("/sitemap.xml", (req, res) => {
-    const lastmod = new Date().toISOString().slice(0, 10);
+    // const lastmod = new Date().toISOString().slice(0, 10);
     const urls = [
         {
             loc: "https://www.pvpscalpel.com/",
-            changefreq: "daily",
+            // changefreq: "daily",
             priority: "1.0",
         },
         {
@@ -376,7 +376,7 @@ app.get("/sitemap.xml", (req, res) => {
         },
         {
             loc: "https://www.pvpscalpel.com/leaderboard/rated-bg",
-            changefreq: "daily",
+            changefreq: "weekly",
             priority: "0.8",
         },
         {
@@ -386,19 +386,19 @@ app.get("/sitemap.xml", (req, res) => {
         },
         {
             loc: "https://www.pvpscalpel.com/posts",
-            changefreq: "weekly",
-            priority: "0.7",
+            changefreq: "monthly",
+            priority: "0.1",
         },
         {
             loc: "https://www.pvpscalpel.com/joinGuild",
             changefreq: "monthly",
             priority: "0.6",
         },
-        {
-            loc: "https://www.pvpscalpel.com/download",
-            changefreq: "monthly",
-            priority: "0.6",
-        },
+        // {
+        //     loc: "https://www.pvpscalpel.com/download",
+        //     changefreq: "monthly",
+        //     priority: "0.6",
+        // },
     ];
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>\n` +
@@ -408,7 +408,7 @@ app.get("/sitemap.xml", (req, res) => {
                 (entry) =>
                     `  <url>\n` +
                     `    <loc>${entry.loc}</loc>\n` +
-                    `    <lastmod>${lastmod}</lastmod>\n` +
+                    // `    <lastmod>${lastmod}</lastmod>\n` +
                     `    <changefreq>${entry.changefreq}</changefreq>\n` +
                     `    <priority>${entry.priority}</priority>\n` +
                     `  </url>`

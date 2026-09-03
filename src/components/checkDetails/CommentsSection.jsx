@@ -1,15 +1,14 @@
-import { useContext } from "react";
 import PostTemplate from "./PostTemplate";
-import { DetailsProvider } from "./Details";
 import Style from "../../Styles/modular/CommentsSection.module.css";
+import { useComments } from "./CommentsContext.js";
 
 export default function CommentsSection() {
-    const { optimisticPosts, commentsRef } = useContext(DetailsProvider);
+    const { optimisticPosts, commentsRef } = useComments();
 
     if (!optimisticPosts) return null;
 
     return (
-        <section className={Style.commentsContainer}>
+        <div className={Style.commentsContainer}>
             {optimisticPosts.length === 0 ? (
                 <p className={Style.emptyState}>
                     No comments yet! Be the first to share your thoughts.
@@ -28,6 +27,6 @@ export default function CommentsSection() {
                     />
                 ))
             )}
-        </section>
+        </div>
     );
 }

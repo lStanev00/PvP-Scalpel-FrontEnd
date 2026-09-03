@@ -3,17 +3,19 @@ import { UserContext } from "../../hooks/ContextVariables";
 import { CharacterContext } from "../../pages/CharDetails";
 import Style from "../../Styles/modular/charDetails.module.css";
 import { useNavigate } from "react-router-dom";
-import { DetailsProvider } from "./Details";
 import { publicAssetUrl } from "../../helpers/assets.js";
+import { CommentsContext } from "./CommentsContext.js";
 
-export default function UserDataContainer() {
+export default function UserDataContainer({contextWindow = undefined}) {
     const navigate = useNavigate();
     const { user, httpFetch } = useContext(UserContext);
-    const { data, location } = useContext(CharacterContext);
+    const characterWindow = useContext(CharacterContext);
+    const commentsWindow = useContext(CommentsContext);
+    const { data, location } = contextWindow ?? characterWindow ?? {};
+    const { posts = [], commentsRef } = commentsWindow ?? contextWindow ?? {};
     const [isLiked, setIsLiked] = useState();
     const [likesCount, setLikesCount] = useState();
     const [viewCount, setViewCount] = useState(data?.checkedCount);
-    const { posts, commentsRef } = useContext(DetailsProvider);
     const [commentsCount, setCMCount] = useState(posts?.length);
 
     useEffect(() => {
@@ -39,6 +41,8 @@ export default function UserDataContainer() {
 
     const likeHandler = async (e) => {
         e.preventDefault();
+        if (!data?._id) return;
+
         const likeURL = `/like/${data._id}`;
         const req = await httpFetch(likeURL);
 
@@ -49,9 +53,7 @@ export default function UserDataContainer() {
 
     const commentsSectionClickHandler = (e) => {
         e.preventDefault();
-
-        const commentsSection = commentsRef.headSection;
-        return commentsSection.scrollIntoView({ behavior: "smooth" });
+        commentsRef?.current?.headSection?.scrollIntoView({ behavior: "smooth" });
     };
 
     return (
@@ -65,7 +67,7 @@ export default function UserDataContainer() {
                     src={publicAssetUrl(
                         `user_action_icons/${isLiked ? "Liked" : "Like"}.png`,
                     )}
-                    alt="Character Avatar"
+                    alt="Like/d icon"
                 />
                 <div className={Style["banner-content"]}>
                     <strong>{likesCount ? likesCount : 0} Likes</strong>
@@ -80,7 +82,7 @@ export default function UserDataContainer() {
                     }}
                     onClick={commentsSectionClickHandler}
                     src={publicAssetUrl("user_action_icons/Comments.png")}
-                    alt="Character Avatar"
+                    alt="Comments count icon (on click go to comments)"
                 />
                 <div
                     style={{
@@ -95,7 +97,7 @@ export default function UserDataContainer() {
 
                 <img
                     src={publicAssetUrl("user_action_icons/View_Count.png")}
-                    alt="Character Avatar"
+                    alt="Views count icon"
                 />
                 <div className={Style["banner-content"]}>
                     <strong>{viewCount} Views</strong>
