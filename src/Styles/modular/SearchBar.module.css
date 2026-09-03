@@ -9,7 +9,8 @@
         inset 0 0 6px rgba(255, 215, 0, 0.05),
         0 2px 8px rgba(0, 0, 0, 0.45);
     border-radius: 8px;
-    min-width: 25svw;
+    width: min(34rem, 35vw);
+    min-width: 15rem;
     max-width: 580px;
     transition: all 0.25s ease-in-out;
     cursor: text;
@@ -87,4 +88,16 @@
 /* Add soft pulse to the entire bar */
 .searchBar {
     animation: subtleGlow 10s ease-in-out infinite;
+}
+
+@media (max-width: 900px) {
+    .searchBar {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .input {
+        min-width: 0;
+        font-size: 0.9rem;
+    }
 }

@@ -3,31 +3,28 @@ import Style from "../../Styles/modular/ArmoryItemHover.module.css";
 import { HoverContext } from "./Armory";
 
 export default function ArmoryItemHover() {
-    const { hoverItem: item, coursorPosition } = useContext(HoverContext);
+    const { hoverItem: item, anchorRect } = useContext(HoverContext);
 
-    if (!item) return null;
-    const zoom = getCurrentZoom();
+    if (!item || !anchorRect) return null;
     const viewportWidth = typeof window !== "undefined" ? window.innerWidth : 0;
     const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 0;
-    const showLeft = coursorPosition.x > viewportWidth / 2;
-    const showAbove = coursorPosition.y > viewportHeight * 0.68;
-    const scaledX = coursorPosition.x / zoom;
-    const scaledY = coursorPosition.y / zoom;
-    const scaledViewportWidth = viewportWidth / zoom;
-    const scaledViewportHeight = viewportHeight / zoom;
+    const showLeft = anchorRect.left > viewportWidth / 2;
+    const showAbove = anchorRect.top > viewportHeight * 0.62;
     const positionStyle = {
         ...(showAbove
-            ? { bottom: `calc(${scaledViewportHeight - scaledY}px + 0.5rem)` }
-            : { top: `calc(${scaledY}px + 0.5rem)` }),
+            ? { bottom: `${viewportHeight - anchorRect.top + 8}px` }
+            : { top: `${anchorRect.bottom + 8}px` }),
         ...(showLeft
-            ? { right: `calc(${scaledViewportWidth - scaledX}px + 1.5rem)` }
-            : { left: `calc(${scaledX}px + 1.5rem)` }),
+            ? { right: `${viewportWidth - anchorRect.left + 8}px` }
+            : { left: `${anchorRect.right + 8}px` }),
     };
 
     return (
         <div
+            id="armory-item-details"
             className={Style.wrapper}
-            style={positionStyle}>
+            style={positionStyle}
+            role="tooltip">
             <img src={item.media} alt={item.name} className={Style.icon} />
 
             <div className={Style.details}>
@@ -98,11 +95,4 @@ export default function ArmoryItemHover() {
             </div>
         </div>
     );
-}
-
-export function getCurrentZoom() {
-    const w = window.innerWidth;
-    if (w <= 1150) return 0.65;
-    if (w <= 1550) return 0.8;
-    return 1; // default
 }

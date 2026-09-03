@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../hooks/ContextVariables";
 import Style from "../Styles/modular/Header.module.css";
 import SearchBar from "./SearchBar/SearchBar";
@@ -11,19 +11,34 @@ import {
     GiTripleScratches,
 } from "react-icons/gi";
 import { publicAssetUrl } from "../helpers/assets.js";
+import { FiMenu, FiX } from "react-icons/fi";
 
 export default function Navigation() {
     const { user } = useContext(UserContext);
     const location = useLocation().pathname;
-    const navigate = useNavigate();
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    useEffect(() => {
+        setMenuOpen(false);
+    }, [location]);
+
+    useEffect(() => {
+        if (!menuOpen) return undefined;
+
+        const closeOnEscape = (event) => {
+            if (event.key === "Escape") setMenuOpen(false);
+        };
+
+        document.addEventListener("keydown", closeOnEscape);
+        return () => document.removeEventListener("keydown", closeOnEscape);
+    }, [menuOpen]);
 
     return (
-        <div className={Style.header}>
+        <header className={Style.header}>
             <div className={Style.upperWrapper}>
-                <div
-                    onClick={() => {
-                        navigate(`/`);
-                    }}
+                <Link
+                    to="/"
+                    aria-label="PvP Scalpel home"
                     className={Style.logo}>
                     <img
                         className={Style["logo-img"]}
@@ -31,12 +46,28 @@ export default function Navigation() {
                         alt="logo pic"
                     />
                     {/* PvP Scalpel */}
-                </div>
+                </Link>
 
                 <SearchBar />
             </div>
 
-            <nav className={Style.navbar}>
+            <button
+                type="button"
+                className={Style.menuToggle}
+                aria-controls="site-navigation"
+                aria-expanded={menuOpen}
+                aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+                onClick={() => setMenuOpen((open) => !open)}
+            >
+                {menuOpen ? <FiX /> : <FiMenu />}
+            </button>
+
+            <nav
+                id="site-navigation"
+                className={Style.navbar}
+                data-open={menuOpen}
+                aria-label="Primary navigation"
+            >
                 <ul className={Style["nav-links"]}>
                     {!user?._id && (
                         <>
@@ -101,6 +132,6 @@ export default function Navigation() {
                     </li>
                 </ul>
             </nav>
-        </div>
+        </header>
     );
 }

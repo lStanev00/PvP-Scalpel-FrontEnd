@@ -1,4 +1,4 @@
-import { createContext, useContext , useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Style from "../../Styles/modular/Armory.module.css";
 import { CharacterContext } from "../../pages/CharDetails";
 import ArmoryItemHover from "./ArmoryItemHover";
@@ -8,20 +8,54 @@ const fallbackImg = publicAssetUrl("item_fallback.png");
 
 export const HoverContext = createContext();
 
-export default function Armory({ParentStyle}) {
+export default function Armory() {
     const { data } = useContext(CharacterContext);
     const [hoverItem, setHoverItem] = useState(null);
-    const [coursorPosition, setCoursorPosition] = useState({ x: 0, y: 0 });
+    const [anchorRect, setAnchorRect] = useState(null);
+    const armoryRef = useRef(null);
+
+    const showItem = (item, element) => {
+        if (!item || !element) return;
+        setHoverItem(item);
+        setAnchorRect(element.getBoundingClientRect());
+    };
+
+    const hideItem = () => {
+        setHoverItem(null);
+        setAnchorRect(null);
+    };
+
+    useEffect(() => {
+        if (!hoverItem) return undefined;
+
+        const closeOnEscape = (event) => {
+            if (event.key !== "Escape") return;
+            setHoverItem(null);
+            setAnchorRect(null);
+        };
+        const closeOutsideArmory = (event) => {
+            if (armoryRef.current?.contains(event.target)) return;
+            setHoverItem(null);
+            setAnchorRect(null);
+        };
+
+        document.addEventListener("keydown", closeOnEscape);
+        document.addEventListener("pointerdown", closeOutsideArmory);
+        document.addEventListener("focusin", closeOutsideArmory);
+        return () => {
+            document.removeEventListener("keydown", closeOnEscape);
+            document.removeEventListener("pointerdown", closeOutsideArmory);
+            document.removeEventListener("focusin", closeOutsideArmory);
+        };
+    }, [hoverItem]);
 
     return (
-        <HoverContext.Provider value={{ hoverItem, setHoverItem, coursorPosition }}>
-            <section className={`${Style.parentSection}`}>
-                <h1 style={{marginBottom: "0.5rem"}}>Armory</h1>
+        <HoverContext.Provider value={{ hoverItem, anchorRect, showItem, hideItem }}>
+            <section className={Style.parentSection} ref={armoryRef}>
+                <h1 className={Style.title}>Armory</h1>
 
-                <div
-                    className={`${ParentStyle["inner-section"]} ${Style.main}`}
-                    onMouseMove={(e) => setCoursorPosition({ x: e.clientX, y: e.clientY })}>
-                    <div className={Style.bgLayer}></div>
+                <div className={Style.main}>
+                    <div className={Style.bgLayer} aria-hidden="true"></div>
                     <div className={Style.container}>
                         <ItemsTab1 />
                         <img
@@ -81,19 +115,38 @@ function ItemsTab3() {
 
 function ItemGenerator({ name }) {
     const { data } = useContext(CharacterContext);
-    const { setHoverItem } = useContext(HoverContext);
+    const { hoverItem, showItem, hideItem } = useContext(HoverContext);
     const { gear: items } = data;
     const item = items?.[name];
+    const isOpen = Boolean(item && hoverItem === item);
 
-    if (!item) return <img className={Style.itemImg} src={fallbackImg} />;
-    if (name.length <= 2) return <img className={Style.itemImg} src={fallbackImg} />;
-    if (item)
+    if (!item) {
         return (
+            <span className={Style.itemSlot} aria-hidden="true">
+                <img className={Style.itemImg} src={fallbackImg} alt="" />
+            </span>
+        );
+    }
+
+    return (
+        <button
+            type="button"
+            className={Style.itemControl}
+            aria-label={`View ${item.name || name} details`}
+            aria-expanded={isOpen}
+            aria-describedby={isOpen ? "armory-item-details" : undefined}
+            onMouseEnter={(event) => showItem(item, event.currentTarget)}
+            onMouseLeave={(event) => {
+                if (document.activeElement !== event.currentTarget) hideItem();
+            }}
+            onFocus={(event) => showItem(item, event.currentTarget)}
+            onClick={(event) => showItem(item, event.currentTarget)}
+        >
             <img
                 className={Style.itemImg}
-                src={item?.media ? item?.media : fallbackImg}
-                onMouseEnter={() => setHoverItem(item)}
-                onMouseLeave={() => setHoverItem(null)}
+                src={item.media || fallbackImg}
+                alt=""
             />
-        );
+        </button>
+    );
 }
