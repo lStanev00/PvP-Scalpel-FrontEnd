@@ -341,12 +341,12 @@ app.get("/leaderboard/:slug", (req, res) => {
     renderPage(res, view);
 });
 
+const lastmod = new Date().toISOString().slice(0, 10); // out of route so it dont lie
 app.get("/sitemap.xml", (req, res) => {
-    // const lastmod = new Date().toISOString().slice(0, 10);
     const urls = [
         {
             loc: "https://www.pvpscalpel.com/",
-            // changefreq: "daily",
+            changefreq: "weekly",
             priority: "1.0",
         },
         {
@@ -408,7 +408,7 @@ app.get("/sitemap.xml", (req, res) => {
                 (entry) =>
                     `  <url>\n` +
                     `    <loc>${entry.loc}</loc>\n` +
-                    // `    <lastmod>${lastmod}</lastmod>\n` +
+                    `    <lastmod>${lastmod}</lastmod>\n` +
                     `    <changefreq>${entry.changefreq}</changefreq>\n` +
                     `    <priority>${entry.priority}</priority>\n` +
                     `  </url>`
