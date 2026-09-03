@@ -5,6 +5,33 @@
 
 /* ========== GENERAL LAYOUT ========== */
 
+.detailsPage {
+    width: 100%;
+}
+
+.characterStage {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(0.35rem, 1.5vw, 1.25rem);
+    border-radius: 14px;
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: filter 0.2s ease;
+}
+
+.hasCharacterArt {
+    background-color: rgba(8, 11, 24, 0.74);
+}
+
+.engagement {
+    width: min(100%, 72rem);
+}
+
 .container {
     display: flex;
     max-width: 900px;
@@ -66,9 +93,9 @@
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.15);
 }
 
-/* ========== BANNER ========== */
+/* ========== CHARACTER BANNER ========== */
 
-.banner {
+.characterBanner {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -76,7 +103,7 @@
     background: linear-gradient(145deg, var(--bg-row), rgba(10, 12, 25, 0.92));
     backdrop-filter: blur(6px);
     padding: 1.2rem 1.6rem;
-    margin-bottom: 1.8rem;
+    margin: 0;
 
     border-radius: var(--radius);
     border: 1px solid var(--border-color);
@@ -84,12 +111,14 @@
         0 0 25px rgba(0, 0, 0, 0.55),
         inset 0 0 8px rgba(0, 245, 212, 0.06);
 
+    /* width: min(100%, 72rem); */
     width: 100%;
     transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 /* ========== ICONS / IMAGES ========== */
-.banner img {
+.characterAvatar {
+    flex: 0 0 72px;
     width: 72px;
     height: 72px;
     border-radius: var(--radius);
@@ -102,7 +131,7 @@
     cursor: pointer;
 }
 
-.banner img:hover {
+.characterAvatar:hover {
     transform: scale(1.05);
     box-shadow:
         0 0 14px rgba(0, 245, 212, 0.25),
@@ -110,7 +139,8 @@
 }
 
 /* ========== TEXT CONTENT ========== */
-.banner-content {
+.bannerContent {
+    min-width: 0;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -118,12 +148,32 @@
     gap: 1rem;
 }
 
-.banner-content strong {
+.bannerContent strong {
     font-size: 1.2rem;
     font-weight: 700;
     color: var(--color-accent);
     text-shadow: 0 0 6px rgba(0, 245, 212, 0.3);
     transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.bannerContent > span {
+    overflow-wrap: anywhere;
+    line-height: 1.45;
+}
+
+.refreshControls {
+    display: grid;
+    flex: 0 0 auto;
+    justify-items: end;
+    gap: 0.5rem;
+}
+
+.last-updated {
+    max-width: 12rem;
+    color: var(--color-muted);
+    font-size: 0.82rem;
+    line-height: 1.3;
+    text-align: right;
 }
 
 .bannerCharName {
@@ -222,4 +272,76 @@
     max-width: 100%;
     height: auto;
     z-index: -1;
+}
+
+@media (max-width: 1250px) {
+    .armoryLayout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .armoryRight {
+        width: 100%;
+        align-items: center;
+    }
+}
+
+@media (max-width: 700px) {
+    .characterStage {
+        gap: 1rem;
+        padding-inline: 0;
+        border-radius: 10px;
+        background-position: center top;
+    }
+
+    .characterBanner {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 0.75rem;
+        padding: 0.85rem;
+        border-radius: 12px;
+    }
+
+    .characterAvatar {
+        width: 3.5rem;
+        height: 3.5rem;
+        flex-basis: 3.5rem;
+    }
+
+    .bannerContent {
+        gap: 0.55rem;
+    }
+
+    .bannerCharName {
+        max-width: 100%;
+        font-size: 1rem;
+        overflow-wrap: anywhere;
+    }
+
+    .bannerContent > span {
+        color: rgba(234, 238, 246, 0.84);
+        font-size: 0.84rem;
+    }
+
+    .refreshControls {
+        display: flex;
+        grid-column: 1 / -1;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+    }
+
+    .last-updated {
+        text-align: left;
+    }
+
+    .button {
+        min-height: 2.5rem;
+    }
+
+    .armoryLayout {
+        gap: 1rem;
+        margin-top: 0;
+    }
 }

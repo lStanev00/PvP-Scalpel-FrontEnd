@@ -1,6 +1,7 @@
 .pageWrapper {
     position: relative;
-    width: 95%;
+    width: min(95%, 120rem);
+    min-height: 100vh;
     background-image: var(--asset-main-background);
     background-size: 100% auto;
     background-position: center;
@@ -29,15 +30,6 @@
 
 .detailPageWrapper {
     background-image: none;
-}
-
-/* For smaller screens */
-@media (max-width: 768px) {
-    .pageWrapper {
-        padding: 1rem;
-        width: 95%;
-        gap: 1rem;
-    }
 }
 
 .footer {
@@ -145,5 +137,19 @@
     .pageWrapper {
         width: 100%;
         padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .pageWrapper {
+        width: 100%;
+        padding: 0.65rem;
+        gap: 1rem;
+        border-inline: 0;
+        border-radius: 0;
+    }
+
+    .footer {
+        margin-top: 2rem;
     }
 }

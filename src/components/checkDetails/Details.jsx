@@ -14,6 +14,7 @@ import { CommentsProvider } from "./CommentsContext.js";
 export function Details() {
     const { data, location } = useContext(CharacterContext);
     const [isUpdating, setUpdating] = useState(false);
+    const characterImage = data?.media?.charImg;
 
     // Missing data case on brute tests appearing 0/1000 so wont overengineer this case
     if (data?.errorMSG) return <h1>{data.errorMSG}</h1>;
@@ -60,30 +61,25 @@ export function Details() {
 
     return (
         <CommentsProvider initialPosts={data?.posts} entryID={data?._id}>
-            <div>
+            <div className={Style.detailsPage}>
                 <div
-                    style={
-                        data.media === null
-                            ? {
-                                  filter: isUpdating ? "blur(5px)" : "none",
-                              }
-                            : {
-                                  backgroundImage: `url('${data.media.charImg}')`,
-                                  backgroundPosition: "center",
-                                  backgroundSize: "cover",
-                                  backgroundRepeat: "no-repeat",
-                                  backgroundAttachment: "fixed",
-                                  overflow: "hidden",
-                                  filter: isUpdating ? "blur(5px)" : "none",
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "center",
-                              }
-                    }
+                    className={`${Style.characterStage} ${
+                        characterImage ? Style.hasCharacterArt : ""
+                    }`}
+                    style={{
+                        backgroundImage: characterImage
+                            ? `linear-gradient(rgba(8, 11, 24, 0.28), rgba(8, 11, 24, 0.58)), url("${characterImage}")`
+                            : "none",
+                        filter: isUpdating ? "blur(5px)" : "none",
+                    }}
                 >
-                    <div className={Style["banner"]}>
-                        <img src={data.media.avatar} alt="Character Avatar" />
-                        <div className={Style["banner-content"]}>
+                    <section className={Style.characterBanner} aria-label="Character summary">
+                        <img
+                            className={Style.characterAvatar}
+                            src={data.media.avatar}
+                            alt="Character Avatar"
+                        />
+                        <div className={Style.bannerContent}>
                             <h3 className={Style.bannerCharName}>
                                 {data.name} - {data.playerRealm.name}
                             </h3>
@@ -93,10 +89,14 @@ export function Details() {
                                 {data.guildName && <>| Guild: {data.guildName}</>}
                             </span>
                         </div>
-                        <ReloadBTN isUpdating={isUpdating} setUpdating={setUpdating} />
-                    </div>
+                        <div className={Style.refreshControls}>
+                            <ReloadBTN isUpdating={isUpdating} setUpdating={setUpdating} />
+                        </div>
+                    </section>
 
-                    <UserDataContainer contextWindow={{ data, location }} />
+                    {/* <div className={Style.engagement}> */}
+                        <UserDataContainer contextWindow={{ data, location }} />
+                    {/* </div> */}
 
                     <section className={Style.statsFeed}>
                         <PvPRatingsSection
@@ -113,10 +113,10 @@ export function Details() {
                             <TalentsSection />
                             <StatsChart />
                         </div>
-                        <Armory ParentStyle={Style} />
+                        <Armory />
                     </section>
-                </div>
                 <Comments />
+                </div>
             </div>
         </CommentsProvider>
     );

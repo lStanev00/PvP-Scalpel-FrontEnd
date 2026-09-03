@@ -159,3 +159,44 @@
 .copyIcon {
     font-size: 1.3rem;
 }
+
+@media (max-width: 480px) {
+    .section {
+        max-width: 100%;
+        padding: 0.9rem 0.65rem;
+    }
+
+    .section h2 {
+        font-size: 1.15rem;
+    }
+
+    .inner {
+        padding: 0.9rem 0.35rem 1rem;
+    }
+
+    .specs {
+        gap: 0.6rem;
+    }
+
+    .specCard {
+        min-width: 0;
+        padding: 0.75rem 0.35rem;
+        font-size: 0.85rem;
+    }
+
+    .specCard img {
+        width: 3.25rem;
+        height: 3.25rem;
+    }
+
+    .talentSpec {
+        font-size: 1.1rem;
+        overflow-wrap: anywhere;
+    }
+
+    .copyBtn {
+        max-width: 100%;
+        padding: 0.72rem 1rem;
+        font-size: 0.92rem;
+    }
+}

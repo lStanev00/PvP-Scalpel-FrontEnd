@@ -6,6 +6,7 @@ import UserDataContainer from "../components/checkDetails/UserDataContainer.jsx"
 import Loading from "../components/loading.jsx";
 import Comments from "../components/checkDetails/Comments.jsx";
 import { CommentsProvider } from "../components/checkDetails/CommentsContext.js";
+import Style from "../Styles/modular/Watch.module.css";
 
 export default function Watch() {
     const { videoID } = useParams();
@@ -57,7 +58,7 @@ export default function Watch() {
 
         return (
             <CommentsProvider initialPosts={videoDoc.comments} entryID={videoDoc._id}>
-                <div>
+                <article className={Style.page}>
                     <VideoPlayer
                         src={buildPath(videoDoc.manifest.video)}
                         poster={buildPath(videoDoc.manifest.thumbnail)}
@@ -66,7 +67,7 @@ export default function Watch() {
                     />
                     <UserDataContainer contextWindow={contextWindow} />
                     <Comments />
-                </div>
+                </article>
             </CommentsProvider>
         );
     }

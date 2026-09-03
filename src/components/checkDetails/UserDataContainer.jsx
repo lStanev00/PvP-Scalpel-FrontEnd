@@ -1,54 +1,60 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../hooks/ContextVariables";
 import { CharacterContext } from "../../pages/CharDetails";
-import Style from "../../Styles/modular/charDetails.module.css";
+import Style from "../../Styles/modular/UserDataContainer.module.css";
 import { useNavigate } from "react-router-dom";
 import { publicAssetUrl } from "../../helpers/assets.js";
 import { CommentsContext } from "./CommentsContext.js";
 
-export default function UserDataContainer({contextWindow = undefined}) {
+const compactCount = new Intl.NumberFormat(undefined, {
+    notation: "compact",
+    maximumFractionDigits: 1,
+});
+
+function normalizeCount(value) {
+    const count = Number(value);
+    return Number.isFinite(count) && count >= 0 ? count : 0;
+}
+
+export default function UserDataContainer({ contextWindow = undefined }) {
     const navigate = useNavigate();
     const { user, httpFetch } = useContext(UserContext);
     const characterWindow = useContext(CharacterContext);
     const commentsWindow = useContext(CommentsContext);
     const { data, location } = contextWindow ?? characterWindow ?? {};
     const { posts = [], commentsRef } = commentsWindow ?? contextWindow ?? {};
-    const [isLiked, setIsLiked] = useState();
-    const [likesCount, setLikesCount] = useState();
-    const [viewCount, setViewCount] = useState(data?.checkedCount);
-    const [commentsCount, setCMCount] = useState(posts?.length);
+    const [isLiked, setIsLiked] = useState(false);
+    const [likesCount, setLikesCount] = useState(0);
+    const [isLikePending, setIsLikePending] = useState(false);
+    const commentsCount = posts.length;
+    const viewCount = normalizeCount(data?.checkedCount ?? data?.views);
 
     useEffect(() => {
-        const errorHandleForComs = () => {
-            if (!commentsCount)
-                setCMCount((now) => {
-                    return 0;
-                });
-        };
-
-        errorHandleForComs();
-    }, [commentsCount]);
-
-    useEffect(() => {
-        if (user?._id && data?.likes) setIsLiked((data?.likes).includes(user?._id));
-
-        if (data?.likes) setLikesCount(data.likes.length);
-    }, []);
-
-    useEffect(() => {
-        setCMCount(posts.length);
-    }, [posts]);
+        const likes = Array.isArray(data?.likes) ? data.likes : [];
+        setIsLiked(Boolean(user?._id && likes.includes(user._id)));
+        setLikesCount(likes.length);
+    }, [data?.likes, user?._id]);
 
     const likeHandler = async (e) => {
         e.preventDefault();
-        if (!data?._id) return;
+        if (!data?._id || isLikePending) return;
 
-        const likeURL = `/like/${data._id}`;
-        const req = await httpFetch(likeURL);
+        setIsLikePending(true);
+        try {
+            const req = await httpFetch(`/like/${data._id}`);
 
-        if (req.status == 401) return navigate(`/login?target=${location}`);
-        setIsLiked(req.data?.isLiked);
-        setLikesCount(req.data.likesCount);
+            if (req?.status === 401) {
+                return navigate(`/login?target=${encodeURIComponent(location || "/")}`);
+            }
+            if (typeof req?.data?.isLiked === "boolean") setIsLiked(req.data.isLiked);
+            if (req?.data?.likesCount != null) {
+                setLikesCount(normalizeCount(req.data.likesCount));
+            }
+        } catch (error) {
+            console.warn("Like request failed:", error);
+        } finally {
+            setIsLikePending(false);
+        }
     };
 
     const commentsSectionClickHandler = (e) => {
@@ -57,51 +63,60 @@ export default function UserDataContainer({contextWindow = undefined}) {
     };
 
     return (
-            <div className={Style["banner"]}>
+        <section className={Style.rail} aria-label="Entry engagement">
+            <button
+                type="button"
+                className={`${Style.segment} ${Style.action} ${isLiked ? Style.active : ""}`}
+                onClick={likeHandler}
+                aria-pressed={isLiked}
+                aria-label={`${isLiked ? "Remove like" : "Like this entry"}. ${likesCount} ${
+                    likesCount === 1 ? "like" : "likes"
+                }`}
+                disabled={isLikePending || !data?._id}
+            >
                 <img
-                    style={{
-                        cursor: "pointer",
-                        transition: "transform 0.2s ease",
-                    }}
-                    onClick={async (e) => await likeHandler(e)}
+                    className={Style.icon}
                     src={publicAssetUrl(
                         `user_action_icons/${isLiked ? "Liked" : "Like"}.png`,
                     )}
-                    alt="Like/d icon"
+                    alt=""
                 />
-                <div className={Style["banner-content"]}>
-                    <strong>{likesCount ? likesCount : 0} Likes</strong>
-                    <span>
-                        {isLiked ? "You Liked this Character" : "Give a like hit the thumbup"}
-                    </span>
-                </div>
+                <span className={Style.metric}>
+                    <strong aria-live="polite">{compactCount.format(likesCount)}</strong>
+                    <span>{likesCount === 1 ? "Like" : "Likes"}</span>
+                </span>
+            </button>
 
+            <button
+                type="button"
+                className={`${Style.segment} ${Style.action}`}
+                onClick={commentsSectionClickHandler}
+                aria-label={`Go to ${commentsCount} ${
+                    commentsCount === 1 ? "comment" : "comments"
+                }`}
+            >
                 <img
-                    style={{
-                        cursor: "pointer",
-                    }}
-                    onClick={commentsSectionClickHandler}
+                    className={Style.icon}
                     src={publicAssetUrl("user_action_icons/Comments.png")}
-                    alt="Comments count icon (on click go to comments)"
+                    alt=""
                 />
-                <div
-                    style={{
-                        cursor: "pointer",
-                    }}
-                    onClick={commentsSectionClickHandler}
-                    className={Style["banner-content"]}>
-                    <strong>
-                        {commentsCount} {commentsCount == 1 ? "Comment" : "Comments"}
-                    </strong>
-                </div>
+                <span className={Style.metric}>
+                    <strong>{compactCount.format(commentsCount)}</strong>
+                    <span>{commentsCount === 1 ? "Comment" : "Comments"}</span>
+                </span>
+            </button>
 
+            <div className={Style.segment} aria-label={`${viewCount} views`}>
                 <img
+                    className={Style.icon}
                     src={publicAssetUrl("user_action_icons/View_Count.png")}
-                    alt="Views count icon"
+                    alt=""
                 />
-                <div className={Style["banner-content"]}>
-                    <strong>{viewCount} Views</strong>
-                </div>
+                <span className={Style.metric}>
+                    <strong>{compactCount.format(viewCount)}</strong>
+                    <span>{viewCount === 1 ? "View" : "Views"}</span>
+                </span>
             </div>
+        </section>
     );
 }

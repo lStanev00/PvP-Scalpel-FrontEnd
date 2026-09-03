@@ -52,8 +52,10 @@ body {
     background-color: #1c1c2e;
     color: white;
     display: flex;
+    width: 100%;
+    min-width: 320px;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
 }
 
@@ -117,17 +119,6 @@ body {
     }
     50% {
         box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-    }
-}
-
-@media (max-width: 1550px) {
-    body {
-        zoom: 0.8;
-    }
-}
-@media (max-width: 1150px) {
-    body {
-        zoom: 0.65;
     }
 }
 

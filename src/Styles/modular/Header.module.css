@@ -23,6 +23,7 @@
 /* container for logo + searchbar */
 .upperWrapper {
     display: flex;
+    min-width: 0;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
@@ -38,7 +39,14 @@
     cursor: pointer;
     font-weight: 800;
     color: #f4f4f4;
+    text-decoration: none;
     transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo:focus-visible {
+    border-radius: 50%;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
 }
 
 .logo:hover {
@@ -66,6 +74,26 @@
     flex-direction: column;
     align-items: center;
     gap: 0.6rem;
+}
+
+.menuToggle {
+    display: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 215, 0, 0.24);
+    border-radius: 8px;
+    background: rgba(8, 12, 26, 0.56);
+    color: #ffd84a;
+    font-size: 1.35rem;
+    cursor: pointer;
+}
+
+.menuToggle:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
 }
 
 /* links container */
@@ -200,14 +228,63 @@
     animation: faintPulse 14s ease-in-out infinite;
 }
 
-/* responsive tweak */
 @media (max-width: 900px) {
-    .nav-links {
-        scale: 0.85;
+    .header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        padding: 0.7rem;
+        gap: 0.7rem;
+    }
+
+    .upperWrapper {
+        gap: 0.65rem;
+    }
+
+    .menuToggle {
+        display: inline-flex;
     }
 
     .logo-img {
-        width: 2.8rem;
-        height: 2.8rem;
+        width: 2.65rem;
+        height: 2.65rem;
+    }
+
+    .navbar {
+        display: none;
+        grid-column: 1 / -1;
+        width: 100%;
+        padding-top: 0.25rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .navbar[data-open="true"] {
+        display: block;
+    }
+
+    .nav-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .nav-links a {
+        display: flex;
+        min-height: 2.75rem;
+        align-items: center;
+        justify-content: center;
+        padding: 0.55rem 0.7rem;
+        text-align: center;
+    }
+
+    .leaderboardMenu {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header {
+        animation: none;
     }
 }
