@@ -1,5 +1,4 @@
 import { createContext, useContext , useState } from "react";
-import { DetailsProvider } from "./Details";
 import Style from "../../Styles/modular/Armory.module.css";
 import { CharacterContext } from "../../pages/CharDetails";
 import ArmoryItemHover from "./ArmoryItemHover";
@@ -9,8 +8,7 @@ const fallbackImg = publicAssetUrl("item_fallback.png");
 
 export const HoverContext = createContext();
 
-export default function Armory() {
-    const { Style: ParentStyle } = useContext(DetailsProvider);
+export default function Armory({ParentStyle}) {
     const { data } = useContext(CharacterContext);
     const [hoverItem, setHoverItem] = useState(null);
     const [coursorPosition, setCoursorPosition] = useState({ x: 0, y: 0 });

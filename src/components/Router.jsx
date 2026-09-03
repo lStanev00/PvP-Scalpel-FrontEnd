@@ -63,9 +63,9 @@ export default function Navigation() {
                     <li>
                         <Link to="/scan">Lobby Scan</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to="/watch">Scalpel TV</Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link to="/posts">Posts</Link>
                     </li>

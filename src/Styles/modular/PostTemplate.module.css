@@ -1,241 +1,195 @@
 .commentItem {
     position: relative;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 2.35rem minmax(0, 1fr);
     width: 100%;
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 1rem;
-
-    background: var(--bg-main-card-char-details);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    box-shadow:
-        inset 0 0 6px var(--divider-color),
-        0 0 12px rgba(0, 0, 0, 0.6);
+    gap: 0.85rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--divider-color);
+    background: transparent;
     color: var(--color-text);
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    transition:
+        background-color 0.25s ease,
+        box-shadow 0.25s ease,
+        opacity 0.2s ease;
 }
 
-.commentItem:hover {
-    transform: translateY(-2px);
-    box-shadow:
-        0 0 14px rgba(255, 215, 0, 0.08),
-        0 0 20px rgba(0, 0, 0, 0.7);
+.commentItem[data-highlighted="true"] {
+    background: rgba(255, 215, 0, 0.045);
+    box-shadow: inset 3px 0 0 rgba(255, 215, 0, 0.72);
 }
 
-/* ===== OPTIMISTIC STATE ===== */
-.optimistic {
-    opacity: 0.85;
-    border: 1px dashed var(--color-accent);
-    animation: pulseGlow 1.3s infinite alternate;
-}
-
-@keyframes pulseGlow {
-    from {
-        box-shadow: 0 0 6px rgba(0, 245, 212, 0.2);
-    }
-    to {
-        box-shadow: 0 0 16px rgba(0, 245, 212, 0.45);
-    }
-}
-
-.optimisticTag {
-    display: flex;
+.avatar {
+    display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
-    font-size: 0.85rem;
+    justify-content: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    border: 1px solid rgba(0, 245, 212, 0.2);
+    border-radius: 50%;
+    background: rgba(0, 245, 212, 0.1);
     color: var(--color-accent);
-    text-shadow: 0 0 6px rgba(0, 245, 212, 0.3);
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 
-.clockIcon {
-    font-size: 1rem;
-    animation: spin 1.4s linear infinite;
+.commentContent {
+    min-width: 0;
 }
 
-@keyframes spin {
-    from { transform: rotate(0); }
-    to { transform: rotate(360deg); }
-}
-
-/* ===== HEADER ===== */
 .commentHeader {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid var(--divider-color);
-}
-
-.metaLeft,
-.metaRight {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-.icon {
-    color: var(--color-gold);
-    font-size: 1.1rem;
-    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.25));
+    gap: 0.45rem;
+    min-height: 1.35rem;
+    margin-bottom: 0.3rem;
 }
 
 .author {
-    font-weight: 600;
-    color: var(--color-gold);
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .date {
     color: var(--color-muted);
-    font-size: 0.9rem;
-}
-
-/* ===== BODY ===== */
-.commentBody {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-}
-
-.commentTitle {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    text-shadow: 0 0 6px rgba(0, 245, 212, 0.25);
+    font-size: 0.8rem;
 }
 
 .commentText {
+    margin: 0;
+    overflow-wrap: anywhere;
     color: var(--color-text);
     font-size: 0.95rem;
-    line-height: 1.4rem;
-    white-space: pre-line;
+    line-height: 1.55;
+    white-space: pre-wrap;
 }
 
-/* ===== FOOTER ===== */
-.commentFooter {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.8rem;
-    margin-top: 1rem;
+.optimistic {
+    opacity: 0.68;
 }
 
-.actionBtn {
+.optimisticTag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--color-accent);
+    font-size: 0.78rem;
+}
+
+.clockIcon {
+    width: 0.85rem;
+    height: 0.85rem;
+    animation: spin 1.4s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.commentFooter,
+.editActions {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 0.9rem;
+    gap: 0.25rem;
+    margin-top: 0.55rem;
+}
+
+.actionBtn,
+.confirmBtn,
+.cancelBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    min-height: 1.9rem;
+    padding: 0.3rem 0.55rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-muted);
+    font: inherit;
+    font-size: 0.8rem;
     font-weight: 600;
-    padding: 0.4rem 0.9rem;
-    border-radius: 6px;
-    border: none;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 }
 
-/* EDIT BUTTON */
-.editBtn {
-    background: linear-gradient(180deg, var(--color-accent), #0077ff);
-    color: #fff;
-    box-shadow: 0 0 8px rgba(0, 245, 212, 0.3);
-}
-.editBtn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 14px rgba(0, 245, 212, 0.45);
+.actionBtn:hover,
+.actionBtn:focus-visible,
+.cancelBtn:hover,
+.cancelBtn:focus-visible {
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--color-text);
+    outline: none;
 }
 
-/* DELETE BUTTON */
-.deleteBtn {
-    background: linear-gradient(180deg, #ff5e5e, #8b0000);
-    color: #fff;
-    box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
-}
-.deleteBtn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 12px rgba(255, 0, 0, 0.45);
-}
-
-/* ===== EDIT MODE ===== */
-.editing {
-    background: rgba(18, 24, 42, 0.92);
-    border: 1px solid rgba(0, 245, 212, 0.2);
+.deleteBtn:hover,
+.deleteBtn:focus-visible {
+    color: #ff8585;
 }
 
 .editForm {
     display: flex;
+    min-width: 0;
     flex-direction: column;
-    gap: 0.8rem;
 }
 
-.editHeading {
-    text-align: center;
-    color: var(--color-gold);
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.editInput,
 .editTextarea {
     width: 100%;
-    background: var(--bg-row);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    color: var(--color-text);
-    padding: 0.7rem 1rem;
-    font-size: 0.95rem;
-    outline: none;
-    box-shadow: inset 0 0 6px var(--divider-color);
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.editInput:focus,
-.editTextarea:focus {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
-}
-
-.editTextarea {
-    min-height: 100px;
+    min-height: 5.5rem;
+    padding: 0.5rem 0.15rem;
     resize: vertical;
+    border: 0;
+    border-bottom: 1px solid var(--color-accent);
+    border-radius: 0;
+    outline: none;
+    background: transparent;
+    color: var(--color-text);
+    font: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .editActions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 0.6rem;
-}
-
-/* Confirm / Cancel */
-.confirmBtn,
-.cancelBtn {
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: 0.6rem 1.4rem;
-    border-radius: var(--radius);
-    border: none;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.25s ease;
+    justify-content: flex-end;
 }
 
 .confirmBtn {
-    background: linear-gradient(180deg, var(--color-accent), #0077ff);
-    color: #fff;
-    box-shadow: 0 0 8px rgba(0, 245, 212, 0.3);
-}
-.confirmBtn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 14px rgba(0, 245, 212, 0.45);
+    background: var(--color-accent);
+    color: #07120f;
 }
 
-.cancelBtn {
-    background: linear-gradient(145deg, var(--bg-row), rgba(35, 40, 60, 0.9));
-    color: var(--color-muted);
-    border: 1px solid var(--border-color);
+.confirmBtn:hover,
+.confirmBtn:focus-visible {
+    background: #6fffea;
+    outline: none;
 }
-.cancelBtn:hover {
-    transform: scale(1.05);
-    color: var(--color-text);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+
+@media (max-width: 600px) {
+    .commentItem {
+        grid-template-columns: 2rem minmax(0, 1fr);
+        gap: 0.65rem;
+        padding: 1rem 0;
+    }
+
+    .avatar {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .clockIcon {
+        animation: none;
+    }
 }

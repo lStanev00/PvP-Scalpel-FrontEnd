@@ -3,16 +3,16 @@ import { UserContext } from "../../hooks/ContextVariables";
 import { CharacterContext } from "../../pages/CharDetails";
 import Style from "../../Styles/modular/charDetails.module.css";
 import { useNavigate } from "react-router-dom";
-import { DetailsProvider } from "./Details";
 import { publicAssetUrl } from "../../helpers/assets.js";
+import { CommentsContext } from "./CommentsContext.js";
 
 export default function UserDataContainer({contextWindow = undefined}) {
     const navigate = useNavigate();
     const { user, httpFetch } = useContext(UserContext);
     const characterWindow = useContext(CharacterContext);
-    const detailsWindow = useContext(DetailsProvider);
+    const commentsWindow = useContext(CommentsContext);
     const { data, location } = contextWindow ?? characterWindow ?? {};
-    const { posts = [], commentsRef } = contextWindow ?? detailsWindow ?? {};
+    const { posts = [], commentsRef } = commentsWindow ?? contextWindow ?? {};
     const [isLiked, setIsLiked] = useState();
     const [likesCount, setLikesCount] = useState();
     const [viewCount, setViewCount] = useState(data?.checkedCount);
@@ -53,7 +53,7 @@ export default function UserDataContainer({contextWindow = undefined}) {
 
     const commentsSectionClickHandler = (e) => {
         e.preventDefault();
-        commentsRef?.headSection?.scrollIntoView({ behavior: "smooth" });
+        commentsRef?.current?.headSection?.scrollIntoView({ behavior: "smooth" });
     };
 
     return (

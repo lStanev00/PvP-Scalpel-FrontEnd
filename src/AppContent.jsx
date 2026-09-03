@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"; // Dont clear imports
+import { Route, Routes, useLocation } from "react-router-dom"; // Dont clear imports
 import Navigation from "./components/Router.jsx";
 import Home from "./pages/Home.jsx";
 import GoToTopButton from "./components/topBtn.jsx";
@@ -42,6 +42,11 @@ const assetStyles = {
 
 export default function AppContent() {
     const { httpFetch } = useContext(UserContext);
+    const location = useLocation();
+    const hideIconBackground =
+        location.pathname.startsWith("/check/") ||
+        location.pathname === "/watch" ||
+        /^\/watch\/[^/]+\/?$/.test(location.pathname);
 
     useEffect(() => {
         httpFetch("/verify/me");
@@ -51,7 +56,12 @@ export default function AppContent() {
     return (
         // <Router>
         <>
-            <div style={{ "--custom-val": "", ...assetStyles }} className={Style.pageWrapper}>
+            <div
+                style={{ "--custom-val": "", ...assetStyles }}
+                className={`${Style.pageWrapper} ${
+                    hideIconBackground ? Style.detailPageWrapper : ""
+                }`}
+            >
                 <Navigation />
 
                 <main>
@@ -120,7 +130,7 @@ export default function AppContent() {
                         <Route path="/goto/:email" element={<GotoEmail />} />
                         <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/linkDiscord" element={<LinkDiscord />} />
-                        <Route path="/watch" element={<ScalpelTV />} />
+                        {/* <Route path="/watch" element={<ScalpelTV />} /> */}
                         <Route
                             path="/watch/:videoID"
                             element={

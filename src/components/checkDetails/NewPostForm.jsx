@@ -1,34 +1,57 @@
-import { startTransition, useContext, useState } from "react";
+import { startTransition, useContext, useRef, useState } from "react";
 import styles from "../../Styles/modular/NewPostForm.module.css";
 import { UserContext } from "../../hooks/ContextVariables";
 import { useLocation, useNavigate } from "react-router-dom";
-import { DetailsProvider } from "./Details";
-import { FaPaperPlane } from "react-icons/fa";
-import { CharacterContext } from "../../pages/CharDetails";
+import { FiUser } from "react-icons/fi";
+import { useComments } from "./CommentsContext.js";
 
 export default function NewPostForm() {
-    const { data } = useContext(CharacterContext);
-    const characterID = data?._id;
-    const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const { user, httpFetch } = useContext(UserContext);
     const [error, setError] = useState();
-    const location = useLocation().pathname;
-    const { addOptimisticPost, setPosts } = useContext(DetailsProvider);
+    const location = useLocation();
+    const { addOptimisticPost, entryID, setPosts } = useComments();
     const navigate = useNavigate();
+    const textareaRef = useRef(null);
+    const returnTarget = `${location.pathname}${location.search}`;
+    const userInitial = user?.username?.trim()?.charAt(0)?.toUpperCase() || "?";
+
+    const resetComposer = () => {
+        setContent("");
+        setError(undefined);
+        setIsExpanded(false);
+
+        if (textareaRef.current) {
+            textareaRef.current.style.height = "";
+            textareaRef.current.style.overflowY = "hidden";
+        }
+    };
+
+    const handleContentChange = (event) => {
+        const textarea = event.currentTarget;
+        setContent(textarea.value);
+        textarea.style.height = "auto";
+        textarea.style.height = `${Math.min(textarea.scrollHeight, 192)}px`;
+        textarea.style.overflowY = textarea.scrollHeight > 192 ? "auto" : "hidden";
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(undefined);
 
-        if (!title.trim() || !content.trim()) return;
-        if (!user?._id) return navigate(`/login`);
+        const trimmedContent = content.trim();
+        if (!trimmedContent || isSubmitting) return;
+        if (!user?._id) {
+            return navigate(`/login?target=${encodeURIComponent(returnTarget)}`);
+        }
+        if (!entryID) return setError("Comments are unavailable for this entry.");
 
         const fakePost = {
             isOptimistic: true,
             _id: `FAKE-${Math.random().toString(36).slice(2)}`,
-            title,
-            content,
+            content: trimmedContent,
             author: {
                 _id: user._id,
                 username: user.username,
@@ -36,25 +59,28 @@ export default function NewPostForm() {
             createdAt: new Date().toISOString(),
         };
 
+        setIsSubmitting(true);
         startTransition(() => addOptimisticPost(fakePost));
 
         try {
-            // const {  title, content, authorID, characterID  } = req.body;
+            const body = {
+                content: trimmedContent,
+                authorID: user._id,
+            };
+            if (location.pathname.startsWith("/check")) {
+                body.characterID = entryID;
+            } else if (location.pathname.startsWith("/watch")) {
+                body.mediaID = entryID;
+            }
             const req = await httpFetch(`/new/post`, {
                 method: "POST",
-                body: JSON.stringify({
-                    title: title.trim(),
-                    content: content.trim(),
-                    authorID: user._id,
-                    characterID,
-                }),
+                body: JSON.stringify(body),
             });
 
             if (req.status === 201) {
                 const data = req.data;
                 setPosts((prev) => [...prev.filter((p) => p._id !== fakePost._id), data]);
-                setTitle("");
-                setContent("");
+                resetComposer();
             } else {
                 setError(req.data?.msg || `Request failed: ${req.status}`);
                 setPosts((prev) => prev.filter((p) => p._id !== fakePost._id));
@@ -63,60 +89,77 @@ export default function NewPostForm() {
             console.error("Post failed:", err);
             setPosts((prev) => prev.filter((p) => p._id !== fakePost._id));
             setError("Failed to create post. Try again!");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
+    if (!user?._id) {
+        return (
+            <div className={styles.signedOutPrompt}>
+                <span className={styles.guestAvatar} aria-hidden="true">
+                    <FiUser />
+                </span>
+                <button
+                    type="button"
+                    className={styles.signInButton}
+                    onClick={() =>
+                        navigate(`/login?target=${encodeURIComponent(returnTarget)}`)
+                    }
+                >
+                    Sign in to comment
+                </button>
+            </div>
+        );
+    }
+
     return (
-        <form className={styles.commentForm} onSubmit={handleSubmit}>
-            <div className={styles.headerLine}>
-                <h1>Add a Comment</h1>
-                {error && <p className={styles.errorMsg}>{error}</p>}
-            </div>
+        <form
+            className={styles.commentForm}
+            onSubmit={handleSubmit}
+            aria-busy={isSubmitting}
+        >
+            <span className={styles.avatar} aria-hidden="true">
+                {userInitial}
+            </span>
 
-            <div className={styles.inputs}>
-                <input
-                    type="text"
-                    placeholder="Title your thought..."
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    name="title"
-                    required
-                />
-
+            <div className={styles.composerBody}>
                 <textarea
-                    placeholder="Share your opinion..."
+                    ref={textareaRef}
+                    className={styles.commentInput}
+                    placeholder="Add a comment..."
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    name="description"
+                    onChange={handleContentChange}
+                    onFocus={() => setIsExpanded(true)}
+                    name="content"
+                    rows={1}
+                    aria-label="Comment"
+                    aria-expanded={isExpanded}
                     required
                 />
-            </div>
 
-            <div className={styles.actions}>
-                {user?._id && (
-                    <button disabled={!user?._id} type="submit" className={styles.submitBtn}>
-                        <FaPaperPlane size={16} />
-                        <span> Submit Comment</span>
-                    </button>
+                {error && (
+                    <p className={styles.errorMsg} role="alert">
+                        {error}
+                    </p>
                 )}
 
-                {!user?._id && (
-                    <div className={styles.authButtons}>
+                {isExpanded && (
+                    <div className={styles.actions}>
                         <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                navigate(`/login?target=${location}`);
-                            }}
-                            className={styles.altBtn}>
-                            Login
+                            type="button"
+                            className={styles.cancelBtn}
+                            onClick={resetComposer}
+                            disabled={isSubmitting}
+                        >
+                            Cancel
                         </button>
                         <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                navigate("/register");
-                            }}
-                            className={styles.altBtn}>
-                            Register
+                            type="submit"
+                            className={styles.submitBtn}
+                            disabled={!content.trim() || isSubmitting}
+                        >
+                            {isSubmitting ? "Posting..." : "Comment"}
                         </button>
                     </div>
                 )}

@@ -1,7 +1,6 @@
-import { useContext, useState, useOptimistic, useRef, useEffect, createContext } from "react";
+import { useContext, useState } from "react";
 import Style from "../../Styles/modular/charDetails.module.css";
 import ReloadBTN from "./reloadBTN.jsx";
-import { useSearchParams } from "react-router-dom";
 import { CharacterContext } from "../../pages/CharDetails.jsx";
 import UserDataContainer from "./UserDataContainer.jsx";
 import StatsChart from "./StatsChart.jsx";
@@ -10,55 +9,15 @@ import TalentsSection from "./TallentsSection.jsx";
 import Armory from "./Armory.jsx";
 import PvPRatingsSection from "./PvPRatingsSection.jsx";
 import Comments from "./Comments.jsx";
-
-export const DetailsProvider = createContext();
+import { CommentsProvider } from "./CommentsContext.js";
 
 export function Details() {
-    const { data } = useContext(CharacterContext);
+    const { data, location } = useContext(CharacterContext);
     const [isUpdating, setUpdating] = useState(false);
-    const [posts, setPosts] = useState(() => (Array.isArray(data?.posts) ? data.posts : []));
 
-    useEffect(() => {
-        setPosts(Array.isArray(data?.posts) ? data.posts : []);
-    }, [data?.posts]);
+    // Missing data case on brute tests appearing 0/1000 so wont overengineer this case
+    if (data?.errorMSG) return <h1>{data.errorMSG}</h1>;
 
-    const [optimisticPosts, addOptimisticPost] = useOptimistic(posts, (currentPosts, newPost) => [
-        ...currentPosts,
-        newPost,
-    ]);
-    const commentsRef = useRef([]);
-    const [lookingForComment] = useSearchParams();
-
-    useEffect(() => {
-        try {
-            const commentID = lookingForComment.get(`comment`);
-            if (!commentID) return;
-
-            const div = commentsRef?.current[commentID];
-
-            div.scrollIntoView({ behavior: "smooth" });
-
-            // Save original styles
-            const originalBorder = div.style.border;
-
-            // Apply new styles
-            div.style.border = "2px solid rgba(255, 204, 0, 0.6)";
-
-            // Revert after 3 secs
-            setTimeout(() => {
-                div.style.border = originalBorder;
-            }, 3000);
-        } catch {
-            return;
-        }
-    }, [lookingForComment]);
-
-    if (data?.errorMSG)
-        return (
-            <>
-                <h1>{data.errorMSG}</h1>
-            </>
-        );
     // Sort PvP Ratings into Categories
     const shuffleRatings = {};
     const blitzRatings = {};
@@ -77,7 +36,7 @@ export function Details() {
                 listAchievements.length > 0
             ) {
                 const strategistExist = listAchievements.find((entry) =>
-                    entry.name.includes("Strategist")
+                    entry.name.includes("Strategist"),
                 );
                 if (strategistExist) {
                     if (blitzRatings[bracketKey]) {
@@ -100,66 +59,65 @@ export function Details() {
     });
 
     return (
-        <div
-            style={
-                data.media === null
-                    ? {
-                          filter: isUpdating ? "blur(5px)" : "none",
-                      }
-                    : {
-                          backgroundImage: `url('${data.media.charImg}')`,
-                          backgroundPosition: "center",
-                          backgroundSize: "cover",
-                          backgroundRepeat: "no-repeat",
-                          backgroundAttachment: "fixed",
-                          overflow: "hidden",
-                          filter: isUpdating ? "blur(5px)" : "none",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                      }
-            }>
-            <DetailsProvider.Provider
-                value={{ commentsRef, optimisticPosts, addOptimisticPost, setPosts, posts, Style }}>
-                {/* Character Banner */}
-                <div className={Style["banner"]}>
-                    <img src={data.media.avatar} alt="Character Avatar" />
-                    <div className={Style["banner-content"]}>
-                        <h3 className={Style.bannerCharName}>
-                            {data.name} - {data.playerRealm.name}
-                        </h3>
-                        <span>
-                            {data.race} | Level {data.level} | {data.class.name} (
-                            {data.activeSpec.name}){" "}
-                            {data.guildName && <>| Guild: {data.guildName}</>}
-                        </span>
+        <CommentsProvider initialPosts={data?.posts} entryID={data?._id}>
+            <div>
+                <div
+                    style={
+                        data.media === null
+                            ? {
+                                  filter: isUpdating ? "blur(5px)" : "none",
+                              }
+                            : {
+                                  backgroundImage: `url('${data.media.charImg}')`,
+                                  backgroundPosition: "center",
+                                  backgroundSize: "cover",
+                                  backgroundRepeat: "no-repeat",
+                                  backgroundAttachment: "fixed",
+                                  overflow: "hidden",
+                                  filter: isUpdating ? "blur(5px)" : "none",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                              }
+                    }
+                >
+                    <div className={Style["banner"]}>
+                        <img src={data.media.avatar} alt="Character Avatar" />
+                        <div className={Style["banner-content"]}>
+                            <h3 className={Style.bannerCharName}>
+                                {data.name} - {data.playerRealm.name}
+                            </h3>
+                            <span>
+                                {data.race} | Level {data.level} | {data.class.name} (
+                                {data.activeSpec.name}){" "}
+                                {data.guildName && <>| Guild: {data.guildName}</>}
+                            </span>
+                        </div>
+                        <ReloadBTN isUpdating={isUpdating} setUpdating={setUpdating} />
                     </div>
-                    <ReloadBTN isUpdating={isUpdating} setUpdating={setUpdating} />
+
+                    <UserDataContainer contextWindow={{ data, location }} />
+
+                    <section className={Style.statsFeed}>
+                        <PvPRatingsSection
+                            otherRatings={otherRatings}
+                            blitzRatings={blitzRatings}
+                            shuffleRatings={shuffleRatings}
+                            data={data}
+                            Style={Style}
+                        />
+                        <AchevementsSection />
+                    </section>
+                    <section className={Style["armoryLayout"]}>
+                        <div className={Style["armoryRight"]}>
+                            <TalentsSection />
+                            <StatsChart />
+                        </div>
+                        <Armory ParentStyle={Style} />
+                    </section>
                 </div>
-
-                <UserDataContainer />
-
-                <section className={Style.statsFeed}>
-                    <PvPRatingsSection
-                        otherRatings={otherRatings}
-                        blitzRatings={blitzRatings}
-                        shuffleRatings={shuffleRatings}
-                        data={data}
-                        Style={Style}
-                    />
-                    <AchevementsSection />
-                </section>
-                <section className={Style["armoryLayout"]}>
-                    <div className={Style["armoryRight"]}>
-                        <TalentsSection />
-                        <StatsChart />
-                    </div>
-                    <Armory />
-                </section>
-
-                {/* Comments Section */}
                 <Comments />
-            </DetailsProvider.Provider>
-        </div>
+            </div>
+        </CommentsProvider>
     );
 }
