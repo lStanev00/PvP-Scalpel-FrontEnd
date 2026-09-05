@@ -5,6 +5,7 @@ import AccInfo from "../components/ProfilePage/AccInfo";
 import ChangePassword from "../components/ProfilePage/ChangePassword";
 import ViewUserPosts from "../components/ProfilePage/ViewUserPosts";
 import { useNavigate } from "react-router-dom";
+import ViewUserVideos from "../components/ProfilePage/ViewUserVideos.jsx";
 
 export default function ProfilePage() {
     const navigate = useNavigate();
@@ -36,6 +37,14 @@ export default function ProfilePage() {
                         >
                             Change Password
                         </button>
+                        
+                        <button
+                            onClick={() => setContent("ViewVideos")}
+                            className={content === "ViewPosts" ? Style.active : ""}
+                        >
+                            Your Videos
+                        </button>
+
                         <button
                             onClick={() => setContent("ViewPosts")}
                             className={content === "ViewPosts" ? Style.active : ""}
@@ -49,6 +58,7 @@ export default function ProfilePage() {
                 <section className={`${Style.content}`}>
                     {content === "AccInfo" && <AccInfo />}
                     {content === "ViewPosts" && <ViewUserPosts />}
+                    {content === "ViewVideos" && <ViewUserVideos />}
                     {content === "ChangePassword" && (
                         <ChangePassword setContent={setContent} httpFetch={httpFetch} />
                     )}

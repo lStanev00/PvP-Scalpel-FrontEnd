@@ -82,110 +82,6 @@
     min-width: 0;
 }
 
-.cardLink {
-    display: block;
-    min-width: 0;
-    border-radius: 11px;
-    color: inherit;
-    text-decoration: none;
-}
-
-.cardLink:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 4px;
-}
-
-.thumbnail {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 10px;
-    background: #050712;
-}
-
-.thumbnail img,
-.thumbnailFallback {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.thumbnail img {
-    object-fit: cover;
-    transition:
-        filter 0.25s ease,
-        transform 0.25s ease;
-}
-
-.cardLink:hover .thumbnail img {
-    filter: brightness(1.06) saturate(1.05);
-    transform: scale(1.015);
-}
-
-.thumbnailFallback {
-    display: grid;
-    place-items: center;
-    color: rgba(0, 245, 212, 0.45);
-    background: rgba(255, 255, 255, 0.035);
-}
-
-.thumbnailFallback svg {
-    width: 2rem;
-    height: 2rem;
-}
-
-.cardBody {
-    padding: 0.7rem 0.15rem 0;
-}
-
-.cardBody h2 {
-    display: -webkit-box;
-    margin: 0;
-    overflow: hidden;
-    color: #f3f7ff;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.38;
-    overflow-wrap: anywhere;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-}
-
-.metadata {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.35rem;
-    margin: 0.4rem 0 0;
-    color: var(--color-muted);
-    font-size: 0.8rem;
-    line-height: 1.35;
-}
-
-.metadata > * {
-    display: inline-flex;
-    align-items: center;
-}
-
-.metadata > * + *::before {
-    content: "•";
-    margin-right: 0.35rem;
-    color: rgba(152, 163, 199, 0.72);
-}
-
-.views {
-    gap: 0.25rem;
-}
-
-.views img {
-    width: 2rem;
-    height: 2rem;
-    object-fit: contain;
-    opacity: 0.78;
-}
-
-
 .status {
     display: flex;
     flex-direction: column;
@@ -249,7 +145,7 @@
 
 .skeletonThumbnail {
     aspect-ratio: 16 / 9;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .skeletonLine {
@@ -317,8 +213,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .filterButton,
-    .thumbnail img {
+    .filterButton {
         transition: none;
     }
 
