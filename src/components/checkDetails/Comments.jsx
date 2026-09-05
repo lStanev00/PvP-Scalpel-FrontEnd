@@ -1,15 +1,16 @@
+/* eslint-disable react/prop-types -- Optional presentation variant; context ownership is unchanged. */
 import Style from "../../Styles/modular/CommentsMain.module.css";
 import CommentsSection from "./CommentsSection";
 import NewPostForm from "./NewPostForm";
 import { useComments } from "./CommentsContext.js";
 
-export default function Comments() {
+export default function Comments({ variant = "default" }) {
     const { commentsRef, optimisticPosts } = useComments();
     const commentsCount = optimisticPosts?.length ?? 0;
 
     return (
         <section
-            className={Style.main}
+            className={`${Style.main} ${variant === "watch" ? Style.watch : ""}`}
             aria-labelledby="comments-heading"
             ref={(element) => {
                 commentsRef.current.headSection = element;
@@ -20,8 +21,8 @@ export default function Comments() {
                     {commentsCount} {commentsCount === 1 ? "Comment" : "Comments"}
                 </h2>
             </header>
-            <NewPostForm />
-            <CommentsSection />
+            <NewPostForm variant={variant} />
+            <CommentsSection variant={variant} />
         </section>
     );
 }

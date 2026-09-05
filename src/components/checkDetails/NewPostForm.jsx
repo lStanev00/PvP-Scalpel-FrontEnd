@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types -- Optional Watch presentation keeps the default composer unchanged. */
 import { startTransition, useContext, useRef, useState } from "react";
 import styles from "../../Styles/modular/NewPostForm.module.css";
 import { UserContext } from "../../hooks/ContextVariables";
@@ -5,7 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
 import { useComments } from "./CommentsContext.js";
 
-export default function NewPostForm() {
+export default function NewPostForm({ variant = "default" }) {
+    const isWatch = variant === "watch";
     const [content, setContent] = useState("");
     const [isExpanded, setIsExpanded] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -67,10 +69,10 @@ export default function NewPostForm() {
                 content: trimmedContent,
                 authorID: user._id,
             };
-            if (location.pathname.startsWith("/check")) {
+            if (variant === "default") {
                 body.characterID = entryID;
-            } else if (location.pathname.startsWith("/watch")) {
-                body.mediaID = entryID;
+            } else if (isWatch) {
+                body.media = entryID;
             }
             const req = await httpFetch(`/new/post`, {
                 method: "POST",
@@ -96,7 +98,7 @@ export default function NewPostForm() {
 
     if (!user?._id) {
         return (
-            <div className={styles.signedOutPrompt}>
+            <div className={`${styles.signedOutPrompt} ${isWatch ? styles.watch : ""}`}>
                 <span className={styles.guestAvatar} aria-hidden="true">
                     <FiUser />
                 </span>
@@ -115,7 +117,7 @@ export default function NewPostForm() {
 
     return (
         <form
-            className={styles.commentForm}
+            className={`${styles.commentForm} ${isWatch ? styles.watch : ""}`}
             onSubmit={handleSubmit}
             aria-busy={isSubmitting}
         >
@@ -144,22 +146,24 @@ export default function NewPostForm() {
                     </p>
                 )}
 
-                {isExpanded && (
+                {(isExpanded || isWatch) && (
                     <div className={styles.actions}>
-                        <button
-                            type="button"
-                            className={styles.cancelBtn}
-                            onClick={resetComposer}
-                            disabled={isSubmitting}
-                        >
-                            Cancel
-                        </button>
+                        {isExpanded && (
+                            <button
+                                type="button"
+                                className={styles.cancelBtn}
+                                onClick={resetComposer}
+                                disabled={isSubmitting}
+                            >
+                                Cancel
+                            </button>
+                        )}
                         <button
                             type="submit"
                             className={styles.submitBtn}
                             disabled={!content.trim() || isSubmitting}
                         >
-                            {isSubmitting ? "Posting..." : "Comment"}
+                            {isSubmitting ? "Posting..." : isWatch ? "Post comment" : "Comment"}
                         </button>
                     </div>
                 )}

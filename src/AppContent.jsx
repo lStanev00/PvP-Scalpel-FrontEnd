@@ -130,7 +130,7 @@ export default function AppContent() {
                         <Route path="/goto/:email" element={<GotoEmail />} />
                         <Route path="/validate/:scenario" element={<VlidateToken />} />
                         <Route path="/linkDiscord" element={<LinkDiscord />} />
-                        {/* <Route path="/watch" element={<ScalpelTV />} /> */}
+                        <Route path="/watch" element={<ScalpelTV />} />
                         <Route
                             path="/watch/:videoID"
                             element={

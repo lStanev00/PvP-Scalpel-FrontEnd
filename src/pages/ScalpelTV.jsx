@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FiVideo } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import VideoCard from "../components/VideoCard/VideoCard.jsx";
 
 import { UserContext } from "../hooks/ContextVariables.jsx";
 import Style from "../Styles/modular/ScalpelTV.module.css";
@@ -8,117 +8,11 @@ import {
     GAME_DATA_STORAGE_EVENT,
     getGameBrackets,
 } from "../helpers/storageOperations/gameData.js";
-import { publicAssetUrl } from "../helpers/assets.js";
+import mappedVideos from "../helpers/normalizeVideoObj.js";
+import SEOTV from "../SEO/SEOTV.jsx";
 
-const CONTENT_ROOT = "https://bucket.pvpscalpel.com/pvp-scalpel-frontend/";
-const VIEW_ICON_URL = publicAssetUrl("user_action_icons/View_Count.png");
 const SKELETON_ITEMS = Array.from({ length: 8 }, (_, index) => index);
-const compactNumber = new Intl.NumberFormat(undefined, {
-    notation: "compact",
-    maximumFractionDigits: 1,
-});
-const relativeTime = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
 
-function buildPath(path) {
-    if (typeof path !== "string" || !path.trim()) return null;
-
-    try {
-        return new URL(path, CONTENT_ROOT).href;
-    } catch {
-        return null;
-    }
-}
-
-function getViewLabel(value) {
-    if (value === null || value === undefined || value === "") return null;
-
-    const views = Number(value);
-    if (!Number.isFinite(views) || views < 0) return null;
-
-    return `${compactNumber.format(views)} ${views === 1 ? "view" : "views"}`;
-    // return `${compactNumber.format(views)}`;
-}
-
-function getRelativeDate(value) {
-    if (value === null || value === undefined || value === "") return null;
-
-    const date = new Date(value);
-    const timestamp = date.getTime();
-    if (!Number.isFinite(timestamp)) return null;
-
-    const difference = timestamp - Date.now();
-    const absoluteDifference = Math.abs(difference);
-    const intervals = [
-        ["year", 365 * 24 * 60 * 60 * 1000],
-        ["month", 30 * 24 * 60 * 60 * 1000],
-        ["day", 24 * 60 * 60 * 1000],
-        ["hour", 60 * 60 * 1000],
-        ["minute", 60 * 1000],
-    ];
-    const interval = intervals.find(([, milliseconds]) => absoluteDifference >= milliseconds);
-
-    return {
-        timestamp,
-        value: String(value),
-        exact: date.toLocaleString(),
-        label: interval
-            ? relativeTime.format(Math.round(difference / interval[1]), interval[0])
-            : "just now",
-    };
-}
-
-function getBracketDetails(value, brackets) {
-    const bracketObject = value && typeof value === "object" ? value : null;
-    const rawBracket = bracketObject?._id ?? bracketObject?.id ?? bracketObject?.slug ?? value;
-    const normalizedRaw = rawBracket === null || rawBracket === undefined
-        ? ""
-        : String(rawBracket);
-    const matchingBracket = brackets.find((entry) => {
-        return (
-            String(entry?._id) === normalizedRaw ||
-            (entry?.slug && String(entry.slug) === normalizedRaw)
-        );
-    });
-    const objectName =
-        typeof bracketObject?.name === "string" ? bracketObject.name.trim() : "";
-    const matchingName =
-        typeof matchingBracket?.name === "string" ? matchingBracket.name.trim() : "";
-    const isGeneralVideo = normalizedRaw === "0";
-    const name = isGeneralVideo
-        ? "PvP-S Video"
-        : objectName || matchingName || "Other";
-    const isKnown = Boolean(isGeneralVideo || objectName || matchingName);
-    const identity = normalizedRaw || name.toLowerCase();
-
-    return {
-        key: isKnown ? `bracket:${identity}` : "other",
-        name,
-    };
-}
-
-function normalizeVideos(videos, brackets) {
-    const normalized = videos.flatMap((entry, index) => {
-        if (!entry?._id) return [];
-
-        const date = getRelativeDate(entry.createdAt);
-
-        return [{
-            id: String(entry._id),
-            sourceIndex: index,
-            title: entry?.title?.trim() || "Untitled video",
-            thumbnail: buildPath(entry?.manifest?.thumbnail),
-            bracket: getBracketDetails(entry?.bracket, brackets),
-            views: getViewLabel(entry?.views),
-            date,
-        }];
-    });
-    const dated = normalized
-        .filter((entry) => entry.date)
-        .sort((a, b) => b.date.timestamp - a.date.timestamp || a.sourceIndex - b.sourceIndex);
-    const undated = normalized.filter((entry) => !entry.date);
-
-    return [...dated, ...undated];
-}
 
 export default function ScalpelTV() {
     const { httpFetch } = useContext(UserContext);
@@ -170,10 +64,7 @@ export default function ScalpelTV() {
         };
     }, [httpFetch, retryCount]);
 
-    const videos = useMemo(
-        () => normalizeVideos(Array.isArray(videosMeta) ? videosMeta : [], brackets),
-        [brackets, videosMeta],
-    );
+    const videos = useMemo(() => mappedVideos(videosMeta, brackets), [videosMeta, brackets]);
     const bracketFilters = useMemo(() => {
         const representedBrackets = new Map();
 
@@ -194,6 +85,7 @@ export default function ScalpelTV() {
 
     return (
         <section className={Style.page} aria-labelledby="scalpel-tv-title">
+            <SEOTV></SEOTV>
             <h1 id="scalpel-tv-title" className={Style.visuallyHidden}>
                 Scalpel TV videos
             </h1>
@@ -275,48 +167,7 @@ export default function ScalpelTV() {
                     <ul className={Style.grid}>
                         {visibleVideos.map((video) => (
                             <li className={Style.card} key={video.id}>
-                                <Link
-                                    className={Style.cardLink}
-                                    to={`/watch/${encodeURIComponent(video.id)}`}
-                                >
-                                    <div className={Style.thumbnail}>
-                                        {video.thumbnail ? (
-                                            <img
-                                                src={video.thumbnail}
-                                                alt=""
-                                                loading="lazy"
-                                                decoding="async"
-                                            />
-                                        ) : (
-                                            <span className={Style.thumbnailFallback}>
-                                                <FiVideo aria-hidden="true" />
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <div className={Style.cardBody}>
-                                        <h2>{video.title}</h2>
-                                        <p className={Style.metadata}>
-                                            <span title="Views count">{video.bracket.name}</span>
-                                            {video.views && (
-                                                <span className={Style.views}>
-                                                    <img src={VIEW_ICON_URL} alt="Views icon" aria-hidden="true" />
-                                                    {video.views}
-                                                    
-                                                </span>
-                                            )}
-                                            {video.date && (
-                                                <time
-                                                    dateTime={video.date.value}
-                                                    title={video.date.exact}
-                                                    aria-label={`${video.date.label}, ${video.date.exact}`}
-                                                >
-                                                    {video.date.label}
-                                                </time>
-                                            )}
-                                        </p>
-                                    </div>
-                                </Link>
+                                <VideoCard video={video} />
                             </li>
                         ))}
                     </ul>

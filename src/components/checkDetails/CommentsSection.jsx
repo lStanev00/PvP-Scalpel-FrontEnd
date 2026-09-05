@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types -- Optional Watch empty-state presentation. */
+import { FiMessageSquare } from "react-icons/fi";
 import PostTemplate from "./PostTemplate";
 import Style from "../../Styles/modular/CommentsSection.module.css";
 import { useComments } from "./CommentsContext.js";
 
-export default function CommentsSection() {
+export default function CommentsSection({ variant = "default" }) {
     const { optimisticPosts, commentsRef } = useComments();
 
     if (!optimisticPosts) return null;
@@ -10,8 +12,13 @@ export default function CommentsSection() {
     return (
         <div className={Style.commentsContainer}>
             {optimisticPosts.length === 0 ? (
-                <p className={Style.emptyState}>
-                    No comments yet! Be the first to share your thoughts.
+                <p className={`${Style.emptyState} ${variant === "watch" ? Style.watchEmpty : ""}`}>
+                    {variant === "watch" ? (
+                        <>
+                            <FiMessageSquare aria-hidden="true" />
+                            <span>No comments yet. Be the first to share your thoughts.</span>
+                        </>
+                    ) : "No comments yet! Be the first to share your thoughts."}
                 </p>
             ) : (
                 optimisticPosts.map((post) => (

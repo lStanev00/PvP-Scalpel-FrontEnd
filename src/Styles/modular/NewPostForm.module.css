@@ -142,7 +142,61 @@
     outline: none;
 }
 
+.watch .composerBody {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.5rem 0.75rem;
+}
+
+.watch .commentInput {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 44px;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.035);
+    font-size: 1rem;
+}
+
+.watch .commentInput:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.watch .actions {
+    grid-column: 2;
+    grid-row: 1;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.watch .actions button {
+    min-height: 44px;
+    border-radius: 8px;
+}
+
+.watch .errorMsg {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0;
+}
+
 @media (max-width: 600px) {
+    .watch .composerBody {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .watch .actions {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .watch .errorMsg {
+        grid-row: 3;
+    }
+
     .commentForm,
     .signedOutPrompt {
         gap: 0.65rem;

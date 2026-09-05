@@ -13,6 +13,20 @@
     line-height: 1.5;
 }
 
+.emptyState.watchEmpty {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding: 1.5rem 0;
+    text-align: center;
+}
+
+.watchEmpty svg {
+    width: 20px;
+    height: 20px;
+}
+
 @media (max-width: 600px) {
     .commentsContainer {
         margin-top: 0.85rem;
