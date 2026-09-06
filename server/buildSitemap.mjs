@@ -1,5 +1,5 @@
 
-export function buildSitemap(lastmod, urls = sitemapUrls) {
+export function buildSitemap(lastmod, urls) {
     const sitemapUrls = [
         {
             loc: "https://www.pvpscalpel.com/",
@@ -52,8 +52,8 @@ export function buildSitemap(lastmod, urls = sitemapUrls) {
             priority: "0.6",
         },
     ];
-    
-    const entries = urls
+
+    const entries = (urls ?? sitemapUrls)
         .map(
             (entry) =>
                 `  <url>\n` +

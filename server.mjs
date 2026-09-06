@@ -19,6 +19,10 @@ import {
 } from "./server/resolveAssetBase.mjs";
 import { resolveScriptSrc } from "./server/resolveScriptSrc.mjs";
 import { securityHeaders } from "./server/securityHeaders.mjs";
+import {
+    buildUnavailableVideoSeo,
+    buildVideoSeo,
+} from "./server/videoSeo.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -233,6 +237,83 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
             "char",
             buildCharNotFoundSeo(canonical, logoUrl)
         );
+    }
+});
+
+app.get("/watch/:videoID", async (req, res) => {
+    req.suppress404Log = true;
+    const { videoID } = req.params;
+
+    const renderUnavailableVideo = (status) => {
+        res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
+        res.status(status);
+        return renderPage(
+            res,
+            "watch",
+            buildUnavailableVideoSeo(videoID, logoUrl)
+        );
+    };
+
+    if (!apiBase) {
+        log("warn", "video.api_base_missing", {
+            id: req.requestId,
+        });
+        return renderUnavailableVideo(503);
+    }
+
+    const endpoint = `${apiBase}/video/${encodeURIComponent(videoID)}`;
+
+    try {
+        const response = await fetch(endpoint, {
+            headers: {
+                "600": "BasicPass",
+                "Content-Type": "application/json",
+                "fe-ping": "front-end",
+            },
+        });
+
+        if (!response.ok) {
+            log("warn", "video.fetch_failed", {
+                id: req.requestId,
+                endpoint,
+                status: response.status,
+            });
+            return renderUnavailableVideo(response.status);
+        }
+
+        const contentType = response.headers.get("content-type") || "";
+        const video = contentType.includes("application/json")
+            ? await response.json()
+            : null;
+
+        if (!video?._id) {
+            log("warn", "video.response_invalid", {
+                id: req.requestId,
+                endpoint,
+            });
+            return renderUnavailableVideo(502);
+        }
+
+        if (video.isPrivate) {
+            return renderUnavailableVideo(403);
+        }
+
+        if (video.censored) {
+            return renderUnavailableVideo(451);
+        }
+
+        return renderPage(
+            res,
+            "watch",
+            buildVideoSeo(video, { assetBase, logoUrl })
+        );
+    } catch (error) {
+        log("error", "video.fetch_error", {
+            id: req.requestId,
+            endpoint,
+            error: error?.message || "unknown",
+        });
+        return renderUnavailableVideo(502);
     }
 });
 
