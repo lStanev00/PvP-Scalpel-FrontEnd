@@ -3,7 +3,8 @@ export function getSafeInternalTarget(target) {
         typeof target !== "string" ||
         !target.startsWith("/") ||
         target.startsWith("//") ||
-        target.startsWith("/\\")
+        target.startsWith("/\\") ||
+        /^\/logout\/?(?:[?#]|$)/.test(target)
     ) {
         return null;
     }
