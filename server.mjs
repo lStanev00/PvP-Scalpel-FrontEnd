@@ -3,7 +3,26 @@ import { engine } from "express-handlebars";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import { randomUUID } from "crypto";
+import { buildSitemap } from "./server/buildSitemap.mjs";
+import {
+    buildCharNotFoundSeo,
+    buildCharSeo,
+} from "./server/characterSeo.mjs";
+import { createRenderPage } from "./server/createRenderPage.mjs";
+import { extractBuildAssets } from "./server/extractBuildAssets.mjs";
+import { log } from "./server/logger.mjs";
+import { requestLogger } from "./server/requestLogger.mjs";
+import { resolveApiBase } from "./server/resolveApiBase.mjs";
+import {
+    assetUrl,
+    resolveAssetBase,
+} from "./server/resolveAssetBase.mjs";
+import { resolveScriptSrc } from "./server/resolveScriptSrc.mjs";
+import { securityHeaders } from "./server/securityHeaders.mjs";
+import {
+    buildUnavailableVideoSeo,
+    buildVideoSeo,
+} from "./server/videoSeo.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,163 +33,15 @@ app.disable("x-powered-by");
 const rootDir = __dirname;
 const seoDir = path.join(rootDir, "SEO");
 const distDir = path.join(rootDir, "dist");
-const DEFAULT_ASSET_BASE_URL =
-    "https://bucket.pvpscalpel.com/pvp-scalpel-frontend";
-
-function resolveAssetBase() {
-    const raw =
-        process.env.ASSET_BASE_URL ||
-        process.env.VITE_ASSET_BASE_URL ||
-        DEFAULT_ASSET_BASE_URL;
-
-    return String(raw || DEFAULT_ASSET_BASE_URL)
-        .trim()
-        .replace(/\/+$/, "");
-}
-
-function assetUrl(assetPath) {
-    return `${assetBase}/${String(assetPath || "").replace(/^\/+/, "")}`;
-}
-
 const assetBase = resolveAssetBase();
-const publicAssetBase = assetUrl("public");
+const publicAssetBase = assetUrl(assetBase, "public");
 const logoUrl = `${publicAssetBase}/logo/logo_resized.png`;
 const assetOrigin = new URL(assetBase).origin;
-
-function resolveApiBase() {
-    const raw =
-        process.env.REST_URL ||
-        process.env.VITE_API_URL ||
-        "https://api.pvpscalpel.com";
-
-    const trimmed = String(raw || "").trim();
-    if (!trimmed) return "";
-
-    if (/^https?:\/\//i.test(trimmed)) {
-        return trimmed.replace(/\/+$/, "");
-    }
-
-    // Back-compat: when API_URL is provided without a scheme, assume http:// (typical for internal networks).
-    return `http://${trimmed}`.replace(/\/+$/, "");
-}
-
 const apiBase = resolveApiBase();
 const manifestPath = path.join(distDir, "manifest.json");
 const indexPath = path.join(distDir, "index.html");
-
-const LOG_LEVEL = (process.env.LOG_LEVEL || "warn").toLowerCase();
-const LOG_REQUEST_HEADERS = process.env.LOG_REQUEST_HEADERS === "true";
-const LOG_REQUESTS = (process.env.LOG_REQUESTS || "errors").toLowerCase();
-const SLOW_REQUEST_MS = Number(process.env.SLOW_REQUEST_MS) || 1500;
-const levelRank = {
-    error: 0,
-    warn: 1,
-    info: 2,
-    debug: 3,
-};
-
-function shouldLog(level) {
-    const current = levelRank[LOG_LEVEL] ?? levelRank.info;
-    const target = levelRank[level] ?? levelRank.info;
-    return target <= current;
-}
-
-function log(level, message, meta = {}) {
-    if (!shouldLog(level)) return;
-    const payload = {
-        level,
-        message,
-        time: new Date().toISOString(),
-        ...meta,
-    };
-    const line = JSON.stringify(payload);
-    if (level === "error") {
-        console.error(line);
-    } else if (level === "warn") {
-        console.warn(line);
-    } else {
-        console.log(line);
-    }
-}
-
-function newRequestId() {
-    try {
-        return randomUUID();
-    } catch {
-        return `${Date.now().toString(36)}-${Math.random()
-            .toString(36)
-            .slice(2, 10)}`;
-    }
-}
-
-function extractBuildAssets() {
-    if (!fs.existsSync(indexPath)) {
-        log("warn", "build.index.missing", { indexPath });
-        return {
-            headTags: "",
-            scriptTag: "",
-            scriptSrc: "",
-        };
-    }
-
-    try {
-        const html = fs.readFileSync(indexPath, "utf-8");
-        const headTags = [];
-
-        const preloadMatches =
-            html.match(/<link[^>]+rel="modulepreload"[^>]*>/gi) || [];
-        const styleMatches =
-            html.match(/<link[^>]+rel="stylesheet"[^>]*>/gi) || [];
-
-        headTags.push(...preloadMatches, ...styleMatches);
-
-        const scriptMatch = html.match(
-            /<script[^>]*type="module"[^>]*src="[^"]+"[^>]*>\s*<\/script>/i
-        );
-        const scriptTag = scriptMatch?.[0] || "";
-
-        const srcMatch = scriptTag.match(/src="([^"]+)"/i);
-        const scriptSrc = srcMatch?.[1] || "";
-
-        return {
-            headTags: headTags.join("\n"),
-            scriptTag,
-            scriptSrc,
-        };
-    } catch {
-        log("error", "build.index.read_failed", { indexPath });
-        return {
-            headTags: "",
-            scriptTag: "",
-            scriptSrc: "",
-        };
-    }
-}
-
-const buildAssets = extractBuildAssets();
-
-function resolveScriptSrc() {
-    if (fs.existsSync(manifestPath)) {
-        try {
-            const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
-            const entry = manifest["src/main.jsx"] || manifest["index.html"];
-            if (entry?.file) {
-                return `/${entry.file}`;
-            }
-        } catch {
-            log("warn", "build.manifest.read_failed", { manifestPath });
-            // Fall back to the default Vite entry.
-        }
-    }
-
-    if (buildAssets.scriptSrc) {
-        return buildAssets.scriptSrc;
-    }
-
-    return "";
-}
-
-const scriptSrc = resolveScriptSrc();
+const buildAssets = extractBuildAssets(indexPath);
+const scriptSrc = resolveScriptSrc(manifestPath, buildAssets);
 log("info", "server.assets", {
     distExists: fs.existsSync(distDir),
     manifestExists: fs.existsSync(manifestPath),
@@ -179,87 +50,8 @@ log("info", "server.assets", {
     headTags: Boolean(buildAssets.headTags),
 });
 
-app.use((req, res, next) => {
-    res.setHeader("X-Content-Type-Options", "nosniff");
-    res.setHeader("X-Frame-Options", "DENY");
-    res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-    res.setHeader(
-        "Permissions-Policy",
-        "camera=(), microphone=(), geolocation=(), payment=()"
-    );
-    res.setHeader(
-        "Cache-Control",
-        "no-store, no-cache, must-revalidate, proxy-revalidate"
-    );
-    res.setHeader("Pragma", "no-cache");
-    res.setHeader("Expires", "0");
-    next();
-});
-
-app.use((req, res, next) => {
-    const requestId = newRequestId();
-    const start = process.hrtime.bigint();
-    req.requestId = requestId;
-
-    const meta = {
-        id: requestId,
-        method: req.method,
-        path: req.originalUrl,
-        ip: req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() ||
-            req.socket?.remoteAddress,
-        ua: req.headers["user-agent"],
-        referer: req.headers.referer,
-    };
-
-    if (LOG_REQUEST_HEADERS) {
-        meta.headers = req.headers;
-    }
-
-    if (LOG_REQUESTS === "all" && shouldLog("info")) {
-        log("info", "request.start", meta);
-    }
-
-    res.on("finish", () => {
-        const durationMs = Number(process.hrtime.bigint() - start) / 1e6;
-        const payload = {
-            id: requestId,
-            status: res.statusCode,
-            durationMs: Math.round(durationMs),
-            length: res.getHeader("content-length") || undefined,
-            method: req.method,
-            path: req.originalUrl,
-        };
-
-        if (LOG_REQUESTS === "none") {
-            return;
-        }
-
-        if (res.statusCode >= 500) {
-            log("error", "request.end", payload);
-            return;
-        }
-
-        if (res.statusCode === 404 && req.suppress404Log) {
-            return;
-        }
-
-        if (res.statusCode >= 400) {
-            log("warn", "request.end", payload);
-            return;
-        }
-
-        if (durationMs >= SLOW_REQUEST_MS) {
-            log("warn", "request.slow", payload);
-            return;
-        }
-
-        if (LOG_REQUESTS === "all" && shouldLog("info")) {
-            log("info", "request.end", payload);
-        }
-    });
-
-    next();
-});
+app.use(securityHeaders);
+app.use(requestLogger);
 
 app.engine(
     "hbs",
@@ -289,25 +81,14 @@ if (fs.existsSync(distDir)) {
         })
     );
 }
-
-
-function renderPage(res, view, data = {}) {
-    res.render(view, {
-        appHtml: "",
-        headExtra: buildAssets.headTags,
-        bodyScripts: buildAssets.scriptTag,
-        scriptSrc,
-        assetBase,
-        publicAssetBase,
-        logoUrl,
-        assetOrigin,
-        ...data,
-    });
-    log("debug", "render.page", {
-        id: res.req?.requestId,
-        view,
-    });
-}
+const renderPage = createRenderPage({
+    buildAssets,
+    scriptSrc,
+    assetBase,
+    publicAssetBase,
+    logoUrl,
+    assetOrigin,
+});
 
 const leaderboardViews = new Map([
     ["solo-shuffle", "leaderboard-solo-shuffle"],
@@ -354,205 +135,9 @@ Sitemap: https://www.pvpscalpel.com/sitemap.xml
 
 const lastmod = new Date().toISOString().slice(0, 10); // out of route so it dont lie
 app.get("/sitemap.xml", (req, res) => {
-    const urls = [
-        {
-            loc: "https://www.pvpscalpel.com/",
-            changefreq: "weekly",
-            priority: "1.0",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/leaderboard",
-            changefreq: "daily",
-            priority: "0.9",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/leaderboard/solo-shuffle",
-            changefreq: "daily",
-            priority: "0.8",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/leaderboard/2v2",
-            changefreq: "daily",
-            priority: "0.8",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/leaderboard/3v3",
-            changefreq: "daily",
-            priority: "0.8",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/leaderboard/blitz",
-            changefreq: "daily",
-            priority: "0.8",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/leaderboard/rated-bg",
-            changefreq: "weekly",
-            priority: "0.8",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/roster",
-            changefreq: "weekly",
-            priority: "0.7",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/posts",
-            changefreq: "monthly",
-            priority: "0.1",
-        },
-        {
-            loc: "https://www.pvpscalpel.com/joinGuild",
-            changefreq: "monthly",
-            priority: "0.6",
-        },
-        // {
-        //     loc: "https://www.pvpscalpel.com/download",
-        //     changefreq: "monthly",
-        //     priority: "0.6",
-        // },
-    ];
-
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>\n` +
-        `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-        urls
-            .map(
-                (entry) =>
-                    `  <url>\n` +
-                    `    <loc>${entry.loc}</loc>\n` +
-                    `    <lastmod>${lastmod}</lastmod>\n` +
-                    `    <changefreq>${entry.changefreq}</changefreq>\n` +
-                    `    <priority>${entry.priority}</priority>\n` +
-                    `  </url>`
-            )
-            .join("\n") +
-        `\n</urlset>\n`;
-
     res.setHeader("Cache-Control", "public, max-age=3600");
-    res.status(200).type("application/xml").send(xml);
+    res.status(200).type("application/xml").send(buildSitemap(lastmod));
 });
-
-function safeJsonStringify(value) {
-    return JSON.stringify(value).replace(/</g, "\\u003c");
-}
-
-function buildCharSeo(char, canonical) {
-    if (!char) {
-        return buildCharNotFoundSeo(canonical);
-    }
-
-    const name = char?.name || "Character";
-    const realm = char?.playerRealm?.name || "";
-    const region = (char?.server || "").toUpperCase();
-    const spec = char?.activeSpec?.name || "";
-    const charClass = char?.class?.name || "";
-    const guild = char?.guildName || "Independent";
-    const faction = char?.faction || "";
-    const level = char?.level ?? "";
-
-    let bestBracket = null;
-    let bestRating = 0;
-
-    if (char?.rating && typeof char.rating === "object") {
-        for (const [bracket, data] of Object.entries(char.rating)) {
-            const current = data?.currentSeason?.rating ?? 0;
-            if (current > bestRating) {
-                bestRating = current;
-                bestBracket = bracket;
-            }
-        }
-    }
-
-    const displayBracket = bestBracket
-        ? bestBracket.replace(/[-_]/g, " ").toUpperCase()
-        : "PVP";
-    const rating = bestRating || 0;
-
-    const title = `${name} - ${spec} ${charClass} (${rating} ${displayBracket}) | PvP Scalpel`.replace(
-        /\s+/g,
-        " "
-    ).trim();
-
-    const descriptionParts = [
-        `${name}${level ? `, level ${level}` : ""}${
-            faction ? ` ${faction}` : ""
-        }${charClass ? ` ${charClass}` : ""}${
-            realm ? ` on ${realm}` : ""
-        }${region ? ` (${region})` : ""}${spec ? ` - ${spec} specialization.` : "."}`,
-        `Currently rated ${rating} in ${displayBracket}, member of ${guild}.`,
-        "View detailed gear, talents, achievements, and performance history on PvP Scalpel.",
-    ];
-
-    const description = descriptionParts.join(" ").replace(/\s+/g, " ").trim();
-
-    const image =
-        char?.media?.charImg ||
-        char?.media?.avatar ||
-        logoUrl;
-
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "VideoGameCharacter",
-        name,
-        description,
-        image,
-        url: canonical,
-        characterClass: charClass || undefined,
-        characterLevel: level || undefined,
-        game: {
-            "@type": "VideoGame",
-            name: "World of Warcraft",
-            url: "https://worldofwarcraft.blizzard.com/",
-        },
-        additionalProperty: [
-            { "@type": "PropertyValue", name: "Faction", value: faction },
-            { "@type": "PropertyValue", name: "Spec", value: spec },
-            {
-                "@type": "PropertyValue",
-                name: "Highest Rating",
-                value: `${rating} (${displayBracket})`,
-            },
-            { "@type": "PropertyValue", name: "Guild", value: guild },
-        ].filter((entry) => entry.value),
-    };
-
-    return {
-        title,
-        description,
-        canonical,
-        ogTitle: title,
-        ogDescription: description,
-        ogType: "profile",
-        ogUrl: canonical,
-        ogImage: image,
-        twitterCard: "summary_large_image",
-        twitterTitle: title,
-        twitterDescription: description,
-        twitterImage: image,
-        jsonLD: safeJsonStringify(structuredData),
-    };
-}
-
-function buildCharNotFoundSeo(canonical) {
-    const title = "Character Not Found | PvP Scalpel";
-    const description =
-        "We couldn't find that character. Check the realm, server, and name, then try again.";
-    const image = logoUrl;
-
-    return {
-        title,
-        description,
-        canonical,
-        ogTitle: title,
-        ogDescription: description,
-        ogType: "website",
-        ogUrl: canonical,
-        ogImage: image,
-        twitterCard: "summary_large_image",
-        twitterTitle: title,
-        twitterDescription: description,
-        twitterImage: image,
-    };
-}
 
 app.get("/check/:server/:realm/:name", async (req, res) => {
     req.suppress404Log = true;
@@ -565,7 +150,11 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
         log("warn", "character.api_base_missing", {
             id: req.requestId,
         });
-        return renderPage(res, "char", buildCharNotFoundSeo(canonical));
+        return renderPage(
+            res,
+            "char",
+            buildCharNotFoundSeo(canonical, logoUrl)
+        );
     }
 
     try {
@@ -609,7 +198,11 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
                 status: response.status,
             });
             res.status(response.status);
-            return renderPage(res, "char", buildCharNotFoundSeo(canonical));
+            return renderPage(
+                res,
+                "char",
+                buildCharNotFoundSeo(canonical, logoUrl)
+            );
         }
 
         const contentType = response.headers.get("content-type") || "";
@@ -619,7 +212,11 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
 
         if (!data || data?.errorMSG) {
             res.status(200);
-            return renderPage(res, "char", buildCharNotFoundSeo(canonical));
+            return renderPage(
+                res,
+                "char",
+                buildCharNotFoundSeo(canonical, logoUrl)
+            );
         }
 
         log("info", "character.found", {
@@ -628,14 +225,95 @@ app.get("/check/:server/:realm/:name", async (req, res) => {
             server,
             realm,
         });
-        return renderPage(res, "char", buildCharSeo(data, canonical));
+        return renderPage(res, "char", buildCharSeo(data, canonical, logoUrl));
     } catch (error) {
         log("error", "character.fetch_error", {
             id: req.requestId,
             error: error?.message || "unknown",
         });
         res.status(500);
-        return renderPage(res, "char", buildCharNotFoundSeo(canonical));
+        return renderPage(
+            res,
+            "char",
+            buildCharNotFoundSeo(canonical, logoUrl)
+        );
+    }
+});
+
+app.get("/watch/:videoID", async (req, res) => {
+    req.suppress404Log = true;
+    const { videoID } = req.params;
+
+    const renderUnavailableVideo = (status) => {
+        res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
+        res.status(status);
+        return renderPage(
+            res,
+            "watch",
+            buildUnavailableVideoSeo(videoID, logoUrl)
+        );
+    };
+
+    if (!apiBase) {
+        log("warn", "video.api_base_missing", {
+            id: req.requestId,
+        });
+        return renderUnavailableVideo(503);
+    }
+
+    const endpoint = `${apiBase}/video/${encodeURIComponent(videoID)}`;
+
+    try {
+        const response = await fetch(endpoint, {
+            headers: {
+                "600": "BasicPass",
+                "Content-Type": "application/json",
+                "fe-ping": "front-end",
+            },
+        });
+
+        if (!response.ok) {
+            log("warn", "video.fetch_failed", {
+                id: req.requestId,
+                endpoint,
+                status: response.status,
+            });
+            return renderUnavailableVideo(response.status);
+        }
+
+        const contentType = response.headers.get("content-type") || "";
+        const video = contentType.includes("application/json")
+            ? await response.json()
+            : null;
+
+        if (!video?._id) {
+            log("warn", "video.response_invalid", {
+                id: req.requestId,
+                endpoint,
+            });
+            return renderUnavailableVideo(502);
+        }
+
+        if (video.isPrivate) {
+            return renderUnavailableVideo(403);
+        }
+
+        if (video.censored) {
+            return renderUnavailableVideo(451);
+        }
+
+        return renderPage(
+            res,
+            "watch",
+            buildVideoSeo(video, { assetBase, logoUrl })
+        );
+    } catch (error) {
+        log("error", "video.fetch_error", {
+            id: req.requestId,
+            endpoint,
+            error: error?.message || "unknown",
+        });
+        return renderUnavailableVideo(502);
     }
 });
 

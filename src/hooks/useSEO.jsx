@@ -9,10 +9,12 @@ export function useSEO({
     ogType,
     ogUrl,
     ogImage,
+    ogSiteName,
     twitterCard,
     twitterTitle,
     twitterDescription,
     twitterImage,
+    robots,
     jsonLD,
 }) {
     useEffect(() => {
@@ -38,12 +40,37 @@ export function useSEO({
         setMeta('meta[property="og:type"]', "property", ogType);
         setMeta('meta[property="og:url"]', "property", ogUrl);
         setMeta('meta[property="og:image"]', "property", ogImage);
+        setMeta('meta[property="og:site_name"]', "property", ogSiteName);
 
         // Twitter
         setMeta('meta[name="twitter:card"]', "name", twitterCard);
         setMeta('meta[name="twitter:title"]', "name", twitterTitle);
         setMeta('meta[name="twitter:description"]', "name", twitterDescription);
         setMeta('meta[name="twitter:image"]', "name", twitterImage);
+
+        let restoreRobots;
+        if (robots) {
+            let robotsMeta = document.querySelector('meta[name="robots"]');
+            const previousContent = robotsMeta?.getAttribute("content");
+            const created = !robotsMeta;
+
+            if (!robotsMeta) {
+                robotsMeta = document.createElement("meta");
+                robotsMeta.setAttribute("name", "robots");
+                document.head.appendChild(robotsMeta);
+            }
+
+            robotsMeta.setAttribute("content", robots);
+            restoreRobots = () => {
+                if (created) {
+                    robotsMeta.remove();
+                } else if (previousContent === null) {
+                    robotsMeta.removeAttribute("content");
+                } else {
+                    robotsMeta.setAttribute("content", previousContent);
+                }
+            };
+        }
 
         // Canonical URL
         if (canonical) {
@@ -68,6 +95,8 @@ export function useSEO({
             }
             script.textContent = JSON.stringify(jsonLD);
         }
+
+        return restoreRobots;
     }, [
         title,
         description,
@@ -77,10 +106,12 @@ export function useSEO({
         ogType,
         ogUrl,
         ogImage,
+        ogSiteName,
         twitterCard,
         twitterTitle,
         twitterDescription,
         twitterImage,
+        robots,
         jsonLD,
     ]);
 }

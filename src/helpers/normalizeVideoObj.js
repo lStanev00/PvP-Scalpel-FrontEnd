@@ -9,7 +9,7 @@ const compactNumber = new Intl.NumberFormat(undefined, {
  * @typedef {string | number | { _id?: string | number, id?: string | number, slug?: string, name?: string } | null} VideoBracketInput
  * @typedef {import("./storageOperations/gameData.js").GameBracket} GameBracket
  * @typedef {{ timestamp: number, value: string, exact: string, label: string }} VideoDate
- * @typedef {import("../components/VideoCard/VideoCard.jsx").VideoCardData & { sourceIndex: number, bracket: { key: string, name: string }, date: VideoDate | null }} NormalizedVideo
+ * @typedef {import("../components/VideoCard/VideoCard.jsx").VideoCardData & { sourceIndex: number, username: string, bracket: { key: string, name: string }, date: VideoDate | null }} NormalizedVideo
  */
 
 /**
@@ -17,6 +17,7 @@ const compactNumber = new Intl.NumberFormat(undefined, {
  * @typedef {object} VideoMetadata
  * @property {string | number} [_id] Entries with a missing or falsy ID are skipped.
  * @property {string | null} [title]
+ * @property {{ username?: string | null } | null} [author]
  * @property {{ thumbnail?: string | null } | null} [manifest]
  * @property {VideoBracketInput} [bracket]
  * @property {string | number | null} [views]
@@ -60,6 +61,11 @@ function normalizeVideos(videos, brackets) {
                     typeof entry.title === "string" && entry.title.trim()
                         ? entry.title.trim()
                         : "Untitled video",
+                username:
+                    typeof entry.author?.username === "string" &&
+                    entry.author.username.trim()
+                        ? entry.author.username.trim()
+                        : "Anonymous",
                 thumbnail: buildPath(entry?.manifest?.thumbnail),
                 bracket: getBracketDetails(entry?.bracket, brackets),
                 views: getViewLabel(entry?.views),

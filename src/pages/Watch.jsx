@@ -12,7 +12,7 @@ import Style from "../Styles/modular/Watch.module.css";
 import mappedVideos from "../helpers/normalizeVideoObj.js";
 import { GAME_DATA_STORAGE_EVENT, getGameBrackets } from "../helpers/storageOperations/gameData.js";
 import NotFound from "./NotFound.jsx";
-import SEOTV from "../SEO/SEOTV.jsx";
+import SEOVideo, { SEOUnavailableVideo } from "../SEO/SEOVideo.jsx";
 
 export default function Watch() {
     const { videoID } = useParams();
@@ -85,7 +85,11 @@ export default function Watch() {
             const response = await httpFetch(`/video/${videoID}`);
             if (cancelled) return;
 
-            if (response.status === 200) {
+            if (response.status === 200 && response.data?.isPrivate) {
+                setVideoDoc(403);
+            } else if (response.status === 200 && response.data?.censored) {
+                setVideoDoc(451);
+            } else if (response.status === 200 && response.data?._id) {
                 setVideoDoc(response.data);
             } else if (response.status === 403) {
                 setVideoDoc(403);
@@ -97,6 +101,7 @@ export default function Watch() {
                 setVideoDoc(500);
             } else {
                 console.warn(response);
+                setVideoDoc(500);
             }
         };
 
@@ -108,10 +113,7 @@ export default function Watch() {
     }, [httpFetch, videoID]);
 
     if (videoDoc && typeof videoDoc !== "number") {
-        const title =
-            typeof videoDoc.title === "string" && videoDoc.title.trim()
-                ? videoDoc.title.trim()
-                : "Untitled video";
+        const title = displayVideo?.title || "Untitled video";
         const contextWindow = {
             data: {
                 ...videoDoc,
@@ -122,7 +124,7 @@ export default function Watch() {
 
         return (
             <CommentsProvider initialPosts={videoDoc.comments} entryID={videoDoc._id}>
-                <SEOTV />
+                <SEOVideo video={displayVideo} />
                 <div className={Style.note}></div>
                 <article
                     className={`${Style.page} ${suggestedVideos.length > 0 ? Style.withSuggestions : ""}`}
@@ -131,7 +133,7 @@ export default function Watch() {
                         <VideoPlayer
                             key={videoDoc._id}
                             src={buildPath(videoDoc.manifest.video)}
-                            poster={buildPath(videoDoc.manifest.thumbnail)}
+                            poster={displayVideo?.thumbnail}
                             title={title}
                             brackedId={videoDoc.bracket?._id ?? videoDoc.bracket ?? 0}
                             mediaRef={mediaRef}
@@ -169,27 +171,16 @@ export default function Watch() {
         );
     }
 
-    if (videoDoc === 404)
+    if (typeof videoDoc === "number") {
         return (
             <>
-                <SEOTV></SEOTV>
-                <NotFound />
+                <SEOUnavailableVideo videoID={videoID} />
+                <NotFound manageSEO={false} />
             </>
         );
-    if (videoDoc === 500)
-        return (
-            <>
-                <SEOTV></SEOTV>
-                <NotFound />
-            </>
-        ); // acceptable for now
+    }
 
-    return (
-        <>
-            <SEOTV></SEOTV>
-            <Loading />
-        </>
-    );
+    return <Loading />;
 }
 
 function getDescriptionPreview(text) {
