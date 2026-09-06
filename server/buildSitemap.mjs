@@ -1,5 +1,5 @@
 
-export function buildSitemap(lastmod, urls) {
+export async function buildSitemap(lastmod, urls, apiBase) {
     const sitemapUrls = [
         {
             loc: "https://www.pvpscalpel.com/",
@@ -52,6 +52,34 @@ export function buildSitemap(lastmod, urls) {
             priority: "0.6",
         },
     ];
+
+    try {
+        
+        const endpoint = `${apiBase}/videosIDs`
+        const response = await fetch(endpoint, {
+            headers: {
+                "600": "BasicPass",
+                "Content-Type": "application/json",
+                "fe-ping": "front-end",
+            },
+        });
+    
+        if (response.ok) {
+            const data = await response.json();
+            if(Array.isArray(data)) for (const videoID of data) {
+                const entry =
+                {
+                    loc: `https://www.pvpscalpel.com/watch/${videoID}`,
+                    changefreq: "weekly",
+                    priority: "0.8",
+                }
+                sitemapUrls.push(entry)
+            }
+        }
+        
+    } catch (error) {
+        console.error(error)        
+    }
 
     const entries = (urls ?? sitemapUrls)
         .map(

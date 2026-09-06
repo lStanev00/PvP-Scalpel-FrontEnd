@@ -134,9 +134,9 @@ Sitemap: https://www.pvpscalpel.com/sitemap.xml
 });
 
 const lastmod = new Date().toISOString().slice(0, 10); // out of route so it dont lie
-app.get("/sitemap.xml", (req, res) => {
+app.get("/sitemap.xml", async (req, res) => {
     res.setHeader("Cache-Control", "public, max-age=3600");
-    res.status(200).type("application/xml").send(buildSitemap(lastmod));
+    res.status(200).type("application/xml").send(await buildSitemap(lastmod, undefined, apiBase));
 });
 
 app.get("/check/:server/:realm/:name", async (req, res) => {
