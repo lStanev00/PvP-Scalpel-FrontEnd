@@ -12,22 +12,20 @@ function canonicalFor(videoID) {
 }
 
 function useVideoSEO({ title, username, image, canonical, robots }) {
-    const description = `${username} on ${SITE_NAME}`;
+    const socialTitle = `${title} - ${username} at ${SITE_NAME}`;
 
     useSEO({
-        title,
-        description,
+        title: socialTitle,
         canonical,
         robots,
+        suppressDescription: true,
         ogSiteName: SITE_NAME,
-        ogTitle: title,
-        ogDescription: description,
+        ogTitle: socialTitle,
         ogType: "website",
         ogUrl: canonical,
         ogImage: image,
         twitterCard: "summary_large_image",
-        twitterTitle: title,
-        twitterDescription: description,
+        twitterTitle: socialTitle,
         twitterImage: image,
     });
 }

@@ -5,10 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>{{#if title}}{{title}}{{else}}PvP Scalpel{{/if}}</title>
+        {{#unless suppressDescription}}
         <meta
             name="description"
             content="{{#if description}}{{description}}{{else}}PvP Scalpel delivers real-time World of Warcraft PvP leaderboards, member insights, and guild analytics. Precision - Performance - Power.{{/if}}"
         />
+        {{/unless}}
         <meta name="author" content="Lachezar Stanev" />
 
         <link rel="icon" type="image/png" href="{{logoUrl}}" />
@@ -22,10 +24,12 @@
             property="og:title"
             content="{{#if ogTitle}}{{ogTitle}}{{else}}{{#if title}}{{title}}{{else}}PvP Scalpel - WoW PvP Analytics{{/if}}{{/if}}"
         />
+        {{#unless suppressDescription}}
         <meta
             property="og:description"
             content="{{#if ogDescription}}{{ogDescription}}{{else}}{{#if description}}{{description}}{{else}}Analyze your World of Warcraft PvP performance and compete with precision using PvP Scalpel.{{/if}}{{/if}}"
         />
+        {{/unless}}
         <meta
             property="og:image"
             content="{{#if ogImage}}{{ogImage}}{{else}}{{logoUrl}}{{/if}}"
@@ -44,10 +48,12 @@
             name="twitter:title"
             content="{{#if twitterTitle}}{{twitterTitle}}{{else}}{{#if ogTitle}}{{ogTitle}}{{else}}{{#if title}}{{title}}{{else}}PvP Scalpel - WoW PvP Analytics{{/if}}{{/if}}{{/if}}"
         />
+        {{#unless suppressDescription}}
         <meta
             name="twitter:description"
             content="{{#if twitterDescription}}{{twitterDescription}}{{else}}{{#if ogDescription}}{{ogDescription}}{{else}}{{#if description}}{{description}}{{else}}Track and compare your WoW PvP rankings across all brackets. Precision - Performance - Power.{{/if}}{{/if}}{{/if}}"
         />
+        {{/unless}}
         <meta
             name="twitter:image"
             content="{{#if twitterImage}}{{twitterImage}}{{else}}{{#if ogImage}}{{ogImage}}{{else}}{{logoUrl}}{{/if}}{{/if}}"

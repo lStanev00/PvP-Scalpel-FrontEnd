@@ -15,6 +15,7 @@ export function useSEO({
     twitterDescription,
     twitterImage,
     robots,
+    suppressDescription = false,
     jsonLD,
 }) {
     useEffect(() => {
@@ -31,12 +32,34 @@ export function useSEO({
 
         if (title) document.title = title;
 
-        // Standard Meta
-        setMeta('meta[name="description"]', "name", description);
+        const descriptionSelectors = [
+            'meta[name="description"]',
+            'meta[property="og:description"]',
+            'meta[name="twitter:description"]',
+        ];
+        const suppressedDescriptions = [];
+
+        if (suppressDescription) {
+            for (const selector of descriptionSelectors) {
+                const meta = document.querySelector(selector);
+                if (!meta) continue;
+
+                suppressedDescriptions.push({
+                    meta,
+                    content: meta.getAttribute("content"),
+                });
+                meta.setAttribute("content", "");
+            }
+        } else {
+            // Standard Meta
+            setMeta('meta[name="description"]', "name", description);
+        }
 
         // Open Graph
         setMeta('meta[property="og:title"]', "property", ogTitle);
-        setMeta('meta[property="og:description"]', "property", ogDescription);
+        if (!suppressDescription) {
+            setMeta('meta[property="og:description"]', "property", ogDescription);
+        }
         setMeta('meta[property="og:type"]', "property", ogType);
         setMeta('meta[property="og:url"]', "property", ogUrl);
         setMeta('meta[property="og:image"]', "property", ogImage);
@@ -45,7 +68,9 @@ export function useSEO({
         // Twitter
         setMeta('meta[name="twitter:card"]', "name", twitterCard);
         setMeta('meta[name="twitter:title"]', "name", twitterTitle);
-        setMeta('meta[name="twitter:description"]', "name", twitterDescription);
+        if (!suppressDescription) {
+            setMeta('meta[name="twitter:description"]', "name", twitterDescription);
+        }
         setMeta('meta[name="twitter:image"]', "name", twitterImage);
 
         let restoreRobots;
@@ -96,7 +121,16 @@ export function useSEO({
             script.textContent = JSON.stringify(jsonLD);
         }
 
-        return restoreRobots;
+        return () => {
+            restoreRobots?.();
+            for (const { meta, content } of suppressedDescriptions) {
+                if (content === null) {
+                    meta.removeAttribute("content");
+                } else {
+                    meta.setAttribute("content", content);
+                }
+            }
+        };
     }, [
         title,
         description,
@@ -112,6 +146,7 @@ export function useSEO({
         twitterDescription,
         twitterImage,
         robots,
+        suppressDescription,
         jsonLD,
     ]);
 }

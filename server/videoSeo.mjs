@@ -28,12 +28,20 @@ function resolveThumbnail(thumbnail, assetBase, logoUrl) {
     }
 }
 
-function buildSocialMetadata({ title, description, canonical, image, robots }) {
+function buildSocialMetadata({
+    title,
+    description,
+    canonical,
+    image,
+    robots,
+    suppressDescription = false,
+}) {
     return {
         title,
         description,
         canonical,
         robots,
+        suppressDescription,
         ogSiteName: SITE_NAME,
         ogTitle: title,
         ogDescription: description,
@@ -48,8 +56,9 @@ function buildSocialMetadata({ title, description, canonical, image, robots }) {
 }
 
 export function buildVideoSeo(video, { assetBase, logoUrl }) {
-    const title = normalizeText(video?.title, DEFAULT_TITLE);
+    const clipTitle = normalizeText(video?.title, DEFAULT_TITLE);
     const username = normalizeText(video?.author?.username, DEFAULT_USERNAME);
+    const title = `${clipTitle} - ${username} at ${SITE_NAME}`;
     const canonical = buildCanonical(video._id);
     const image = resolveThumbnail(
         video?.manifest?.thumbnail,
@@ -59,10 +68,11 @@ export function buildVideoSeo(video, { assetBase, logoUrl }) {
 
     return buildSocialMetadata({
         title,
-        description: `${username} on ${SITE_NAME}`,
+        description: "",
         canonical,
         image,
         robots: "index, follow",
+        suppressDescription: true,
     });
 }
 
