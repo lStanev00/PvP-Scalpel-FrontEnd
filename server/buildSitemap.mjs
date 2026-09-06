@@ -1,5 +1,5 @@
 
-export function buildSitemap(lastmod, urls) {
+export async function buildSitemap(lastmod, urls, apiBase) {
     const sitemapUrls = [
         {
             loc: "https://www.pvpscalpel.com/",
@@ -42,6 +42,11 @@ export function buildSitemap(lastmod, urls) {
             priority: "0.7",
         },
         {
+            loc: "https://www.pvpscalpel.com/watch",
+            changefreq: "daily",
+            priority: "0.9",
+        },
+        {
             loc: "https://www.pvpscalpel.com/posts",
             changefreq: "monthly",
             priority: "0.1",
@@ -52,6 +57,43 @@ export function buildSitemap(lastmod, urls) {
             priority: "0.6",
         },
     ];
+
+    try {
+        const endpoint = `${apiBase}/videosIDs`;
+        const response = await fetch(endpoint, {
+            headers: {
+                "600": "BasicPass",
+                "Content-Type": "application/json",
+                "fe-ping": "front-end",
+            },
+            signal: AbortSignal.timeout(5000),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                const seen = new Set();
+                for (const videoID of data) {
+                    if (
+                        typeof videoID !== "string" ||
+                        !/^[a-f\d]{24}$/i.test(videoID) ||
+                        seen.has(videoID)
+                    ) {
+                        continue;
+                    }
+
+                    seen.add(videoID);
+                    sitemapUrls.push({
+                        loc: `https://www.pvpscalpel.com/watch/${encodeURIComponent(videoID)}`,
+                        changefreq: "weekly",
+                        priority: "0.8",
+                    });
+                }
+            }
+        }
+    } catch (error) {
+        console.warn("Could not enrich sitemap with video URLs", error);
+    }
 
     const entries = (urls ?? sitemapUrls)
         .map(
