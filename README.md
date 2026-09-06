@@ -26,7 +26,7 @@ PvP Scalpel is a frontend application that consumes a custom backend to display 
 ## Routes
 
 - `/` Home
-- `/leaderboard/:slug?` Leaderboards (`solo-shuffle`, `2v2`, `3v3`, `blitz`, `rated-bg`)
+- `/leaderboard/:slug` Leaderboards (`solo-shuffle`, `2v2`, `3v3`, `blitz`, `rated-bg`); `/leaderboard` redirects to `/leaderboard/blitz`
 - `/check/:server/:realm/:name` Character details
 - `/roster` Guild roster
 - `/joinGuild` Recruitment

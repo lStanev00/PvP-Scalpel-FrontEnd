@@ -11,7 +11,7 @@ export default function NotFound({ manageSEO = true }) {
     const fromPath = location.state?.from;
     const pathToShow =
         typeof fromPath === "string" && fromPath ? fromPath : location.pathname || "/";
-    const canonical = `https://pvpscalpel.com${pathToShow}`;
+    const canonical = `https://www.pvpscalpel.com${pathToShow}`;
 
     return (
         <>
@@ -32,7 +32,7 @@ export default function NotFound({ manageSEO = true }) {
                 path={pathToShow}
                 primaryAction={{
                     label: "Return to Command Center",
-                    onClick: () => navigate("/leaderboard"),
+                    onClick: () => navigate("/leaderboard/blitz"),
                 }}
                 ghostAction={{ label: "Home", onClick: () => navigate("/") }}
                 linkAction={{

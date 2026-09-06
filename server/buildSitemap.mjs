@@ -7,11 +7,6 @@ export async function buildSitemap(lastmod, urls, apiBase) {
             priority: "1.0",
         },
         {
-            loc: "https://www.pvpscalpel.com/leaderboard",
-            changefreq: "daily",
-            priority: "0.9",
-        },
-        {
             loc: "https://www.pvpscalpel.com/leaderboard/solo-shuffle",
             changefreq: "daily",
             priority: "0.8",
@@ -38,6 +33,11 @@ export async function buildSitemap(lastmod, urls, apiBase) {
         },
         {
             loc: "https://www.pvpscalpel.com/roster",
+            changefreq: "weekly",
+            priority: "0.7",
+        },
+        {
+            loc: "https://www.pvpscalpel.com/scan",
             changefreq: "weekly",
             priority: "0.7",
         },

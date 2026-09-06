@@ -104,7 +104,7 @@ export default function Navigation() {
                         <Link to="/roster">Members</Link>
                     </li>
                     <li className={Style.navDropdown}>
-                        <Link to="/leaderboard" className={Style.leaderboardLink}>
+                        <Link to="/leaderboard/blitz" className={Style.leaderboardLink}>
                             Leaderboard
                         </Link>
                         <div className={Style.leaderboardMenu}>

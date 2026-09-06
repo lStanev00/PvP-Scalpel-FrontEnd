@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom"; // Dont clear imports
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"; // Dont clear imports
 import Navigation from "./components/Router.jsx";
 import Home from "./pages/Home.jsx";
 import GoToTopButton from "./components/topBtn.jsx";
@@ -96,6 +96,32 @@ export default function AppContent() {
 
                         <Route path="/" element={<Home />}></Route>
                         <Route
+                            path="/leaderboard"
+                            element={
+                                <Navigate
+                                    replace
+                                    to={{
+                                        pathname: "/leaderboard/blitz",
+                                        search: location.search,
+                                        hash: location.hash,
+                                    }}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/leaderboard/leaderboard"
+                            element={
+                                <Navigate
+                                    replace
+                                    to={{
+                                        pathname: "/leaderboard/blitz",
+                                        search: location.search,
+                                        hash: location.hash,
+                                    }}
+                                />
+                            }
+                        />
+                        <Route
                             path="/roster"
                             element={
                                 <Suspense fallback={<Loading />}>
@@ -141,8 +167,34 @@ export default function AppContent() {
                         />
                         <Route path="/posts" element={<Posts />} />
                         <Route path="/scan" element={<LobbyScan />} />
+                        <Route
+                            path="/scanLobby"
+                            element={
+                                <Navigate
+                                    replace
+                                    to={{
+                                        pathname: "/scan",
+                                        search: location.search,
+                                        hash: location.hash,
+                                    }}
+                                />
+                            }
+                        />
                         <Route path="/download" element={<Download />} />
-                        <Route path="/desktopBeta" element={<DesktopBeta />} />
+                        <Route path="/desktop-beta" element={<DesktopBeta />} />
+                        <Route
+                            path="/desktopBeta"
+                            element={
+                                <Navigate
+                                    replace
+                                    to={{
+                                        pathname: "/desktop-beta",
+                                        search: location.search,
+                                        hash: location.hash,
+                                    }}
+                                />
+                            }
+                        />
                         <Route path="/404" element={<NotFound />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
