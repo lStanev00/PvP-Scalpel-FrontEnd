@@ -11,7 +11,7 @@ export default function CharacterNotFound() {
     const navigate = useNavigate();
     const { inputRef } = useContext(UserContext);
 
-    const canonical = `https://pvpscalpel.com${location.pathname || "/"}`;
+    const canonical = `https://www.pvpscalpel.com${location.pathname || "/"}`;
 
     const target = useMemo(() => {
         const displayName = name ? `@${name}` : "@unknown";
@@ -99,7 +99,7 @@ export default function CharacterNotFound() {
             }}
             path={location.pathname || "/"}
             primaryAction={{ label: "Scan Another Target", onClick: focusSearch }}
-            ghostAction={{ label: "Return to Leaderboard", onClick: () => navigate("/leaderboard") }}
+            ghostAction={{ label: "Return to Leaderboard", onClick: () => navigate("/leaderboard/blitz") }}
             linkAction={{
                 label: "Go Back",
                 onClick: () => {

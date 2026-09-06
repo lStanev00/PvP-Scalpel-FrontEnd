@@ -5,7 +5,8 @@ export default function SEOPosts() {
         title: "PvP Scalpel — Community Posts",
         description:
             "Read PvP guides, strategies, and announcements from the PvP Scalpel community.",
-        canonical: "https://pvpscalpel.com/posts",
+        canonical: "https://www.pvpscalpel.com/posts",
+        ogUrl: "https://www.pvpscalpel.com/posts",
     });
 
     return null;

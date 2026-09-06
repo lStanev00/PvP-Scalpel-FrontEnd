@@ -5,7 +5,8 @@ export default function SEORoster() {
         title: "PvP Scalpel — Guild Members",
         description:
             "Meet the PvP Scalpel guild — elite WoW PvP players united by precision, performance, and power.",
-        canonical: "https://pvpscalpel.com/roster",
+        canonical: "https://www.pvpscalpel.com/roster",
+        ogUrl: "https://www.pvpscalpel.com/roster",
     });
 
     return null;

@@ -41,7 +41,7 @@ View detailed gear, talents, achievements, and performance history on PvP Scalpe
         char.media?.avatar ||
         publicAssetUrl("logo/logo_resized.png");
 
-    const canonical = `https://pvpscalpel.com/check/${region.toLowerCase()}/${
+    const canonical = `https://www.pvpscalpel.com/check/${region.toLowerCase()}/${
         char.playerRealm?.slug
     }/${name}`;
 

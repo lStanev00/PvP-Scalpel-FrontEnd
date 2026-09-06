@@ -34,9 +34,9 @@ export default function SEOLeaderboard({ content }) {
     const description =
         descriptions[content] ||
         "Explore real-time World of Warcraft PvP leaderboards — view rankings, class stats, and guild progress across all rated brackets.";
-    const slug = slugs[content] || "leaderboard";
+    const slug = slugs[content] || "blitz";
 
-    const url = `https://pvpscalpel.com/leaderboard/${slug}`;
+    const url = `https://www.pvpscalpel.com/leaderboard/${slug}`;
 
     useSEO({
         title,

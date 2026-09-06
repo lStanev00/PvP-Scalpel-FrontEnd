@@ -31,6 +31,16 @@ const __dirname = path.dirname(__filename);
 const app = express();
 app.disable("x-powered-by");
 
+const canonicalOrigin = "https://www.pvpscalpel.com";
+
+function permanentRedirect(pathname) {
+    return (req, res) => {
+        const queryIndex = req.originalUrl.indexOf("?");
+        const search = queryIndex === -1 ? "" : req.originalUrl.slice(queryIndex);
+        res.redirect(301, `${canonicalOrigin}${pathname}${search}`);
+    };
+}
+
 const rootDir = __dirname;
 const seoDir = path.join(rootDir, "SEO");
 const distDir = path.join(rootDir, "dist");
@@ -99,11 +109,20 @@ const leaderboardViews = new Map([
     ["rated-bg", "leaderboard-rated-bg"],
 ]);
 
+app.get("/leaderboard", permanentRedirect("/leaderboard/blitz"));
+app.get(
+    "/leaderboard/leaderboard",
+    permanentRedirect("/leaderboard/blitz")
+);
+app.get("/scanLobby", permanentRedirect("/scan"));
+app.get("/desktopBeta", permanentRedirect("/desktop-beta"));
+
 app.get("/", (req, res) => renderPage(res, "home"));
 app.get("/download", (req, res) => renderPage(res, "download"));
 app.get("/joinGuild", (req, res) => renderPage(res, "joinGuild"));
 app.get("/posts", (req, res) => renderPage(res, "posts"));
 app.get("/roster", (req, res) => renderPage(res, "roster"));
+app.get("/scan", (req, res) => renderPage(res, "lobby-scan"));
 app.get("/watch", (req, res) => {
     renderPage(res, "watch", buildVideoCatalogueSeo(logoUrl));
 });
@@ -113,12 +132,9 @@ app.get("/desktop-beta", (req, res) => {
         title: "PvP Scalpel Desktop — Closed Beta",
         description:
             "Private closed beta information for the PvP Scalpel Desktop companion application.",
-        canonical: "https://pvpscalpel.com/desktop-beta",
+        canonical: "https://www.pvpscalpel.com/desktop-beta",
         robots: "noindex, nofollow, noarchive",
     });
-});
-app.get("/leaderboard", (req, res) => {
-    renderPage(res, "leaderboard");
 });
 
 app.get("/leaderboard/:slug", (req, res) => {
@@ -146,7 +162,7 @@ app.get("/sitemap.xml", async (req, res) => {
 app.get("/check/:server/:realm/:name", async (req, res) => {
     req.suppress404Log = true;
     const { server, realm, name } = req.params;
-    const canonical = `https://pvpscalpel.com/check/${encodeURIComponent(
+    const canonical = `https://www.pvpscalpel.com/check/${encodeURIComponent(
         server
     )}/${encodeURIComponent(realm)}/${encodeURIComponent(name)}`;
 

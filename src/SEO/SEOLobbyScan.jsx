@@ -5,7 +5,8 @@ export default function SEOLobbyScan() {
         title: "PvP Scalpel - PvP Lobby Scan",
         description:
             "Paste your PvP Scalpel lobby string to stage pre-match bracket, rating, and lobby reads before the gates open.",
-        canonical: "https://pvpscalpel.com/scanLobby",
+        canonical: "https://www.pvpscalpel.com/scan",
+        ogUrl: "https://www.pvpscalpel.com/scan",
     });
 
     return null;

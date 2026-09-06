@@ -15,7 +15,7 @@ export default function Footer({Style}) {
                 </div>
 
                 <div className={Style["footer-links"]}>
-                    <a href="/leaderboard">Leaderboard</a>
+                    <a href="/leaderboard/blitz">Leaderboard</a>
                     <a href="/roster">Members</a>
                     <a href="/posts">Community</a>
                     <a

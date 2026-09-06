@@ -7,12 +7,12 @@ export default function SEODesktopBeta() {
         title: "PvP Scalpel Desktop — Closed Beta",
         description:
             "Private closed beta information for the PvP Scalpel Desktop companion application.",
-        canonical: "https://pvpscalpel.com/desktopBeta",
+        canonical: "https://www.pvpscalpel.com/desktop-beta",
         ogTitle: "PvP Scalpel Desktop — Closed Beta",
         ogDescription:
             "Private closed beta information for the PvP Scalpel Desktop companion application.",
         ogType: "website",
-        ogUrl: "https://pvpscalpel.com/desktop-beta",
+        ogUrl: "https://www.pvpscalpel.com/desktop-beta",
         ogImage: publicAssetUrl("logo/logo_resized.png"),
         twitterCard: "summary_large_image",
         twitterTitle: "PvP Scalpel Desktop — Closed Beta",
