@@ -21,6 +21,7 @@ import { resolveScriptSrc } from "./server/resolveScriptSrc.mjs";
 import { securityHeaders } from "./server/securityHeaders.mjs";
 import {
     buildUnavailableVideoSeo,
+    buildVideoCatalogueSeo,
     buildVideoSeo,
 } from "./server/videoSeo.mjs";
 
@@ -103,6 +104,9 @@ app.get("/download", (req, res) => renderPage(res, "download"));
 app.get("/joinGuild", (req, res) => renderPage(res, "joinGuild"));
 app.get("/posts", (req, res) => renderPage(res, "posts"));
 app.get("/roster", (req, res) => renderPage(res, "roster"));
+app.get("/watch", (req, res) => {
+    renderPage(res, "watch", buildVideoCatalogueSeo(logoUrl));
+});
 app.get("/desktop-beta", (req, res) => {
     res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
     renderPage(res, "desktop-beta", {

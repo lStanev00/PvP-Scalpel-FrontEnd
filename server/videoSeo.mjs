@@ -2,6 +2,10 @@ const SITE_NAME = "PvP Scalpel";
 const CANONICAL_ORIGIN = "https://www.pvpscalpel.com";
 const DEFAULT_TITLE = "Untitled video";
 const DEFAULT_USERNAME = "Anonymous";
+const TV_TITLE = "Scalpel TV";
+const TV_DESCRIPTION =
+    "Watch World of Warcraft PvP videos, highlights, guides, arena matches, Battleground Blitz clips, and community content from PvP Scalpel.";
+const TV_CANONICAL = `${CANONICAL_ORIGIN}/watch`;
 const UNAVAILABLE_TITLE = "Clip unavailable | PvP Scalpel";
 const UNAVAILABLE_DESCRIPTION = "This PvP Scalpel clip is unavailable.";
 
@@ -73,6 +77,16 @@ export function buildVideoSeo(video, { assetBase, logoUrl }) {
         image,
         robots: "index, follow",
         suppressDescription: true,
+    });
+}
+
+export function buildVideoCatalogueSeo(logoUrl) {
+    return buildSocialMetadata({
+        title: TV_TITLE,
+        description: TV_DESCRIPTION,
+        canonical: TV_CANONICAL,
+        image: logoUrl,
+        robots: "index, follow",
     });
 }
 
