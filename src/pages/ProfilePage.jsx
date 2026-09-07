@@ -1,18 +1,38 @@
 import Style from "../Styles/modular/ProfilePage.module.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../hooks/ContextVariables";
 import AccInfo from "../components/ProfilePage/AccInfo";
 import ChangePassword from "../components/ProfilePage/ChangePassword";
 import ViewUserPosts from "../components/ProfilePage/ViewUserPosts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ViewUserVideos from "../components/ProfilePage/ViewUserVideos.jsx";
 
 export default function ProfilePage() {
     const navigate = useNavigate();
     const { user, httpFetch } = useContext(UserContext);
-    const [content, setContent] = useState("AccInfo");
-
     if (!user || !user._id) return navigate(`/login`);
+    
+    const [content, setContent] = useState("AccInfo");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const allowedProfileNavSet = new Set(["AccInfo", "ChangePassword", "ViewVideos", "ViewPosts"]);
+
+    const nav = searchParams.get("nav");
+    useEffect(() => {
+        if (!nav) return;
+
+        const trimmed = nav.trim();
+
+        if (allowedProfileNavSet.has(trimmed)) {
+            setContent(trimmed);
+
+            setSearchParams((prev) => {
+                const next = new URLSearchParams(prev);
+                next.delete("nav");
+                return next;
+            });
+        }
+    }, [searchParams.get("nav")]);
+
 
     return (
         <>
@@ -27,28 +47,24 @@ export default function ProfilePage() {
                     <div className={Style.buttonGroup}>
                         <button
                             onClick={() => setContent("AccInfo")}
-                            className={content === "AccInfo" ? Style.active : ""}
-                        >
+                            className={content === "AccInfo" ? Style.active : ""}>
                             Account Info
                         </button>
                         <button
                             onClick={() => setContent("ChangePassword")}
-                            className={content === "ChangePassword" ? Style.active : ""}
-                        >
+                            className={content === "ChangePassword" ? Style.active : ""}>
                             Change Password
                         </button>
-                        
+
                         <button
                             onClick={() => setContent("ViewVideos")}
-                            className={content === "ViewPosts" ? Style.active : ""}
-                        >
+                            className={content === "ViewPosts" ? Style.active : ""}>
                             Your Videos
                         </button>
 
                         <button
                             onClick={() => setContent("ViewPosts")}
-                            className={content === "ViewPosts" ? Style.active : ""}
-                        >
+                            className={content === "ViewPosts" ? Style.active : ""}>
                             Your Posts
                         </button>
                     </div>

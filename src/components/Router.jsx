@@ -4,14 +4,9 @@ import { UserContext } from "../hooks/ContextVariables";
 import Style from "../Styles/modular/Header.module.css";
 import SearchBar from "./SearchBar/SearchBar";
 import { FaFlag } from "react-icons/fa";
-import {
-    GiBattleAxe,
-    GiCrossedSwords,
-    GiLightningTrio,
-    GiTripleScratches,
-} from "react-icons/gi";
+import { GiBattleAxe, GiCrossedSwords, GiLightningTrio, GiTripleScratches } from "react-icons/gi";
 import { publicAssetUrl } from "../helpers/assets.js";
-import { FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX, FiChevronRight, FiChevronUp, FiChevronDown } from "react-icons/fi";
 
 export default function Navigation() {
     const { user } = useContext(UserContext);
@@ -36,10 +31,7 @@ export default function Navigation() {
     return (
         <header className={Style.header}>
             <div className={Style.upperWrapper}>
-                <Link
-                    to="/"
-                    aria-label="PvP Scalpel home"
-                    className={Style.logo}>
+                <Link to="/" aria-label="PvP Scalpel home" className={Style.logo}>
                     <img
                         className={Style["logo-img"]}
                         src={publicAssetUrl("logo/logo_resized.png")}
@@ -57,8 +49,7 @@ export default function Navigation() {
                 aria-controls="site-navigation"
                 aria-expanded={menuOpen}
                 aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-                onClick={() => setMenuOpen((open) => !open)}
-            >
+                onClick={() => setMenuOpen((open) => !open)}>
                 {menuOpen ? <FiX /> : <FiMenu />}
             </button>
 
@@ -66,29 +57,57 @@ export default function Navigation() {
                 id="site-navigation"
                 className={Style.navbar}
                 data-open={menuOpen}
-                aria-label="Primary navigation"
-            >
+                aria-label="Primary navigation">
                 <ul className={Style["nav-links"]}>
                     {!user?._id && (
                         <>
-                            <li>
-                                <Link to={`/login?target=${location}`}>Login</Link>
+                            <li className={Style.navDropdown}>
+                                <Link
+                                    to={`/login?target=${location}`}
+                                    className={Style.leaderboardLink}>
+                                    Login
+                                </Link>
+                                <div className={Style.leaderboardMenu}>
+                                    <Link to="/register">
+                                        <FiChevronRight className={Style.leaderboardMenuIcon} />
+                                        <span>Register</span>
+                                    </Link>
+                                </div>
                             </li>
                         </>
                     )}
                     {user?._id && (
                         <>
-                            <li>
-                                <Link to="/profile">Profile</Link>
+                            <li className={Style.navDropdown}>
+                                <Link to={`/profile`} className={Style.leaderboardLink}>
+                                    Profile
+                                </Link>
+                                <div className={Style.leaderboardMenu}>
+                                    <Link to="/profile?nav=ChangePassword">
+                                        <FiChevronRight className={Style.leaderboardMenuIcon} />
+                                        <span>Change passwoard</span>
+                                    </Link>
+                                    <Link to="/profile?nav=ViewVideos">
+                                        <FiChevronRight className={Style.leaderboardMenuIcon} />
+                                        <span>Your Videos</span>
+                                    </Link>
+                                    <Link to="/profile?nav=ViewPosts">
+                                        <FiChevronRight className={Style.leaderboardMenuIcon} />
+                                        <span>Your Comments</span>
+                                    </Link>
+                                    <Link to="/logout">
+                                        <FiChevronRight className={Style.leaderboardMenuIcon} />
+                                        <span>Logout</span>
+                                    </Link>
+                                </div>
                             </li>
-                            {String(user?.role || "").trim().toLowerCase() === "admin" && (
+                            {String(user?.role || "")
+                                .trim()
+                                .toLowerCase() === "admin" && (
                                 <li>
                                     <Link to="/upload/media">Upload Media</Link>
                                 </li>
                             )}
-                            <li>
-                                <Link to="/logout">Logout</Link>
-                            </li>
                         </>
                     )}
                     <li>
@@ -100,8 +119,20 @@ export default function Navigation() {
                     {/* <li>
                         <Link to="/posts">Posts</Link>
                     </li> */}
-                    <li>
-                        <Link to="/roster">Members</Link>
+                    <li className={Style.navDropdown}>
+                        <Link to={`/roster`} className={Style.leaderboardLink}>
+                            Guild
+                        </Link>
+                        <div className={Style.leaderboardMenu}>
+                            <Link to="/roster">
+                                <FiChevronRight className={Style.leaderboardMenuIcon} />
+                                <span>Members</span>
+                            </Link>
+                            <Link to="/joinGuild">
+                                <FiChevronRight className={Style.leaderboardMenuIcon} />
+                                <span>Join the Guild</span>
+                            </Link>
+                        </div>
                     </li>
                     <li className={Style.navDropdown}>
                         <Link to="/leaderboard/blitz" className={Style.leaderboardLink}>
