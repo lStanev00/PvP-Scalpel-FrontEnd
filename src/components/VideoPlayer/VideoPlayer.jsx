@@ -570,7 +570,8 @@ export default function VideoPlayer({
             onPointerMove={handlePlayerPointerMove}
             onKeyDown={handlePlayerKeyDown}
             onKeyUp={handlePlayerKeyUp}
-            onPointerLeave={() => {
+            onPointerLeave={(event) => {
+                if (event.pointerType === "touch") return;
                 if (!fullscreen) setControlsVisible(false);
             }}
         >
