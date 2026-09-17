@@ -541,3 +541,34 @@
         display: none;
     }
 }
+
+@media (max-width: 620px), (pointer: coarse) {
+    .controlRow button {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+    }
+
+    .controlRow button svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .playbackRate {
+        height: 44px;
+        min-width: 44px;
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 420px) {
+    .controlRow {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .time {
+        order: -1;
+        flex-basis: 100%;
+    }
+}

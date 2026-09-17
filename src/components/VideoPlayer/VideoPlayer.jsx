@@ -120,8 +120,18 @@ export default function VideoPlayer({
             }
         };
 
+        const video = videoRef.current;
+        const handleNativeFullscreenEnd = () => {
+            window.clearTimeout(controlsTimerRef.current);
+            setControlsVisible(true);
+        };
+
         document.addEventListener("fullscreenchange", handleFullscreenChange);
-        return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+        video?.addEventListener("webkitendfullscreen", handleNativeFullscreenEnd);
+        return () => {
+            document.removeEventListener("fullscreenchange", handleFullscreenChange);
+            video?.removeEventListener("webkitendfullscreen", handleNativeFullscreenEnd);
+        };
     }, []);
 
     useEffect(() => {
@@ -366,12 +376,22 @@ export default function VideoPlayer({
     };
 
     const toggleFullscreen = async () => {
-        if (!playerRef.current) return;
+        const player = playerRef.current;
+        const video = videoRef.current;
+        if (!player) return;
 
-        if (document.fullscreenElement) {
-            await document.exitFullscreen?.();
-        } else {
-            await playerRef.current.requestFullscreen?.();
+        try {
+            if (document.fullscreenElement) {
+                await document.exitFullscreen?.();
+            } else if (video?.webkitDisplayingFullscreen) {
+                video.webkitExitFullscreen?.();
+            } else if (document.fullscreenEnabled && player.requestFullscreen) {
+                await player.requestFullscreen();
+            } else {
+                video?.webkitEnterFullscreen?.();
+            }
+        } catch (error) {
+            console.warn("Unable to change video fullscreen mode.", error);
         }
     };
 
