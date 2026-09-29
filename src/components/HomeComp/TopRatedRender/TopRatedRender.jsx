@@ -4,7 +4,7 @@ import Style from "../WeeklyRender/WeeklyRender.module.css";
 export default function TopRatedRender({ topData }) {
     const navigate = useNavigate();
     if (!topData || Object.keys(topData).length === 0) return null;
-    console.info(topData)
+    // console.info(topData)
 
     const order = ["solo", "blitz", "3v3", "2v2", "BG"];
     const mapTitle = {
