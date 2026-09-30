@@ -1,7 +1,7 @@
 import { httpFetchWithCredentials } from "../httpFetch.js";
 
 const STORAGE_KEY = "gameData";
-const GAME_DATA_TTL_MS = 2 * 24 * 60 * 60 * 1000;
+const GAME_DATA_TTL_MS = 0.025 * 24 * 60 * 60 * 1000; // less cache
 export const GAME_DATA_STORAGE_EVENT = "gameDataStorageChanged";
 let pendingGameDataRefresh = null;
 
