@@ -23,6 +23,7 @@ import localStorageValidatoor from "./helpers/localStorageValidator.js";
 import LinkDiscord from "./pages/linkDiscord.jsx";
 import { publicAssetUrl } from "./helpers/assets.js";
 import ScalpelTV from "./pages/ScalpelTV.jsx";
+import BlizPlates from "./pages/blizPlate.jsx";
 
 const CharDetails = lazy(() => import("./pages/CharDetails.jsx"));
 const JoinGuild = lazy(() => import("./pages/JoinGuild.jsx"));
@@ -76,6 +77,7 @@ export default function AppContent() {
                                 }></Route>
                             <Route path="/logout" element={<Logout />} />
                         </Route>
+                        <Route path="/labz" element={<BlizPlates />}></Route>
 
                         <Route element={<AdminRoute />}>
                             <Route
