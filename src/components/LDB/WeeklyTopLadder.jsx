@@ -78,7 +78,7 @@ export default function WeeklyTop({ content }) {
                             />
                             <div className={Style.meta}>
                                 <p className={Style.name}>{p.name}</p>
-                                <p className={Style.realm}>{p.activeSpec.name}</p>
+                                <p className={Style.realm}>{p.activeSpec?.name}</p>
                             </div>
                             <div className={Style.rating}>
                                 <span className={Style.startRating}>{p?.startRating || 0}</span>
