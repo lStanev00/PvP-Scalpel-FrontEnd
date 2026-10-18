@@ -4,6 +4,7 @@ import Style from "../../Styles/modular/TallentSection.module.css"
 import delay from "../../helpers/delay";
 import { GiScrollUnfurled } from "react-icons/gi";
 import { FaCopy } from "react-icons/fa6";
+import { publicAssetUrl } from "../../helpers/assets.js";
 
 export default function TalentSection() {
     const { data } = useContext(CharacterContext);
@@ -39,8 +40,8 @@ export default function TalentSection() {
                         <span>{data.class.name}</span>
                     </div>
                     <div className={Style.specCard}>
-                        <img src={activeSpec.media} alt={activeSpec.name} />
-                        <span>{activeSpec.name}</span>
+                        <img src={activeSpec?.media || publicAssetUrl("item_fallback.png")} alt={activeSpec?.name === undefined ? "Missing"  : activeSpec?.name  } />
+                        <span>{activeSpec?.name === undefined ? "Not yet SPECed"  : activeSpec?.name  }</span>
                     </div>
                 </div>
 
