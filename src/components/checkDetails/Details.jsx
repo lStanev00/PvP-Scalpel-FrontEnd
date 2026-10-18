@@ -71,8 +71,7 @@ export function Details() {
                             ? `linear-gradient(rgba(8, 11, 24, 0.28), rgba(8, 11, 24, 0.58)), url("${characterImage}")`
                             : "none",
                         filter: isUpdating ? "blur(5px)" : "none",
-                    }}
-                >
+                    }}>
                     <section className={Style.characterBanner} aria-label="Character summary">
                         <img
                             className={Style.characterAvatar}
@@ -84,8 +83,9 @@ export function Details() {
                                 {data.name} - {data.playerRealm.name}
                             </h3>
                             <span>
-                                {data.race} | Level {data.level} | {data.class.name} (
-                                {data.activeSpec.name}){" "}
+                                {data.race} | Level {data.level} |{" "}
+                                {data.class.name ? data.class.name : null} {data?.activeSpec?.name}
+                                {data?.activeSpec?.name ? `(${data?.activeSpec?.name})` : null}
                                 {data.guildName && <>| Guild: {data.guildName}</>}
                             </span>
                         </div>
@@ -95,7 +95,7 @@ export function Details() {
                     </section>
 
                     {/* <div className={Style.engagement}> */}
-                        <UserDataContainer contextWindow={{ data, location }} />
+                    <UserDataContainer contextWindow={{ data, location }} />
                     {/* </div> */}
 
                     <section className={Style.statsFeed}>
@@ -115,7 +115,7 @@ export function Details() {
                         </div>
                         <Armory />
                     </section>
-                <Comments />
+                    <Comments />
                 </div>
             </div>
         </CommentsProvider>
