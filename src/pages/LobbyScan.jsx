@@ -10,6 +10,7 @@ import SEOLobbyScan from "../SEO/SEOLobbyScan.jsx";
 import Style from "../Styles/modular/LobbyScan.module.css";
 import { publicAssetUrl } from "../helpers/assets.js";
 import LobbyPlayersTable from "../components/LobbyScan/LobbyPlayersTable.jsx";
+import { useSearchParams } from "react-router";
 
 const SOCKET_URL = "wss://ws.pvpscalpel.com";
 
@@ -755,7 +756,9 @@ function ResultsPanel({
 
 export default function LobbyScan() {
     const [status, setStatus] = useState("connecting");
-    const [input, setInput] = useState("");
+    const [searchParam] = useSearchParams();
+    const searchCode = searchParam.get("code");
+    const [input, setInput] = useState(searchCode ?? "");
     const [rows, setRows] = useState([]);
     const [bracket, setBracket] = useState(null);
     const [error, setError] = useState("");
@@ -978,14 +981,12 @@ export default function LobbyScan() {
     }, [sendPayload]);
 
     useEffect(() => {
-        const socket = connect();
+        connect();
 
         return () => {
+            const socket = socketRef.current;
             pendingPayloadRef.current = "";
-
-            if (socketRef.current === socket) {
-                socketRef.current = null;
-            }
+            socketRef.current = null;
 
             if (
                 socket &&
@@ -1057,8 +1058,8 @@ export default function LobbyScan() {
         return () => clearInterval(timer);
     }, [status]);
 
-    const startScan = useCallback(() => {
-        const payload = normalizeLobbyPayload(input);
+    const startScan = useCallback((code) => {
+        const payload = normalizeLobbyPayload(code);
 
         if (!payload) {
             setError("Paste a PvP Scalpel lobby string before starting the scan.");
@@ -1073,11 +1074,18 @@ export default function LobbyScan() {
         setBracket(null);
         setError("");
         connect();
-    }, [closeSocket, connect, input, resetScanTracking]);
+    }, [closeSocket, connect, resetScanTracking]);
+
+    useEffect(() => {
+        if (!normalizeLobbyPayload(searchCode)) return;
+
+        setInput(searchCode);
+        startScan(searchCode);
+    }, [searchCode, startScan]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        startScan();
+        startScan(input);
     };
 
     const handleRetry = () => {
@@ -1092,7 +1100,7 @@ export default function LobbyScan() {
             return;
         }
 
-        startScan();
+        startScan(input);
     };
 
     const handleReset = () => {
