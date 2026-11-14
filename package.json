@@ -1,7 +1,7 @@
 {
   "name": "front-end",
   "private": true,
-  "version": "2.1.11",
+  "version": "2.1.111",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,7 +18,7 @@
   "dependencies": {
     "baseline-browser-mapping": "^2.9.19",
     "express": "^5.1.0",
-    "express-handlebars": "^8.0.1",
+    "express-handlebars": "^9.0.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
